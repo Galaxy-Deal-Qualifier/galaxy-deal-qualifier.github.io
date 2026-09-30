@@ -1,30 +1,25 @@
-/* Load after styles.css. Compact, theme-aware website branding. */
+/* Fixed square badge; the supplied purple logo stays unchanged. */
 .side-brand .side-mark {
-  width: 28px;
-  height: 28px;
-  min-width: 28px;
-  flex: 0 0 28px;
   display: grid;
   place-items: center;
-  background: transparent;
-  border: 0;
-  padding: 0;
-  border-radius: 0;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  flex: 0 0 36px;
+  padding: 6px;
+  background: #f5f5f7;
+  border: 1px solid #cfd3dd;
+  border-radius: 6px;
   box-shadow: none;
   filter: none;
 }
 .side-brand .side-mark .brand-logo {
-  width: 28px;
-  height: 28px;
+  display: block;
+  width: 24px;
+  height: 24px;
+  max-width: 24px;
   object-fit: contain;
+  border: 0;
   border-radius: 0;
   box-shadow: none;
-}
-.side-mark .brand-logo-light { display: block; }
-.side-mark .brand-logo-dark { display: none; }
-:root[data-theme="dark"] .side-mark .brand-logo-light { display: none; }
-:root[data-theme="dark"] .side-mark .brand-logo-dark { display: block; }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .side-mark .brand-logo-light { display: none; }
-  :root:not([data-theme="light"]) .side-mark .brand-logo-dark { display: block; }
 }
