@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deal Qualifier v9.2
+  Galaxy Deal Qualifier v9.4
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -553,54 +553,50 @@
   <a id="cmp-gsm" href="#" target="_blank" rel="noopener">open on GSMArena</a>.</span></p>
 </section>
 
-<section id="panel-service" class="saleskit" hidden>
+<section id="panel-service" class="saleskit" data-svc="2" hidden>
   <h2>Repair or upgrade</h2>
-  <p class="sk-intro">Look up what Samsung charges to repair the customer&#8217;s device out of warranty, then see
-  what a new one costs here today and how far apart the two are. Repair prices are Samsung Australia&#8217;s own
-  estimates; upgrade prices come from the same engine as the quote.</p>
-  <div class="bld-grid">
-    <div class="bld-col">
-      <div class="card">
-        <p class="card-title">The device that needs repair</p>
-        <div class="field-grid even">
-          <div>
-            <label class="field-label" for="svc-cat">Category</label>
-            <select id="svc-cat"></select>
-          </div>
-          <div>
-            <label class="field-label" for="svc-series">Series</label>
-            <select id="svc-series"></select>
-          </div>
+  <p class="sk-intro">What Samsung charges to repair the customer&#8217;s device, beside what a new one costs here today.</p>
+  <div class="svc-layout">
+    <div class="card svc-repair">
+      <p class="card-title">Device in for repair</p>
+      <div class="svc-pickers">
+        <div>
+          <label class="field-label" for="svc-cat">Category</label>
+          <select id="svc-cat"></select>
         </div>
-        <label class="field-label" for="svc-model">Model</label>
-        <select id="svc-model"></select>
-        <span class="field-label" id="svc-issues-label">What&#8217;s wrong with it? <span class="svc-hint">Up to two</span></span>
-        <div id="svc-issues" class="svc-issues" role="group" aria-labelledby="svc-issues-label"></div>
-        <label class="field-label" for="svc-manual">Or a repair price already quoted <span class="svc-hint">Overrides the estimate</span></label>
-        <input type="number" id="svc-manual" min="0" step="1" inputmode="decimal" placeholder="e.g. 389" autocomplete="off" />
+        <div>
+          <label class="field-label" for="svc-series">Series</label>
+          <select id="svc-series"></select>
+        </div>
+        <div>
+          <label class="field-label" for="svc-model">Model</label>
+          <select id="svc-model"></select>
+        </div>
       </div>
-      <div class="card">
-        <p class="card-title">Repair estimate</p>
-        <div id="svc-estimate"></div>
-        <p class="svc-src">Estimates are from Samsung Australia&#8217;s
-        <a href="https://www.samsung.com/au/support/repair-cost/" target="_blank" rel="noopener">Repair Cost Estimator</a>,
-        captured <span id="svc-fetched"></span>, and include GST. They cover out-of-warranty repairs only. The final
-        price is set once an authorised Samsung technician has assessed the device, and a card surcharge of up
-        to 1.20% may apply.</p>
+      <span class="field-label" id="svc-issues-label">What&#8217;s wrong? <span class="svc-hint">Pick up to two</span></span>
+      <div id="svc-issues" class="svc-issues" role="group" aria-labelledby="svc-issues-label"></div>
+      <div id="svc-estimate" class="svc-estimate" aria-live="polite"></div>
+      <div class="svc-manual">
+        <label for="svc-manual">Already been quoted a price?</label>
+        <span class="svc-manual-field"><span aria-hidden="true">A$</span><input type="number" id="svc-manual" min="0" step="1" inputmode="decimal" placeholder="0" autocomplete="off" /></span>
       </div>
+      <p class="svc-src">Out-of-warranty estimates from Samsung Australia&#8217;s
+      <a href="https://www.samsung.com/au/support/repair-cost/" target="_blank" rel="noopener">Repair Cost Estimator</a>,
+      captured <span id="svc-fetched"></span>. The final price is set after a technician assesses the device;
+      a card surcharge of up to 1.20% may apply.</p>
     </div>
-    <div class="bld-col">
-      <div class="card">
+    <div class="card svc-upgrade">
+      <div class="svc-up-head">
         <p class="card-title">Upgrade instead</p>
         <div class="segmented" id="svc-modes" role="group" aria-label="Customer pricing type">
           <button type="button" data-mode="none" aria-pressed="true">Standard</button>
           <button type="button" data-mode="edu" aria-pressed="false">Education</button>
           <button type="button" data-mode="smb" aria-pressed="false">SMB</button>
         </div>
-        <div id="svc-groups" class="svc-groups" role="group" aria-label="Ranges to show"></div>
-        <div id="svc-summary" class="svc-summary" hidden></div>
-        <div id="svc-upgrades"></div>
       </div>
+      <div id="svc-groups" class="svc-groups" role="group" aria-label="Ranges to show"></div>
+      <div id="svc-summary" class="svc-summary" hidden></div>
+      <div id="svc-upgrades" class="svc-upgrades"></div>
     </div>
   </div>
 </section>
@@ -3888,8 +3884,10 @@
   // ---- offers ending soon ----
   // Hideable, the same way the ticket boxes are: it collapses to a single line rather than
   // vanishing, so it can always be brought back. Dismissal is remembered per offer, so an
-  // offer newly entering the 7-day window opens the strip again on its own.
+  // offer newly entering the window opens the strip again on its own.
   const EXPIRY_DISMISS_KEY = "galaxyExpiryDismissed";
+  // How far ahead the strip looks. Three days is close enough to act on; a week was mostly noise.
+  const EXPIRY_SOON_DAYS = 3;
 
   function expiryDismissed() {
     try { return JSON.parse(localStorage.getItem(EXPIRY_DISMISS_KEY) || "{}") || {}; }
@@ -3899,7 +3897,7 @@
   function endingSoon() {
     const out = [], seen = {};
     const add = (name, end) => {
-      if (!end || !urgencyFor(end)) return;
+      if (!end || !urgencyFor(end) || daysUntil(end) > EXPIRY_SOON_DAYS) return;
       const key = name + "|" + end;
       if (seen[key]) return;
       seen[key] = true;
@@ -3933,7 +3931,7 @@
 
     if (!unseen.length) {
       banner.className = "expiry-banner expiry-mini";
-      banner.innerHTML = `<span class="ex-text">${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within 7 days</span>`
+      banner.innerHTML = `<span class="ex-text">${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within ${EXPIRY_SOON_DAYS} days</span>`
         + `<button type="button" id="expiry-show">Show them</button>`;
       banner.hidden = false;
       document.getElementById("expiry-show").addEventListener("click", () => setExpiryHidden(false));
@@ -3941,7 +3939,7 @@
     }
 
     banner.className = "expiry-banner";
-    banner.innerHTML = `<div class="ex-head"><strong>${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within 7 days</strong>`
+    banner.innerHTML = `<div class="ex-head"><strong>${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within ${EXPIRY_SOON_DAYS} days</strong>`
       + `<button type="button" id="expiry-hide">Hide</button></div>`
       + `<div class="expiry-list">` + soon.map(x =>
           `<span class="expiry-item">${escapeHtml(x.name)}${urgencyBadge(x.end)}</span>`).join("") + `</div>`;
@@ -5201,6 +5199,18 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "9.4", d: "1 Oct 2026", t: "A tidier Service page",
+      items: [
+        "<strong>The repair price now sits right under the faults you pick</strong>, in one card, instead of in a separate box further down the page. That card stays in view while you scroll the upgrades.",
+        "<strong>Faults are compact buttons</strong> \u2014 Display, Battery, Charge Port \u2014 each with its price, two to a row. Where Samsung offers a repair or a replacement, the two sit side by side as a switch.",
+        "<strong>Each upgrade is one clean line</strong>: the device, its storage, today\u2019s price with how much more or less it is than the repair underneath, and a Quote button.",
+        "Nothing about the prices or how they are worked out has changed."
+      ] },
+    { v: "9.3", d: "1 Oct 2026", t: "The ending-soon strip looks three days ahead",
+      items: [
+        "<strong>The amber strip at the top now lists offers ending within 3 days</strong>, down from 7, so it only shows what needs acting on now. The \u201cends in 5 days\u201d tags beside individual offers are unchanged.",
+        "The sidebar has a new purple logo and a single purple accent in place of the colour picker."
+      ] },
     { v: "9.2", d: "1 Oct 2026", t: "Compare fills itself in",
       items: [
         "<strong>Compare now opens on what you\u2019re already working with.</strong> The device you\u2019ve picked on the Deal Qualifier, with its storage, goes into <strong>Device 1</strong>, and the device you\u2019ve picked for repair on the Service page goes into <strong>Device 2</strong> \u2014 so a customer\u2019s S23 and the S26 they\u2019re looking at are side by side without choosing either again.",
@@ -5811,6 +5821,8 @@
   };
   const svc = { mode: "none", picked: [], option: 0, groups: null, variants: {} };
   const svcEl = id => document.getElementById("svc-" + id);
+  // Samsung's issue names carry a long qualifier that every screen issue shares; the short form fits a button.
+  const svcIssueName = n => String(n).replace(/\s*\(Broken \/ Colour Inaccurate\)/, "").replace(/ Issues?$/, "");
 
   function svcProduct() { return REPAIR.products[Number(svcEl("model").value)] || null; }
 
@@ -5837,7 +5849,7 @@
     const opts = svcOptions();
     if (!opts.length) return null;
     const o = opts[Math.min(svc.option, opts.length - 1)];
-    return { total: o.total, manual: false, type: o.type };
+    return { total: o.total, manual: false, type: o.type, parts: o.parts };
   }
 
   function svcFillSeries() {
@@ -5878,44 +5890,46 @@
   function svcRenderIssues() {
     const p = svcProduct();
     const box = svcEl("issues");
-    if (!p) { box.innerHTML = `<p class="svc-empty">Pick a model to see its repairs.</p>`; return; }
+    if (!p) { box.innerHTML = ""; return; }
     const full = svc.picked.length >= 2;
     box.innerHTML = p.i.map((iss, k) => {
       const on = svc.picked.indexOf(k) !== -1;
       const off = full && !on;
       const prices = iss[1].map(o => o[1]);
-      const lo = Math.min.apply(null, prices), hi = Math.max.apply(null, prices);
-      return `<label class="svc-issue${on ? " on" : ""}${off ? " off" : ""}">`
+      const lo = Math.min.apply(null, prices);
+      const full_name = REPAIR.issues[iss[0]];
+      return `<label class="svc-issue${on ? " on" : ""}${off ? " off" : ""}" title="${escapeHtml(full_name)}">`
         + `<input type="checkbox" data-issue="${k}"${on ? " checked" : ""}${off ? " disabled" : ""} />`
-        + `<span class="svc-issue-name">${escapeHtml(REPAIR.issues[iss[0]])}</span>`
-        + `<span class="svc-issue-price">${lo === hi ? fmt(lo) : fmt(lo) + " – " + fmt(hi)}</span></label>`;
+        + `<span class="svc-issue-name">${escapeHtml(svcIssueName(full_name))}</span>`
+        + `<span class="svc-issue-price">${prices.length > 1 ? "from " : ""}${fmt(lo)}</span></label>`;
     }).join("");
   }
 
   function svcRenderEstimate() {
     const out = svcEl("estimate");
-    const p = svcProduct();
     const cost = svcRepairCost();
     const opts = svcOptions();
     if (!cost) {
-      out.innerHTML = `<p class="svc-empty">Tick what is wrong with the device, or enter a price the customer has already been quoted.</p>`;
+      out.innerHTML = `<p class="svc-empty">Pick what&#8217;s wrong to see the repair price.</p>`;
       return;
     }
     let html = "";
+    let sub;
     if (cost.manual) {
-      html += `<div class="bld-line bld-rrp"><span>Price already quoted</span><span class="la">${fmt(cost.total)}</span></div>`;
+      sub = "Price the customer was quoted";
     } else {
-      const names = svc.picked.map(k => REPAIR.issues[p.i[k][0]]);
-      html += `<div class="bld-head">${escapeHtml(p.n)}</div>`;
-      html += `<div class="bld-sub">${escapeHtml(names.join(" + "))}</div>`;
       if (opts.length > 1) {
-        html += opts.map((o, k) => `<label class="svc-opt"><input type="radio" name="svc-option" data-option="${k}"${k === Math.min(svc.option, opts.length - 1) ? " checked" : ""} />`
-          + `<span class="svc-opt-name">${escapeHtml(o.type)}</span><span class="svc-opt-price">${fmt(o.total)}</span></label>`).join("");
-      } else {
-        html += (opts[0].parts || opts).map(o => `<div class="bld-line"><span>${escapeHtml(o.type)}</span><span>${fmt(o.total)}</span></div>`).join("");
+        const at = Math.min(svc.option, opts.length - 1);
+        html += `<div class="svc-choice"><div class="segmented" role="group" aria-label="Repair option">`
+          + opts.map((o, k) => `<button type="button" data-option="${k}" aria-pressed="${k === at ? "true" : "false"}">${escapeHtml(o.type)} · ${fmt(o.total)}</button>`).join("")
+          + `</div></div>`;
       }
+      sub = cost.parts
+        ? cost.parts.map(o => escapeHtml(o.type) + " " + fmt(o.total)).join(" + ")
+        : escapeHtml(cost.type) + " · incl. GST";
     }
-    html += `<div class="bld-total"><span>Repair, incl. GST</span><span class="la">${fmt(cost.total)}</span></div>`;
+    html += `<div class="svc-total"><span><span class="svc-total-label">${cost.manual ? "Repair" : "Repair estimate"}</span>`
+      + `<span class="svc-total-sub">${sub}</span></span><span class="svc-total-amount">${fmt(cost.total)}</span></div>`;
     out.innerHTML = html;
   }
 
@@ -5950,10 +5964,12 @@
     if (cost && rows.length) {
       const cheapest = rows[0];
       const diff = Math.round((cheapest.price - cost.total) * 100) / 100;
+      const name = `<strong>${escapeHtml(cheapest.m.n)} ${escapeHtml(cheapest.variant.v)}</strong>`;
       summary.hidden = false;
       summary.innerHTML = diff > 0
-        ? `Repairing costs <strong>${fmt(cost.total)}</strong>. The lowest-priced upgrade shown, a new <strong>${escapeHtml(cheapest.m.n)} ${escapeHtml(cheapest.variant.v)}</strong>, is <strong>${fmt(cheapest.price)}</strong> &mdash; <strong>${fmt(diff)}</strong> more than the repair.`
-        : `Repairing costs <strong>${fmt(cost.total)}</strong>. A new <strong>${escapeHtml(cheapest.m.n)} ${escapeHtml(cheapest.variant.v)}</strong> is <strong>${fmt(cheapest.price)}</strong> &mdash; ${diff === 0 ? "the same as" : "<strong>" + fmt(-diff) + "</strong> less than"} the repair.`;
+        ? `The lowest-priced upgrade shown, ${name}, is <strong>${fmt(diff)} more</strong> than the ${fmt(cost.total)} repair.`
+        : diff === 0 ? `The lowest-priced upgrade shown, ${name}, costs <strong>the same</strong> as the ${fmt(cost.total)} repair.`
+        : `A new ${name} is <strong>${fmt(-diff)} less</strong> than the ${fmt(cost.total)} repair.`;
     } else {
       summary.hidden = true;
     }
@@ -5963,18 +5979,17 @@
     out.innerHTML = rows.map(r => {
       const diff = cost ? Math.round((r.price - cost.total) * 100) / 100 : null;
       const diffHtml = diff === null ? ""
-        : diff > 0 ? `<span class="svc-row-diff">${fmt(diff)} more than repairing</span>`
-        : diff === 0 ? `<span class="svc-row-diff less">Same as repairing</span>`
-        : `<span class="svc-row-diff less">${fmt(-diff)} less than repairing</span>`;
-      const select = r.m.variants.length > 1
+        : diff > 0 ? `<span class="svc-row-diff">${fmt(diff)} more than repair</span>`
+        : diff === 0 ? `<span class="svc-row-diff less">Same as repair</span>`
+        : `<span class="svc-row-diff less">${fmt(-diff)} less than repair</span>`;
+      const variant = r.m.variants.length > 1
         ? `<select data-variant="${r.m.m}" aria-label="${escapeHtml(r.m.n)} storage or variant">${r.m.variants.map(x => `<option${x.v === r.variant.v ? " selected" : ""}>${escapeHtml(x.v)}</option>`).join("")}</select>`
-        : `<span class="bld-sub" style="margin:0;">${escapeHtml(r.variant.v)}</span>`;
+        : `<span>${escapeHtml(r.variant.v)}</span>`;
       return `<div class="svc-row">`
-        + `<span class="svc-row-name">${escapeHtml(r.m.n)}</span>`
-        + `<span class="svc-row-price">${r.price < r.rrp ? "<s>" + fmt(r.rrp) + "</s>" : ""}${fmt(r.price)}</span>`
-        + `<span class="svc-row-pick">${select}<button type="button" class="svc-quote" data-quote="${r.m.m}">Start a quote</button></span>`
-        + (diffHtml || "<span></span>")
-        + (r.names.length ? `<span class="svc-row-offer">${escapeHtml(r.names.join(" · "))}</span>` : "")
+        + `<span class="svc-row-name">${escapeHtml(r.m.n)}${r.names.length ? `<span class="svc-row-offer">${escapeHtml(r.names.join(" · "))}</span>` : ""}</span>`
+        + `<span class="svc-row-variant">${variant}</span>`
+        + `<span class="svc-row-money"><span class="svc-row-price">${r.price < r.rrp ? "<s>" + fmt(r.rrp) + "</s>" : ""}${fmt(r.price)}</span>${diffHtml}</span>`
+        + `<button type="button" class="svc-quote" data-quote="${r.m.m}" aria-label="Start a quote for ${escapeHtml(r.m.n)}">Quote</button>`
         + `</div>`;
     }).join("");
   }
@@ -5998,9 +6013,10 @@
       svc.option = 0;
       svcRender();
     });
-    svcEl("estimate").addEventListener("change", e => {
-      if (e.target.dataset.option == null) return;
-      svc.option = Number(e.target.dataset.option);
+    svcEl("estimate").addEventListener("click", e => {
+      const b = e.target.closest("button[data-option]");
+      if (!b) return;
+      svc.option = Number(b.dataset.option);
       svcRenderEstimate(); svcRenderUpgrades();
     });
     svcEl("modes").addEventListener("click", e => {
