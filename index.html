@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deal Qualifier v9.4
+  Galaxy Deal Qualifier v9.5
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -17,7 +17,7 @@
 <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="favicon.ico?v=final-4" />
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=final-4" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=final-4" />
-<link rel="stylesheet" href="styles.css?v=9.4b" />
+<link rel="stylesheet" href="styles.css?v=9.5" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=dark-badge-5" />
 <script>
@@ -1046,13 +1046,16 @@
     const today = Date.UTC(NOW.getFullYear(), NOW.getMonth(), NOW.getDate());
     return Math.round((end - today) / 86400000);
   }
+  // How far ahead an offer counts as ending soon, for the strip and for the tags beside offers.
+  // Three days is close enough to act on; a week was mostly noise.
+  const EXPIRY_SOON_DAYS = 3;
   function urgencyFor(dateStr) {
     const d = daysUntil(dateStr);
     if (d === null) return null;
     if (d < 0) return { cls: "expired", text: "expired" };
     if (d === 0) return { cls: "today", text: "ends today" };
     if (d === 1) return { cls: "today", text: "ends tomorrow" };
-    if (d <= 7) return { cls: "soon", text: "ends in " + d + " days" };
+    if (d <= EXPIRY_SOON_DAYS) return { cls: "soon", text: "ends in " + d + " days" };
     return null;
   }
   function urgencyBadge(dateStr) {
@@ -3886,8 +3889,6 @@
   // vanishing, so it can always be brought back. Dismissal is remembered per offer, so an
   // offer newly entering the window opens the strip again on its own.
   const EXPIRY_DISMISS_KEY = "galaxyExpiryDismissed";
-  // How far ahead the strip looks. Three days is close enough to act on; a week was mostly noise.
-  const EXPIRY_SOON_DAYS = 3;
 
   function expiryDismissed() {
     try { return JSON.parse(localStorage.getItem(EXPIRY_DISMISS_KEY) || "{}") || {}; }
@@ -3897,7 +3898,7 @@
   function endingSoon() {
     const out = [], seen = {};
     const add = (name, end) => {
-      if (!end || !urgencyFor(end) || daysUntil(end) > EXPIRY_SOON_DAYS) return;
+      if (!end || !urgencyFor(end)) return;
       const key = name + "|" + end;
       if (seen[key]) return;
       seen[key] = true;
@@ -5199,6 +5200,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "9.5", d: "1 Oct 2026", t: "\u201cEnds in\u201d tags look three days ahead too",
+      items: [
+        "<strong>The \u201cends in 3 days\u201d tags beside individual offers now start three days out</strong>, matching the amber strip at the top. An offer with more than three days to run no longer carries a tag; \u201cends today\u201d and \u201cends tomorrow\u201d are unchanged.",
+        "The sidebar logo has been adjusted for dark mode."
+      ] },
     { v: "9.4", d: "1 Oct 2026", t: "A tidier Service page",
       items: [
         "<strong>The repair price now sits right under the faults you pick</strong>, in one card, instead of in a separate box further down the page. That card stays in view while you scroll the upgrades.",
