@@ -1541,3 +1541,54 @@ body.print-view .deal-stage-heading { display: none; }
     .svc-quote { grid-row: 2; grid-column: 2; }
   }
   /* ---- end Service ---- */
+
+  /* ---- Price check ---- */
+  .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; margin-bottom: 16px; }
+  .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }
+  .pc-pickers .field-label { margin-top: 0; }
+  .pc-pickers .segmented { margin: 0; }
+  .pc-ours { text-align: right; min-width: 200px; }
+  .pc-ours-label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-dim); }
+  .pc-ours-amount { display: block; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .pc-ours-sub { display: block; font-size: 12px; color: var(--good); }
+  .pc-ours-sub.plain { color: var(--ink-faint); }
+  .pc-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 16px; align-items: start; }
+  .pc-row { display: grid; grid-template-columns: minmax(0, 1fr) 128px minmax(150px, auto); gap: 4px 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .pc-row:last-child { border-bottom: 0; }
+  .pc-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
+  .pc-note { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; color: var(--ink-faint); }
+  .pc-note a { color: inherit; }
+  .pc-note.warn { color: var(--warn); }
+  .pc-money { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-faint); font-size: 13px; }
+  .pc-money input { width: 100%; min-width: 0; min-height: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-diff { text-align: right; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--ink-faint); white-space: nowrap; }
+  .pc-diff.win { color: var(--good); font-weight: 600; }
+  .pc-diff.lose { color: var(--danger); font-weight: 600; }
+  .pc-term, .pc-sim { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-dim); }
+  .pc-term select { width: auto; min-height: 34px; font-size: 13px; }
+  .pc-sim { justify-content: space-between; margin-top: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+  .pc-sim input { width: 104px; min-height: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-telco { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .pc-telco:last-child { border-bottom: 0; padding-bottom: 0; }
+  .pc-telco-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+  .pc-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 12px; margin-top: 8px; }
+  .pc-fields .field-label { margin-top: 0; font-size: 12px; }
+  .pc-fields select, .pc-fields input { min-height: 36px; font-size: 13px; }
+  .pc-plan { display: grid; grid-template-columns: minmax(0, 1fr) 76px; gap: 6px; }
+  .pc-plan input, .pc-fields .pc-money input { text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-sums { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 10px; padding: 10px 12px; border-radius: var(--r); background: var(--surface-2); border: 1px solid var(--line); }
+  .pc-sum-label { display: block; font-size: 12px; color: var(--ink-faint); }
+  .pc-sum-value { display: block; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pc-sum-value.win { color: var(--good); }
+  .pc-sum-value.lose { color: var(--danger); }
+  .pc-sum-note { display: block; font-size: 12px; color: var(--ink-faint); }
+  @media (max-width: 1180px) {
+    .pc-grid, .pc-device { grid-template-columns: minmax(0, 1fr); }
+    .pc-ours { text-align: left; }
+  }
+  @media (max-width: 640px) {
+    .pc-pickers, .pc-fields, .pc-sums { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .pc-row { grid-template-columns: minmax(0, 1fr) 120px; }
+    .pc-diff { grid-column: 1 / -1; text-align: left; }
+  }
+  /* ---- end Price check ---- */
