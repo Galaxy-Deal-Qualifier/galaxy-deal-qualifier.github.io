@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deal Qualifier v9.1
+  Galaxy Deal Qualifier v9.2
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -1948,6 +1948,52 @@
     if (!mo) return null;
     const variant = mo.variants.find(v => v.v === vs.value) || mo.variants[0];
     return { m: mo.m, n: mo.n, v: variant.v, p: variant.p };
+  }
+
+  // ---- Compare autofill ----
+  // Compare opens on what the consultant is already working with: the device being quoted goes in
+  // Device 1 and the device in for repair goes in Device 2. Each is filled once per change at its
+  // source, so a pick made by hand on the Compare page stays until the source moves again. The
+  // devices the pages open on by default are not a choice anybody made, so they are not copied.
+  const cmpAuto = { buy: null, repair: null, repairTouched: false };
+  const cmpNameKey = n => String(n).toLowerCase()
+    .replace(/galaxy|bluetooth|wi-?fi|lte|\b[45]g\b|\b\d\dmm\b|\(\d{4}\)/g, "").replace(/[^a-z0-9]/g, "");
+  const cmpBuyKey = () => deviceSelect.value + "|" + variantSelect.value;
+  setTimeout(() => { cmpAuto.buy = cmpBuyKey(); }, 0);
+  document.addEventListener("change", e => {
+    const t = e.target;
+    if (t && (t.id === "svc-cat" || t.id === "svc-series" || t.id === "svc-model" || (t.closest && t.closest("#svc-issues")))) cmpAuto.repairTouched = true;
+  });
+
+  function cmpSetSlot(slot, modelValue, variant) {
+    const ms = document.getElementById("cmp-model-" + slot);
+    const vs = document.getElementById("cmp-variant-" + slot);
+    const search = document.getElementById("cmp-search-" + slot);
+    if (!ms) return false;
+    if (search && search.value) { search.value = ""; ms.innerHTML = cmpOptionsHtml(slot, ""); }
+    if (!Array.prototype.some.call(ms.options, o => o.value === modelValue)) return false;
+    ms.value = modelValue;
+    cmpFillVariants(slot);
+    if (variant && Array.prototype.some.call(vs.options, o => o.value === variant)) vs.value = variant;
+    return true;
+  }
+
+  // The repair list and the Compare list name devices differently ("Tab S9 FE Wifi" against
+  // "Galaxy Tab S9 FE"), so they are matched on the name with the radio and size words removed.
+  function cmpRepairMatch() {
+    if (!cmpAuto.repairTouched || typeof svcProduct !== "function") return null;
+    const p = svcProduct();
+    if (!p) return null;
+    const key = cmpNameKey(p.n);
+    const row = cmpCatalogue().find(r => cmpNameKey(r.n) === key);
+    return row ? row.v : null;
+  }
+
+  function cmpAutofill() {
+    const buy = cmpBuyKey();
+    if (cmpAuto.buy !== buy && cmpSetSlot("a", deviceSelect.value, variantSelect.value)) cmpAuto.buy = buy;
+    const repair = cmpRepairMatch();
+    if (repair && cmpAuto.repair !== repair && cmpSetSlot("b", repair)) cmpAuto.repair = repair;
   }
 
   // Row labels carry a short plain-English gloss in the space beside them, so the meaning is
@@ -5159,6 +5205,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "9.2", d: "1 Oct 2026", t: "Compare fills itself in",
+      items: [
+        "<strong>Compare now opens on what you\u2019re already working with.</strong> The device you\u2019ve picked on the Deal Qualifier, with its storage, goes into <strong>Device 1</strong>, and the device you\u2019ve picked for repair on the Service page goes into <strong>Device 2</strong> \u2014 so a customer\u2019s S23 and the S26 they\u2019re looking at are side by side without choosing either again.",
+        "It only fills in when you change the device at its source, so anything you pick by hand on the Compare page stays put. Compare holds specifications for most phones, tablets and watches back to 2021; a repair device it doesn\u2019t know (buds, the Ring, some older models) leaves Device 2 as it was."
+      ] },
     { v: "9.1", d: "1 Oct 2026", t: "Service gets its own section, and a new logo",
       items: [
         "<strong>Repair or upgrade has its own Service section in the sidebar</strong>, instead of sitting under Store tools.",
@@ -6014,7 +6065,7 @@
         tabs.forEach(x => x.setAttribute("aria-selected", String(x === t)));
         Object.keys(panels).forEach(k => { panels[k].hidden = k !== t.dataset.panel; });
         if (t.dataset.panel === "whatsnew") markWhatsNewSeen();
-        if (t.dataset.panel === "compare") { cmpBuildPickers(); renderDeviceCompare(); }
+        if (t.dataset.panel === "compare") { cmpBuildPickers(); cmpAutofill(); renderDeviceCompare(); }
         if (t.dataset.panel === "builder") { bldBuild(); bldRenderBreakdown(); }
         if (t.dataset.panel === "service") svcBuild();
         window.scrollTo(0, 0);
