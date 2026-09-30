@@ -24,12 +24,12 @@ html body .side-brand .side-mark .brand-logo {
   box-shadow: none;
 }
 html[data-theme="dark"] body .side-brand .side-mark {
-  background: #1F2129;
+  background: #34384D;
   border-color: #303044;
 }
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) body .side-brand .side-mark {
-    background: #0c0e16;
+    background: #34384D;
     border-color: #303044;
   }
 }
