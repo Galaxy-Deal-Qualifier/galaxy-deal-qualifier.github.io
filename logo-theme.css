@@ -1,4 +1,4 @@
-/* Final brand mark: square badge, small centred original logo. */
+/* Square brand badge with a small centred logo. */
 .side-brand .side-mark {
   display: grid;
   place-items: center;
@@ -22,4 +22,16 @@
   border: 0;
   border-radius: 0;
   box-shadow: none;
+}
+/* Manual dark mode. */
+:root[data-theme="dark"] .side-brand .side-mark {
+  background: #0c0e16;
+  border-color: #303044;
+}
+/* Automatic dark mode, unless light mode was explicitly selected. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .side-brand .side-mark {
+    background: #0c0e16;
+    border-color: #303044;
+  }
 }
