@@ -1496,7 +1496,7 @@ body.print-view .deal-stage-heading { display: none; }
   .svc-empty { margin: 0; padding: 14px; border: 1px dashed var(--line-strong); border-radius: var(--r); color: var(--ink-faint); font-size: 13px; text-align: center; }
   .svc-choice { display: flex; margin-bottom: 10px; }
   .svc-choice .segmented { width: 100%; margin: 0; }
-  .svc-choice .segmented button { flex: 1 1 0; }
+  .svc-choice .segmented button { flex: 1 1 0; min-width: 0; padding: 6px 8px; font-size: 12px; line-height: 1.25; white-space: normal; }
   .svc-total { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; padding: 14px 16px; border-radius: var(--r); background: var(--surface-2); border: 1px solid var(--line); }
   .svc-total-label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-dim); }
   .svc-total-sub { display: block; margin-top: 2px; font-size: 12px; color: var(--ink-faint); line-height: 1.4; }
