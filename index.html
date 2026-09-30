@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deal Qualifier v9.2
+  Galaxy Deal Qualifier v9.3
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -3888,8 +3888,10 @@
   // ---- offers ending soon ----
   // Hideable, the same way the ticket boxes are: it collapses to a single line rather than
   // vanishing, so it can always be brought back. Dismissal is remembered per offer, so an
-  // offer newly entering the 7-day window opens the strip again on its own.
+  // offer newly entering the window opens the strip again on its own.
   const EXPIRY_DISMISS_KEY = "galaxyExpiryDismissed";
+  // How far ahead the strip looks. Three days is close enough to act on; a week was mostly noise.
+  const EXPIRY_SOON_DAYS = 3;
 
   function expiryDismissed() {
     try { return JSON.parse(localStorage.getItem(EXPIRY_DISMISS_KEY) || "{}") || {}; }
@@ -3899,7 +3901,7 @@
   function endingSoon() {
     const out = [], seen = {};
     const add = (name, end) => {
-      if (!end || !urgencyFor(end)) return;
+      if (!end || !urgencyFor(end) || daysUntil(end) > EXPIRY_SOON_DAYS) return;
       const key = name + "|" + end;
       if (seen[key]) return;
       seen[key] = true;
@@ -3933,7 +3935,7 @@
 
     if (!unseen.length) {
       banner.className = "expiry-banner expiry-mini";
-      banner.innerHTML = `<span class="ex-text">${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within 7 days</span>`
+      banner.innerHTML = `<span class="ex-text">${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within ${EXPIRY_SOON_DAYS} days</span>`
         + `<button type="button" id="expiry-show">Show them</button>`;
       banner.hidden = false;
       document.getElementById("expiry-show").addEventListener("click", () => setExpiryHidden(false));
@@ -3941,7 +3943,7 @@
     }
 
     banner.className = "expiry-banner";
-    banner.innerHTML = `<div class="ex-head"><strong>${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within 7 days</strong>`
+    banner.innerHTML = `<div class="ex-head"><strong>${icoHtml("clock", "banner-ico")}${soon.length} offer${soon.length === 1 ? "" : "s"} ending within ${EXPIRY_SOON_DAYS} days</strong>`
       + `<button type="button" id="expiry-hide">Hide</button></div>`
       + `<div class="expiry-list">` + soon.map(x =>
           `<span class="expiry-item">${escapeHtml(x.name)}${urgencyBadge(x.end)}</span>`).join("") + `</div>`;
@@ -5201,6 +5203,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "9.3", d: "1 Oct 2026", t: "The ending-soon strip looks three days ahead",
+      items: [
+        "<strong>The amber strip at the top now lists offers ending within 3 days</strong>, down from 7, so it only shows what needs acting on now. The \u201cends in 5 days\u201d tags beside individual offers are unchanged.",
+        "The sidebar has a new purple logo and a single purple accent in place of the colour picker."
+      ] },
     { v: "9.2", d: "1 Oct 2026", t: "Compare fills itself in",
       items: [
         "<strong>Compare now opens on what you\u2019re already working with.</strong> The device you\u2019ve picked on the Deal Qualifier, with its storage, goes into <strong>Device 1</strong>, and the device you\u2019ve picked for repair on the Service page goes into <strong>Device 2</strong> \u2014 so a customer\u2019s S23 and the S26 they\u2019re looking at are side by side without choosing either again.",
