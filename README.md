@@ -8,76 +8,57 @@ Created by Isaiah Graham & Harsha Parthiban. © 2026 Isaiah Graham & Harsha Part
 
 ## Files
 
-- index.html — page content, device data and application logic.
-- styles.css — styling, layout, colours and responsive behaviour.
+- index.html — website content, catalogue, offer data and application logic.
+- styles.css — your supplied website styling.
+- logo-theme.css — switches the sidebar logo with the website theme.
+- favicon-theme.js — switches the browser tab logo with the website theme.
+- logo-light.svg — navy logo for light mode.
+- logo-dark.svg — white logo for dark mode.
+- .nojekyll — serves the files directly on GitHub Pages.
 
-Keep both files in the same folder.
+Keep all files together. No build step or package installation is required.
 
-## Getting started
+## Publish on GitHub Pages
 
-1. Open index.html in a web browser.
-2. Select your store.
-3. Choose a device, storage option and colour.
-4. Select Standard, Education or SMB pricing.
-5. Review eligible offers and enable applicable options.
-6. Add the device to the quote.
-7. Review the total, then print or copy the quote.
+Upload the contents of this folder to the folder your GitHub Pages site publishes from. Replace the existing index.html and styles.css. Commit the files and wait for the deployment to finish, then refresh the published website. If the old tab icon remains, close and reopen the tab.
 
-## Features
+## Use
 
-- Device pricing for Standard, Education and SMB customers.
-- Eligible offer calculations and stacking rules.
-- Trade-in, New Galaxy Club and ECO bundles.
-- Payment plan estimates.
-- Device comparison and Deal Builder.
-- Store selection and stock-file uploads.
-- Printable customer quotes.
-- Light and dark themes.
-- Release history and feedback.
+Select your store, choose a device and variant, choose Standard, Education or SMB pricing, review offers, enable applicable trade-in or bundle options, add items to the quote, and print or copy it.
 
-Offer availability depends on eligibility rules and dates. Stock availability depends on the store data loaded.
+## Edit
 
-## Editing the appearance
+Edit styles.css for appearance and index.html for content, offers and functionality. Preserve existing element IDs and data attributes. Logo switching supports manual light/dark selection and the system theme.
 
-Edit styles.css to change fonts, colours, spacing, controls and layout.
+## Automatic Sales Kit updates
 
-The stylesheet includes responsive layouts, theme settings and print formatting. Later rules can override earlier rules, so check the refinement sections near the end when changing an existing style.
+The GitHub workflow `.github/workflows/saleskit-sync.yml` checks all nine public Sales Kit category pages every six hours, on changes pushed to main, and on manual runs. It regenerates supported offers and publishes the website through GitHub Pages. GitHub schedules may run later than scheduled.
 
-Some device colours and interactive positioning are controlled by JavaScript in index.html.
+Education rate, expiry and bulletin updates are automatic while the reviewed device coverage and stacking rules stay the same. Straightforward retail SAVE dollar/percentage offers are imported when their model, start/end dates, amount and Education/SMB exclusions are explicit. Historical changelog entries are ignored. Unrecognised mappings and changes to complex sections produce visible review warnings. Trade-in, MBO, voucher, loyalty, accessories and SMB rules require a reviewed update when their coverage or conditions change.
 
-## Editing content and functionality
+The current Education offers were verified against bulletin A260006390: 20% off, ending 2 November 2026. Offer dates are inclusive and read as Australian day/month/year dates.
 
-Edit index.html to change page text, device data, offer rules or application behaviour.
+The updater fails without deploying if a source cannot be fetched or core Education validation fails. The previous published site stays online. The website shows the actual check date and warns when the check is older than 24 hours. Offers still expire normally; the updater never extends an offer by guessing. Reload the site to use a newly deployed offer set.
 
-Preserve existing element IDs and data attributes when changing the layout, as the application uses them to connect controls to its logic.
+The workflow publishes updated files without committing them back to the repository. A successful run's website artifact and saleskit-sync-status.json record that run's result. scripts/saleskit-baseline.json contains the reviewed Education coverage and source fingerprints; update it only after reviewing changed source rules.
 
-## Stock data
+## Enable the workflow on GitHub
 
-Use Store & Stock to load a supported stock export. Confirm the selected store and the age of the data before relying on availability figures.
+1. Upload all project files to the repository root on main, including the hidden .github directory and the scripts directory. Keep the workflow at .github/workflows/saleskit-sync.yml.
+2. Open repository Settings → Pages and set Source to GitHub Actions.
+3. Open Actions → Sync Sales Kit and publish website → Run workflow.
+4. Confirm the sync, tests and deployment all succeed. Check the published site's check date and Education pricing.
 
-Some preferences and state are saved in the browser. Settings may differ between browsers and devices.
+The generated package targets the root/main layout of https://github.com/Galaxy-Deal-Qualifier/galaxy-deal-qualifier.github.io. If another workflow already deploys Pages, replace or disable it to avoid competing deployments. No credentials for the public Sales Kit or third-party proxy are required. Repository restrictions may require an administrator to enable Pages deployment permissions.
+
+## Validate locally
+
+Run `python3 -m unittest discover -s scripts -p 'test_*.py'`, then `python3 scripts/sync_saleskit.py`, then `node scripts/test_pricing.cjs`. Python 3.9+ and Node are used by the update/tests; visitors need only a browser. All parser dependencies are from the Python standard library.
 
 ## Release history
 
-The first version was released on 12 August 2026 and provided basic device pricing only. Later releases added offers, quoting, trade-ins, bundles, stock tools, comparisons and interface improvements.
+Version 1.0 was released on 12 August 2026 with basic device pricing only. See What's New in the website for later releases.
 
-The What’s New section contains the release history.
+## Validation
 
-## Checking changes
-
-After editing, refresh the browser and check:
-
-- Device selection and pricing.
-- Offer eligibility and quote totals.
-- Trade-in and bundle options.
-- Payment plan estimates.
-- Navigation between sections.
-- Light and dark themes.
-- Narrow-screen layout.
-- Printed quote formatting.
-
-## Credits
-
-Created by Isaiah Graham & Harsha Parthiban.
-
-© 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
+Check pricing, eligibility, trade-in, bundles, printing, narrow-screen layout and both themes after changes. This package is the website with theme-aware logos; it does not include PWA installation or offline caching.

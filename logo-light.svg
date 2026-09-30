@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+<title>Galaxy Deal Qualifier</title>
+<path fill="#18243a" fill-rule="evenodd" d="M10 6h22a7 7 0 0 1 5 2l23 23a7 7 0 0 1 0 10L41 60a7 7 0 0 1-10 0L8 37a7 7 0 0 1-2-5V10a4 4 0 0 1 4-4Zm9 8a5 5 0 1 0 0 10 5 5 0 0 0 0-10Z"/>
+<path d="m24 37 9 9 19-20" stroke="#18243a" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="m24 37 9 9 19-20" stroke="#36c99a" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
