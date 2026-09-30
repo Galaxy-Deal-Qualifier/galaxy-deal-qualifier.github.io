@@ -5882,7 +5882,7 @@
         html += (opts[0].parts || opts).map(o => `<div class="bld-line"><span>${escapeHtml(o.type)}</span><span>${fmt(o.total)}</span></div>`).join("");
       }
     }
-    html += `<div class="bld-total"><span>Repair</span><span class="la">${fmt(cost.total)}</span></div>`;
+    html += `<div class="bld-total"><span>Repair, incl. GST</span><span class="la">${fmt(cost.total)}</span></div>`;
     out.innerHTML = html;
   }
 
@@ -5919,7 +5919,7 @@
       const diff = Math.round((cheapest.price - cost.total) * 100) / 100;
       summary.hidden = false;
       summary.innerHTML = diff > 0
-        ? `Repairing costs <strong>${fmt(cost.total)}</strong>. The nearest upgrade, a new <strong>${escapeHtml(cheapest.m.n)} ${escapeHtml(cheapest.variant.v)}</strong>, is <strong>${fmt(cheapest.price)}</strong> &mdash; <strong>${fmt(diff)}</strong> more than the repair.`
+        ? `Repairing costs <strong>${fmt(cost.total)}</strong>. The lowest-priced upgrade shown, a new <strong>${escapeHtml(cheapest.m.n)} ${escapeHtml(cheapest.variant.v)}</strong>, is <strong>${fmt(cheapest.price)}</strong> &mdash; <strong>${fmt(diff)}</strong> more than the repair.`
         : `Repairing costs <strong>${fmt(cost.total)}</strong>. A new <strong>${escapeHtml(cheapest.m.n)} ${escapeHtml(cheapest.variant.v)}</strong> is <strong>${fmt(cheapest.price)}</strong> &mdash; ${diff === 0 ? "the same as" : "<strong>" + fmt(-diff) + "</strong> less than"} the repair.`;
     } else {
       summary.hidden = true;
