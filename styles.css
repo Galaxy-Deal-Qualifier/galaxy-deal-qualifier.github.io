@@ -1475,73 +1475,7 @@ body.print-view .deal-stage-heading { display: none; }
 }
   
 
-  /* ---- Price check ---- */
-  .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; }
-  .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }
-  .pc-pickers .field-label { margin-top: 0; }
-  .pc-pickers .segmented { margin: 0; }
-  .pc-ours { text-align: right; min-width: 220px; }
-  .pc-ours-label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-dim); }
-  .pc-ours-amount { display: block; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
-  .pc-ours-sub { display: block; font-size: 12px; color: var(--good); }
-  .pc-ours-sub.plain { color: var(--ink-faint); }
-  .pc-section-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin: 28px 0 10px; }
-  .pc-h { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
-  .pc-h-sub { font-size: 13px; color: var(--ink-faint); }
-  .pc-controls { margin-left: auto; align-self: center; }
-  .pc-controls .segmented { margin: 0; }
-  .pc-right { text-align: right; }
-  .pc-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
-  .pc-note { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; line-height: 1.4; color: var(--ink-faint); }
-  .pc-note a, .pc-link { color: var(--ink-faint); text-decoration: underline; text-underline-offset: 2px; font-size: 12px; }
-  .pc-note a:hover, .pc-link:hover { color: var(--accent); }
-  .pc-money { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-faint); font-size: 13px; }
-  .pc-money input { width: 100%; min-width: 0; min-height: 36px; text-align: right; font-variant-numeric: tabular-nums; }
-  .pc-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; background: var(--surface-3); color: var(--ink-dim); }
-  .pc-pill.win { background: var(--good-bg); color: var(--good); }
-  .pc-pill.lose { background: var(--danger-bg); color: var(--danger); }
-  .pc-pill:empty { display: none; }
-  /* retailers: one tile each */
-  .pc-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-  .pc-tile { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-1); }
-  .pc-tile-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
-  .pc-tile .pc-money { font-size: 16px; }
-  .pc-tile .pc-money input { min-height: 44px; padding-right: 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
-  .pc-tile-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; }
-  .pc-tile-foot .pc-note { margin: 0; }
-  .pc-tile-foot .pc-note.warn { color: var(--warn); }
-  /* telcos: one row each */
-  .pc-telcos { padding-top: 6px; padding-bottom: 6px; }
-  .pc-thead, .pc-trow, .pc-here { display: grid; grid-template-columns: minmax(150px, 1.5fr) 130px 224px 104px minmax(170px, 1fr); gap: 6px 16px; align-items: center; }
-  .pc-thead { padding: 10px 0 8px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink-faint); }
-  .pc-trow { padding: 14px 0; border-bottom: 1px solid var(--line); }
-  .pc-plan { display: grid; grid-template-columns: minmax(0, 1fr) 72px; gap: 6px; }
-  .pc-plan select, .pc-plan input, .pc-trow .pc-money input { min-height: 36px; font-size: 13px; }
-  .pc-plan input { text-align: right; font-variant-numeric: tabular-nums; }
-  .pc-total { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .pc-total .pc-pill { margin-top: 4px; }
-  .pc-total-note { display: block; font-size: 12px; font-weight: 400; color: var(--ink-faint); white-space: normal; }
-  .pc-here { grid-template-columns: minmax(150px, 1.5fr) 130px 224px 104px minmax(170px, 1fr); padding: 14px 0 10px; }
-  .pc-here-text { grid-column: 1 / 3; }
-  .pc-sim { grid-column: 3 / 5; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--ink-dim); }
-  .pc-sim .pc-money { flex: 0 0 auto; }
-  .pc-sim input { width: 84px; }
-  @media (max-width: 1180px) {
-    .pc-device { grid-template-columns: minmax(0, 1fr); }
-    .pc-ours { text-align: left; }
-    .pc-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .pc-thead { display: none; }
-    .pc-trow, .pc-here { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .pc-trow > :first-child, .pc-trow > :last-child, .pc-here-text, .pc-sim, .pc-here > :last-child { grid-column: 1 / -1; }
-    .pc-trow > :last-child, .pc-here > :last-child { text-align: left; }
-    .pc-trow .pc-cell-plan { grid-column: 1 / -1; }
-  }
-  @media (max-width: 640px) {
-    .pc-pickers { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-    .pc-tiles { grid-template-columns: minmax(0, 1fr); }
-    .pc-controls { margin-left: 0; width: 100%; }
-  }
-  /* ---- end Price check ---- */
+  
 
   /* ---- Service: repair or upgrade ---- */
   .svc-layout { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 16px; align-items: start; }
@@ -1610,3 +1544,74 @@ body.print-view .deal-stage-heading { display: none; }
     .svc-quote { grid-row: 2; grid-column: 2; }
   }
   /* ---- end Service ---- */
+
+  /* ---- Price check ---- */
+  .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; }
+  .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }
+  .pc-pickers .field-label { margin-top: 0; }
+  .pc-pickers .segmented { margin: 0; }
+  .pc-ours { text-align: right; min-width: 220px; }
+  .pc-ours-label { display: block; font-size: 13px; font-weight: 600; color: var(--ink-dim); }
+  .pc-ours-amount { display: block; font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .pc-ours-sub { display: block; font-size: 12px; color: var(--good); }
+  .pc-ours-sub.plain { color: var(--ink-faint); }
+  .pc-section-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; margin: 28px 0 10px; }
+  .pc-h { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+  .pc-h-sub { font-size: 13px; color: var(--ink-faint); }
+  .pc-controls { margin-left: auto; align-self: center; }
+  .pc-controls .segmented { margin: 0; }
+  .pc-right { text-align: right; }
+  .pc-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
+  .pc-note { display: block; margin-top: 2px; font-size: 12px; font-weight: 400; line-height: 1.4; color: var(--ink-faint); }
+  .pc-note a, .pc-link { color: var(--ink-faint); text-decoration: underline; text-underline-offset: 2px; font-size: 12px; }
+  .pc-note a:hover, .pc-link:hover { color: var(--accent); }
+  .pc-money { display: inline-flex; align-items: center; gap: 6px; color: var(--ink-faint); font-size: 13px; }
+  .pc-money input { width: 100%; min-width: 0; min-height: 36px; text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; background: var(--surface-3); color: var(--ink-dim); }
+  .pc-pill.win { background: var(--good-bg); color: var(--good); }
+  .pc-pill.lose { background: var(--danger-bg); color: var(--danger); }
+  .pc-pill:empty { display: none; }
+  /* retailers: one tile each */
+  .pc-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+  .pc-tile { display: flex; flex-direction: column; gap: 10px; padding: 14px 16px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-1); }
+  .pc-tile-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .pc-tile .pc-money { font-size: 16px; }
+  .pc-tile .pc-money input { min-height: 44px; padding-right: 12px; font-size: 20px; font-weight: 600; letter-spacing: -0.01em; }
+  .pc-tile-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-height: 24px; }
+  .pc-tile-foot .pc-note { margin: 0; }
+  .pc-tile-foot .pc-note.warn { color: var(--warn); }
+  .pc-policy { margin: 0; padding-top: 10px; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.45; color: var(--ink-faint); }
+  .pc-policy a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+  .pc-policy a:hover { color: var(--accent); }
+  /* telcos: one row each */
+  .pc-telcos { padding-top: 6px; padding-bottom: 6px; }
+  .pc-thead, .pc-trow, .pc-here { display: grid; grid-template-columns: minmax(150px, 1.5fr) 130px 224px 104px minmax(170px, 1fr); gap: 6px 16px; align-items: center; }
+  .pc-thead { padding: 10px 0 8px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink-faint); }
+  .pc-trow { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .pc-plan { display: grid; grid-template-columns: minmax(0, 1fr) 72px; gap: 6px; }
+  .pc-plan select, .pc-plan input, .pc-trow .pc-money input { min-height: 36px; font-size: 13px; }
+  .pc-plan input { text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-total { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .pc-total .pc-pill { margin-top: 4px; }
+  .pc-total-note { display: block; font-size: 12px; font-weight: 400; color: var(--ink-faint); white-space: normal; }
+  .pc-here { grid-template-columns: minmax(150px, 1.5fr) 130px 224px 104px minmax(170px, 1fr); padding: 14px 0 10px; }
+  .pc-here-text { grid-column: 1 / 3; }
+  .pc-sim { grid-column: 3 / 5; display: flex; align-items: center; justify-content: space-between; gap: 10px; font-size: 13px; color: var(--ink-dim); }
+  .pc-sim .pc-money { flex: 0 0 auto; }
+  .pc-sim input { width: 84px; }
+  @media (max-width: 1180px) {
+    .pc-device { grid-template-columns: minmax(0, 1fr); }
+    .pc-ours { text-align: left; }
+    .pc-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pc-thead { display: none; }
+    .pc-trow, .pc-here { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .pc-trow > :first-child, .pc-trow > :last-child, .pc-here-text, .pc-sim, .pc-here > :last-child { grid-column: 1 / -1; }
+    .pc-trow > :last-child, .pc-here > :last-child { text-align: left; }
+    .pc-trow .pc-cell-plan { grid-column: 1 / -1; }
+  }
+  @media (max-width: 640px) {
+    .pc-pickers { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+    .pc-tiles { grid-template-columns: minmax(0, 1fr); }
+    .pc-controls { margin-left: 0; width: 100%; }
+  }
+  /* ---- end Price check ---- */
