@@ -14,18 +14,19 @@
 <meta charset="utf-8" />
 <title>Galaxy Deal Qualifier</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="favicon.ico?v=purple-3" />
-<link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=purple-3" />
-<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=purple-3" />
 <link rel="stylesheet" href="styles.css" />
-<link rel="stylesheet" href="logo-theme.css?v=purple-3" />
+<link rel="stylesheet" href="brand-accent.css?v=1" />
+<link rel="stylesheet" href="logo-theme.css?v=2" />
+<link rel="icon" href="favicon.ico?v=2" sizes="any" />
+<link id="site-favicon" rel="icon" type="image/png" sizes="64x64" href="favicon-light.png?v=2" />
+<script src="favicon-theme.js?v=2" defer></script>
+
 <script>
   (function () {
     try {
       var saved = localStorage.getItem("galaxyQuoteDeskTheme");
       if (saved === "light" || saved === "dark") document.documentElement.dataset.theme = saved;
-      var accent = localStorage.getItem("galaxyAccent");
-      if (accent && /^[a-z]+$/.test(accent)) document.documentElement.dataset.accent = accent;
+
     } catch (e) {}
   })();
 </script>
@@ -35,7 +36,10 @@
 <div class="app">
 <aside class="side" aria-label="Galaxy Deal Qualifier">
   <div class="side-brand">
-    <span class="side-mark" aria-hidden="true"><img class="brand-logo" src="logo-purple.png" alt="" width="24" height="24" /></span>
+    <span class="side-mark" aria-hidden="true">
+      <img class="brand-logo brand-logo-light" src="logo-light.svg" alt="" width="28" height="28" />
+      <img class="brand-logo brand-logo-dark" src="logo-dark.svg" alt="" width="28" height="28" />
+    </span>
     <span class="side-name">Galaxy Deal Qualifier<small>Retail pricing &amp; quotes</small></span>
   </div>
 
@@ -61,14 +65,6 @@
       <div id="store-current-q" class="bundle-status pending"></div>
     </div>
     <p class="side-meta">Sales Kit checked on <strong id="sync-date">17 Aug 2026</strong>. Rules checked against the Samsung Sales Kit; catalogue from Pronto.</p>
-    <div class="swatches" role="group" aria-label="Accent colour">
-      <button type="button" class="swatch swatch-blue" data-accent="blue" aria-label="Blue accent" aria-pressed="false"></button>
-      <button type="button" class="swatch swatch-red" data-accent="red" aria-label="Red accent" aria-pressed="false"></button>
-      <button type="button" class="swatch swatch-green" data-accent="green" aria-label="Green accent" aria-pressed="false"></button>
-      <button type="button" class="swatch swatch-purple" data-accent="purple" aria-label="Purple accent" aria-pressed="false"></button>
-      <button type="button" class="swatch swatch-orange" data-accent="orange" aria-label="Orange accent" aria-pressed="false"></button>
-      <button type="button" class="swatch swatch-teal" data-accent="teal" aria-label="Teal accent" aria-pressed="false"></button>
-    </div>
     <div class="side-tools">
       <button id="tour-btn" class="icon-btn tour-btn" type="button" aria-label="Take a tour of this tool"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.5a2.4 2.4 0 1 1 3.3 2.2c-.6.3-1 .8-1 1.4v.3"/><path d="M12 16.5h.01"/></svg></span><span class="tour-btn-label">Tour</span></button>
       <button id="theme-toggle" class="icon-btn theme-toggle" type="button" aria-label="Switch to dark mode"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19.5 14.6A7.5 7.5 0 0 1 9.4 4.5a7.5 7.5 0 1 0 10.1 10.1z"/></svg></span><span class="theme-toggle-label">Dark mode</span></button>
@@ -809,22 +805,7 @@
     }
   })();
 
-  // ---- accent colour ----
-  (function () {
-    const swatches = Array.from(document.querySelectorAll(".swatch"));
-    function syncSwatches() {
-      const current = document.documentElement.dataset.accent || "blue";
-      swatches.forEach(s => s.setAttribute("aria-pressed", String(s.dataset.accent === current)));
-    }
-    swatches.forEach(s => {
-      s.addEventListener("click", () => {
-        document.documentElement.dataset.accent = s.dataset.accent;
-        try { localStorage.setItem("galaxyAccent", s.dataset.accent); } catch (e) {}
-        syncSwatches();
-      });
-    });
-    syncSwatches();
-  })();
+
 
   function categoryOf(name) {
     if (name.startsWith("Galaxy Z")) return "Galaxy Z Series — Foldables";
