@@ -1,0 +1,60 @@
+{
+  "education": {
+    "Mobile": {
+      "scope": "RATE% OFF S26, S25 & S24 FAMILY\nRATE% OFF A Series Family\nRATE% OFF Z6/Z7/Z8 Flip&Fold Family\n***STACKABLE WITH EDUCATION TRADE-IN, LOYALTY OFFER, HOUR OF POWER AND BLACKTOWN HEALTH CHECK ONLY***\nBARCODE COUPON: EDU0152",
+      "targets": [
+        "model:m1",
+        "model:m2",
+        "model:m3",
+        "model:m4",
+        "model:m5",
+        "model:m6",
+        "model:m7",
+        "model:m8",
+        "model:m9",
+        "model:m20",
+        "model:m21",
+        "model:m34",
+        "model:m29",
+        "model:m30",
+        "model:m31"
+      ]
+    },
+    "Tablet": {
+      "scope": "RATE% OFF Tab S11 series, Tab S10 Lite, Tab A11+, Tab A9+, Tab S6 Lite and Tab S9/10 Series\n***STACKABLE WITH EDUCATION TRADE-IN, LOYALTY OFFER, HOUR OF POWER AND BLACKTOWN HEALTH CHECK ONLY***\nBARCODE COUPON: EDU0152",
+      "targets": [
+        "model:m10",
+        "model:m11",
+        "model:m17",
+        "model:m18",
+        "model:m19",
+        "model:m23",
+        "model:m24"
+      ]
+    },
+    "Wearable": {
+      "scope": "RATE% OFF Buds 3 and Buds 4 series\nRATE% OFF Watch\nRATE% OFF Smart Tag\n***STACKABLE WITH EDUCATION TRADE-IN, LOYALTY OFFER, HOUR OF POWER AND BLACKTOWN HEALTH CHECK ONLY***\nBARCODE COUPON: EDU0152",
+      "targets": [
+        "model:m12",
+        "model:m13",
+        "model:m32",
+        "model:m33",
+        "model:m25",
+        "model:m14",
+        "model:m15",
+        "model:m22"
+      ]
+    }
+  },
+  "pageHashes": {
+    "s-series": "d0bcb2421c2fa09c2fbc207bae72341df7fd77a850adc4e7da13adf2c4884c61",
+    "z-series": "8eae2437a191bfc731be8a992f8e4bb778d1ad4568eee085d185b7fb4deef258",
+    "a-series": "ff957e536e2d9ef6485abbac572fcc1eea5bbf929480abd8ab7e5d57598d687d",
+    "tablets": "43ba8618a4d292b74fb131c4e10a1968fca21a82725ea9ab93221b1fed417598",
+    "wearables": "8734a0ff657cbb5ddfdb015d20f4ccbc39c8179e145a0c74865334ef9e48c9ea",
+    "accessories": "279b368bfa7757772cba9774be7e873d99ccb90a597339890b2292e93d88bba1",
+    "loyalty": "f889267b642ded9470e7a32ade761363d053c06d289d2331ec2535720d7533c5",
+    "eol": "cd08727da927bfd9770d96cec4bcd3016a3146f0e47dfe287fc7705a1074f2c4"
+  },
+  "smbText": "15% OFF\nA57/A56/A37/A36/A26/A17 Handsets, Z8/Z7/Z6 Family, S26/S25/S24 Family (Excl S24 Base), XCover6/7, Tab S11 Family/S9/S10 Lite/A11+/A9+/Active Family/ Watch FE/7/8/Ultra/9/Ultra2\n***NOT STACKABLE WITH ANY OTHER OFFER UNLESS OTHERWISE STATED***\nBARCODE COUPON: SMB0038\nBulletin Code: A260004803\n15% OFF\nS26FE\n***NOT STACKABLE WITH ANY OTHER OFFER UNLESS OTHERWISE STATED***\nBulletin Code: A260005730"
+}
