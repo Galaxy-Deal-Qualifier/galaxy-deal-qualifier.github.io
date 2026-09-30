@@ -1,21 +1,8 @@
-/* One consistent brand accent; light and dark modes remain available. */
-:root {
-  --accent: #6835d6;
-  --accent-ink: #ffffff;
-  --accent-soft: #f0eafd;
-  --accent-line: #ccb8f3;
+/* Fixed purple brand accent. Light and dark themes remain available. */
+@media screen {
+  :root { --accent: #6835d6; --accent-ink: #fff; --accent-soft: #f0eafd; --accent-line: #ccb8f3; }
+  :root[data-theme="dark"] { --accent: #b99aff; --accent-ink: #151020; --accent-soft: #2a203b; --accent-line: #614988; }
 }
-:root[data-theme="dark"] {
-  --accent: #b99aff;
-  --accent-ink: #151020;
-  --accent-soft: #2a203b;
-  --accent-line: #614988;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --accent: #b99aff;
-    --accent-ink: #151020;
-    --accent-soft: #2a203b;
-    --accent-line: #614988;
-  }
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --accent: #b99aff; --accent-ink: #151020; --accent-soft: #2a203b; --accent-line: #614988; }
 }
