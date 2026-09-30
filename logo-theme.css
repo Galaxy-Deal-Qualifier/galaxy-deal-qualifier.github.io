@@ -22,14 +22,14 @@ html body .side-brand .side-mark .brand-logo {
   border: 0;
   border-radius: 0;
   box-shadow: none;
-}
 html[data-theme="dark"] body .side-brand .side-mark {
-  background: #34384D;
-  border-color: #303044;
+  background: #3B4057;
+  border-color: #545A73;
 }
+
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) body .side-brand .side-mark {
-    background: #34384D;
-    border-color: #303044;
+    background: #3B4057;
+    border-color: #545A73;
   }
 }
