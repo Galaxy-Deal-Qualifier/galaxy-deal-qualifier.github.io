@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deal Qualifier v9.5
+  Galaxy Deal Qualifier v9.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -17,7 +17,7 @@
 <link rel="icon" type="image/x-icon" sizes="16x16 32x32 48x48" href="favicon.ico?v=final-4" />
 <link rel="icon" type="image/png" sizes="64x64" href="favicon.png?v=final-4" />
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png?v=final-4" />
-<link rel="stylesheet" href="styles.css?v=9.5" />
+<link rel="stylesheet" href="styles.css?v=9.6" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=dark-badge-5" />
 <script>
@@ -695,6 +695,17 @@
 
 <script>
   const DEVICES = [{"m": "m1", "n": "Galaxy S26 Ultra", "v": "256GB", "p": 2199}, {"m": "m1", "n": "Galaxy S26 Ultra", "v": "512GB", "p": 2499}, {"m": "m1", "n": "Galaxy S26 Ultra", "v": "1TB", "p": 2949}, {"m": "m2", "n": "Galaxy S26+", "v": "256GB", "p": 1849}, {"m": "m2", "n": "Galaxy S26+", "v": "512GB", "p": 2149}, {"m": "m3", "n": "Galaxy S26", "v": "256GB", "p": 1549}, {"m": "m3", "n": "Galaxy S26", "v": "512GB", "p": 1849}, {"m": "m4", "n": "Galaxy Z Fold8 Ultra", "v": "256GB", "p": 2999}, {"m": "m4", "n": "Galaxy Z Fold8 Ultra", "v": "512GB", "p": 3299}, {"m": "m4", "n": "Galaxy Z Fold8 Ultra", "v": "1TB", "p": 3899}, {"m": "m5", "n": "Galaxy Z Fold8", "v": "256GB", "p": 2699}, {"m": "m5", "n": "Galaxy Z Fold8", "v": "512GB", "p": 2999}, {"m": "m5", "n": "Galaxy Z Fold8", "v": "1TB", "p": 3599}, {"m": "m6", "n": "Galaxy Z Flip8", "v": "256GB", "p": 1949}, {"m": "m6", "n": "Galaxy Z Flip8", "v": "512GB", "p": 2249}, {"m": "m7", "n": "Galaxy A57 5G", "v": "128GB", "p": 849}, {"m": "m7", "n": "Galaxy A57 5G", "v": "256GB", "p": 949}, {"m": "m8", "n": "Galaxy A37 5G", "v": "128GB", "p": 649}, {"m": "m9", "n": "Galaxy A27 5G", "v": "128GB", "p": 549}, {"m": "m10", "n": "Galaxy Tab S11 Ultra", "v": "256GB Wi-Fi", "p": 2099}, {"m": "m10", "n": "Galaxy Tab S11 Ultra", "v": "512GB Wi-Fi", "p": 2449}, {"m": "m10", "n": "Galaxy Tab S11 Ultra", "v": "1TB Wi-Fi", "p": 2999}, {"m": "m10", "n": "Galaxy Tab S11 Ultra", "v": "256GB LTE", "p": 2349}, {"m": "m10", "n": "Galaxy Tab S11 Ultra", "v": "512GB LTE", "p": 2699}, {"m": "m10", "n": "Galaxy Tab S11 Ultra", "v": "1TB LTE", "p": 3249}, {"m": "m11", "n": "Galaxy Tab S11", "v": "128GB Wi-Fi", "p": 1549}, {"m": "m11", "n": "Galaxy Tab S11", "v": "256GB Wi-Fi", "p": 1849}, {"m": "m11", "n": "Galaxy Tab S11", "v": "512GB Wi-Fi", "p": 2199}, {"m": "m11", "n": "Galaxy Tab S11", "v": "128GB LTE", "p": 1799}, {"m": "m11", "n": "Galaxy Tab S11", "v": "256GB LTE", "p": 2099}, {"m": "m11", "n": "Galaxy Tab S11", "v": "512GB LTE", "p": 2399}, {"m": "m12", "n": "Galaxy Watch9", "v": "40mm Bluetooth", "p": 649}, {"m": "m12", "n": "Galaxy Watch9", "v": "40mm LTE", "p": 749}, {"m": "m12", "n": "Galaxy Watch9", "v": "44mm Bluetooth", "p": 699}, {"m": "m12", "n": "Galaxy Watch9", "v": "44mm LTE", "p": 799}, {"m": "m13", "n": "Galaxy Watch Ultra2", "v": "47mm LTE", "p": 1299}, {"m": "m15", "n": "Galaxy Buds4 Pro", "v": "Standard", "p": 399}, {"m": "m14", "n": "Galaxy Buds4", "v": "Standard", "p": 299}, {"m": "m22", "n": "Galaxy Buds3 FE", "v": "Standard", "p": 249}, {"m": "m16", "n": "Galaxy Ring", "v": "Standard", "p": 699}, {"m": "m20", "n": "Galaxy S25 FE", "v": "128GB", "p": 1099}, {"m": "m20", "n": "Galaxy S25 FE", "v": "256GB", "p": 1249}, {"m": "m20", "n": "Galaxy S25 FE", "v": "512GB", "p": 1549}, {"m": "m21", "n": "Galaxy A17 5G", "v": "128GB", "p": 399}, {"m": "m17", "n": "Galaxy Tab S10 Lite", "v": "128GB Wi-Fi", "p": 629}, {"m": "m17", "n": "Galaxy Tab S10 Lite", "v": "256GB Wi-Fi", "p": 799}, {"m": "m17", "n": "Galaxy Tab S10 Lite", "v": "128GB LTE", "p": 799}, {"m": "m17", "n": "Galaxy Tab S10 Lite", "v": "256GB LTE", "p": 999}, {"m": "m18", "n": "Galaxy Tab S10 FE+", "v": "128GB Wi-Fi", "p": 1099}, {"m": "m18", "n": "Galaxy Tab S10 FE+", "v": "256GB Wi-Fi", "p": 1299}, {"m": "m18", "n": "Galaxy Tab S10 FE+", "v": "128GB LTE", "p": 1299}, {"m": "m18", "n": "Galaxy Tab S10 FE+", "v": "256GB LTE", "p": 1499}, {"m": "m19", "n": "Galaxy Tab A11+", "v": "128GB Wi-Fi", "p": 479}, {"m": "m19", "n": "Galaxy Tab A11+", "v": "256GB Wi-Fi", "p": 599}, {"m": "m19", "n": "Galaxy Tab A11+", "v": "128GB LTE", "p": 549}, {"m": "m19", "n": "Galaxy Tab A11+", "v": "256GB LTE", "p": 699}, {"m": "m23", "n": "Galaxy Tab S10 FE", "v": "128GB Wi-Fi", "p": 849}, {"m": "m23", "n": "Galaxy Tab S10 FE", "v": "256GB Wi-Fi", "p": 1049}, {"m": "m23", "n": "Galaxy Tab S10 FE", "v": "128GB LTE", "p": 1049}, {"m": "m23", "n": "Galaxy Tab S10 FE", "v": "256GB LTE", "p": 1249}, {"m": "m24", "n": "Galaxy Tab S10+", "v": "256GB Wi-Fi", "p": 1799}, {"m": "m24", "n": "Galaxy Tab S10+", "v": "512GB Wi-Fi", "p": 2049}, {"m": "m24", "n": "Galaxy Tab S10+", "v": "256GB LTE", "p": 2049}, {"m": "m24", "n": "Galaxy Tab S10+", "v": "512GB LTE", "p": 2299}, {"m": "m25", "n": "Galaxy Watch8 Classic", "v": "46mm Blutooth", "p": 899}, {"m": "m25", "n": "Galaxy Watch8 Classic", "v": "46mm LTE", "p": 999}, {"m": "m26", "n": "Galaxy Tab Active5", "v": "128GB LTE", "p": 1199}, {"m": "m26", "n": "Galaxy Tab Active5", "v": "256GB LTE", "p": 1049}, {"m": "m26", "n": "Galaxy Tab Active5", "v": "128GB Wi-Fi", "p": 849}, {"m": "m26", "n": "Galaxy Tab Active5", "v": "256GB Wi-Fi", "p": 999}, {"m": "m27", "n": "Galaxy XCover7 Pro", "v": "128GB", "p": 999}, {"m": "m28", "n": "Galaxy Fit 3", "v": "Standard", "p": 149}, {"m": "m29", "n": "Galaxy S25 Ultra", "v": "512GB", "p": 2349}, {"m": "m30", "n": "Galaxy S25 Edge", "v": "512GB", "p": 2149}, {"m": "m31", "n": "Galaxy Z Flip7", "v": "512GB", "p": 2099}, {"m": "m32", "n": "Galaxy Watch Ultra", "v": "47mm LTE", "p": 1299}, {"m": "m33", "n": "Galaxy Watch8", "v": "40mm Bluetooth", "p": 649}, {"m": "m33", "n": "Galaxy Watch8", "v": "40mm LTE", "p": 749}, {"m": "m33", "n": "Galaxy Watch8", "v": "44mm Bluetooth", "p": 699}, {"m": "m33", "n": "Galaxy Watch8", "v": "44mm LTE", "p": 799}, {"m": "m34", "n": "Galaxy S26 FE", "v": "128GB", "p": 1149}, {"m": "m34", "n": "Galaxy S26 FE", "v": "256GB", "p": 1299}];
+  // Retail price changes Samsung has announced with a start date. DEVICES above holds the price
+  // until then; from the date, the new price takes over here, before anything else reads DEVICES.
+  const PRICE_CHANGES = [{"from": "2026-10-11", "m": "m1", "v": "256GB", "was": 2199, "p": 2299}, {"from": "2026-10-11", "m": "m1", "v": "512GB", "was": 2499, "p": 2599}, {"from": "2026-10-11", "m": "m1", "v": "1TB", "was": 2949, "p": 3199}, {"from": "2026-10-11", "m": "m2", "v": "256GB", "was": 1849, "p": 1949}, {"from": "2026-10-11", "m": "m2", "v": "512GB", "was": 2149, "p": 2249}, {"from": "2026-10-11", "m": "m3", "v": "256GB", "was": 1549, "p": 1649}, {"from": "2026-10-11", "m": "m3", "v": "512GB", "was": 1849, "p": 1949}];
+  (function () {
+    const d = new Date();
+    const today = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0");
+    PRICE_CHANGES.forEach(c => {
+      if (today < c.from) return;
+      DEVICES.forEach(x => { if (x.m === c.m && x.v === c.v && x.p === c.was) x.p = c.p; });
+    });
+  })();
 
   const NGC_PLANS = [{"series": "S Series", "term": "1 year", "price": 149}, {"series": "S Series", "term": "2 years", "price": 279}, {"series": "Z Series", "term": "1 year", "price": 289}, {"series": "Z Series", "term": "2 years", "price": 519}];
 
@@ -5200,6 +5211,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "9.6", d: "1 Oct 2026", t: "The S26 price rise switches itself on",
+      items: [
+        "<strong>Galaxy S26 retail prices go up on Sunday 11 October, and the tool will change over by itself that morning.</strong> Until then every S26 price is exactly as it is today.",
+        "From 11 October: <strong>S26</strong> $1,549 \u2192 $1,649 (256GB) and $1,849 \u2192 $1,949 (512GB); <strong>S26+</strong> $1,849 \u2192 $1,949 and $2,149 \u2192 $2,249; <strong>S26 Ultra</strong> $2,199 \u2192 $2,299, $2,499 \u2192 $2,599 and $2,949 \u2192 $3,199 (1TB).",
+        "Education, SMB and any offer on these devices are worked out from the new price from that day. A quote printed before the 11th shows the old price, so re-quote anything a customer comes back for after the change."
+      ] },
     { v: "9.5", d: "1 Oct 2026", t: "\u201cEnds in\u201d tags look three days ahead too",
       items: [
         "<strong>The \u201cends in 3 days\u201d tags beside individual offers now start three days out</strong>, matching the amber strip at the top. An offer with more than three days to run no longer carries a tag; \u201cends today\u201d and \u201cends tomorrow\u201d are unchanged.",
