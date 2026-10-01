@@ -82,10 +82,23 @@
       </span>
       <span id="print-copy-status" class="print-copy-status"></span>
       <button type="button" id="print-copy">Copy quote</button>
+      <button type="button" id="print-email">Email quote</button>
       <button type="button" id="print-back">Back to editing</button>
     </span>
   </div>
 </div>
+
+
+<dialog id="email-quote-dialog" aria-labelledby="email-quote-title" style="width:min(420px,calc(100% - 40px));padding:24px;border:1px solid #737386;border-radius:16px;background:var(--surface,#fff);color:var(--text,#15151b)">
+  <form id="email-quote-form">
+    <h2 id="email-quote-title">Email quote</h2>
+    <p>Enter the customer's email. Your email app will open with the quote ready to review and send.</p>
+    <label for="quote-customer-email">Customer email</label>
+    <input id="quote-customer-email" type="email" required autocomplete="off" maxlength="254" placeholder="customer@example.com" style="display:block;width:100%;box-sizing:border-box;margin:12px 0 20px;padding:12px" />
+    <button type="button" id="email-quote-cancel">Cancel</button>
+    <button type="submit">Open email draft</button>
+  </form>
+</dialog>
 
 <div id="print-header">
   <div class="print-brand">Galaxy Deal Qualifier</div>
@@ -3191,6 +3204,31 @@
       document.body.removeChild(ta);
     }
     bar.textContent = ok ? "Quote copied to clipboard." : "Couldn't copy — select the quote and copy manually.";
+  });
+
+  const emailDialog = document.getElementById("email-quote-dialog");
+  const customerEmail = document.getElementById("quote-customer-email");
+  document.getElementById("print-email").addEventListener("click", () => {
+    if (document.body.classList.contains("print-compare")) {
+      document.getElementById("print-copy-status").textContent = "Return to your customer quote to email it.";
+      return;
+    }
+    if (!cart.length) return;
+    customerEmail.value = "";
+    emailDialog.showModal();
+    customerEmail.focus();
+  });
+  document.getElementById("email-quote-cancel").addEventListener("click", () => emailDialog.close());
+  document.getElementById("email-quote-form").addEventListener("submit", event => {
+    event.preventDefault();
+    if (!event.currentTarget.reportValidity()) return;
+    const body = "Hi,\n\nThank you for visiting us. Here is your device quote.\n\n" + plainTextQuote();
+    const link = "mailto:" + encodeURIComponent(customerEmail.value.trim()) +
+      "?subject=" + encodeURIComponent("Device Quote") + "&body=" + encodeURIComponent(body);
+    window.location.href = link;
+    emailDialog.close();
+    customerEmail.value = "";
+    document.getElementById("print-copy-status").textContent = "Email draft requested. Review it and press Send in your email app. If it didn't open, use Copy quote.";
   });
 
   function tradeInCredit() {
