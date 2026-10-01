@@ -104,19 +104,6 @@
 </div>
 
 
-<dialog id="email-quote-dialog" aria-labelledby="email-quote-title" style="width:min(420px,calc(100% - 40px));padding:24px;border:1px solid #737386;border-radius:16px;background:var(--surface,#fff);color:var(--text,#15151b)">
-  <form id="email-quote-form">
-    <h2 id="email-quote-title">Email quote</h2>
-    <p>Enter the customer's email. Your email app will open with the quote ready to review and send.</p>
-    <label for="quote-customer-email">Customer email</label>
-    <input id="quote-customer-email" type="email" required autocomplete="off" maxlength="254" placeholder="customer@example.com" style="display:block;width:100%;box-sizing:border-box;margin:12px 0 20px;padding:12px" />
-    <div class="email-quote-actions">
-      <button type="button" id="email-quote-cancel">Cancel</button>
-      <button type="submit">Open email draft</button>
-    </div>
-  </form>
-</dialog>
-
 <div id="print-header">
   <div class="print-brand">Galaxy Deal Qualifier</div>
   <h2>Customer Quote</h2>
@@ -3223,29 +3210,55 @@
     bar.textContent = ok ? "Quote copied to clipboard." : "Couldn't copy — select the quote and copy manually.";
   });
 
-  const emailDialog = document.getElementById("email-quote-dialog");
-  const customerEmail = document.getElementById("quote-customer-email");
+  function formattedEmailQuote() {
+    const safe = value => escapeHtml(String(value || ""));
+    const paragraph = (text, style = "") => `<p style="margin:8px 0;${style}">${safe(text)}</p>`;
+    let lines = "";
+    Array.from(ledgerBody.children).forEach(block => {
+      lines += '<div style="padding:24px 0;border-top:1px solid #d8dbe2">';
+      if (block.classList.contains("item")) {
+        lines += paragraph(block.querySelector(".item-name")?.textContent, "font-weight:700;font-size:20px");
+        lines += paragraph(block.querySelector(".item-variant")?.textContent);
+        block.querySelectorAll(".item-line").forEach(row => {
+          const base = row.querySelector(".item-base");
+          if (base) lines += paragraph(base.textContent, "text-decoration:line-through;color:#606473");
+          else lines += paragraph(row.textContent, "font-weight:600");
+        });
+        block.querySelectorAll(".eco-note,.clash-note").forEach(note => { lines += paragraph(note.textContent, "font-size:14px;color:#606473"); });
+        lines += paragraph(block.querySelector(".item-subtotal")?.textContent, "font-weight:700");
+      } else lines += paragraph(block.textContent);
+      lines += '</div>';
+    });
+    const date = new Date().toLocaleDateString("en-AU", {day:"numeric",month:"long",year:"numeric"});
+    const valid = document.getElementById("print-valid");
+    return `<div style="font-family:Arial,sans-serif;font-size:16px;line-height:1.6;background:#fff;color:#20212b;padding:24px;max-width:640px;margin:auto">` +
+      paragraph("Galaxy Deal Qualifier", "font-weight:700;font-size:20px") + paragraph("Retail pricing & quotes") +
+      '<h1 style="font-size:28px;margin:28px 0 16px">Customer Quote</h1>' +
+      paragraph("Created: " + date) + (valid.hidden ? "" : paragraph(valid.textContent)) +
+      (preparedBy() ? paragraph("Served by " + preparedBy()) : "") + lines +
+      '<div style="border-top:1px solid #d8dbe2;padding:24px 0">' + paragraph("Customer total", "font-weight:700;font-size:20px") +
+      paragraph(grandTotalEl.textContent,"font-weight:700;font-size:32px") + '</div>' +
+      '<div style="border-top:1px solid #d8dbe2;padding-top:24px">' + paragraph("This is a quoting aid, not a source of truth.","font-weight:700") +
+      paragraph("Offers and prices may change and some require codes or conditions applied at the register. Always confirm the final price in POS at the time of the transaction.") + '</div></div>';
+  }
   document.getElementById("print-email").addEventListener("click", () => {
-    if (document.body.classList.contains("print-compare")) {
-      document.getElementById("print-copy-status").textContent = "Return to your customer quote to email it.";
+    const status = document.getElementById("print-copy-status");
+    if (!cart.length || document.body.classList.contains("print-compare")) {
+      status.textContent = "Open a customer quote with at least one device first.";
       return;
     }
-    if (!cart.length) return;
-    customerEmail.value = "";
-    emailDialog.showModal();
-    customerEmail.focus();
-  });
-  document.getElementById("email-quote-cancel").addEventListener("click", () => emailDialog.close());
-  document.getElementById("email-quote-form").addEventListener("submit", event => {
-    event.preventDefault();
-    if (!event.currentTarget.reportValidity()) return;
-    const body = "Hi,\n\nThank you for visiting us. Here is your device quote.\n\n" + plainTextQuote();
-    const link = "mailto:" + encodeURIComponent(customerEmail.value.trim()) +
-      "?subject=" + encodeURIComponent("Device Quote") + "&body=" + encodeURIComponent(body);
-    window.location.href = link;
-    emailDialog.close();
-    customerEmail.value = "";
-    document.getElementById("print-copy-status").textContent = "Email draft requested. Review it and press Send in your email app. If it didn't open, use Copy quote.";
+    const json = JSON.stringify({text:plainTextQuote(),html:formattedEmailQuote()});
+    const bytes = new TextEncoder().encode(json);
+    let binary = "";
+    bytes.forEach(byte => binary += String.fromCharCode(byte));
+    const url = "https://script.google.com/macros/s/AKfycbxb_u1P_-vnLoV-tXECFSUH2NZSZ57xzi_XDofY2DDbKkLfvbi0f-yAwMMRit9TtVMgQw/exec?quote=" + encodeURIComponent(btoa(binary));
+    if (url.length > 16000) {
+      status.textContent = "This quote is too large for the Gmail window. Split it into smaller quotes or use Copy quote.";
+      return;
+    }
+    const opened = window.open(url, "_blank");
+    if (opened) opened.opener = null;
+    status.textContent = opened ? "Enter the customer's email and press Send quote in the Google window. Sign in to your sending Gmail account if asked." : "Allow popups for this website, then click Email quote again.";
   });
 
   function tradeInCredit() {
