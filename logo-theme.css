@@ -1,36 +1,47 @@
-/* Version 5: square logo badge; overrides older dashboard styling. */
+/* Version 5: square logo badge */
 html body .side-brand .side-mark {
   display: grid;
   place-items: center;
+
   width: 36px;
   height: 36px;
   min-width: 36px;
   flex: 0 0 36px;
+
   padding: 6px;
+
   background: #f5f5f7;
   border: 1px solid #d6d8e1;
   border-radius: 6px;
+
   box-shadow: none;
-  filter: none;
 }
+
+/* Logo */
 html body .side-brand .side-mark .brand-logo {
   display: block;
+
   width: 24px;
   height: 24px;
   max-width: 24px;
+
   object-fit: contain;
-  border: 0;
+
+  border: none;
   border-radius: 0;
   box-shadow: none;
 }
+
+/* Dark mode */
 html[data-theme="dark"] body .side-brand .side-mark {
-  background: #3B4057;
-  border-color: #545A73;
+  background: #33384d;
+  border-color: #565d7a;
 }
 
+/* System dark mode when no manual light theme is selected */
 @media (prefers-color-scheme: dark) {
   html:not([data-theme="light"]) body .side-brand .side-mark {
-    background: #3B4057;
-    border-color: #545A73;
+    background: #33384d;
+    border-color: #565d7a;
   }
 }
