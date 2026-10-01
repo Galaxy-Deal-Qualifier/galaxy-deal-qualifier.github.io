@@ -48,7 +48,7 @@
 #email-quote-dialog button:focus-visible{outline:3px solid #c9b9f3;outline-offset:2px}
 @media print{#email-quote-dialog{display:none!important}}
 </style>
-<link rel="stylesheet" href="design-polish.css?v=1" />
+<style>@media print{.sheet-sync-controls{display:none!important}}body.print-view .sheet-sync-controls{display:none!important}</style>
 </head>
 <body>
 <div class="app">
@@ -2523,7 +2523,7 @@
   const TI_CATS = ["Phone", "Tablet", "Watch"];
   const TI_OTHER = "__other";
 
-  function tiVariantEnd(v) { return v[4] ? TRADEIN_END_EARLY : TRADEIN_END; }
+  function tiVariantEnd(v) { return v.sheetEnd || (v[4] ? TRADEIN_END_EARLY : TRADEIN_END); }
   function tiVariantHigh(v) { return v[3] || 0; }
   function tiSizeUnit(cat) { return cat === "Watch" ? "mm" : "GB"; }
   function tiSizeLabel(cat) { return cat === "Watch" ? "Case size" : "Storage"; }
@@ -4580,7 +4580,7 @@
     if (isNaN(when)) return "";
     const days = Math.floor((NOW - when) / 86400000);
     const age = days <= 0 ? "today" : days === 1 ? "yesterday" : days + " days ago";
-    const how = stockMeta.source === "code" ? "Loaded from a shared code" : "Loaded from a file";
+    const how = stockMeta.source === "sheet" ? "Loaded from Google Sheets" : stockMeta.source === "code" ? "Loaded from a shared code" : "Loaded from a file";
     return `${how}, captured ${age} (${when.toLocaleDateString("en-AU",
       { day: "numeric", month: "short", year: "numeric" })}).`;
   }
@@ -6489,7 +6489,113 @@
         window.scrollTo(0, 0);
       });
     });
-  })();
+    // Read-only Google Sheets integration, using Google's Visualization response protocol.
+  const websiteTradeInGroups = TRADEIN_GROUPS.map(g => [g[0],g[1],g[2],g[3].map(v => v.slice())]);
+  const sheetId = '1ZvdlWD5rpuuwwGSPoVK2A-9MUqRorqo3K7qQbZUZ5jU';
+  const sheetStores = {'SES Werribee':'Werribee','SES Highpoint':'Highpoint','SES Chadstone':'Chandstone','SS Doncaster':'Doncaster','SS Fountain Gate':'Fountain Gate'};
+  const sheetBar = document.createElement('div');
+  sheetBar.className='sheet-sync-controls';
+  sheetBar.style.cssText='padding:12px 16px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink-dim);font-size:13px';
+  sheetBar.innerHTML='<button type="button" id="sheet-refresh" style="margin:0 10px 0 0">Refresh sheet data</button><span id="sheet-message" role="status">Connecting to Google Sheets…</span>';
+  document.querySelector('.notices').append(sheetBar);
+  const sheetMessage=sheetBar.querySelector('#sheet-message');
+  let sheetSequence=0, sheetRefreshId=0;
+  function sheetRead(name){
+    return new Promise((resolve,reject)=>{
+      const callback='gdSheetResponse'+(++sheetSequence), script=document.createElement('script');
+      const cleanup=()=>{clearTimeout(timeout);script.remove();delete window[callback]};
+      const timeout=setTimeout(()=>{cleanup();reject(new Error('Google Sheets timed out.'))},25000);
+      window[callback]=response=>{
+        cleanup();if(response.status!=='ok'||!response.table){reject(new Error('Could not read '+name+'.'));return}
+        const table=response.table;
+        const rows=table.rows.map(r=>r.c.map(c=>c?(c.f??c.v??''):''));
+        const labels=table.cols.map(c=>c.label||'');
+        if(labels.some(Boolean))rows.unshift(labels);
+        resolve(rows);
+      };
+      script.onerror=()=>{cleanup();reject(new Error('Could not connect to Google Sheets.'))};
+      script.src='https://docs.google.com/spreadsheets/d/'+sheetId+'/gviz/tq?sheet='+encodeURIComponent(name)+'&headers=1&tqx='+encodeURIComponent('out:json;responseHandler:'+callback)+'&_='+Date.now();
+      document.head.append(script);
+    });
+  }
+  function tradeFromSheet(rows){
+    if(rows.length<2)throw new Error('Trade-In has no values.');
+    const h=rows[0].map(x=>String(x).toLowerCase().trim()),col=name=>h.indexOf(name.toLowerCase());
+    for(const key of ['make','GWOPrice','nonGWOPrice','storage','NewModelName','AssetTypeName','expiryDate'])if(col(key)<0)throw new Error('Trade-In is missing '+key+'.');
+    const groups=new Map(),seen=new Map(),conflicts=new Set();
+    const number=x=>Number(String(x).replace(/[$,]/g,''));
+    rows.slice(1).forEach(r=>{
+      const brand=String(r[col('make')]||'').trim();if(!TI_BRANDS.includes(brand))return;
+      let cat=String(r[col('AssetTypeName')]||'').trim();if(/phone/i.test(cat))cat='Phone';if(!TI_CATS.includes(cat))return;
+      const model=String(r[col('NewModelName')]||'').trim();
+      const size=number(r[col(cat==='Watch'&&col('CaseSize')>=0?'CaseSize':'storage')]);
+      const gwo=number(r[col('GWOPrice')]),non=number(r[col('nonGWOPrice')]);
+      if(!model||!size||!Number.isFinite(gwo)||!Number.isFinite(non))return;
+      const rawDate=String(r[col('expiryDate')]||'');const parsedDate=new Date(rawDate);
+      if(Number.isNaN(parsedDate.getTime()))return;
+      const end=parsedDate.toLocaleDateString('en-CA',{timeZone:'Australia/Melbourne',year:'numeric',month:'2-digit',day:'2-digit'});
+      // ISO date via parts avoids locale-dependent separators.
+      const parts=new Intl.DateTimeFormat('en',{timeZone:'Australia/Melbourne',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(parsedDate);
+      const part=type=>parts.find(p=>p.type===type).value;const iso=part('year')+'-'+part('month')+'-'+part('day');
+      const key=JSON.stringify([brand,cat,model]),variantKey=key+'::'+size;
+      const signature=JSON.stringify([gwo,non,iso]);
+      if(seen.has(variantKey)){if(seen.get(variantKey)!==signature)conflicts.add(variantKey);return}
+      seen.set(variantKey,signature);
+      if(!groups.has(key))groups.set(key,[brand,cat,model,[]]);
+      const v=[size,gwo,non,0];v.sheetEnd=iso;groups.get(key)[3].push(v);
+    });
+    let websiteFallbacks=0,unresolvedConflicts=0;
+    for(const [key,g] of groups){
+      g[3]=g[3].flatMap(v=>{
+        if(!conflicts.has(key+'::'+v[0]))return [v];
+        const original=websiteTradeInGroups.find(b=>b[0]===g[0]&&b[1]===g[1]&&b[2]===g[2]);
+        const variant=original&&original[3].find(b=>String(b[0])===String(v[0]));
+        if(variant){websiteFallbacks++;return [variant.slice()];}
+        unresolvedConflicts++;return [];
+      });
+      if(!g[3].length)groups.delete(key);
+    }
+    if(!groups.size)throw new Error('No unambiguous trade-in rows found.');
+    const snapshots=tiSlots.map(slot=>({model:slot.model.value,size:slot.size.value}));
+    TRADEIN_GROUPS.splice(0,TRADEIN_GROUPS.length,...Array.from(groups.values()));
+    tiSlots.forEach((slot,i)=>{tiFillModels(slot);if(Array.from(slot.model.options).some(o=>o.value===snapshots[i].model))slot.model.value=snapshots[i].model;tiFillSizes(slot);if(Array.from(slot.size.options).some(o=>o.value===snapshots[i].size))slot.size.value=snapshots[i].size;if(slot.model.value!==snapshots[i].model || slot.size.value!==snapshots[i].size){if(slot.filled!==null && Number(slot.val.value)===slot.filled){slot.val.value="";slot.desc.value="";slot.filled=null;}}tiRefresh(slot,false)});
+    return groups.size+' models'+(websiteFallbacks?' · '+websiteFallbacks+' variants use existing website values':'')+(unresolvedConflicts?' · '+unresolvedConflicts+' conflicts have no website match; use manual value':'');
+  }
+  function stockFromSheet(rows){
+    if(rows.length<2)return [];
+    const cols=detectColumns(rows[0]);if(cols.device==null||cols.qty==null)throw new Error('Stock needs Device and Quantity columns.');
+    const result=[];
+    rows.slice(1).forEach(r=>{
+      const raw=String(r[cols.device]||'').trim();if(!raw)return;
+      const qty=Number(String(r[cols.qty]??'').replace(/,/g,''));if(!Number.isFinite(qty)||qty<0)throw new Error('Invalid quantity for '+raw+'.');
+      const desc=splitDescription(raw),variant=cols.variant!=null?String(r[cols.variant]||desc.capacity):desc.capacity;
+      const colour=cols.colour!=null?String(r[cols.colour]||desc.colour):desc.colour;
+      const code=cols.code!=null?String(r[cols.code]||''):'';if(isLoanCode(code))return;
+      const match=matchCatalog([raw,variant,colour].join(' '));
+      const row={device:desc.name||raw,variant,colour,code,gtin:cols.gtin!=null?String(r[cols.gtin]||''):'',qty,onHand:null,category:cols.category!=null?String(r[cols.category]||''):'',matchM:match?match.m:null,matchV:match?match.v:null};
+      classifyRow(row,raw);result.push(row);
+    });recoverColours(result);return result;
+  }
+  async function refreshSheetData(){
+    const request=++sheetRefreshId,store=currentStore(),tab=sheetStores[store];
+    sheetMessage.textContent='Loading shared data…';
+    const messages=[];
+    try{const rows=await sheetRead('Trade-In');if(request!==sheetRefreshId)return;const count=tradeFromSheet(rows);messages.push('Trade-in: '+count+' loaded');}
+    catch(e){messages.push('Trade-in not updated: '+e.message+' Existing values retained.');}
+    if(request!==sheetRefreshId)return;
+    if(tab){
+      try{const rows=await sheetRead(tab);if(request!==sheetRefreshId||currentStore()!==store)return;const parsed=stockFromSheet(rows);
+        if(!parsed.length)messages.push(tab+' sheet is empty; existing stock retained.');
+        else{stockRows=parsed;saveStockForStore('sheet');renderStockTable();renderStockMeta();renderPromoPreview();renderAccessories();messages.push(parsed.length+' stock rows loaded for '+store);}
+      }catch(e){messages.push('Stock not updated: '+e.message+' Existing stock retained.');}
+    }else messages.push(store?'No sheet tab connected for '+store+'.':'Select a store to load its stock.');
+    if(request===sheetRefreshId){renderLedger();sheetMessage.textContent=messages.join(' · ');}
+  }
+  sheetBar.querySelector('button').addEventListener('click',refreshSheetData);
+  document.querySelectorAll('[data-store-select]').forEach(el=>el.addEventListener('change',()=>setTimeout(refreshSheetData,0)));
+  refreshSheetData();
+
+})();
 
   // ---- offers reference panel ----
   const KIND_LABEL = {
@@ -6786,6 +6892,5 @@
   }
 })();
 </script>
-<script src="design-polish.js?v=1"></script>
 </body>
 </html>
