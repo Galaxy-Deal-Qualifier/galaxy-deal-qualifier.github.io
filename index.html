@@ -3251,7 +3251,7 @@
     const bytes = new TextEncoder().encode(json);
     let binary = "";
     bytes.forEach(byte => binary += String.fromCharCode(byte));
-    const url = "https://script.google.com/macros/s/AKfycbwqh2lF0JNRHtZwm8RuxlExHARebhqhQXmtrRcH0_aID5yf4-hTwPXz5tM9lRztkEMPSw/exec?quote=" + encodeURIComponent(btoa(binary));
+    const url = "https://script.google.com/macros/s/AKfycbwmgBDkLSvVuaI19MU3k2_UzFX7GC40867Wfo19IO0_6PPiqtfaPkYvwb1P1NYRM6fgtg/exec?quote=" + encodeURIComponent(btoa(binary));
     if (url.length > 16000) {
       status.textContent = "This quote is too large for the Gmail window. Split it into smaller quotes or use Copy quote.";
       return;
