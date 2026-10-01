@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10
+  Galaxy Deals v10.1
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=app9" defer></script>
-<link rel="stylesheet" href="styles.css?v=10" />
+<link rel="stylesheet" href="styles.css?v=10.1" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -5350,6 +5350,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "10.1", d: "1 Oct 2026", t: "Compare: magnetic charging needs a magnetic case",
+      items: [
+        "<strong>The Wireless charging row on Compare now says, for every phone, that magnetic charging needs a MagSafe-style magnetic case.</strong> That includes the S26 Ultra and S26+, which GSMArena lists as having magnets built in \u2014 the comparison now follows how we sell it rather than the spec sheet.",
+        "The charging standard and speed still show (Qi2.2 25W, Qi2 Ready 15W, Qi 15W and so on), and the \u201cWhat these terms mean\u201d note and the source line under the table say the same thing. Ordinary pad charging still works without a case.",
+        "No prices, offers or deal rules have changed."
+      ] },
     { v: "10", d: "1 Oct 2026", t: "The Sales Kit page, and Expired Deals folds away",
       items: [
         "<strong>\u201cOffers &amp; Eligibility\u201d is now called Sales Kit</strong> in the sidebar, matching what everyone calls it.",
