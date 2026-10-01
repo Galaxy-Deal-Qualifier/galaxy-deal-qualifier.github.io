@@ -2,17 +2,17 @@
  const body=document.body;
  const svg=paths=>`<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${paths}</svg></span>`;
  const rail=svg('<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9 4v16M14 9l-3 3 3 3"/>');
- const compact=svg('<path d="M4 6h16M4 10h16M4 14h16M4 18h16"/>');
  const controls=document.createElement('div');controls.className='design-controls';
- controls.innerHTML=`<button id="sidebar-collapse" type="button" aria-pressed="false" aria-label="Collapse sidebar" title="Collapse sidebar">${rail}<span class="control-label">Collapse</span></button><button id="compact-view" type="button" aria-pressed="false" aria-label="Toggle compact view" title="Toggle compact view">${compact}<span class="control-label">Compact</span></button>`;
- document.querySelector('.side-brand').after(controls);
- const collapse=controls.querySelector('#sidebar-collapse'),density=controls.querySelector('#compact-view');
+ controls.innerHTML=`<button id="sidebar-collapse" type="button" aria-pressed="false" aria-label="Collapse sidebar" title="Collapse sidebar">${rail}</button>`;
+ document.querySelector('.side-brand').append(controls);
+ body.classList.remove('compact-view');
+ try{localStorage.removeItem('gdCompactView')}catch(e){}
+ const collapse=controls.querySelector('#sidebar-collapse');
  function apply(){
   collapse.setAttribute('aria-pressed',body.classList.contains('sidebar-collapsed'));
   collapse.setAttribute('aria-label',body.classList.contains('sidebar-collapsed')?'Expand sidebar':'Collapse sidebar');collapse.title=collapse.getAttribute('aria-label');
-  density.setAttribute('aria-pressed',body.classList.contains('compact-view'));
  }
- for(const [button,cls,key] of [[collapse,'sidebar-collapsed','gdSidebarCollapsed'],[density,'compact-view','gdCompactView']]){
+ for(const [button,cls,key] of [[collapse,'sidebar-collapsed','gdSidebarCollapsed']]){
   try{body.classList.toggle(cls,localStorage.getItem(key)==='true')}catch(e){}
   button.addEventListener('click',()=>{body.classList.toggle(cls);try{localStorage.setItem(key,body.classList.contains(cls))}catch(e){}apply()});
  }
