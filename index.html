@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deal Qualifier v10
+  Galaxy Deals v10
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -12,7 +12,7 @@
 <meta name="copyright" content="&copy; 2026 Isaiah Graham &amp; Harsha Parthiban" />
 <meta name="robots" content="noindex" />
 <meta charset="utf-8" />
-<title>Galaxy Deal Qualifier</title>
+<title>Galaxy Deals</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/x-icon" href="favicon.ico?v=logo7" />
 <link id="brand-favicon" rel="icon" type="image/png" sizes="64x64" href="icon-light-64.png?v=logo7" />
@@ -51,10 +51,10 @@
 </head>
 <body>
 <div class="app">
-<aside class="side" aria-label="Galaxy Deal Qualifier">
+<aside class="side" aria-label="Galaxy Deals">
   <div class="side-brand">
     <span class="side-mark" aria-hidden="true"><img class="brand-logo" src="logo.png?v=logo7" alt="" width="24" height="24" /></span>
-    <span class="side-name">Galaxy Deal Qualifier<small>Retail pricing &amp; quotes</small></span>
+    <span class="side-name">Galaxy Deals<small>Retail pricing &amp; quotes</small></span>
   </div>
 
   <nav class="tabs" role="tablist" aria-label="Sections" aria-orientation="vertical"><div class="tabs-group"><span class="nav-group-label">Quote</span><button type="button" class="tab" data-panel="quote" role="tab" aria-selected="true"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-2.2-1.4-2.1 1.4-2.2-1.4-2.2 1.4-2.3-1.4z"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"/></svg></span><span>Customer Quote</span></button><button type="button" class="tab" data-panel="builder" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Deal Builder</span></button></div>
@@ -105,7 +105,7 @@
 
 
 <div id="print-header">
-  <div class="print-brand">Galaxy Deal Qualifier</div>
+  <div class="print-brand">Galaxy Deals</div>
   <h2>Customer Quote</h2>
   <div class="print-date">Quote Created <span id="print-date-value"></span></div>
   <div class="print-valid" id="print-valid" hidden></div>
@@ -535,7 +535,7 @@
 
 <section id="panel-compare" class="saleskit" hidden>
   <div id="cmp-print-header">
-    <div class="print-brand">Galaxy Deal Qualifier</div>
+    <div class="print-brand">Galaxy Deals</div>
     <h2>Device Comparison</h2>
     <div class="print-date" id="cmp-print-date"></div>
   </div>
@@ -721,7 +721,7 @@
   <div class="saleskit-head">
     <div>
       <h2>What's New</h2>
-      <p class="saleskit-sub">Everything that has changed in the Galaxy Deal Qualifier, newest first.</p>
+      <p class="saleskit-sub">Everything that has changed in the Galaxy Deals, newest first.</p>
     </div>
   </div>
   <div id="whatsnew-body"></div>
@@ -3133,7 +3133,7 @@
     const byName = preparedBy();
     // Optional header lines are dropped rather than left as blanks, so a quote with no expiry
     // and no name doesn't paste with a gap where they would have been.
-    const head = ["GALAXY DEAL QUALIFIER", "Customer Quote", "Quote Created " + dateStr,
+    const head = ["GALAXY DEALS", "Customer Quote", "Quote Created " + dateStr,
                   validLine, byName ? "Served by " + byName : ""].filter(Boolean);
     return head.concat(["",
             ledgerBody.innerText, "", "TOTAL: " + grandTotalEl.textContent, "",
@@ -3232,7 +3232,7 @@
     const date = new Date().toLocaleDateString("en-AU", {day:"numeric",month:"long",year:"numeric"});
     const valid = document.getElementById("print-valid");
     return `<div style="font-family:Arial,sans-serif;font-size:16px;line-height:1.6;background:#fff;color:#20212b;padding:24px;max-width:640px;margin:auto">` +
-      paragraph("Galaxy Deal Qualifier", "font-weight:700;font-size:20px") + paragraph("Retail pricing & quotes") +
+      paragraph("Galaxy Deals", "font-weight:700;font-size:20px") + paragraph("Retail pricing & quotes") +
       '<h1 style="font-size:28px;margin:28px 0 16px">Customer Quote</h1>' +
       paragraph("Created: " + date) + (valid.hidden ? "" : paragraph(valid.textContent)) +
       (preparedBy() ? paragraph("Served by " + preparedBy()) : "") + lines +
@@ -5408,7 +5408,7 @@
     { v: "9.1", d: "1 Oct 2026", t: "Service gets its own section, and a new logo",
       items: [
         "<strong>Repair or upgrade has its own Service section in the sidebar</strong>, instead of sitting under Store tools.",
-        "<strong>New Galaxy Deal Qualifier logo</strong> at the top of the sidebar, in a light and a dark version that follow the theme.",
+        "<strong>New Galaxy Deals logo</strong> at the top of the sidebar, in a light and a dark version that follow the theme.",
         "The date at the top of the Deal Qualifier now reads <strong>Sales Kit checked on</strong>, and a notice appears if the Sales Kit hasn\u2019t been checked in the last 24 hours.",
         "No prices, offers or deal rules have changed."
       ] },
@@ -6540,7 +6540,7 @@
 
   const STEPS = [
     {
-      title: "Welcome to the Galaxy Deal Qualifier",
+      title: "Welcome to Galaxy Deals",
       text: "Pick a device and this works out every deal it qualifies for — retail, Education, SMB, trade-in bonuses, ECO vouchers and New Galaxy Club — then builds a quote you can print. Here's the two-minute version.",
       panel: "quote"
     },
