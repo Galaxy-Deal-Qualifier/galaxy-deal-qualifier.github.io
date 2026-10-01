@@ -22,6 +22,7 @@ html body .side-brand .side-mark .brand-logo {
   border: 0;
   border-radius: 0;
   box-shadow: none;
+}
 html[data-theme="dark"] body .side-brand .side-mark {
   background: #3B4057;
   border-color: #545A73;
