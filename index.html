@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10.7
+  Galaxy Deals v10.8
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js"></script>
-<link rel="stylesheet" href="styles.css?v=10.7" />
+<link rel="stylesheet" href="styles.css?v=10.8" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -3440,7 +3440,26 @@
     if (quote.savings > 0) line("You save " + fmt(quote.savings), 13, true);
     y += 8;
     line("This is a quoting aid. Offers and prices may change. Always confirm the final price in POS at the time of purchase.", 9);
-    pdf.save("Galaxy-Deals-Quote-" + new Date().toISOString().slice(0,10) + ".pdf");
+    savePdfFile(pdf, "Galaxy-Deals-Quote-" + new Date().toISOString().slice(0,10) + ".pdf");
+  }
+
+  // Inside the Claude artifact a page can't download by itself, so the PDF goes to the viewer's save
+  // prompt there. Anywhere else (the GitHub site) there is no window.claude and jsPDF saves it.
+  const pdfDownloads = window.claude && typeof window.claude.use === "function"
+    ? window.claude.use("downloads").catch(() => null) : Promise.resolve(null);
+  async function savePdfFile(pdf, name) {
+    if (!(window.claude && typeof window.claude.use === "function")) { pdf.save(name); return; }
+    const downloads = await pdfDownloads;
+    if (!downloads) { printStatus("PDF download isn't available in this view. Use Print instead.", "warn"); return; }
+    try {
+      await downloads.save({ filename: name, data: pdf.output("blob") });
+      printStatus("");
+    } catch (e) {
+      const code = e && e.code;
+      if (code === "declined") return;
+      printStatus(code === "rate_limited" ? "A save prompt is already open."
+        : "Couldn't save the PDF here. Use Print instead.", "warn");
+    }
   }
   document.getElementById("print-pdf").addEventListener("click", downloadQuotePdf);
   document.getElementById("quote-pdf").addEventListener("click", downloadQuotePdf);
@@ -5671,6 +5690,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "10.8", d: "3 Oct 2026", t: "Download PDF works in the Claude artifact",
+      items: [
+        "<strong>Download PDF now works in the Claude artifact.</strong> Harsha\u2019s Download PDF button (on the quote and on the print screen) did nothing there, because the artifact can\u2019t download files by itself. It now opens a save prompt showing the file name and size; accept it to save the quote as a PDF. On the GitHub site it downloads straight away, as before.",
+        "No prices or offers have changed."
+      ] },
     { v: "10.7", d: "2 Oct 2026", t: "Tap a bulletin code to copy it",
       items: [
         "<strong>Tap any bulletin code to copy it</strong>, ready to key into POS. It works wherever a code shows: offer cards, the Sales Kit, Expired Deals, the new-deal and finished-deal banners, quote lines and What\u2019s New. Codes have a dotted underline and a small copy icon, and a \u201cCopied A260006352\u201d message confirms it.",
