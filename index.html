@@ -20,7 +20,7 @@
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=app9" defer></script>
-<link rel="stylesheet" href="styles.css?v=10.5" />
+<link rel="stylesheet" href="styles.css?v=10.5-saleskit" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -114,15 +114,6 @@
   <div class="print-by-line" id="print-by-line" hidden></div>
 </div>
 
-<div class="notices">
-  <div id="expiry-banner" class="expiry-banner" hidden></div>
-  <div id="sync-warning" class="sync-warning" hidden>
-    <div class="sync-warning-inner">
-      <strong><span class="banner-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4 21 19.5H3z"/><path d="M12 10v4M12 17h.01"/></svg></span>Sales Kit updates need review</strong>
-      <div id="sync-warning-body"></div>
-    </div>
-  </div>
-</div>
 
 <main class="shell">
   <div class="page-head">
@@ -131,8 +122,6 @@
       <p class="page-meta"><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>Sales Kit checked on <strong data-sync-date>24 Sept 2026</strong></span><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>Always confirm the final price in POS</span></p>
     </div>
   </div>
-  <button type="button" id="finished-note" class="finished-note" hidden></button>
-  <div id="started-banner" class="started-banner" hidden></div>
 
   <div class="col" id="config-col">
     <section class="card" id="device-card">
@@ -741,6 +730,16 @@
 </section>
 
 <section id="panel-saleskit" class="saleskit" hidden>
+<div class="notices">
+  <div id="expiry-banner" class="expiry-banner" hidden></div>
+  <div id="sync-warning" class="sync-warning" hidden>
+    <div class="sync-warning-inner">
+      <strong><span class="banner-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 4 21 19.5H3z"/><path d="M12 10v4M12 17h.01"/></svg></span>Sales Kit updates need review</strong>
+      <div id="sync-warning-body"></div>
+    </div>
+  </div>
+</div>
+  <div id="started-banner" class="started-banner" hidden></div>
   <div id="finished-banner" class="finished-banner" hidden></div>
   <div class="saleskit-head">
     <div>
@@ -4021,14 +4020,11 @@
 
   function renderFinishedDeals() {
     const banner = document.getElementById("finished-banner");
-    const note = document.getElementById("finished-note");
     const dot = document.getElementById("saleskit-dot");
     const done = finishedDeals(false);
-    // Nothing outstanding: the home page notice and the tab dot go, and the Sales Kit keeps a
+    // Nothing outstanding: the tab dot goes, and the Sales Kit keeps a
     // one-line record of what was cleared for as long as the deals are still in the window.
     if (!done.length) {
-      note.hidden = true;
-      note.innerHTML = "";
       if (dot) dot.hidden = true;
       const cleared = finishedDeals(true);
       if (!cleared.length) {
@@ -4056,24 +4052,14 @@
     banner.hidden = false;
     document.getElementById("finished-done").addEventListener("click", dismissFinishedDeals);
 
-    // A nudge on the Deal Qualifier, and a dot on the tab so it is visible from anywhere.
-    note.innerHTML = `<span class="fn-text"><strong>${icoHtml("stop", "banner-ico")}DEAL FINISHED, CHANGE TICKETS TO BAU</strong> — `
-      + `${done.length} deal${done.length === 1 ? " has" : "s have"} finished.</span>`
-      + `<span class="fn-go">See them in the Sales Kit</span>${icoHtml("chev", "banner-ico")}`;
-    note.hidden = false;
     if (dot) dot.hidden = false;
   }
 
-  document.getElementById("finished-note").addEventListener("click", () => {
-    const tab = document.querySelector('.tab[data-panel="saleskit"]');
-    if (tab) tab.click();
-  });
   renderFinishedDeals();
 
   // ---- deals that have just started ----
   // The mirror of the one above: the deal is live and the shelf is still at retail. Shown on the
-  // day it starts and the day after, on the Deal Qualifier only -- the Sales Kit already lists
-  // these among the active offers, so repeating them there would say nothing new.
+  // day it starts and the day after, in the Sales Kit alongside ticket updates.
   const PROMO_DISMISS_KEY = "galaxyPromoDismissed";
 
   function promoDismissed() {
@@ -6732,7 +6718,7 @@
   sheetBar.className='sheet-sync-controls';
   sheetBar.style.cssText='padding:12px 16px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink-dim);font-size:13px';
   sheetBar.innerHTML='<button type="button" id="sheet-refresh" style="margin:0 10px 0 0">Refresh sheet data</button><span id="sheet-message" role="status">Connecting to Google Sheets…</span>';
-  document.querySelector('.notices').append(sheetBar);
+  document.querySelector('#panel-saleskit .notices').append(sheetBar);
   const sheetMessage=sheetBar.querySelector('#sheet-message');
   let sheetSequence=0, sheetRefreshId=0;
   function sheetRead(name){
