@@ -20,7 +20,7 @@
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=app9" defer></script>
-<link rel="stylesheet" href="styles.css?v=10.5-saleskit" />
+<link rel="stylesheet" href="styles.css?v=10.5-saleskit-quote" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -91,7 +91,7 @@
 <div class="main">
 <div id="print-bar">
   <div class="print-bar-inner">
-    <span class="print-bar-msg">Press <kbd>Ctrl</kbd>+<kbd>P</kbd> (or <kbd>⌘</kbd>+<kbd>P</kbd>) to print this quote.</span>
+    <span class="print-bar-msg" hidden></span>
     <span class="print-bar-actions">
       <span class="print-by">
         <label for="print-by-input">Served by</label>
@@ -100,6 +100,7 @@
       <span id="print-copy-status" class="print-copy-status"></span>
       <button type="button" id="print-copy">Copy quote</button>
       <button type="button" id="print-email">Email quote</button>
+      <button type="button" id="print-new">New quote</button>
       <button type="button" id="print-back">Back to editing</button>
     </span>
   </div>
@@ -355,6 +356,7 @@
 
   <div class="quote-bar" id="quote-bar">
     <span class="quote-bar-total"><span class="quote-bar-label">Total</span><span id="quote-bar-total">A$0.00</span></span>
+    <button type="button" class="clear-btn" id="quote-bar-reset">Reset quote</button>
     <button type="button" class="clear-btn" id="quote-bar-jump">View quote</button>
     <button type="button" class="print-btn" id="quote-bar-print"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print</button>
   </div>
@@ -3168,12 +3170,16 @@
   }
   addBtn.addEventListener("click", addSelectionToQuote);
   addBtn2.addEventListener("click", addSelectionToQuote);
-  clearBtn.addEventListener("click", () => {
+  function resetQuote() {
     cart = [];
     clearPreparedBy();
     renderLedger();
     renderPromoPreview();
-  });
+    printStatus("");
+    document.getElementById("print-copy-status").textContent = "";
+  }
+  clearBtn.addEventListener("click", resetQuote);
+  document.getElementById("quote-bar-reset").addEventListener("click", resetQuote);
 
   // ---- print quote ----
   // This page runs in a sandboxed frame with no allow-modals, so window.print() and alert()
@@ -3250,6 +3256,8 @@
   function setPrintView(on) {
     document.body.classList.toggle("print-view", on);
     if (on) { stampPrintDate(); renderPreparedBy(); window.scrollTo(0, 0); }
+    document.querySelector(".print-bar-msg").hidden = !document.body.classList.contains("print-compare");
+    document.getElementById("print-new").hidden = document.body.classList.contains("print-compare");
   }
 
   printBtn.addEventListener("click", () => {
@@ -3288,7 +3296,15 @@
     const cmpPanel = document.getElementById("panel-compare");
     if (cmpPanel) { cmpPanel.classList.remove("cmp-fitted"); cmpPanel.style.removeProperty("--cmp-fit"); }
     const msg = document.querySelector(".print-bar-msg");
-    if (msg) msg.innerHTML = "Press <kbd>Ctrl</kbd>+<kbd>P</kbd> (or <kbd>\u2318</kbd>+<kbd>P</kbd>) to print this quote.";
+    if (msg) { msg.textContent = ""; msg.hidden = true; }
+  });
+
+  document.getElementById("print-new").addEventListener("click", () => {
+    setPrintView(false);
+    document.body.classList.remove("print-compare");
+    resetQuote();
+    document.querySelector('.tab[data-panel="quote"]').click();
+    window.scrollTo(0, 0);
   });
 
   document.getElementById("print-copy").addEventListener("click", async () => {

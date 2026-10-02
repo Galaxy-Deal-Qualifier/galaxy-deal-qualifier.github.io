@@ -1651,3 +1651,8 @@ body.print-view .deal-stage-heading { display: none; }
 /* Sales Kit owns offer alerts and sync controls. */
 #panel-saleskit > .notices { max-width: none; padding: 0; margin: 0 0 16px; }
 #panel-saleskit > .started-banner { margin-bottom: 16px; }
+
+@media (max-width: 620px) {
+  .quote-bar { flex-wrap: wrap; gap: 8px; }
+  .quote-bar-total { flex: 1 0 100%; }
+}
