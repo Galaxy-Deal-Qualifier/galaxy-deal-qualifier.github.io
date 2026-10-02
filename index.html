@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10.6
+  Galaxy Deals v10.7
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js"></script>
-<link rel="stylesheet" href="styles.css?v=10.6" />
+<link rel="stylesheet" href="styles.css?v=10.7" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -2056,6 +2056,115 @@
     const variant = mo.variants.find(v => v.v === vs.value) || mo.variants[0];
     return { m: mo.m, n: mo.n, v: variant.v, p: variant.p };
   }
+
+  // ---- Tap to copy bulletin codes ----
+  // Any bulletin code on the page copies itself when tapped, ready to key into POS. Codes are wrapped
+  // as panels draw, so every place that shows one (offer cards, the Sales Kit, quote lines, banners,
+  // What's New) gets it without each template knowing.
+  const BULLETIN_RE = (() => {
+    const extra = {};
+    PROMOS.concat(CURATED_OFFERS).forEach(o => {
+      const b = String((o && o.bulletin) || "").trim();
+      if (/^[A-Z]{2,4}\d{2,}$/.test(b)) extra[b] = true;   // RTL05, RPG31: the A-numbers are matched below
+    });
+    return new RegExp("\\b(A\\d{9}" + Object.keys(extra).map(k => "|" + k).join("") + ")\\b", "g");
+  })();
+  const BULLETIN_SKIP = "script, style, textarea, input, select, option, svg, title, .bul-copy, .bul-toast, [contenteditable]";
+
+  function bulletinWrap(root) {
+    const found = [];
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: n => {
+        BULLETIN_RE.lastIndex = 0;
+        return BULLETIN_RE.test(n.nodeValue) && n.parentElement && !n.parentElement.closest(BULLETIN_SKIP)
+          ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+      }
+    });
+    while (walker.nextNode()) found.push(walker.currentNode);
+    found.forEach(n => {
+      const text = n.nodeValue, frag = document.createDocumentFragment();
+      let last = 0;
+      BULLETIN_RE.lastIndex = 0;
+      let m;
+      while ((m = BULLETIN_RE.exec(text))) {
+        frag.appendChild(document.createTextNode(text.slice(last, m.index)));
+        const b = document.createElement("span");
+        b.className = "bul-copy";
+        b.textContent = m[0];
+        b.setAttribute("role", "button");
+        b.setAttribute("tabindex", "0");
+        b.setAttribute("title", "Tap to copy " + m[0]);
+        frag.appendChild(b);
+        last = m.index + m[0].length;
+      }
+      frag.appendChild(document.createTextNode(text.slice(last)));
+      n.parentNode.replaceChild(frag, n);
+    });
+  }
+
+  function bulletinToast(msg) {
+    let t = document.getElementById("bul-toast");
+    if (!t) {
+      t = document.createElement("div");
+      t.id = "bul-toast"; t.className = "bul-toast"; t.setAttribute("role", "status");
+      document.body.appendChild(t);
+    }
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(bulletinToast.timer);
+    bulletinToast.timer = setTimeout(() => t.classList.remove("show"), 1600);
+  }
+
+  function bulletinCopy(el) {
+    const code = el.textContent.trim();
+    const done = ok => {
+      el.classList.remove("copied", "failed");
+      void el.offsetWidth;   // restart the flash on a second tap
+      el.classList.add(ok ? "copied" : "failed");
+      setTimeout(() => el.classList.remove("copied", "failed"), 1200);
+      if (ok) { bulletinToast("Copied " + code); return; }
+      // Copying is blocked in some frames: select the code so a long-press or Ctrl+C finishes the job.
+      const r = document.createRange(); r.selectNodeContents(el);
+      const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+      bulletinToast("Couldn't copy here: " + code + " is selected, copy it by hand");
+    };
+    // The old copy command runs inside the tap itself, which the artifact's frame allows; the
+    // Clipboard API is the second try.
+    let ok = false;
+    const ta = document.createElement("textarea");
+    ta.value = code; ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
+    const focused = document.activeElement;
+    document.body.appendChild(ta); ta.select();
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    if (focused && focused.focus) focused.focus({ preventScroll: true });
+    if (ok || !navigator.clipboard) { done(ok); return; }
+    navigator.clipboard.writeText(code).then(() => done(true), () => done(false));
+  }
+
+  // Capture phase, so a code inside a label, a card or a button copies without also ticking,
+  // opening or pressing the thing around it.
+  document.addEventListener("click", e => {
+    const b = e.target.closest && e.target.closest(".bul-copy");
+    if (!b) return;
+    e.preventDefault(); e.stopPropagation();
+    bulletinCopy(b);
+  }, true);
+  document.addEventListener("keydown", e => {
+    const b = e.target.closest && e.target.closest(".bul-copy");
+    if (!b || (e.key !== "Enter" && e.key !== " ")) return;
+    e.preventDefault(); e.stopPropagation();
+    bulletinCopy(b);
+  }, true);
+
+  let bulletinQueued = false;
+  new MutationObserver(() => {
+    if (bulletinQueued) return;
+    bulletinQueued = true;
+    requestAnimationFrame(() => { bulletinQueued = false; bulletinWrap(document.body); });
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
+  bulletinWrap(document.body);
 
   // ---- Compare autofill ----
   // Compare opens on what the consultant is already working with: the device being quoted goes in
@@ -5562,6 +5671,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "10.7", d: "2 Oct 2026", t: "Tap a bulletin code to copy it",
+      items: [
+        "<strong>Tap any bulletin code to copy it</strong>, ready to key into POS. It works wherever a code shows: offer cards, the Sales Kit, Expired Deals, the new-deal and finished-deal banners, quote lines and What\u2019s New. Codes have a dotted underline and a small copy icon, and a \u201cCopied A260006352\u201d message confirms it.",
+        "If a browser blocks copying, the code is selected instead, so a long-press or Ctrl+C finishes the job.",
+        "No prices or offers have changed."
+      ] },
     { v: "10.6", d: "2 Oct 2026", t: "Sales Kit: Tab S10 Lite $100 off and S26 $600 trade-in bonus",
       items: [
         "<strong>Tab S10 Lite: save $100</strong> (A260006441), 3 to 14 Oct 2026. 128GB Wi-Fi $629 \u2192 $529, 256GB Wi-Fi and 128GB LTE $799 \u2192 $699, 256GB LTE $999 \u2192 $899. Not with Education or SMB.",
