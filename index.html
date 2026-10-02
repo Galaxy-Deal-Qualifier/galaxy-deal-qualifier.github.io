@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10.8
+  Galaxy Deals v10.9
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -14,13 +14,13 @@
 <meta charset="utf-8" />
 <title>Galaxy Deals</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link id="brand-favicon" rel="icon" type="image/png" href="logo.png?v=transparent1" />
+<link id="brand-favicon" rel="icon" type="image/png" href="logo-96.png?v=1" />
 <link id="brand-apple-icon" rel="apple-touch-icon" sizes="180x180" href="icon-light-180.png?v=app9" />
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
-<script src="jspdf.umd.min.js"></script>
-<link rel="stylesheet" href="styles.css?v=10.8" />
+<script src="jspdf.umd.min.js" defer></script>
+<link rel="stylesheet" href="styles.css?v=10.9" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -55,7 +55,7 @@
 <div class="app">
 <aside class="side" aria-label="Galaxy Deals">
   <div class="side-brand">
-    <span class="side-mark" aria-hidden="true"><img class="brand-logo" src="logo.png?v=logo7" alt="" width="24" height="24" /></span>
+    <span class="side-mark" aria-hidden="true"><img class="brand-logo" src="logo-96.png?v=1" alt="" width="24" height="24" /></span>
     <span class="side-name">Galaxy Deals<small>Retail pricing &amp; quotes</small></span>
   </div>
 
@@ -5690,6 +5690,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "10.9", d: "3 Oct 2026", t: "Faster first load; sheet sync moved to Store & Stock",
+      items: [
+        "<strong>The page opens faster.</strong> The shared trade-in sheet (about 8,600 rows) froze the page for most of a second while it was read; it now reads in a fraction of that, and only after the page has finished loading, so you can start quoting straight away. The sidebar logo is now a small copy (16 KB, was 1.7 MB), and the PDF library no longer holds up the first paint.",
+        "<strong>Refresh sheet data has moved to Store &amp; Stock</strong>, inside the Stock on Hand card, with its status line (trade-in models loaded and your store\u2019s stock).",
+        "No prices or offers have changed."
+      ] },
     { v: "10.8", d: "2 Oct 2026", t: "Download PDF works in the Claude artifact",
       items: [
         "<strong>Download PDF now works in the Claude artifact.</strong> Harsha\u2019s Download PDF button (on the quote and on the print screen) did nothing there, because the artifact can\u2019t download files by itself. It now opens a save prompt showing the file name and size; accept it to save the quote as a PDF. On the GitHub site it downloads straight away, as before.",
@@ -7004,9 +7010,9 @@
   const sheetStores = {'SES Werribee':'Werribee','SES Highpoint':'Highpoint','SES Chadstone':'Chandstone','SS Doncaster':'Doncaster','SS Fountain Gate':'Fountain Gate'};
   const sheetBar = document.createElement('div');
   sheetBar.className='sheet-sync-controls';
-  sheetBar.style.cssText='padding:12px 16px;margin:12px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink-dim);font-size:13px';
-  sheetBar.innerHTML='<button type="button" id="sheet-refresh" style="margin:0 10px 0 0">Refresh sheet data</button><span id="sheet-message" role="status">Connecting to Google Sheets…</span>';
-  document.querySelector('#panel-saleskit .notices').append(sheetBar);
+  sheetBar.style.cssText='padding:12px 16px;margin:14px 0 0;border:1px solid var(--line);border-radius:10px;background:var(--surface-2);color:var(--ink-dim);font-size:13px';
+  sheetBar.innerHTML='<button type="button" id="sheet-refresh" class="clear-btn" style="margin:0 10px 6px 0">Refresh sheet data</button><span id="sheet-message" role="status">Connecting to Google Sheets…</span>';
+  (document.getElementById('stock-meta')||document.querySelector('#panel-store .card:last-of-type')).after(sheetBar);
   const sheetMessage=sheetBar.querySelector('#sheet-message');
   let sheetSequence=0, sheetRefreshId=0;
   function sheetRead(name){
@@ -7027,6 +7033,7 @@
       document.head.append(script);
     });
   }
+  const sheetDateFormat=new Intl.DateTimeFormat('en',{timeZone:'Australia/Melbourne',year:'numeric',month:'2-digit',day:'2-digit'});
   function tradeFromSheet(rows){
     if(rows.length<2)throw new Error('Trade-In has no values.');
     const h=rows[0].map(x=>String(x).toLowerCase().trim()),col=name=>h.indexOf(name.toLowerCase());
@@ -7042,9 +7049,9 @@
       if(!model||!size||!Number.isFinite(gwo)||!Number.isFinite(non))return;
       const rawDate=String(r[col('expiryDate')]||'');const parsedDate=new Date(rawDate);
       if(Number.isNaN(parsedDate.getTime()))return;
-      const end=parsedDate.toLocaleDateString('en-CA',{timeZone:'Australia/Melbourne',year:'numeric',month:'2-digit',day:'2-digit'});
-      // ISO date via parts avoids locale-dependent separators.
-      const parts=new Intl.DateTimeFormat('en',{timeZone:'Australia/Melbourne',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(parsedDate);
+      // ISO date via parts avoids locale-dependent separators. One formatter serves every row:
+      // building one per row froze the page for most of a second on the ~8,600-row sheet.
+      const parts=sheetDateFormat.formatToParts(parsedDate);
       const part=type=>parts.find(p=>p.type===type).value;const iso=part('year')+'-'+part('month')+'-'+part('day');
       const key=JSON.stringify([brand,cat,model]),variantKey=key+'::'+size;
       const signature=JSON.stringify([gwo,non,iso]);
@@ -7102,7 +7109,9 @@
   }
   sheetBar.querySelector('button').addEventListener('click',refreshSheetData);
   document.querySelectorAll('[data-store-select]').forEach(el=>el.addEventListener('change',()=>setTimeout(refreshSheetData,0)));
-  refreshSheetData();
+  // Ask Google once the page has finished loading, so the page is usable while the sheets come in.
+  if(document.readyState==='complete')setTimeout(refreshSheetData,0);
+  else window.addEventListener('load',()=>setTimeout(refreshSheetData,0),{once:true});
 
 })();
 
