@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10.9
+  Galaxy Deals v11
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=10.9" />
+<link rel="stylesheet" href="styles.css?v=11" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -59,7 +59,7 @@
     <span class="side-name">Galaxy Deals<small>Retail pricing &amp; quotes</small></span>
   </div>
 
-  <nav class="tabs" role="tablist" aria-label="Sections" aria-orientation="vertical"><div class="tabs-group"><span class="nav-group-label">Quote</span><button type="button" class="tab" data-panel="quote" role="tab" aria-selected="true"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-2.2-1.4-2.1 1.4-2.2-1.4-2.2 1.4-2.3-1.4z"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"/></svg></span><span>Customer Quote</span></button><button type="button" class="tab" data-panel="builder" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Deal Builder</span></button></div>
+  <nav class="tabs" role="tablist" aria-label="Sections" aria-orientation="vertical"><div class="tabs-group gs-group"><button type="button" class="tab gs-open" id="gs-open" aria-haspopup="dialog"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span><span>Search</span><kbd class="gs-kbd" aria-hidden="true">/</kbd></button></div><div class="tabs-group"><span class="nav-group-label">Quote</span><button type="button" class="tab" data-panel="quote" role="tab" aria-selected="true"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-2.2-1.4-2.1 1.4-2.2-1.4-2.2 1.4-2.3-1.4z"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"/></svg></span><span>Customer Quote</span></button><button type="button" class="tab" data-panel="builder" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Deal Builder</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Products & Offers</span><button type="button" class="tab" data-panel="compare" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="7" height="15" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="15" rx="1.5"/></svg></span><span>Compare</span></button><button type="button" class="tab" data-panel="pricecheck" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M7 7l-3 7a3.2 3.2 0 0 0 6 0zM17 7l-3 7a3.2 3.2 0 0 0 6 0zM12 4v16M8.500 20h7"/></svg></span><span>Price Check</span></button><button type="button" class="tab" data-panel="saleskit" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span>Sales Kit</span><span class="tab-dot danger" id="saleskit-dot" hidden></span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Store Tools</span><button type="button" class="tab" data-panel="store" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></svg></span><span>Store &amp; Stock</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Service</span><button type="button" class="tab" data-panel="service" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.5 6.2a4.2 4.2 0 0 0-5.3 5.3L4 16.7V20h3.3l5.2-5.2a4.2 4.2 0 0 0 5.3-5.3l-2.7 2.7-2.4-.6-.6-2.4z"/></svg></span><span>Repair or Upgrade</span></button></div>
@@ -215,6 +215,28 @@
               </div>
             </div>
           </div>
+          <details class="ti-check" id="ti1-check">
+            <summary>Condition checklist <span class="ti-check-sum" data-sum></span></summary>
+            <p class="ti-check-lead">Tick anything that applies to the customer’s device.</p>
+            <p class="ti-check-group">Asurion won’t take it</p>
+            <div class="ti-check-list">
+              <label class="ti-check-item"><input type="checkbox" data-block="power" /><span>Won’t power on</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="liquid" /><span>Liquid damage</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="parts" /><span>Parts missing</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="locks" /><span>Find My, Google or Samsung account lock still on</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="stolen" /><span>Reported lost or stolen (IMEI blocked)</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="other" /><span>Overseas model, jailbroken or not genuine</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="owner" /><span>Not theirs to sell (leased, or finance still owing)</span></label>
+            </div>
+            <p class="ti-check-group">Not working order</p>
+            <div class="ti-check-list">
+              <label class="ti-check-item"><input type="checkbox" data-damage="screen" /><span>Cracked screen or back glass</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-damage="display" /><span>Display faults (lines, dead spots, discolouring)</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-damage="body" /><span>Bent or cracked frame</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-damage="function" /><span>Buttons, cameras, speakers, charging or touch not working</span></label>
+            </div>
+            <p class="ti-check-note">The first group is from Samsung’s Trade-In terms. The second is a guide: Asurion’s own questions and final assessment decide the grade.</p>
+          </details>
           <div class="grid-2">
             <div>
               <label class="field-label" for="ti1-desc">Shows on the quote as</label>
@@ -261,6 +283,28 @@
               </div>
             </div>
           </div>
+          <details class="ti-check" id="ti2-check">
+            <summary>Condition checklist <span class="ti-check-sum" data-sum></span></summary>
+            <p class="ti-check-lead">Tick anything that applies to the customer’s device.</p>
+            <p class="ti-check-group">Asurion won’t take it</p>
+            <div class="ti-check-list">
+              <label class="ti-check-item"><input type="checkbox" data-block="power" /><span>Won’t power on</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="liquid" /><span>Liquid damage</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="parts" /><span>Parts missing</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="locks" /><span>Find My, Google or Samsung account lock still on</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="stolen" /><span>Reported lost or stolen (IMEI blocked)</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="other" /><span>Overseas model, jailbroken or not genuine</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-block="owner" /><span>Not theirs to sell (leased, or finance still owing)</span></label>
+            </div>
+            <p class="ti-check-group">Not working order</p>
+            <div class="ti-check-list">
+              <label class="ti-check-item"><input type="checkbox" data-damage="screen" /><span>Cracked screen or back glass</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-damage="display" /><span>Display faults (lines, dead spots, discolouring)</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-damage="body" /><span>Bent or cracked frame</span></label>
+              <label class="ti-check-item"><input type="checkbox" data-damage="function" /><span>Buttons, cameras, speakers, charging or touch not working</span></label>
+            </div>
+            <p class="ti-check-note">The first group is from Samsung’s Trade-In terms. The second is a guide: Asurion’s own questions and final assessment decide the grade.</p>
+          </details>
           <div class="grid-2">
             <div>
               <label class="field-label" for="ti2-desc">Shows on the quote as</label>
@@ -659,6 +703,7 @@
     <span class="pc-h-sub" id="pc-retail-when"></span>
   </div>
   <div id="pc-retail" class="pc-tiles"></div>
+  <div id="pc-match" class="card pc-match" aria-live="polite" hidden></div>
 
   <div class="pc-section-head">
     <h3 class="pc-h">Telcos</h3>
@@ -2069,7 +2114,7 @@
     });
     return new RegExp("\\b(A\\d{9}" + Object.keys(extra).map(k => "|" + k).join("") + ")\\b", "g");
   })();
-  const BULLETIN_SKIP = "script, style, textarea, input, select, option, svg, title, .bul-copy, .bul-toast, [contenteditable]";
+  const BULLETIN_SKIP = "script, style, textarea, input, select, option, svg, title, .bul-copy, .bul-toast, .gs-overlay, [contenteditable]";
 
   function bulletinWrap(root) {
     const found = [];
@@ -2777,6 +2822,7 @@
         slot.val.value = "";
       }
       slot.filled = null;
+      tiCheckApply(slot, fromPicker);
       return;
     }
 
@@ -2826,6 +2872,7 @@
     slot.status.className = cls;
     slot.status.innerHTML = parts.join(" \u00b7 ") + "." + endTag + extra;
     slot.status.hidden = false;
+    tiCheckApply(slot, fromPicker);
   }
 
   function tiRefreshAll(fromPicker) { tiSlots.forEach(s => tiRefresh(s, fromPicker)); }
@@ -2850,6 +2897,40 @@
     }));
   });
 
+
+  // ---- trade-in condition checklist ----
+  // Ticks in the first group make the device ineligible, so the credit comes off. Ticks in the second
+  // switch Condition to not working order, which refills the value with Asurion's not-working figure.
+  function tiCheckApply(slot, fromPicker) {
+    if (!slot.blocked || !slot.blocked.length) return;
+    if (fromPicker) { slot.val.value = ""; if (slot.filled !== null) slot.filled = 0; }
+    const lockOnly = slot.blocked.every(b => /lock/i.test(b));
+    slot.status.className = "ti-status bundle-status warn";
+    slot.status.innerHTML = lockOnly
+      ? "<strong>Account lock still on.</strong> Asurion can\u2019t accept a locked device. Ask the customer to turn off Find My, "
+        + "Google and Samsung account locks before trading it in. No credit until it\u2019s off."
+      : "<strong>Asurion won\u2019t take this device</strong> (" + escapeHtml(slot.blocked.join("; ")) + "), so there is no trade-in credit.";
+    slot.status.hidden = false;
+  }
+  tiSlots.forEach(slot => {
+    const box = document.getElementById("ti" + slot.n + "-check");
+    if (!box) return;
+    slot.blocked = [];
+    box.addEventListener("change", () => {
+      const ticked = kind => Array.from(box.querySelectorAll("[data-" + kind + "]:checked")).map(i => i.closest("label").textContent.trim());
+      slot.blocked = ticked("block");
+      const damaged = ticked("damage").length > 0;
+      // Only undo a "not working" the checklist set itself; a choice made in the picker stays.
+      if (damaged) slot.cond.value = "non";
+      else if (slot.checkSetNon) slot.cond.value = "gwo";
+      slot.checkSetNon = damaged;
+      const sum = box.querySelector("[data-sum]");
+      sum.textContent = slot.blocked.length ? "Not accepted" : damaged ? "Not working order" : "";
+      sum.className = "ti-check-sum" + (slot.blocked.length ? " bad" : damaged ? " warn" : "");
+      tiRefresh(slot, true);
+      renderLedger();
+    });
+  });
 
   // ---- trade-in search ----
   // Type any part of a model and its storage ("s23 ultra 256", "iphone 14 pro", "watch6") and pick
@@ -5690,6 +5771,13 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11", d: "3 Oct 2026", t: "Search everything, trade-in condition checklist, price match request",
+      items: [
+        "<strong>Search everything.</strong> A Search button at the top of the sidebar (or press <strong>/</strong>, or Ctrl+K) finds any page, device, offer or bulletin code, repair model or trade-in, and takes you straight to it. Picking a device opens it in the quote; a bulletin code opens the Sales Kit filtered to it; a repair opens Repair or Upgrade on that model; a trade-in fills the next free trade-in slot.",
+        "<strong>Trade-in condition checklist.</strong> Each trade-in device has a checklist under its pickers. The first group (won\u2019t power on, liquid damage, parts missing, account locks still on, lost or stolen, overseas or not genuine, not theirs to sell) is from Samsung\u2019s Trade-In terms: ticking any of them takes the credit off, with a reminder to remove account locks first. The second group (cracked glass, display faults, bent frame, things not working) switches the device to not working order and uses that value. Asurion\u2019s own questions still decide the final grade.",
+        "<strong>Price match request.</strong> On Price Check, when a retailer has the device for less than us, a card sums it up for your manager: the retailer, their price and listing, our price and how much a match takes off, with a short list of what to check first and a Copy request button. A Harvey Norman price you type in counts too.",
+        "No prices or offers have changed."
+      ] },
     { v: "10.9", d: "3 Oct 2026", t: "Faster first load; sheet sync moved to Store & Stock",
       items: [
         "<strong>The page opens faster.</strong> The shared trade-in sheet (about 8,600 rows) froze the page for most of a second while it was read; it now reads in a fraction of that, and only after the page has finished loading, so you can start quoting straight away. The sidebar logo is now a small copy (16 KB, was 1.7 MB), and the PDF library no longer holds up the first paint.",
@@ -6876,6 +6964,7 @@
       if (theirs === null) { out.textContent = ""; out.className = "pc-pill"; return; }
       pill(out, Math.round((theirs - ours) * 100) / 100, "there");
     });
+    pcMatchRender(sel, ours);
 
     const term = pcTerm();
     const sim = pcNum(pcEl("sim"));
@@ -6952,7 +7041,219 @@
     }
     pcRender();
   }
+  // ---- Price match request ----
+  // The lowest retailer price under ours, summed up for a manager. It reads the tiles as they stand,
+  // so a price typed in (Harvey Norman, or an in-store price) counts the same as a collected one.
+  function pcMatchRender(sel, ours) {
+    const box = pcEl("match");
+    if (!box) return;
+    let best = null;
+    PC_RETAILERS.forEach(r => {
+      const theirs = pcNum(pcEl("retail").querySelector(`[data-retail="${r[0]}"]`));
+      if (theirs !== null && theirs > 0 && theirs < ours && (!best || theirs < best.price)) best = { id: r[0], name: r[1], price: theirs };
+    });
+    if (!best) { box.hidden = true; box.innerHTML = ""; return; }
+    const hit = (COMPETITORS.retail[best.id] || {})[sel.m + "|" + sel.v];
+    const url = hit && Number(hit[0]) === best.price ? hit[1] : "";   // the listing only backs the figure it was collected with
+    const gap = Math.round((ours - best.price) * 100) / 100;
+    const device = "Samsung " + sel.n + (sel.v === "Standard" ? "" : " " + sel.v);
+    const mode = pc.mode === "edu" ? " (Education price)" : pc.mode === "smb" ? " (SMB price)" : "";
+    const today = new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+    const text = ["Price match request \u2014 " + today, device,
+      best.name + ": " + fmt(best.price) + (url ? " \u2014 " + url : " (price typed in, screenshot attached)"),
+      "Our price: " + fmt(ours) + mode,
+      "A match takes " + fmt(gap) + " off"].join("\n");
+    box.hidden = false;
+    box.innerHTML = `<div class="pc-match-head"><p class="card-title">Price Match Request</p>`
+      + `<button type="button" class="clear-btn" data-match-copy>Copy request</button></div>`
+      + `<p class="pc-match-line"><strong>${escapeHtml(best.name)}</strong> has it for <strong>${fmt(best.price)}</strong>, `
+      + `<strong>${fmt(gap)}</strong> under our ${fmt(ours)}${escapeHtml(mode)}.`
+      + (url ? ` <a class="pc-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Their listing</a>` : "") + `</p>`
+      + `<p class="pc-match-sub">Before you ask your manager:</p><ul class="pc-match-list">`
+      + `<li>Screenshot the listing with the price, and today\u2019s date if it shows.</li>`
+      + `<li>Same model, storage and colour, and in stock with them.</li>`
+      + `<li>Not a clearance, bundle, member-only or marketplace price.</li></ul>`
+      + `<span class="pc-match-status" data-match-status role="status"></span>`;
+    box.querySelector("[data-match-copy]").onclick = () => {
+      const status = box.querySelector("[data-match-status]");
+      copyPlain(text).then(ok => {
+        status.textContent = ok ? "Copied \u2014 paste it into a message to your manager." : "Copying was blocked here. Select the text above and copy it by hand.";
+      });
+    };
+  }
+
+  // Copy text from a tap. The old copy command runs inside the tap, which the artifact's frame
+  // allows; the Clipboard API is the fallback.
+  function copyPlain(text) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    if (ok || !navigator.clipboard) return Promise.resolve(ok);
+    return navigator.clipboard.writeText(text).then(() => true, () => false);
+  }
+
   // ---- end Price check ----
+
+  // ---- Search everything ----
+  // One box for pages, devices, offers and bulletin codes, repairs and trade-ins. Built fresh on
+  // every open, so sheet-loaded trade-ins and offers that started or ended today are current.
+  (function () {
+    const openBtn = document.getElementById("gs-open");
+    if (!openBtn) return;
+    const overlay = document.createElement("div");
+    overlay.className = "gs-overlay";
+    overlay.hidden = true;
+    overlay.innerHTML = `<div class="gs-dialog" role="dialog" aria-modal="true" aria-label="Search everything">`
+      + `<div class="gs-field search-wrap"><input type="search" id="gs-input" autocomplete="off" spellcheck="false" `
+      + `placeholder="Devices, offers, bulletin codes, repairs, trade-ins…" aria-controls="gs-results" /></div>`
+      + `<div id="gs-results" class="gs-results" role="listbox" aria-label="Results"></div>`
+      + `<p class="gs-foot"><kbd>↑</kbd><kbd>↓</kbd> to move · <kbd>Enter</kbd> to open · <kbd>Esc</kbd> to close</p></div>`;
+    document.body.appendChild(overlay);
+    const input = overlay.querySelector("#gs-input"), list = overlay.querySelector("#gs-results");
+    let items = [], hits = [], active = 0, lastFocus = null;
+
+    const goTab = panel => { const t = document.querySelector(`.tab[data-panel="${panel}"]`); if (t) t.click(); };
+    const norm = x => String(x).toLowerCase().replace(/\+/g, " plus ");
+    const keyOf = (...parts) => { const w = norm(parts.join(" ")); return w + " " + w.replace(/[^a-z0-9]/g, ""); };
+
+    function build() {
+      const out = [];
+      document.querySelectorAll(".side .tab[data-panel]").forEach(t => {
+        const label = t.textContent.trim();
+        out.push({ type: "Page", rank: 0, label: label, sub: "Go to page", key: keyOf(label, "page"), go: () => t.click() });
+      });
+      models.forEach(mo => {
+        const low = mo.variants.reduce((b, x) => x.p < b ? x.p : b, mo.variants[0].p);
+        out.push({ type: "Device", rank: 1, label: mo.n, sub: mo.variants.map(v => v.v).join(" · ") + " · from " + fmt(low),
+          key: keyOf(mo.n, mo.cat, mo.variants.map(v => v.v).join(" ")),
+          go: () => {
+            goTab("quote");
+            deviceSelect.value = mo.m;
+            populateVariants();
+            selectedColour = "";
+            renderColourField();
+            renderPromoPreview();
+            deviceSelect.scrollIntoView({ block: "center" });
+          } });
+      });
+      const seen = {};
+      PROMOS.concat(CURATED_OFFERS).forEach(o => {
+        if (!o || !o.name || seen[o.id]) return;
+        seen[o.id] = true;
+        const live = dateValid(o), ended = o.end && TODAY > o.end;
+        const when = ended ? "ended " + fmtDate(o.end) : o.start && TODAY < o.start ? "starts " + fmtDate(o.start) : o.end ? "ends " + fmtDate(o.end) : "ongoing";
+        out.push({ type: "Offer", rank: live ? 2 : 5, label: o.name, sub: (o.bulletin ? o.bulletin + " · " : "") + when,
+          key: keyOf(o.name, o.bulletin || "", "offer deal bonus"),
+          go: () => {
+            goTab("saleskit");
+            const f = document.getElementById("saleskit-filter");
+            if (f) { f.value = o.bulletin || o.name; f.dispatchEvent(new Event("input", { bubbles: true })); f.scrollIntoView({ block: "center" }); }
+          } });
+      });
+      if (typeof REPAIR !== "undefined") REPAIR.products.forEach(p => {
+        const code = String(p.k).split(" ")[0];
+        const top = typeof svcScreenMax === "function" ? svcScreenMax(p) : 0;
+        out.push({ type: "Repair", rank: 3, label: p.n + " repair", sub: code + (top ? " · screen up to " + fmt(top) : ""),
+          key: keyOf(p.n, p.k, "repair fix screen battery"),
+          go: () => {
+            goTab("service");
+            const si = document.getElementById("svc-search");
+            if (!si) return;
+            si.value = code;
+            si.dispatchEvent(new Event("input"));
+            const first = document.querySelector("#svc-suggest [data-hit]");
+            if (first) first.click();
+            si.scrollIntoView({ block: "center" });
+          } });
+      });
+      TRADEIN_GROUPS.forEach(g => g[3].forEach(v => {
+        const label = g[2] + " " + v[0] + tiSizeUnit(g[1]);
+        out.push({ type: "Trade-in", rank: 4, label: label, sub: (v[1] > 0 ? fmt(v[1]) + " in good working order" : "no working-order value") + " · " + g[0],
+          key: keyOf(g[0], g[1], label, "trade in tradein trade-up"),
+          go: () => {
+            goTab("quote");
+            // Trade-in has to be switched on in the quote for the slot to show and count.
+            const tog = document.getElementById("tradein-toggle");
+            if (tog && !tog.checked) tog.click();
+            // The first free trade-in slot, or the first one if both are in use.
+            const slot = tiSlots.find(x => !x.val.value) || tiSlots[0];
+            tiPickFromSearch(slot, g, v);
+            const box = document.getElementById("ti" + slot.n + "-search");
+            if (box) { box.value = label; box.scrollIntoView({ block: "center" }); }
+          } });
+      }));
+      return out;
+    }
+
+    const CAP = { Page: 3, Device: 6, Offer: 6, Repair: 5, "Trade-in": 5 };
+    function search(q) {
+      const terms = norm(q).split(/\s+/).filter(Boolean);
+      if (!terms.length) return [];
+      const ql = norm(q).trim(), per = {};
+      return items.filter(it => terms.every(t => it.key.indexOf(t) !== -1))
+        .map(it => ({ it: it, score: it.rank * 10 + (norm(it.label).startsWith(ql) ? 0 : norm(it.label).includes(ql) ? 3 : 6) }))
+        .sort((a, b) => a.score - b.score || a.it.label.localeCompare(b.it.label, undefined, { numeric: true }))
+        .filter(x => (per[x.it.type] = (per[x.it.type] || 0) + 1) <= (CAP[x.it.type] || 5))
+        .map(x => x.it).slice(0, 24);
+    }
+
+    function draw() {
+      hits = search(input.value);
+      active = Math.min(active, Math.max(hits.length - 1, 0));
+      if (!input.value.trim()) { list.innerHTML = `<p class="gs-empty">Try “s26 ultra”, “A260006352”, “fold5 repair”, “iphone 14 trade” or “price check”.</p>`; return; }
+      if (!hits.length) { list.innerHTML = `<p class="gs-empty">Nothing matches “${escapeHtml(input.value.trim())}”.</p>`; return; }
+      list.innerHTML = hits.map((h, k) => `<button type="button" class="gs-item${k === active ? " on" : ""}" role="option" aria-selected="${k === active}" data-k="${k}">`
+        + `<span class="gs-type">${h.type}</span><span class="gs-text"><span class="gs-label">${escapeHtml(h.label)}</span>`
+        + `<span class="gs-sub">${escapeHtml(h.sub)}</span></span></button>`).join("");
+    }
+    function move(d) {
+      if (!hits.length) return;
+      active = (active + d + hits.length) % hits.length;
+      list.querySelectorAll(".gs-item").forEach((b, k) => { b.classList.toggle("on", k === active); b.setAttribute("aria-selected", String(k === active)); });
+      const on = list.querySelector(".gs-item.on");
+      if (on) on.scrollIntoView({ block: "nearest" });
+    }
+    function open() {
+      lastFocus = document.activeElement;
+      items = build();
+      overlay.hidden = false;
+      document.body.classList.remove("mobile-menu-open");
+      input.value = ""; active = 0; draw();
+      setTimeout(() => input.focus(), 0);
+    }
+    function close(restore) {
+      overlay.hidden = true;
+      if (restore && lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    function run(k) {
+      const h = hits[k];
+      if (!h) return;
+      close(false);
+      h.go();
+    }
+
+    openBtn.addEventListener("click", open);
+    input.addEventListener("input", () => { active = 0; draw(); });
+    input.addEventListener("keydown", e => {
+      if (e.key === "ArrowDown") { e.preventDefault(); move(1); }
+      else if (e.key === "ArrowUp") { e.preventDefault(); move(-1); }
+      else if (e.key === "Enter") { e.preventDefault(); run(active); }
+      else if (e.key === "Escape") { e.preventDefault(); close(true); }
+    });
+    list.addEventListener("click", e => { const b = e.target.closest(".gs-item"); if (b) run(Number(b.dataset.k)); });
+    overlay.addEventListener("mousedown", e => { if (e.target === overlay) close(true); });
+    document.addEventListener("keydown", e => {
+      if (!overlay.hidden) { if (e.key === "Escape") close(true); return; }
+      const t = e.target, typing = t && (t.isContentEditable || /^(TEXTAREA|SELECT)$/.test(t.tagName)
+        || (t.tagName === "INPUT" && !/^(checkbox|radio|button|submit|reset|range|color|file)$/i.test(t.type)));
+      if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) { e.preventDefault(); open(); }
+      else if (e.key === "/" && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); open(); }
+    });
+  })();
 
   // Measure any fixed phone navigation, including the installed app's layout.
   function syncMobileControls() {
