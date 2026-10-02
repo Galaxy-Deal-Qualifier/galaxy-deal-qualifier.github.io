@@ -1629,3 +1629,8 @@ body.print-view .deal-stage-heading { display: none; }
   .sk-expired-details > .sk-expired-row { padding-left: 18px; padding-right: 18px; }
   .sk-expired-details > .sk-expired-row:last-child { padding-bottom: 14px; }
 /* ---- end Expired deals dropdown ---- */
+/* ---- Trade-in search ---- */
+  .ti-search { position: relative; }
+  .ti-search .field-label { margin-top: 0; }
+  .ti-search::before { top: auto; bottom: 10px; transform: none; }
+/* ---- end Trade-in search ---- */

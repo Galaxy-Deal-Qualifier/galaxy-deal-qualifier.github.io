@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10.2
+  Galaxy Deals v10.3
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=app9" defer></script>
-<link rel="stylesheet" href="styles.css?v=10.2" />
+<link rel="stylesheet" href="styles.css?v=10.3" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -191,6 +191,11 @@
       <div id="tradein-rows" class="subrows" hidden>
         <div class="ti-slot" data-slot="1">
           <p class="ti-slot-title">Device 1</p>
+          <div class="ti-search search-wrap">
+            <label class="field-label" for="ti1-search">Search trade-ins</label>
+            <input type="search" id="ti1-search" placeholder="e.g. S23 Ultra 256, iPhone 14 Pro, Watch6" autocomplete="off" />
+            <div class="suggestions" id="ti1-suggest" hidden></div>
+          </div>
           <div class="ti-pick">
             <div>
               <label class="field-label" for="ti1-make">Brand</label>
@@ -232,6 +237,11 @@
         </div>
         <div class="ti-slot" data-slot="2">
           <p class="ti-slot-title">Device 2 <span class="ti-optional">optional</span></p>
+          <div class="ti-search search-wrap">
+            <label class="field-label" for="ti2-search">Search trade-ins</label>
+            <input type="search" id="ti2-search" placeholder="e.g. S23 Ultra 256, iPhone 14 Pro, Watch6" autocomplete="off" />
+            <div class="suggestions" id="ti2-suggest" hidden></div>
+          </div>
           <div class="ti-pick">
             <div>
               <label class="field-label" for="ti2-make">Brand</label>
@@ -792,7 +802,7 @@
 
   const NGC_PLANS = [{"series": "S Series", "term": "1 year", "price": 149}, {"series": "S Series", "term": "2 years", "price": 279}, {"series": "Z Series", "term": "1 year", "price": 289}, {"series": "Z Series", "term": "2 years", "price": 519}];
 
-  const SALESKIT_SYNC_STATUS = {"checkedAt": "2026-10-01T10:58:42.002034+10:00", "source": "https://sites.google.com/view/samsungsaleskit/home", "warnings": [], "scope": "Education and simple retail offers; complex rules require manual review", "offerCount": 9};
+  const SALESKIT_SYNC_STATUS = {"checkedAt": "2026-10-02T10:00:25+10:00", "source": "https://sites.google.com/view/samsungsaleskit/home", "warnings": ["Watch9 $100 trade-in bonus (A260006352, 2\u201328 Oct, unique code, not with Education or SMB) is on the Sales Kit but not yet in this tool. Check the Sales Kit before quoting it."], "scope": "Education and simple retail offers; complex rules require manual review", "offerCount": 9};
   const PROMOS = [{"id": "saleskit_sseries_a260004986_s26save550", "name": "S26 SAVE $550", "type": "fixed", "value": 550, "targets": ["model:m3"], "note": null, "start": null, "end": "2026-09-02", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260004986"}, {"id": "saleskit_sseries_a260004986_s25fesave500", "name": "S25 FE SAVE $500", "type": "fixed", "value": 500, "targets": ["model:m20"], "note": null, "start": null, "end": "2026-09-02", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260004986"}, {"id": "saleskit_aseries_a260004972_a17save80", "name": "A17 Save $80", "type": "fixed", "value": 80, "targets": ["model:m21"], "note": null, "start": null, "end": "2026-08-19", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260004972"}, {"id": "saleskit_tablets_a260005077_tabs11ultrasave500", "name": "TAB S11 ULTRA SAVE $500", "type": "fixed", "value": 500, "targets": ["model:m10", "model:m11"], "note": null, "start": null, "end": "2026-08-19", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005077"}, {"id": "saleskit_tablets_a260005078_tabs10fesave200", "name": "TAB S10FE+ SAVE $200", "type": "fixed", "value": 200, "targets": ["model:m18", "model:m23"], "note": null, "start": null, "end": "2026-08-26", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005078"}, {"id": "saleskit_tablets_a260005077_tabs10litesave100", "name": "TAB S10LITE SAVE $100", "type": "fixed", "value": 100, "targets": ["model:m17"], "note": null, "start": null, "end": "2026-08-19", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005077"}, {"id": "saleskit_tablets_a260005079_tabs11save300", "name": "TAB S11 SAVE $300", "type": "fixed", "value": 300, "note": null, "start": "2026-08-20", "end": "2026-09-02", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005079", "targets": ["model:m11"]}, {"id": "saleskit_tablets_a260005079_taba11plussave100", "name": "TAB A11+ SAVE $100", "type": "fixed", "value": 100, "note": null, "start": "2026-08-20", "end": "2026-09-02", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005079", "targets": ["model:m19"]}, {"id": "saleskit_aseries_a37save100", "name": "A37 SAVE $100", "type": "fixed", "value": 100, "note": null, "start": "2026-08-27", "end": "2026-09-16", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005553", "targets": ["model:m8"]}, {"id": "saleskit_sseries_s26plussave500", "name": "S26+ SAVE $500", "type": "fixed", "value": 500, "note": null, "start": "2026-08-27", "end": "2026-09-23", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005553", "targets": ["model:m2"]}, {"id": "saleskit_sseries_s26ultrasave500", "name": "S26 ULTRA SAVE $500", "type": "fixed", "value": 500, "note": null, "start": "2026-08-27", "end": "2026-09-23", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005553", "targets": ["model:m1"]}, {"id": "saleskit_aseries_a260005624_a27save80", "name": "A27 SAVE $80", "type": "fixed", "value": 80, "note": null, "start": "2026-08-29", "end": "2026-09-23", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005624", "targets": ["model:m9"]}, {"id": "saleskit_wearables_a260005701_watch8classicsave25", "name": "WATCH8 CLASSIC SAVE 25%", "type": "percent", "value": 25, "note": null, "start": "2026-08-29", "end": "2026-09-09", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005701", "targets": ["model:m25"]}, {"id": "saleskit_wearables_a260005701_buds4prosave50", "name": "BUDS4 PRO SAVE $50", "type": "fixed", "value": 50, "note": null, "start": "2026-08-29", "end": "2026-09-09", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005701", "targets": ["model:m15"]}, {"id": "saleskit_tablets_a260005080_tabs10fesave150", "name": "TAB S10FE SAVE $150", "type": "fixed", "value": 150, "note": null, "start": "2026-08-27", "end": "2026-09-16", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005080", "targets": ["model:m23"]}, {"id": "saleskit_tablets_a260005753_tabs11ultrasave500", "name": "TAB S11 ULTRA SAVE $500", "type": "fixed", "value": 500, "note": null, "start": "2026-09-03", "end": "2026-09-30", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005753", "targets": ["model:m10"]}, {"id": "saleskit_tablets_a260005753_tabs10plussave30", "name": "TAB S10+ SAVE 30%", "type": "percent", "value": 30, "note": null, "start": "2026-09-03", "end": "2026-09-30", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005753", "targets": ["model:m24"]}, {"id": "saleskit_tablets_a260005562_tabs10litesave100", "name": "TAB S10LITE SAVE $100", "type": "fixed", "value": 100, "note": null, "start": "2026-09-03", "end": "2026-09-16", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005562", "targets": ["model:m17"]}, {"id": "saleskit_sseries_a260005623_s26fesave250", "name": "S26FE SAVE $250", "type": "fixed", "value": 250, "note": null, "start": "2026-09-04", "end": "2026-10-01", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005623", "targets": ["model:m34"]}, {"id": "saleskit_eco_rtl11_ecosave50", "name": "$50 OFF ANY ECO PRODUCT", "type": "fixed", "value": 50, "note": "RTL funded. Scan the ECO product in Pronto and the $50 comes off automatically.", "start": "2026-09-07", "end": "2026-09-30", "kind": "retail", "stack": "all", "bulletin": "RTL11", "targets": ["model:m12", "model:m13", "model:m25", "model:m28", "model:m32", "model:m33", "model:m14", "model:m15", "model:m22", "model:m10", "model:m11", "model:m17", "model:m18", "model:m19", "model:m23", "model:m24", "model:m26"]}, {"id": "saleskit_eduSmb_mobileeducationoffer", "name": "Mobile Education Offer", "type": "percent", "value": 20, "targets": ["model:m1", "model:m2", "model:m3", "model:m4", "model:m5", "model:m6", "model:m7", "model:m8", "model:m9", "model:m20", "model:m21", "model:m34", "model:m29", "model:m30", "model:m31"], "note": "Coupon EDU0152. Stackable with Education trade-in and loyalty offers only.", "start": null, "end": null, "kind": "education", "stack": "all", "bulletin": "A260005006"}, {"id": "saleskit_eduSmb_tableteducationoffer", "name": "Tablet Education Offer", "type": "percent", "value": 20, "targets": ["model:m10", "model:m11", "model:m17", "model:m18", "model:m19", "model:m23", "model:m24"], "note": "Coupon EDU0152. Stackable with Education trade-in and loyalty offers only.", "start": null, "end": null, "kind": "education", "stack": "all", "bulletin": "A260005006"}, {"id": "saleskit_eduSmb_wearableeducationoff", "name": "Wearable Education Offer", "type": "percent", "value": 20, "targets": ["model:m12", "model:m13", "model:m32", "model:m33", "model:m25", "model:m14", "model:m15", "model:m22"], "note": "Coupon EDU0152. Stackable with Education trade-in and loyalty offers only.", "start": null, "end": null, "kind": "education", "stack": "all", "bulletin": "A260005006"}, {"id": "saleskit_eduSmb_smboffer", "name": "Smb Offer", "type": "percent", "value": 15, "targets": ["model:m1", "model:m2", "model:m3", "model:m4", "model:m5", "model:m6", "model:m7", "model:m8", "model:m10", "model:m11", "model:m20", "model:m21", "model:m17", "model:m19", "model:m26", "model:m34"], "note": "Coupon SMB0038. Not stackable with any other offer unless stated.", "start": null, "end": null, "kind": "smb", "stack": "none", "bulletin": "A260004803"}, {"id": "saleskit_zseries_a260005825_flip8save300", "name": "FLIP8 SAVE $300", "type": "fixed", "value": 300, "targets": ["model:m6"], "note": null, "start": "2026-09-17", "end": "2026-10-07", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005825"}, {"id": "saleskit_zseries_a260005825_fold8ultrasave300", "name": "FOLD8 ULTRA SAVE $300", "type": "fixed", "value": 300, "targets": ["model:m4"], "note": null, "start": "2026-09-17", "end": "2026-10-07", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005825"}, {"id": "saleskit_aseries_a260005825_a17save80", "name": "A17 SAVE $80", "type": "fixed", "value": 80, "targets": ["model:m21"], "note": null, "start": "2026-09-17", "end": "2026-10-07", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005825"}, {"id": "saleskit_aseries_a260005826_a57save150", "name": "A57 SAVE $150", "type": "fixed", "value": 150, "targets": ["model:m7"], "note": null, "start": "2026-09-17", "end": "2026-10-14", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005826"}, {"id": "saleskit_tablets_a260005870_tabs10feplussave200", "name": "TAB S10FE+ SAVE $200", "type": "fixed", "value": 200, "targets": ["model:m18"], "note": null, "start": "2026-09-17", "end": "2026-09-30", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005870"}, {"id": "saleskit_tablets_a260005870_taba11plussave80", "name": "TAB A11+ SAVE $80", "type": "fixed", "value": 80, "targets": ["model:m19"], "note": null, "start": "2026-09-17", "end": "2026-09-30", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260005870"}, {"id": "saleskit_eduSmb_smbs26fe", "name": "SMB Offer S26FE", "type": "percent", "value": 15, "targets": ["model:m34"], "note": "Not stackable with any other offer unless stated.", "start": null, "end": null, "kind": "smb", "stack": "none", "bulletin": "A260005730"}, {"id": "saleskit_eol_watch8", "name": "WATCH8 END OF LIFE \u2014 50% OFF", "type": "percent", "value": 50, "targets": ["model:m33", "model:m25"], "note": "End-of-life sellout \u2014 till stock runs out. Not stackable with Education or SMB.", "start": null, "end": null, "kind": "retail", "stack": "exclude-education-smb", "bulletin": "RPG31"}, {"id": "saleskit_sseries_a260006135_s26ultrasave500", "name": "S26 ULTRA SAVE $500", "type": "fixed", "value": 500, "targets": ["model:m1"], "note": null, "start": "2026-09-24", "end": "2026-10-04", "kind": "retail", "stack": "exclude-education-smb", "bulletin": "A260006135"}];
 
   // Line icons, drawn once and reused wherever the scripts render one. Same grid, stroke and
@@ -2571,7 +2581,35 @@
     }
     slot.model.disabled = false;
     slot.model.appendChild(new Option("Select a model", ""));
-    groups.forEach(g => slot.model.appendChild(new Option(g[2], g[2])));
+    // Grouped by series, newest first, so a Galaxy S23 Ultra sits with the rest of the S23s.
+    const series = {};
+    groups.forEach(g => { const k = tiSeries(g); (series[k.label] = series[k.label] || { rank: k.rank, list: [] }).list.push(g); });
+    Object.keys(series).sort((a, b) => series[b].rank - series[a].rank || a.localeCompare(b)).forEach(label => {
+      const og = document.createElement("optgroup");
+      og.label = label;
+      series[label].list.forEach(g => og.appendChild(new Option(g[2], g[2])));
+      slot.model.appendChild(og);
+    });
+  }
+
+  // Which series a trade-in model belongs to, and how new it is (higher sorts first).
+  function tiSeries(g) {
+    const n = g[2], num = x => Number(x) || 0;
+    let m;
+    if ((m = n.match(/^Galaxy (S|Note|A)\s?(\d+)/))) return { label: "Galaxy " + m[1] + m[2] + " series", rank: (m[1] === "S" ? 300 : m[1] === "Note" ? 200 : 100) + num(m[2]) };
+    if ((m = n.match(/^Galaxy Z (Fold|Flip)/))) return { label: "Galaxy Z " + m[1], rank: m[1] === "Fold" ? 290 : 289 };
+    if ((m = n.match(/^Galaxy Tab (S|A)\s?(\d+)/))) return { label: "Galaxy Tab " + m[1] + m[2] + " series", rank: (m[1] === "S" ? 300 : 100) + num(m[2]) };
+    if ((m = n.match(/^Galaxy Watch\s?(\d+)/))) return { label: "Galaxy Watch" + m[1] + " series", rank: 100 + num(m[1]) };
+    if (/^Galaxy Watch Ultra/.test(n)) return { label: "Galaxy Watch Ultra", rank: 150 };
+    if (/^Galaxy Watch/.test(n)) return { label: "Other Galaxy Watch", rank: 0 };
+    if (/^iPhone Air/.test(n)) return { label: "iPhone 17 series", rank: 117 };
+    if ((m = n.match(/^iPhone (\d+)/))) return { label: "iPhone " + m[1] + " series", rank: 100 + num(m[1]) };
+    if (/^iPhone SE/.test(n)) return { label: "iPhone SE", rank: 50 };
+    if ((m = n.match(/^iPad (Pro|Air|mini)/i))) return { label: "iPad " + m[1].replace(/^mini$/i, "mini"), rank: { pro: 140, air: 130, mini: 120 }[m[1].toLowerCase()] };
+    if (/^iPad/.test(n)) return { label: "iPad", rank: 110 };
+    if ((m = n.match(/^Watch (Series \d+|SE|Ultra)/))) return { label: "Apple Watch " + m[1], rank: /Ultra/.test(m[1]) ? 150 : /SE/.test(m[1]) ? 50 : 100 + num(m[1].replace(/\D/g, "")) };
+    if ((m = n.match(/^Pixel (\d+)/))) return { label: "Pixel " + m[1] + " series", rank: 100 + num(m[1]) };
+    return { label: "Other models", rank: 0 };
   }
 
   function tiFillSizes(slot) {
@@ -2595,8 +2633,10 @@
     return {
       model: g[2], cat: g[1], size: v[0], unit: tiSizeUnit(g[1]),
       gwo: gwo, non: non, high: tiVariantHigh(v), end: tiVariantEnd(v),
-      accepted: paid !== TRADEIN_NOT_ACCEPTED,
-      value: paid === TRADEIN_NOT_ACCEPTED ? 0 : paid
+      // Asurion marks "won't take it" with a negative figure: -50 in the catalogue, but the sheet
+      // has carried -10, -15 and -20 too. None of them is a payout.
+      accepted: paid >= 0,
+      value: paid >= 0 ? paid : 0
     };
   }
 
@@ -2689,6 +2729,64 @@
     [slot.desc, slot.val].forEach(el => el.addEventListener("input", () => {
       tiRefresh(slot, false); renderLedger();
     }));
+  });
+
+
+  // ---- trade-in search ----
+  // Type any part of a model and its storage ("s23 ultra 256", "iphone 14 pro", "watch6") and pick
+  // from the list: brand, type, model and storage are all set in one go.
+  function tiSearchKey(g, v) {
+    const words = [g[0], g[1], g[2], v[0] + tiSizeUnit(g[1]), v[0]].join(" ").toLowerCase();
+    return words + " " + words.replace(/[^a-z0-9]/g, "");
+  }
+  function tiSearchHits(q) {
+    const terms = q.toLowerCase().replace(/\+/g, " plus ").split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    const hits = [];
+    TRADEIN_GROUPS.forEach(g => g[3].forEach(v => {
+      const key = tiSearchKey(g, v);
+      if (terms.every(t => key.indexOf(t) !== -1)) hits.push({ g: g, v: v });
+    }));
+    return hits.slice(0, 12);
+  }
+  function tiPickFromSearch(slot, g, v) {
+    slot.make.value = g[0];
+    slot.cat.value = g[1];
+    tiFillModels(slot);
+    slot.model.value = g[2];
+    tiFillSizes(slot);
+    slot.size.value = String(v[0]);
+    tiRefresh(slot, true);
+    renderLedger();
+  }
+  tiSlots.forEach(slot => {
+    const input = document.getElementById("ti" + slot.n + "-search");
+    const box = document.getElementById("ti" + slot.n + "-suggest");
+    if (!input || !box) return;
+    let hits = [];
+    const close = () => { box.hidden = true; };
+    input.addEventListener("input", () => {
+      hits = tiSearchHits(input.value);
+      if (!input.value.trim()) { close(); return; }
+      box.innerHTML = hits.length
+        ? hits.map((h, k) => `<button type="button" class="suggestion" data-hit="${k}"><span><b>${escapeHtml(h.g[2])}</b> <span class="sv">${h.v[0]}${tiSizeUnit(h.g[1])}</span></span>`
+            + `<span class="sp">${h.v[1] ? fmt(h.v[1]) : "\u2014"}</span></button>`).join("")
+        : `<div class="suggestion" style="cursor:default;color:var(--ink-faint);">Not on Asurion\u2019s list \u2014 use \u201cOther / not listed\u201d</div>`;
+      box.hidden = false;
+    });
+    box.addEventListener("click", e => {
+      const b = e.target.closest("[data-hit]");
+      if (!b) return;
+      const h = hits[Number(b.dataset.hit)];
+      tiPickFromSearch(slot, h.g, h.v);
+      input.value = h.g[2] + " " + h.v[0] + tiSizeUnit(h.g[1]);
+      close();
+    });
+    input.addEventListener("keydown", e => {
+      if (e.key === "Enter" && hits.length) { e.preventDefault(); box.querySelector("[data-hit]").click(); }
+      if (e.key === "Escape") close();
+    });
+    document.addEventListener("click", e => { if (!box.contains(e.target) && e.target !== input) close(); });
   });
 
   document.getElementById("tradein-source").innerHTML =
@@ -5352,6 +5450,14 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "10.3", d: "2 Oct 2026", t: "Trade-ins: grouped models and a search box",
+      items: [
+        "<strong>Search trade-ins.</strong> Each trade-in device now has a search box at the top: type any part of the model and storage \u2014 \u201cs23 ultra 256\u201d, \u201ciphone 14 pro\u201d, \u201cwatch6\u201d \u2014 and pick from the list. Brand, type, model and storage are set in one go, with the good-working-order value shown beside each match.",
+        "<strong>The Model list is grouped by series</strong>, newest first: Galaxy S25 series, Galaxy Z Fold, Galaxy Z Flip, Galaxy A56 series and so on; iPhone 17 series down to iPhone 11; iPad Pro, iPad Air, iPad mini; Pixel by generation.",
+        "<strong>Fixed when values load from the shared Google Sheet:</strong> watches now appear under Watch rather than Phone, and a negative not-working figure (\u221210, \u221215, \u221220) shows as \u201cnot accepted\u201d instead of a negative amount.",
+        "Also in this version: Harsha\u2019s design polish \u2014 a button to collapse the sidebar, a bottom menu on phones, and a friendlier empty quote.",
+        "No prices, offers or trade-in values have changed."
+      ] },
     { v: "10.2", d: "1 Oct 2026", t: "New Trade-Up values, to 4 November",
       items: [
         "<strong>The trade-in values are from Asurion\u2019s new catalogue and run to 4 November 2026</strong> (a few to 3 November). The old list ended 30 September. 368 of the 496 values changed: 160 went up, 88 went down, and on the rest only the not-working figure moved.",
@@ -6527,7 +6633,7 @@
     const number=x=>Number(String(x).replace(/[$,]/g,''));
     rows.slice(1).forEach(r=>{
       const brand=String(r[col('make')]||'').trim();if(!TI_BRANDS.includes(brand))return;
-      let cat=String(r[col('AssetTypeName')]||'').trim();if(/phone/i.test(cat))cat='Phone';if(!TI_CATS.includes(cat))return;
+      let cat=String(r[col(col('DeviceTypeFilter')>=0?'DeviceTypeFilter':'AssetTypeName')]||'').trim();cat=/watch/i.test(cat)?'Watch':/tablet/i.test(cat)?'Tablet':/phone/i.test(cat)?'Phone':cat;if(!TI_CATS.includes(cat))return;
       const model=String(r[col('NewModelName')]||'').trim();
       const size=number(r[col(cat==='Watch'&&col('CaseSize')>=0?'CaseSize':'storage')]);
       const gwo=number(r[col('GWOPrice')]),non=number(r[col('nonGWOPrice')]);
