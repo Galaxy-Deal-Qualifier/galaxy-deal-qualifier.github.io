@@ -98,6 +98,7 @@
         <input type="text" id="print-by-input" placeholder="Your name" autocomplete="off" maxlength="60" />
       </span>
       <span id="print-copy-status" class="print-copy-status"></span>
+      <button type="button" id="print-preview">Print</button>
       <button type="button" id="print-copy">Copy quote</button>
       <button type="button" id="print-email">Email quote</button>
       <button type="button" id="print-new">New quote</button>
@@ -3290,6 +3291,12 @@
     });
   }
 
+  document.getElementById("print-preview").addEventListener("click", () => {
+    stampPrintDate();
+    renderPreparedBy();
+    window.print();
+  });
+
   document.getElementById("print-back").addEventListener("click", () => {
     setPrintView(false);
     document.body.classList.remove("print-compare");
@@ -3299,10 +3306,49 @@
     if (msg) { msg.textContent = ""; msg.hidden = true; }
   });
 
+  function startNewQuote() {
+    cart = [];
+    currentMode = "none";
+    pendingOptIns = [];
+    wearablePendingOptIns = [];
+    segButtons.forEach(btn => btn.setAttribute("aria-pressed", String(btn.dataset.mode === "none")));
+    [tradeinToggle, ngcToggle, wearableToggle].forEach(toggle => { toggle.checked = false; });
+    [tradeinRows, ngcRows, wearableRows].forEach(rows => { rows.hidden = true; });
+    tiSlots.forEach(slot => {
+      slot.make.value = "";
+      slot.cat.selectedIndex = 0;
+      slot.cond.selectedIndex = 0;
+      slot.desc.value = "";
+      slot.val.value = "";
+      slot.filled = null;
+      tiFillModels(slot);
+      tiFillSizes(slot);
+      tiRefresh(slot, false);
+      document.getElementById("ti" + slot.n + "-search").value = "";
+      document.getElementById("ti" + slot.n + "-suggest").hidden = true;
+    });
+    ngcSeriesTouched = false;
+    deviceSelect.selectedIndex = 0;
+    selectedColour = "";
+    colourCustom.value = "";
+    searchInput.value = "";
+    suggestionsBox.hidden = true;
+    populateVariants();
+    syncNgcSeries();
+    populateNgcTerms();
+    wearableModel.selectedIndex = 0;
+    wearableSelectedColour = "";
+    wearableModel.dispatchEvent(new Event("change"));
+    document.querySelector('#accessories-card button[data-acc="no"]').click();
+    renderColourField();
+    renderWearableStatus();
+    resetQuote();
+  }
+
   document.getElementById("print-new").addEventListener("click", () => {
     setPrintView(false);
     document.body.classList.remove("print-compare");
-    resetQuote();
+    startNewQuote();
     document.querySelector('.tab[data-panel="quote"]').click();
     window.scrollTo(0, 0);
   });
