@@ -19,7 +19,8 @@
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
-<link rel="stylesheet" href="styles.css?v=10.5-saleskit-quote" />
+<script src="jspdf.umd.min.js"></script>
+<link rel="stylesheet" href="styles.css?v=10.5-mobile-clear" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -97,6 +98,7 @@
         <input type="text" id="print-by-input" placeholder="Your name" autocomplete="off" maxlength="60" />
       </span>
       <span id="print-copy-status" class="print-copy-status"></span>
+      <button type="button" id="print-pdf">Download PDF</button>
       <button type="button" id="print-preview">Print</button>
       <button type="button" id="print-copy">Copy quote</button>
       <button type="button" id="print-email">Email quote</button>
@@ -355,7 +357,7 @@
   </div>
 
   <div class="quote-bar" id="quote-bar">
-    <span class="quote-bar-total"><span class="quote-bar-label">Total</span><span id="quote-bar-total">A$0.00</span></span>
+    <span class="quote-bar-total"><span class="quote-bar-label">Total</span><span id="quote-bar-total">A$0.00</span><span id="quote-bar-savings" class="quote-savings" hidden></span></span>
     <button type="button" class="clear-btn" id="quote-bar-reset">Reset quote</button>
     <button type="button" class="clear-btn" id="quote-bar-jump">View quote</button>
     <button type="button" class="print-btn" id="quote-bar-print"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print</button>
@@ -413,8 +415,10 @@
           <span class="total-label">Customer total</span>
           <span class="total-wrap"><span class="total-delta" id="total-delta" aria-hidden="true"></span><span class="total-amount" id="grand-total">A$0.00</span></span>
         </div>
+        <p id="quote-savings" class="quote-savings" hidden></p>
         <div class="ledger-actions">
           <button class="print-btn" id="print-btn" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print quote</button>
+          <button class="clear-btn" id="quote-pdf" type="button">Download PDF</button>
           <button class="clear-btn" id="clear-btn" type="button">Clear</button>
         </div>
         <div id="print-status" class="print-status" hidden></div>
@@ -1555,24 +1559,25 @@
     const sel = currentSelection();
     const store = currentStore();
     if (!store || !stockRows.length) { el.innerHTML = ""; return; }
+    const freshness = stockFreshnessHtml();
     const colour = currentColour();
     const res = stockFor(sel.m, sel.v, colour);
     if (!res) {
-      el.innerHTML = `<div class="stock-badge none">No stock line for this variant at ${escapeHtml(store)}</div>`;
+      el.innerHTML = `<div class="stock-badge none">No stock line for this variant at ${escapeHtml(store)}</div>${freshness}`;
       return;
     }
     if (res.qty === null) {
       // The variant is stocked, just not in this colour -- worth saying what else is on the shelf.
       const other = res.allTotal > 0
         ? ` — ${res.allTotal} in other colour${res.allTotal === 1 ? "" : "s"}` : "";
-      el.innerHTML = `<div class="stock-badge zero">No ${escapeHtml(colour)} at ${escapeHtml(store)}${other}</div>`;
+      el.innerHTML = `<div class="stock-badge zero">No ${escapeHtml(colour)} at ${escapeHtml(store)}${other}</div>${freshness}`;
       return;
     }
     const qty = res.qty;
     const cls = qty <= 0 ? "zero" : qty <= 2 ? "low" : "ok";
     const word = qty <= 0 ? "Out of stock" : qty === 1 ? "1 in stock" : qty + " in stock";
     const which = res.byColour ? ` (${escapeHtml(colour)})` : "";
-    el.innerHTML = `<div class="stock-badge ${cls}">${word}${which} at ${escapeHtml(store)}</div>`;
+    el.innerHTML = `<div class="stock-badge ${cls}">${word}${which} at ${escapeHtml(store)}</div>${freshness}`;
   }
 
   const ACC_TYPE_ORDER = ["Cases", "Screen Protection", "Watch Bands", "Covers & Keyboards",
@@ -3068,23 +3073,24 @@
     const sel = wearableSelection();
     const store = currentStore();
     if (!sel || !store || !stockRows.length) { el.innerHTML = ""; return; }
+    const freshness = stockFreshnessHtml();
     const colour = wearableSelectedColour;
     const res = stockFor(sel.m, sel.v, colour);
     if (!res) {
-      el.innerHTML = `<div class="stock-badge none">No stock line for this variant at ${escapeHtml(store)}</div>`;
+      el.innerHTML = `<div class="stock-badge none">No stock line for this variant at ${escapeHtml(store)}</div>${freshness}`;
       return;
     }
     if (res.qty === null) {
       const other = res.allTotal > 0
         ? ` — ${res.allTotal} in other colour${res.allTotal === 1 ? "" : "s"}` : "";
-      el.innerHTML = `<div class="stock-badge zero">No ${escapeHtml(colour)} at ${escapeHtml(store)}${other}</div>`;
+      el.innerHTML = `<div class="stock-badge zero">No ${escapeHtml(colour)} at ${escapeHtml(store)}${other}</div>${freshness}`;
       return;
     }
     const qty = res.qty;
     const cls = qty <= 0 ? "zero" : qty <= 2 ? "low" : "ok";
     const word = qty <= 0 ? "Out of stock" : qty === 1 ? "1 in stock" : qty + " in stock";
     const which = res.byColour ? ` (${escapeHtml(colour)})` : "";
-    el.innerHTML = `<div class="stock-badge ${cls}">${word}${which} at ${escapeHtml(store)}</div>`;
+    el.innerHTML = `<div class="stock-badge ${cls}">${word}${which} at ${escapeHtml(store)}</div>${freshness}`;
   }
 
   wearableModel.addEventListener("change", () => {
@@ -3289,6 +3295,46 @@
       setPrintView(true);
     });
   }
+
+  function downloadQuotePdf() {
+    if (!cart.length) { printStatus("Add at least one device before downloading a quote.", "warn"); return; }
+    if (!window.jspdf) { printStatus("PDF download is unavailable. Refresh the page and try again.", "warn"); return; }
+    const pdf = new window.jspdf.jsPDF();
+    const quote = computeQuote();
+    let y = 22;
+    const clean = value => String(value).replace(/−/g, "-").replace(/—/g, "-").replace(/·/g, "|");
+    function line(text, size = 11, bold = false) {
+      pdf.setFont("helvetica", bold ? "bold" : "normal"); pdf.setFontSize(size);
+      const rows = pdf.splitTextToSize(clean(text), 170);
+      rows.forEach(row => { if (y > 275) { pdf.addPage(); y = 22; } pdf.text(row, 20, y); y += size * 0.45 + 2; });
+    }
+    line("Galaxy Deals", 12, true);
+    line("Customer Quote", 24, true);
+    line("Quote created " + new Date().toLocaleDateString("en-AU"));
+    const valid = document.getElementById("print-valid");
+    if (!valid.hidden) line(valid.textContent);
+    if (preparedBy()) line("Served by " + preparedBy());
+    y += 8;
+    quote.items.forEach(({item, result, ecoApplied, lineTotal}) => {
+      line(item.n, 14, true);
+      line(item.v + (item.colour ? " | " + item.colour : ""));
+      line("Regular price: " + fmt(item.p));
+      result.lines.forEach(discount => line(discount.name + ": -" + fmt(discount.amount)));
+      ecoApplied.forEach(discount => line(discount.name + ": -" + fmt(discount.amount)));
+      line("Line total: " + fmt(lineTotal), 12, true); y += 6;
+    });
+    if (quote.ngcLine) line("New Galaxy Club (" + quote.ngcLine.plan.term + "): " + fmt(quote.ngcLine.planPrice));
+    if (quote.manualCredit) line("Trade-in credit: -" + fmt(quote.manualCredit));
+    quote.bonuses.forEach(b => line(b.name + ": -" + fmt(b.amount)));
+    y += 6;
+    line("Customer total: " + fmt(quote.total), 20, true);
+    if (quote.savings > 0) line("You save " + fmt(quote.savings), 13, true);
+    y += 8;
+    line("This is a quoting aid. Offers and prices may change. Always confirm the final price in POS at the time of purchase.", 9);
+    pdf.save("Galaxy-Deals-Quote-" + new Date().toISOString().slice(0,10) + ".pdf");
+  }
+  document.getElementById("print-pdf").addEventListener("click", downloadQuotePdf);
+  document.getElementById("quote-pdf").addEventListener("click", downloadQuotePdf);
 
   document.getElementById("print-preview").addEventListener("click", () => {
     stampPrintDate();
@@ -3605,10 +3651,12 @@
 
     const bonuses = tradeInBonuses(modeOverride);
     const manualCredit = cart.length ? tradeInCredit() : 0;
+    const baseline = items.reduce((sum, x) => sum + x.item.p, 0) + (ngcLine ? ngcLine.plan.price : 0);
+    const savings = Math.min(baseline, Math.max(0, baseline - total + bonuses.reduce((sum, b) => sum + b.amount, 0)));
     total -= manualCredit;
     bonuses.forEach(b => { total -= b.amount; });
 
-    return { items, ngcLine, bonuses, manualCredit, total: Math.max(0, total) };
+    return { items, ngcLine, bonuses, manualCredit, savings, total: Math.max(0, total) };
   }
 
   // An ECO voucher is worth nothing until there is a Watch, Buds or Tablet in the quote to spend
@@ -3724,6 +3772,11 @@
       ledgerBody.appendChild(row);
     });
 
+    ["quote-savings", "quote-bar-savings"].forEach(id => {
+      const el = document.getElementById(id);
+      el.textContent = "You save " + fmt(quote.savings);
+      el.hidden = quote.savings <= 0;
+    });
     grandTotalEl.textContent = fmt(quote.total);
     announceTotalChange(quote.total);
     const barTotal = document.getElementById("quote-bar-total");
@@ -4728,11 +4781,19 @@
     if (!stockMeta || !stockMeta.savedAt) return "";
     const when = new Date(stockMeta.savedAt);
     if (isNaN(when)) return "";
-    const days = Math.floor((NOW - when) / 86400000);
+    const days = Math.floor((Date.now() - when.getTime()) / 86400000);
     const age = days <= 0 ? "today" : days === 1 ? "yesterday" : days + " days ago";
     const how = stockMeta.source === "sheet" ? "Loaded from Google Sheets" : stockMeta.source === "code" ? "Loaded from a shared code" : "Loaded from a file";
     return `${how}, captured ${age} (${when.toLocaleDateString("en-AU",
       { day: "numeric", month: "short", year: "numeric" })}).`;
+  }
+
+  function stockFreshnessHtml() {
+    if (!stockMeta || !stockMeta.savedAt) return '<div class="stock-freshness">Stock load time unavailable</div>';
+    const when = new Date(stockMeta.savedAt);
+    if (isNaN(when)) return '<div class="stock-freshness">Stock load time unavailable</div>';
+    const stale = Date.now() - when.getTime() >= 86400000;
+    return `<div class="stock-freshness${stale ? " stale" : ""}">Stock loaded ${escapeHtml(when.toLocaleString("en-AU", {day:"numeric",month:"short",hour:"numeric",minute:"2-digit"}))}${stale ? " — over 24 hours old; refresh availability" : ""}</div>`;
   }
 
   function renderStockMeta() {
@@ -6742,6 +6803,28 @@
     pcRender();
   }
   // ---- end Price check ----
+
+  // Measure any fixed phone navigation, including the installed app's layout.
+  function syncMobileControls() {
+    const root = document.documentElement;
+    let navHeight = 0;
+    document.querySelectorAll("nav, .tabs, .mobile-nav, .bottom-nav").forEach(nav => {
+      const style = getComputedStyle(nav);
+      const rect = nav.getBoundingClientRect();
+      if (style.position === "fixed" && rect.height > 0 && rect.top > window.innerHeight / 2) {
+        navHeight = Math.max(navHeight, window.innerHeight - rect.top);
+      }
+    });
+    root.style.setProperty("--mobile-nav-height", navHeight + "px");
+    root.style.setProperty("--quote-safe-bottom", navHeight ? "0px" : "env(safe-area-inset-bottom, 0px)");
+    const bar = document.getElementById("quote-bar");
+    root.style.setProperty("--mobile-quote-height", bar.getBoundingClientRect().height + "px");
+  }
+  window.addEventListener("resize", syncMobileControls);
+  if (window.visualViewport) window.visualViewport.addEventListener("resize", syncMobileControls);
+  new ResizeObserver(syncMobileControls).observe(document.getElementById("quote-bar"));
+  document.querySelectorAll("nav, .tabs").forEach(nav => new ResizeObserver(syncMobileControls).observe(nav));
+  syncMobileControls();
 
   // ---- tabs ----
   (function () {

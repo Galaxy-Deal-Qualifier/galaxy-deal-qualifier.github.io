@@ -1656,3 +1656,28 @@ body.print-view .deal-stage-heading { display: none; }
   .quote-bar { flex-wrap: wrap; gap: 8px; }
   .quote-bar-total { flex: 1 0 100%; }
 }
+
+.quote-savings { color: var(--good); font-weight: 700; margin: 8px 0; }
+.stock-freshness { font-size: 12px; color: var(--ink-dim); margin-top: 5px; }
+.stock-freshness.stale { color: var(--warn, #b77700); }
+
+/* Keep phone controls clear of bottom navigation and the home indicator. */
+@media screen and (max-width: 900px) {
+  body:not(.print-view):not(.print-compare) .side,
+  body:not(.print-view):not(.print-compare) .side-brand {
+    backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+    filter: none !important; background: var(--surface) !important;
+  }
+  body:not(.print-view):not(.print-compare) .quote-bar {
+    position: fixed; left: 0; right: 0;
+    bottom: var(--mobile-nav-height, 0px);
+    margin: 0; z-index: 30; width: auto;
+    flex-wrap: wrap; gap: 8px; background: var(--surface);
+    padding: 10px 16px calc(10px + var(--quote-safe-bottom, env(safe-area-inset-bottom, 0px)));
+  }
+  .quote-bar-total { flex: 1 0 100%; }
+  body:not(.print-view):not(.print-compare) .main {
+    padding-bottom: calc(var(--mobile-quote-height, 140px) + var(--mobile-nav-height, 0px) + 20px);
+  }
+  body.print-view .main { padding-bottom: 0; }
+}
