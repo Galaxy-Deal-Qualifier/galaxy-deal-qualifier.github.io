@@ -1634,3 +1634,16 @@ body.print-view .deal-stage-heading { display: none; }
   .ti-search .field-label { margin-top: 0; }
   .ti-search::before { top: auto; bottom: 10px; transform: none; }
 /* ---- end Trade-in search ---- */
+/* ---- Repair search ---- */
+  .svc-search { position: relative; margin-bottom: 12px; }
+  .svc-search .field-label { margin-top: 0; }
+  .svc-search::before { top: auto; bottom: 10px; transform: none; }
+  .svc-pickers { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+  .svc-pickers > div:last-child { grid-column: auto; }
+  .svc-screen { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin: 0 0 14px; padding: 10px 12px; border-radius: var(--r); background: var(--surface-2); border: 1px solid var(--line); font-size: 13px; }
+  .svc-screen[hidden] { display: none; }
+  .svc-screen-label { flex: 1 0 100%; font-size: 12px; font-weight: 600; color: var(--ink-dim); }
+  .svc-screen-item strong { font-size: 16px; font-variant-numeric: tabular-nums; }
+  .svc-screen-type { color: var(--ink-faint); font-size: 12px; }
+  @media (max-width: 560px) { .svc-pickers { grid-template-columns: minmax(0, 1fr); } }
+/* ---- end Repair search ---- */

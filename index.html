@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v10.4
+  Galaxy Deals v10.5
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <link id="brand-manifest" rel="manifest" href="app-light.webmanifest?v=app9" />
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=app9" defer></script>
-<link rel="stylesheet" href="styles.css?v=10.4" />
+<link rel="stylesheet" href="styles.css?v=10.5" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -590,20 +590,22 @@
   <div class="svc-layout">
     <div class="card svc-repair">
       <p class="card-title">Device in for Repair</p>
+      <div class="svc-search search-wrap">
+        <label class="field-label" for="svc-search">Search repairs</label>
+        <input type="search" id="svc-search" placeholder="e.g. S23 Ultra, Fold5, Watch6 Classic, SM-S918" autocomplete="off" />
+        <div class="suggestions" id="svc-suggest" hidden></div>
+      </div>
       <div class="svc-pickers">
         <div>
           <label class="field-label" for="svc-cat">Category</label>
           <select id="svc-cat"></select>
         </div>
         <div>
-          <label class="field-label" for="svc-series">Series</label>
-          <select id="svc-series"></select>
-        </div>
-        <div>
           <label class="field-label" for="svc-model">Model</label>
           <select id="svc-model"></select>
         </div>
       </div>
+      <div id="svc-screen" class="svc-screen" hidden></div>
       <span class="field-label" id="svc-issues-label">What&#8217;s wrong? <span class="svc-hint">Pick up to two</span></span>
       <div id="svc-issues" class="svc-issues" role="group" aria-labelledby="svc-issues-label"></div>
       <div id="svc-estimate" class="svc-estimate" aria-live="polite"></div>
@@ -5452,6 +5454,13 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "10.5", d: "2 Oct 2026", t: "Repairs: search, grouped models and the highest screen price",
+      items: [
+        "<strong>Search repairs.</strong> Repair or Upgrade now has a search box at the top, like trade-ins: type any part of a model or its code \u2014 \u201cs23 ultra\u201d, \u201cfold5\u201d, \u201cwatch6 classic\u201d, \u201cSM-S918\u201d \u2014 and pick from the list. It searches phones, tablets and wearables at once and sets the category and model for you.",
+        "<strong>The Model list is grouped by series</strong>, newest first: Galaxy S26 series down to S20, Galaxy Z Fold, Galaxy Z Flip, then the Galaxy A range by year; Tab S11 down to Tab S7 and Tab A; Watch Ultra, Watch9 down to Watch4, Watch Active, Buds and Ring. The separate Series dropdown is gone.",
+        "<strong>Highest screen repair price shown for every model.</strong> Picking a model shows the most a screen repair can cost on it, and which option that is (Screen Repair or Screen Replacement). Folds and Flips show the main and cover screens separately, e.g. Z Fold7 main screen up to A$999, cover screen A$319. Each search result shows \u201cScreen up to\u201d too, and the Display buttons now read \u201cup to\u201d the top price instead of \u201cfrom\u201d the lowest.",
+        "No prices, offers or repair estimates have changed."
+      ] },
     { v: "10.4", d: "2 Oct 2026", t: "Watch9 trade-in bonus, SMB devices, new Education bulletin",
       items: [
         "<strong>Watch9 trade-in bonus, $100</strong> (A260006352), 2 to 28 October. It comes off the sale when a Watch9 is quoted with a trade-in. It needs a unique code and stacks with everything except Education and SMB.",
@@ -6173,21 +6182,59 @@
     return { total: o.total, manual: false, type: o.type, parts: o.parts };
   }
 
+  // Which series a repairable model belongs to (higher rank sorts first), and its place within it.
+  function svcSeries(p) {
+    const n = p.n, num = x => Number(x) || 0;
+    const tier = /Ultra/.test(n) ? 2 : /Edge/.test(n) ? 3 : /FE/.test(n) ? 4 : /\+/.test(n) ? 1 : /Lite/.test(n) ? 5 : 0;
+    let m;
+    if ((m = n.match(/^Galaxy S(\d+)/))) return { label: "Galaxy S" + m[1] + " series", rank: 300 + num(m[1]), order: tier };
+    if ((m = n.match(/^Galaxy Z (Fold|Flip)(\d+)/))) return { label: "Galaxy Z " + m[1], rank: m[1] === "Fold" ? 290 : 289, order: -num(m[2]) * 10 + (/Ultra/.test(n) ? 0 : /FE/.test(n) ? 2 : 1) };
+    // One A model per price point each year (A17, A27, A37, A57 in 2026): group them by year.
+    if ((m = n.match(/^Galaxy A(\d+)/))) { const y = num(m[1]) % 10; return { label: "Galaxy A " + (2019 + y) + " range", rank: 100 + y, order: num(m[1]) }; }
+    if ((m = n.match(/^Tab S(\d+)/))) return { label: "Galaxy Tab S" + m[1] + " series", rank: 300 + num(m[1]), order: tier };
+    if (/^Tab A/.test(n)) return { label: "Galaxy Tab A series", rank: 150, order: 0 };
+    if (/Watch.*Ultra/.test(n)) return { label: "Galaxy Watch Ultra", rank: 250, order: -num((n.match(/\d+/) || [0])[0]) };
+    if ((m = n.match(/^Galaxy Watch (\d+)/))) return { label: "Galaxy Watch" + m[1] + " series", rank: 200 + num(m[1]), order: /Classic|Pro/.test(n) ? 1 : 0 };
+    if (/^Galaxy Watch FE/.test(n)) return { label: "Galaxy Watch FE", rank: 207, order: 0 };
+    if (/^Galaxy Watch Active/.test(n)) return { label: "Galaxy Watch Active", rank: 201, order: -num((n.match(/\d+/) || [0])[0]) };
+    if (/^Buds/.test(n)) return { label: "Galaxy Buds", rank: 100, order: 0 };
+    if (/Ring/.test(n)) return { label: "Galaxy Ring", rank: 50, order: 0 };
+    return { label: p.s, rank: 0, order: 0 };
+  }
+
+  // The most a screen fix can cost on a model, per screen (a Fold or Flip has two).
+  function svcScreens(p) {
+    return p.i.filter(iss => /Display|Screen/i.test(REPAIR.issues[iss[0]])).map(iss => {
+      const top = iss[1].reduce((a, o) => o[1] > a[1] ? o : a, iss[1][0]);
+      const name = REPAIR.issues[iss[0]];
+      return { name: /^Front/.test(name) ? "Cover screen" : /^Main/.test(name) ? "Main screen" : "Screen", max: top[1], type: REPAIR.types[top[0]], options: iss[1].length };
+    }).sort((a, b) => b.max - a.max);
+  }
+  const svcScreenMax = p => svcScreens(p).reduce((a, x) => Math.max(a, x.max), 0);
+
+  // The category's models, grouped by series with the newest first, the same way the trade-in list is.
   function svcFillSeries() {
     const cat = Number(svcEl("cat").value);
-    const series = [];
-    REPAIR.products.forEach(p => { if (p.c === cat && series.indexOf(p.s) === -1) series.push(p.s); });
-    svcEl("series").innerHTML = series.map(x => `<option>${escapeHtml(x)}</option>`).join("");
+    const names = {}, groups = {};
+    REPAIR.products.forEach((p, i) => {
+      if (p.c !== cat) return;
+      names[p.n] = (names[p.n] || 0) + 1;
+      const k = svcSeries(p);
+      (groups[k.label] = groups[k.label] || { rank: k.rank, list: [] }).list.push({ i: i, order: k.order });
+    });
+    svcEl("model").innerHTML = Object.keys(groups)
+      .sort((a, b) => groups[b].rank - groups[a].rank || a.localeCompare(b))
+      .map(label => `<optgroup label="${escapeHtml(label)}">` + groups[label].list
+        .sort((a, b) => a.order - b.order || REPAIR.products[a.i].n.localeCompare(REPAIR.products[b.i].n, undefined, { numeric: true }))
+        .map(x => {
+          const p = REPAIR.products[x.i];
+          // Samsung lists a few models twice under one name; the model code tells them apart.
+          return `<option value="${x.i}">${escapeHtml(p.n)}${names[p.n] > 1 ? " (" + escapeHtml(p.k) + ")" : ""}</option>`;
+        }).join("") + `</optgroup>`).join("");
     svcFillModels();
   }
 
   function svcFillModels() {
-    const cat = Number(svcEl("cat").value), series = svcEl("series").value;
-    const names = {};
-    REPAIR.products.forEach(p => { if (p.c === cat && p.s === series) names[p.n] = (names[p.n] || 0) + 1; });
-    svcEl("model").innerHTML = REPAIR.products.map((p, i) => p.c === cat && p.s === series
-      // Samsung lists a few models twice under one name; the model code tells them apart.
-      ? `<option value="${i}">${escapeHtml(p.n)}${names[p.n] > 1 ? " (" + escapeHtml(p.k) + ")" : ""}</option>` : "").join("");
     svc.picked = []; svc.option = 0;
     svcDefaultGroups();
     svcRender();
@@ -6219,11 +6266,27 @@
       const prices = iss[1].map(o => o[1]);
       const lo = Math.min.apply(null, prices);
       const full_name = REPAIR.issues[iss[0]];
-      return `<label class="svc-issue${on ? " on" : ""}${off ? " off" : ""}" title="${escapeHtml(full_name)}">`
+      // A screen can be repaired or replaced; quote the customer the top of that range.
+      const screen = /Display|Screen/i.test(full_name);
+      const hi = Math.max.apply(null, prices);
+      const price = prices.length > 1 ? (screen ? "up to " + fmt(hi) : "from " + fmt(lo)) : fmt(lo);
+      return `<label class="svc-issue${on ? " on" : ""}${off ? " off" : ""}${screen ? " screen" : ""}" title="${escapeHtml(full_name)}">`
         + `<input type="checkbox" data-issue="${k}"${on ? " checked" : ""}${off ? " disabled" : ""} />`
         + `<span class="svc-issue-name">${escapeHtml(svcIssueName(full_name))}</span>`
-        + `<span class="svc-issue-price">${prices.length > 1 ? "from " : ""}${fmt(lo)}</span></label>`;
+        + `<span class="svc-issue-price">${price}</span></label>`;
     }).join("");
+    svcRenderScreen(p);
+  }
+
+  function svcRenderScreen(p) {
+    const box = svcEl("screen");
+    if (!box) return;
+    const screens = p ? svcScreens(p) : [];
+    if (!screens.length) { box.hidden = true; box.innerHTML = ""; return; }
+    box.hidden = false;
+    box.innerHTML = `<span class="svc-screen-label">Highest screen repair${screens.length > 1 ? "s" : ""}</span>`
+      + screens.map(x => `<span class="svc-screen-item">${screens.length > 1 ? escapeHtml(x.name) + " " : ""}<strong>${fmt(x.max)}</strong>`
+        + ` <span class="svc-screen-type">${escapeHtml(x.type)}</span></span>`).join("");
   }
 
   function svcRenderEstimate() {
@@ -6324,7 +6387,6 @@
     svcEl("cat").innerHTML = SVC_CATS.map((c, k) => `<option value="${k}">${c}</option>`).join("");
     svcEl("fetched").textContent = fmtDate(REPAIR.fetched);
     svcEl("cat").addEventListener("change", svcFillSeries);
-    svcEl("series").addEventListener("change", svcFillModels);
     svcEl("model").addEventListener("change", () => { svc.picked = []; svc.option = 0; svcDefaultGroups(); svcRender(); });
     svcEl("manual").addEventListener("input", () => { svcRenderEstimate(); svcRenderUpgrades(); });
     svcEl("issues").addEventListener("change", e => {
@@ -6375,6 +6437,63 @@
       renderPromoPreview();
       document.querySelector('.tab[data-panel="quote"]').click();
     });
+    // ---- repair search ----
+    // Type any part of a model or its code ("s23 ultra", "fold5", "watch6 classic", "sm-s918") and pick
+    // from the list: category and model are set in one go, across phones, tablets and wearables.
+    const svcSearchKey = p => {
+      const words = [p.n, p.s, p.k, SVC_CATS[p.c]].join(" ").toLowerCase().replace(/\+/g, " plus ");
+      return words + " " + words.replace(/[^a-z0-9]/g, "");
+    };
+    function svcSearchHits(q) {
+      const terms = q.toLowerCase().replace(/\+/g, " plus ").split(/\s+/).filter(Boolean);
+      if (!terms.length) return [];
+      const hits = [];
+      REPAIR.products.forEach((p, i) => {
+        const key = svcSearchKey(p);
+        if (terms.every(t => key.indexOf(t) !== -1)) hits.push({ i: i, k: svcSeries(p) });
+      });
+      // Newest first, as in the Model list.
+      return hits.sort((a, b) => b.k.rank - a.k.rank || a.k.order - b.k.order || REPAIR.products[a.i].n.localeCompare(REPAIR.products[b.i].n, undefined, { numeric: true })).slice(0, 12);
+    }
+    function svcPickFromSearch(i) {
+      const p = REPAIR.products[i];
+      svcEl("cat").value = String(p.c);
+      svcFillSeries();
+      svcEl("model").value = String(i);
+      // Same as a pick from the list, so Compare picks the device up too.
+      svcEl("model").dispatchEvent(new Event("change", { bubbles: true }));
+    }
+    (function () {
+      const input = svcEl("search"), box = svcEl("suggest");
+      if (!input || !box) return;
+      let hits = [];
+      const close = () => { box.hidden = true; };
+      input.addEventListener("input", () => {
+        hits = svcSearchHits(input.value);
+        if (!input.value.trim()) { close(); return; }
+        box.innerHTML = hits.length
+          ? hits.map((h, k) => {
+              const p = REPAIR.products[h.i], top = svcScreenMax(p);
+              return `<button type="button" class="suggestion" data-hit="${k}"><span><b>${escapeHtml(p.n)}</b> <span class="sv">${escapeHtml(p.k)}</span></span>`
+                + `<span class="sp">${top ? "Screen up to " + fmt(top) : escapeHtml(SVC_CATS[p.c])}</span></button>`;
+            }).join("")
+          : `<div class="suggestion" style="cursor:default;color:var(--ink-faint);">Not in Samsung\u2019s repair estimator \u2014 enter a quoted price below instead</div>`;
+        box.hidden = false;
+      });
+      box.addEventListener("click", e => {
+        const b = e.target.closest("[data-hit]");
+        if (!b) return;
+        const p = REPAIR.products[hits[Number(b.dataset.hit)].i];
+        svcPickFromSearch(hits[Number(b.dataset.hit)].i);
+        input.value = p.n;
+        close();
+      });
+      input.addEventListener("keydown", e => {
+        if (e.key === "Enter" && hits.length) { e.preventDefault(); box.querySelector("[data-hit]").click(); }
+        if (e.key === "Escape") close();
+      });
+      document.addEventListener("click", e => { if (!box.contains(e.target) && e.target !== input) close(); });
+    })();
     svcFillSeries();
   }
 
