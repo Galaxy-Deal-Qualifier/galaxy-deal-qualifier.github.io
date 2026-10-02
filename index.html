@@ -2596,6 +2596,8 @@
   function tiSeries(g) {
     const n = g[2], num = x => Number(x) || 0;
     let m;
+    if (/^Galaxy A\d/.test(n)) return { label: "Galaxy A series", rank: 150 };
+    if (/^Galaxy Tab A/.test(n)) return { label: "Galaxy Tab A series", rank: 150 };
     if ((m = n.match(/^Galaxy (S|Note|A)\s?(\d+)/))) return { label: "Galaxy " + m[1] + m[2] + " series", rank: (m[1] === "S" ? 300 : m[1] === "Note" ? 200 : 100) + num(m[2]) };
     if ((m = n.match(/^Galaxy Z (Fold|Flip)/))) return { label: "Galaxy Z " + m[1], rank: m[1] === "Fold" ? 290 : 289 };
     if ((m = n.match(/^Galaxy Tab (S|A)\s?(\d+)/))) return { label: "Galaxy Tab " + m[1] + m[2] + " series", rank: (m[1] === "S" ? 300 : 100) + num(m[2]) };
