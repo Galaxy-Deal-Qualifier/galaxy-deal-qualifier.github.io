@@ -9,7 +9,7 @@
     const icon=document.getElementById('brand-favicon');
     const apple=document.getElementById('brand-apple-icon');
     const manifest=document.getElementById('brand-manifest');
-    if(icon)icon.href=new URL(`icon-${theme}-64.png?v=app9`,base).href;
+    if(icon)icon.href=new URL("logo.png?v=transparent1",base).href;
     if(apple)apple.href=new URL(`icon-${theme}-180.png?v=app9`,base).href;
     if(manifest)manifest.href=new URL(`app-${theme}.webmanifest?v=app9`,base).href;
   }
