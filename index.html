@@ -7143,6 +7143,38 @@
 
   // ---- end Price check ----
 
+  // ---- Easter egg ----
+  // Five quick taps on the sidebar logo, or "galaxy guide" typed into Search.
+  (function () {
+    let card = null, timer = null;
+    function show() {
+      if (!card) {
+        card = document.createElement("div");
+        card.className = "egg";
+        card.setAttribute("role", "status");
+        card.innerHTML = `<div class="egg-card"><span class="egg-stars" aria-hidden="true">✦ ✧ ✦</span>`
+          + `<p class="egg-line"><span>Galaxy Deals</span><span class="egg-gt">&gt;</span><span class="egg-other">Galaxy Guide</span></p>`
+          + `<span class="egg-sub">Made by Isaiah Graham &amp; Harsha Parthiban</span></div>`;
+        card.addEventListener("click", hide);
+        document.body.appendChild(card);
+      }
+      card.classList.remove("on"); void card.offsetWidth; card.classList.add("on");
+      clearTimeout(timer); timer = setTimeout(hide, 4000);
+    }
+    function hide() { if (card) card.classList.remove("on"); }
+    document.addEventListener("keydown", e => { if (e.key === "Escape") hide(); });
+    const mark = document.querySelector(".side-mark");
+    let taps = [];
+    if (mark) mark.addEventListener("click", () => {
+      const now = Date.now();
+      taps = taps.filter(t => now - t < 1500).concat(now);
+      if (taps.length >= 5) { taps = []; show(); }
+    });
+    document.addEventListener("input", e => {
+      if (e.target && e.target.id === "gs-input" && /^\s*galaxy\s*guide\s*$/i.test(e.target.value)) { const ov = e.target.closest(".gs-overlay"); if (ov) ov.hidden = true; e.target.value = ""; show(); }
+    });
+  })();
+
   // ---- Search everything ----
   // One box for pages, devices, offers and bulletin codes, repairs and trade-ins. Built fresh on
   // every open, so sheet-loaded trade-ins and offers that started or ended today are current.
