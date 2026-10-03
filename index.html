@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v11
+  Galaxy Deals v11.1
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=11" />
+<link rel="stylesheet" href="styles.css?v=11.1" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -459,6 +459,7 @@
           <span class="total-label">Customer total</span>
           <span class="total-wrap"><span class="total-delta" id="total-delta" aria-hidden="true"></span><span class="total-amount" id="grand-total">A$0.00</span></span>
         </div>
+        <p id="quote-gst" class="quote-gst" hidden></p>
         <p id="quote-savings" class="quote-savings" hidden></p>
         <div class="ledger-actions">
           <button class="print-btn" id="print-btn" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print quote</button>
@@ -1690,8 +1691,8 @@
             const price = r.price == null
               ? `<span class="acc-price none">—</span>`
               : clearancePrice
-                ? `<span class="acc-price"><span class="acc-was">${fmt(r.price)}</span>${fmt(AGED_ACC_PRICE)}</span>`
-                : `<span class="acc-price">${fmt(r.price)}</span>`;
+                ? `<span class="acc-price"><span class="acc-was">${fmt(r.price)}</span>${fmt(AGED_ACC_PRICE)}${gstNote(AGED_ACC_PRICE)}</span>`
+                : `<span class="acc-price">${fmt(r.price)}${gstNote(r.price)}</span>`;
             // Only a priced line can go on a quote; the rest still show availability.
             const add = r.price != null
               ? `<button type="button" class="acc-add" data-acc-add="${escapeHtml(accKey(r))}"`
@@ -1937,6 +1938,7 @@
     }
     const off = res.discount;
     html += `<div class="bld-total"><span>Price</span><span class="la">${fmt(res.subtotal)}</span></div>`
+      + `<div class="bld-sub">incl. GST ${fmt(gstIn(res.subtotal))}</div>`
       + `<div class="bld-sub">${off > 0 ? fmt(off) + " off retail" + (sel.p ? " \u00b7 " + Math.round(off / sel.p * 100) + "%" : "") : "nothing off retail yet"}</div>`;
     if (res.vouchers.length) {
       html += res.vouchers.filter(v => !v.blockedBy).map(v =>
@@ -2352,7 +2354,7 @@
     const rows = [];
     rows.push(`<tr class="cmp-sec"><th class="cmp-row-label">Price today</th>${cols.map(() => "<td></td>").join("")}</tr>`);
     rows.push(`<tr>${cmpLabel("Best deal")}` + cols.map((c, i) => !c.sold ? `<td>${notSold}</td>` :
-      `<td><span class="cmp-best ${i === bestLow ? "cmp-win" : ""}">${fmt(c.best.open.subtotal)}</span>`
+      `<td><span class="cmp-best ${i === bestLow ? "cmp-win" : ""}">${fmt(c.best.open.subtotal)}</span>${gstNote(c.best.open.subtotal)}`
       + (c.best.open.subtotal < c.sel.p - 0.005 ? ` <span class="cmp-rrp">${fmt(c.sel.p)}</span>` : "")
       + `<span class="cmp-offers">${c.best.open.names.length ? escapeHtml(c.best.open.names.join(" + ")) : "no offer running"}</span></td>`).join("") + `</tr>`);
     // The first offer to lapse is the one that ends the price, so that is the date shown.
@@ -2367,10 +2369,10 @@
         + (ends[ends.length - 1] !== ends[0] ? `<span class="cmp-offers">then ${escapeHtml(fmtDateFull(ends[ends.length - 1]))}</span>` : "")
         + `</td>`;
     }).join("") + `</tr>`);
-    rows.push(`<tr>${cmpLabel("Retail")}${cols.map(c => `<td>${c.sold ? fmt(c.sel.p) : notSold}</td>`).join("")}</tr>`);
+    rows.push(`<tr>${cmpLabel("Retail")}${cols.map(c => `<td>${c.sold ? fmt(c.sel.p) + gstNote(c.sel.p) : notSold}</td>`).join("")}</tr>`);
     const eduLow = low(c => c.edu), smbLow = low(c => c.smb);
-    rows.push(`<tr>${cmpLabel("Education")}${cols.map((c, i) => `<td>${c.sold ? money(c.edu, i === eduLow) : notSold}</td>`).join("")}</tr>`);
-    rows.push(`<tr>${cmpLabel("SMB")}${cols.map((c, i) => `<td>${c.sold ? money(c.smb, i === smbLow) : notSold}</td>`).join("")}</tr>`);
+    rows.push(`<tr>${cmpLabel("Education")}${cols.map((c, i) => `<td>${c.sold ? money(c.edu, i === eduLow) + gstNote(c.edu) : notSold}</td>`).join("")}</tr>`);
+    rows.push(`<tr>${cmpLabel("SMB")}${cols.map((c, i) => `<td>${c.sold ? money(c.smb, i === smbLow) + gstNote(c.smb) : notSold}</td>`).join("")}</tr>`);
 
     const SPEC_ROWS = [
       ["Screen", "display"], ["Cover screen", "cover"], ["Processor", "chipset"],
@@ -2514,7 +2516,7 @@
     const saved = d.rrp - d.open.subtotal;
     let html = `<div class="bd-head">
       <div class="bd-label">Best deal on this device</div>
-      <div class="bd-price"><span class="bd-now">${fmt(d.open.subtotal)}</span>`
+      <div class="bd-price"><span class="bd-now">${fmt(d.open.subtotal)}</span>${gstNote(d.open.subtotal)}`
       + (saved > 0.005 ? `<span class="bd-was">${fmt(d.rrp)}</span><span class="bd-off">save ${fmt(saved)}</span>` : "")
       + `</div>`
       + `<p class="bd-stack">${d.open.names.length
@@ -2559,10 +2561,25 @@
     renderBestDealInto(document.getElementById("wearable-best-deal"), wearableSelection());
   }
 
+  // ---- GST ----
+  // Every price here is GST-inclusive, so the GST inside it is one eleventh (10% on the ex-GST
+  // price). Trade-in credit and trade-in bonuses are payment towards the sale, not a discount on it,
+  // so a quote's GST is worked out on the sale before trade-ins come off.
+  function gstIn(amount) { return Math.round((Number(amount) || 0) / 11 * 100) / 100; }
+  function gstNote(amount) { return `<span class="gst-note">incl. GST ${fmt(gstIn(amount))}</span>`; }
+  function gstAfter(el, amount) {
+    if (!el) return;
+    let n = el.nextElementSibling;
+    if (!n || !n.classList.contains("gst-note")) { n = document.createElement("span"); n.className = "gst-note"; el.after(n); }
+    n.textContent = "incl. GST " + fmt(gstIn(amount));
+  }
+  function quoteSale(q) { return q.items.reduce((sum, x) => sum + x.lineTotal, 0) + (q.ngcLine ? q.ngcLine.planPrice : 0); }
+
   function renderPromoPreview() {
     const sel = currentSelection();
     const { m, v, p } = sel;
     priceReadout.textContent = fmt(p);
+    gstAfter(priceReadout, p);
     // Once this exact device is on the quote, adding it again is the exception, not the next step.
     const alreadyIn = cart.some(c => c.m === sel.m && c.v === sel.v);
     addBtn2.classList.toggle("is-secondary", alreadyIn);
@@ -3440,7 +3457,8 @@
     const head = ["GALAXY DEALS", "Customer Quote", "Quote Created " + dateStr,
                   validLine, byName ? "Served by " + byName : ""].filter(Boolean);
     return head.concat(["",
-            ledgerBody.innerText, "", "TOTAL: " + grandTotalEl.textContent, "",
+            ledgerBody.innerText, "", "TOTAL: " + grandTotalEl.textContent,
+            "GST included: " + fmt(gstIn(quoteSale(computeQuote(null)))) + " (on the sale, before trade-in)", "",
             "This is a quoting aid, not a source of truth. Offers and prices change, and some",
             "require codes or conditions applied at the register — always confirm the final",
             "price in POS at the time of the transaction."]).join("\n");
@@ -3511,13 +3529,15 @@
       line("Regular price: " + fmt(item.p));
       result.lines.forEach(discount => line(discount.name + ": -" + fmt(discount.amount)));
       ecoApplied.forEach(discount => line(discount.name + ": -" + fmt(discount.amount)));
-      line("Line total: " + fmt(lineTotal), 12, true); y += 6;
+      line("Line total: " + fmt(lineTotal), 12, true);
+      line("incl. GST " + fmt(gstIn(lineTotal)), 10); y += 6;
     });
     if (quote.ngcLine) line("New Galaxy Club (" + quote.ngcLine.plan.term + "): " + fmt(quote.ngcLine.planPrice));
     if (quote.manualCredit) line("Trade-in credit: -" + fmt(quote.manualCredit));
     quote.bonuses.forEach(b => line(b.name + ": -" + fmt(b.amount)));
     y += 6;
     line("Customer total: " + fmt(quote.total), 20, true);
+    line("Includes GST of " + fmt(gstIn(quoteSale(quote))) + " on the sale, before trade-in", 10);
     if (quote.savings > 0) line("You save " + fmt(quote.savings), 13, true);
     y += 8;
     line("This is a quoting aid. Offers and prices may change. Always confirm the final price in POS at the time of purchase.", 9);
@@ -3644,6 +3664,8 @@
         });
         block.querySelectorAll(".eco-note,.clash-note").forEach(note => { lines += paragraph(note.textContent, "font-size:14px;color:#606473"); });
         lines += paragraph(block.querySelector(".item-subtotal")?.textContent, "font-weight:700");
+        const gstRow = block.querySelector(".item-gst");
+        if (gstRow) lines += paragraph(gstRow.textContent, "font-size:14px;color:#606473");
       } else lines += paragraph(block.textContent);
       lines += '</div>';
     });
@@ -3655,7 +3677,8 @@
       paragraph("Created: " + date) + (valid.hidden ? "" : paragraph(valid.textContent)) +
       (preparedBy() ? paragraph("Served by " + preparedBy()) : "") + lines +
       '<div style="border-top:1px solid #d8dbe2;padding:24px 0">' + paragraph("Customer total", "font-weight:700;font-size:20px") +
-      paragraph(grandTotalEl.textContent,"font-weight:700;font-size:32px") + '</div>' +
+      paragraph(grandTotalEl.textContent,"font-weight:700;font-size:32px") +
+      paragraph("Includes GST of " + fmt(gstIn(quoteSale(computeQuote(null)))) + " on the sale, before trade-in", "font-size:14px;color:#606473") + '</div>' +
       '<div style="border-top:1px solid #d8dbe2;padding-top:24px">' + paragraph("This is a quoting aid, not a source of truth.","font-weight:700") +
       paragraph("Offers and prices may change and some require codes or conditions applied at the register. Always confirm the final price in POS at the time of the transaction.") + '</div></div>';
   }
@@ -3938,7 +3961,8 @@
           html += `<div class="clash-note">${icoHtml("lock")}<span>${escapeHtml(result.lostVoucher.name)} (${fmt(result.lostVoucher.value)})`
                 + ` — not available on ${mode === "edu" ? "Education" : "SMB"} pricing.</span></div>`;
         }
-        html += `<div class="item-subtotal"><span>Line total</span><span class="la">${fmt(lineTotal)}</span></div>`;
+        html += `<div class="item-subtotal"><span>Line total</span><span class="la">${fmt(lineTotal)}</span></div>`
+              + `<div class="item-gst"><span>incl. GST</span><span class="la">${fmt(gstIn(lineTotal))}</span></div>`;
         el.innerHTML = html;
         ledgerBody.appendChild(el);
       });
@@ -3954,7 +3978,8 @@
         h += `<div class="item-line"><span class="lv item-base">${fmt(p.price)}</span></div>`;
         h += `<div class="item-line discount"><span class="lv">${escapeHtml(d.name)}${urgencyBadge(d.end)}${endDateTag(d.end)}</span><span class="la">−${fmt(d.amount)}</span></div>`;
       }
-      h += `<div class="item-subtotal"><span>Plan total</span><span class="la">${fmt(quote.ngcLine.planPrice)}</span></div>`;
+      h += `<div class="item-subtotal"><span>Plan total</span><span class="la">${fmt(quote.ngcLine.planPrice)}</span></div>`
+         + `<div class="item-gst"><span>incl. GST</span><span class="la">${fmt(gstIn(quote.ngcLine.planPrice))}</span></div>`;
       block.innerHTML = h;
       ledgerBody.appendChild(block);
     }
@@ -3990,6 +4015,15 @@
     announceTotalChange(quote.total);
     const barTotal = document.getElementById("quote-bar-total");
     if (barTotal) barTotal.textContent = fmt(quote.total);
+    const saleGst = gstIn(quoteSale(quote));
+    const credited = quote.manualCredit > 0 || quote.bonuses.length > 0;
+    const gstLine = document.getElementById("quote-gst");
+    if (gstLine) {
+      gstLine.hidden = !cart.length;
+      gstLine.textContent = "Includes GST of " + fmt(saleGst)
+        + (credited ? " on the sale of " + fmt(quoteSale(quote)) + ". Trade-in credit is payment towards the sale, so it doesn\u2019t reduce the GST." : ".");
+    }
+    if (barTotal) { if (cart.length) gstAfter(barTotal, quoteSale(quote)); else if (barTotal.nextElementSibling && barTotal.nextElementSibling.classList.contains("gst-note")) barTotal.nextElementSibling.textContent = ""; }
     queueLedgerSize();
     renderAfterpay(quote.total);
     renderZip(quote.total);
@@ -5771,6 +5805,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11.1", d: "3 Oct 2026", t: "GST included, shown beside every price",
+      items: [
+        "<strong>Every price we charge now shows the GST inside it</strong>: the retail price and best deal, each quote line and plan, the customer total (on screen, in the bottom bar, in the copied and emailed quote and the PDF), Deal Builder, Compare, Price Check, Repair or Upgrade and accessories. Prices are GST-inclusive, so the GST is one eleventh of the price \u2014 for example A$1,699.00 includes A$154.45.",
+        "<strong>Trade-ins don\u2019t reduce the GST.</strong> Trade-in credit and trade-in bonuses are payment towards the sale, not a discount on it, so the GST is worked out on the sale before they come off; the total says so when a trade-in is on the quote. Discounts and ECO vouchers do lower the price, so they lower the GST.",
+        "Competitors\u2019 prices and trade-in values aren\u2019t prices we charge, so they carry no GST note. No prices or offers have changed."
+      ] },
     { v: "11", d: "3 Oct 2026", t: "Search everything, trade-in condition checklist, price match request",
       items: [
         "<strong>Search everything.</strong> A Search button at the top of the sidebar (or press <strong>/</strong>, or Ctrl+K) finds any page, device, offer or bulletin code, repair model or trade-in, and takes you straight to it. Picking a device opens it in the quote; a bulletin code opens the Sales Kit filtered to it; a repair opens Repair or Upgrade on that model; a trade-in fills the next free trade-in slot.",
@@ -6646,7 +6686,7 @@
     let html = "";
     let sub;
     if (cost.manual) {
-      sub = "Price the customer was quoted";
+      sub = "Price the customer was quoted \u00b7 incl. GST " + fmt(gstIn(cost.total));
     } else {
       if (opts.length > 1) {
         const at = Math.min(svc.option, opts.length - 1);
@@ -6655,8 +6695,8 @@
           + `</div></div>`;
       }
       sub = cost.parts
-        ? cost.parts.map(o => escapeHtml(o.type) + " " + fmt(o.total)).join(" + ")
-        : escapeHtml(cost.type) + " · incl. GST";
+        ? cost.parts.map(o => escapeHtml(o.type) + " " + fmt(o.total)).join(" + ") + " \u00b7 incl. GST " + fmt(gstIn(cost.total))
+        : escapeHtml(cost.type) + " · incl. GST " + fmt(gstIn(cost.total));
     }
     html += `<div class="svc-total"><span><span class="svc-total-label">${cost.manual ? "Repair" : "Repair estimate"}</span>`
       + `<span class="svc-total-sub">${sub}</span></span><span class="svc-total-amount">${fmt(cost.total)}</span></div>`;
@@ -6718,7 +6758,7 @@
       return `<div class="svc-row">`
         + `<span class="svc-row-name">${escapeHtml(r.m.n)}${r.names.length ? `<span class="svc-row-offer">${escapeHtml(r.names.join(" · "))}</span>` : ""}</span>`
         + `<span class="svc-row-variant">${variant}</span>`
-        + `<span class="svc-row-money"><span class="svc-row-price">${r.price < r.rrp ? "<s>" + fmt(r.rrp) + "</s>" : ""}${fmt(r.price)}</span>${diffHtml}</span>`
+        + `<span class="svc-row-money"><span class="svc-row-price">${r.price < r.rrp ? "<s>" + fmt(r.rrp) + "</s>" : ""}${fmt(r.price)}</span>${gstNote(r.price)}${diffHtml}</span>`
         + `<button type="button" class="svc-quote" data-quote="${r.m.m}" aria-label="Start a quote for ${escapeHtml(r.m.n)}">Quote</button>`
         + `</div>`;
     }).join("");
@@ -6951,7 +6991,7 @@
     const res = pcOurPrice(sel);
     const ours = res.subtotal;
     const names = res.lines.map(l => l.name);
-    pcEl("ours").innerHTML = `<span class="pc-ours-label">Our price today</span><span class="pc-ours-amount">${fmt(ours)}</span>`
+    pcEl("ours").innerHTML = `<span class="pc-ours-label">Our price today</span><span class="pc-ours-amount">${fmt(ours)}</span>${gstNote(ours)}`
       + (names.length ? `<span class="pc-ours-sub">${escapeHtml(names.join(" · "))} · RRP ${fmt(sel.p)}</span>` : `<span class="pc-ours-sub plain">RRP, no offer running</span>`);
 
     const pill = (out, diff, here) => {
