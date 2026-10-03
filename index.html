@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v11.1
+  Galaxy Deals v11.2
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=11.1" />
+<link rel="stylesheet" href="styles.css?v=11.2" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -155,7 +155,7 @@
       <div class="price-bar">
         <div>
           <span class="field-label">Retail price</span>
-          <div id="price-readout" class="price-readout">A$0.00</div>
+          <div id="price-readout" class="price-readout">$0.00</div>
         </div>
         <div class="segmented" role="group" aria-label="Customer pricing type">
           <button type="button" data-mode="none" aria-pressed="true">Standard</button>
@@ -401,7 +401,7 @@
   </div>
 
   <div class="quote-bar" id="quote-bar">
-    <span class="quote-bar-total"><span class="quote-bar-label">Total</span><span id="quote-bar-total">A$0.00</span><span id="quote-bar-savings" class="quote-savings" hidden></span></span>
+    <span class="quote-bar-total"><span class="quote-bar-label">Total</span><span id="quote-bar-total">$0.00</span><span id="quote-bar-savings" class="quote-savings" hidden></span></span>
     <button type="button" class="clear-btn" id="quote-bar-reset">Reset quote</button>
     <button type="button" class="clear-btn" id="quote-bar-jump">View quote</button>
     <button type="button" class="print-btn" id="quote-bar-print"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print</button>
@@ -457,7 +457,7 @@
       <div class="ledger-foot">
         <div class="total-row">
           <span class="total-label">Customer total</span>
-          <span class="total-wrap"><span class="total-delta" id="total-delta" aria-hidden="true"></span><span class="total-amount" id="grand-total">A$0.00</span></span>
+          <span class="total-wrap"><span class="total-delta" id="total-delta" aria-hidden="true"></span><span class="total-amount" id="grand-total">$0.00</span></span>
         </div>
         <p id="quote-gst" class="quote-gst" hidden></p>
         <p id="quote-savings" class="quote-savings" hidden></p>
@@ -651,7 +651,7 @@
       <div id="svc-estimate" class="svc-estimate" aria-live="polite"></div>
       <div class="svc-manual">
         <label for="svc-manual">Already been quoted a price?</label>
-        <span class="svc-manual-field"><span aria-hidden="true">A$</span><input type="number" id="svc-manual" min="0" step="1" inputmode="decimal" placeholder="0" autocomplete="off" /></span>
+        <span class="svc-manual-field"><span aria-hidden="true">$</span><input type="number" id="svc-manual" min="0" step="1" inputmode="decimal" placeholder="0" autocomplete="off" /></span>
       </div>
       <p class="svc-src">Out-of-warranty estimates from Samsung Australia&#8217;s
       <a href="https://www.samsung.com/au/support/repair-cost/" target="_blank" rel="noopener">Repair Cost Estimator</a>,
@@ -729,7 +729,7 @@
         <span class="pc-note" id="pc-here-note"></span>
       </div>
       <label class="pc-sim" for="pc-sim">SIM plan instead
-        <span class="pc-money"><span aria-hidden="true">A$</span><input type="number" id="pc-sim" min="0" step="1" inputmode="decimal" placeholder="same" autocomplete="off" /><span aria-hidden="true">/mth</span></span>
+        <span class="pc-money"><span aria-hidden="true">$</span><input type="number" id="pc-sim" min="0" step="1" inputmode="decimal" placeholder="same" autocomplete="off" /><span aria-hidden="true">/mth</span></span>
       </label>
       <span class="pc-total pc-right" id="pc-here-total"></span>
     </div>
@@ -897,7 +897,7 @@
     body.innerHTML = SYNC_ANOMALIES.map(a => `<div>${a.replace(/[&<>]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]))}</div>`).join("");
     banner.hidden = false;
   }
-  const fmt = n => "A$" + (Math.round(n * 100) / 100).toLocaleString("en-AU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const fmt = n => "$" + (Math.round(n * 100) / 100).toLocaleString("en-AU", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   // ---- theme toggle ----
   (function () {
@@ -4056,7 +4056,7 @@
   }
 
   // When the total moves, the change surfaces above it for a moment -- a deal landing or a trade-in
-  // coming off reads as "-A$300.00" right where the eye already is -- and then gets out of the way.
+  // coming off reads as "-$300.00" right where the eye already is -- and then gets out of the way.
   // The panel sticks 20px from the top once scrolled, but on first load it sits under the page
   // head and any notices. Its height is taken from where it actually is, so the total and Print
   // are on screen before anyone scrolls -- and it grows back to full height as it pins.
@@ -5805,6 +5805,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11.2", d: "3 Oct 2026", t: "Prices shown as $ rather than A$",
+      items: [
+        "<strong>Prices now read $1,699.00 instead of A$1,699.00</strong> everywhere: on screen, in the bottom bar, in the copied, emailed and PDF quotes, and in the price boxes you type into. It\u2019s an Australian tool, so the A added nothing. Older What\u2019s New entries are left as they were written.",
+        "No prices or offers have changed."
+      ] },
     { v: "11.1", d: "3 Oct 2026", t: "GST included, shown beside every price",
       items: [
         "<strong>Every price we charge now shows the GST inside it</strong>: the retail price and best deal, each quote line and plan, the customer total (on screen, in the bottom bar, in the copied and emailed quote and the PDF), Deal Builder, Compare, Price Check, Repair or Upgrade and accessories. Prices are GST-inclusive, so the GST is one eleventh of the price \u2014 for example A$1,699.00 includes A$154.45.",
@@ -6948,7 +6953,7 @@
         : `<a class="pc-link" href="${r[2](q)}" target="_blank" rel="noopener">${r[0] === "hn" ? "Look it up" : "Search their site"}</a>`;
       const note = low ? "Well under RRP — check the listing" : hit ? "" : r[0] === "hn" ? "Type in their price" : "Not found — type it in";
       return `<div class="pc-tile"><div class="pc-tile-head"><span class="pc-name">${r[1]}</span>${link}</div>`
-        + `<span class="pc-money"><span aria-hidden="true">A$</span><input type="number" min="0" step="1" inputmode="decimal" data-retail="${r[0]}" aria-label="${r[1]} price" value="${hit ? hit[0] : ""}" placeholder="—" /></span>`
+        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-retail="${r[0]}" aria-label="${r[1]} price" value="${hit ? hit[0] : ""}" placeholder="—" /></span>`
         + `<div class="pc-tile-foot"><span class="pc-pill" data-retail-diff="${r[0]}"></span><span class="pc-note${low ? " warn" : ""}">${note}</span></div>`
         // Wording taken from a summary of their policy; their own page could not be read by the tool that wrote this.
         + (r[0] === "hn" ? `<p class="pc-policy">They match genuine advertised prices from leading Australian retailers, on request through Live Chat with proof. <a href="https://www.harveynorman.com.au/price-match-guarantee" target="_blank" rel="noopener">Read the policy</a></p>` : "")
@@ -6967,11 +6972,11 @@
         : `${fmt(dev[2])}/mth over ${dev[1]} mths` + (dev[3] && dev[3] > dev[0] ? ` · includes ${fmt(dev[3] - dev[0])} off, lost if they leave early` : "");
       return `<div class="pc-trow" data-telco="${t[0]}">`
         + `<span><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a><span class="pc-note">${note}</span></span>`
-        + `<span class="pc-money"><span aria-hidden="true">A$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="device" aria-label="${t[1]} device price, total" value="${prefill}" placeholder="—" /></span>`
+        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="device" aria-label="${t[1]} device price, total" value="${prefill}" placeholder="—" /></span>`
         + `<span class="pc-plan pc-cell-plan"><select data-field="plan" aria-label="${t[1]} plan">`
         + plans.map((p, k) => `<option value="${k}">${escapeHtml(p.n)}</option>`).join("") + `<option value="">Other plan</option></select>`
-        + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${t[1]} plan price per month" value="${plans.length ? plans[0].p : ""}" placeholder="A$" /></span>`
-        + `<span class="pc-money"><span aria-hidden="true">A$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="extra" aria-label="${t[1]} other costs such as setup, accessories or insurance" placeholder="0" /></span>`
+        + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${t[1]} plan price per month" value="${plans.length ? plans[0].p : ""}" placeholder="$" /></span>`
+        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="extra" aria-label="${t[1]} other costs such as setup, accessories or insurance" placeholder="0" /></span>`
         + `<span class="pc-total pc-right" data-sums></span></div>`;
     }).join("");
     const when2 = ["telstra", "optus", "vodafone"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];

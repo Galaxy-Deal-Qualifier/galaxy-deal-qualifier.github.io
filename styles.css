@@ -545,7 +545,7 @@
   .ti-status[hidden] { display: none; }
   .ti-source { font-size: 13px; color: var(--ink-faint); margin: 0; padding-top: 14px; border-top: 1px solid var(--line); line-height: 1.5; }
   .amount-input { position: relative; }
-  .amount-input::before { content: "A$"; position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--ink-faint); pointer-events: none; }
+  .amount-input::before { content: "$"; position: absolute; left: 11px; top: 50%; transform: translateY(-50%); font-size: 13px; color: var(--ink-faint); pointer-events: none; }
   .amount-input input { padding-left: 32px; font-variant-numeric: tabular-nums; }
 
   /* ECO bundler. */
