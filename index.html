@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v11.5
+  Galaxy Deals v11.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=11.5" />
+<link rel="stylesheet" href="styles.css?v=11.6" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -5872,6 +5872,13 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11.6", d: "4 Oct 2026", t: "Cleaner separate options on the quote",
+      items: [
+        "<strong>Separate options have more room.</strong> The options now sit with the quote rather than in the pinned footer, so the device list isn\u2019t squeezed. Each option is a tidy block: its label and name, the price on the right, and one line underneath with the GST, any trade-in and the saving.",
+        "\u201cSame quote, priced three ways\u201d is hidden while quoting separate options, because it adds the devices together.",
+        "The GST on <strong>Best deal on this device</strong> now sits under the price instead of between the prices.",
+        "No prices or offers have changed."
+      ] },
     { v: "11.5", d: "4 Oct 2026", t: "Quote several devices as separate options",
       items: [
         "<strong>Separate options on one quote.</strong> With two or more devices on a quote, a <strong>Quote as</strong> switch appears above the total. <strong>One sale</strong> adds everything up, as before. <strong>Separate options</strong> prices each device on its own and doesn\u2019t add them together \u2014 for a customer choosing between, say, the 256GB and the 512GB. Each option shows its own price after any trade-in, the GST in it and what they save, and the devices are labelled Option 1, Option 2 and so on.",
@@ -7284,10 +7291,18 @@
         if (name && !name.querySelector(".qo-tag")) name.insertAdjacentHTML("afterbegin", `<span class="qo-tag">Option ${k}</span> `);
       }
     });
+    // The options scroll with the quote rather than sitting in the pinned footer, which would
+    // squeeze the device list down to almost nothing.
+    if (box.previousElementSibling !== ledgerBody) ledgerBody.after(box);
     box.hidden = false;
-    box.innerHTML = `<p class="qo-head">Separate options <span>prices are not added together</span></p>`
-      + opts.map((o, i) => `<div class="qo-row"><span class="qo-name"><span class="qo-tag">Option ${i + 1}</span> ${escapeHtml(quoteOptionName(o))}</span>`
-        + `<span class="qo-price">${fmt(o.q.total)}<span class="qo-sub">${escapeHtml(quoteOptionSub(o))}</span></span></div>`).join("");
+    box.innerHTML = `<p class="qo-head">Separate options<span>Prices are not added together</span></p>`
+      + opts.map((o, i) => {
+        const credit = o.q.manualCredit + o.q.bonuses.reduce((sum, b) => sum + b.amount, 0);
+        const meta = [credit > 0 ? "after " + fmt(credit) + " trade-in" : "", o.q.savings > 0 ? "saves " + fmt(o.q.savings) : ""].filter(Boolean).join(" \u00b7 ");
+        return `<div class="qo-row"><span class="qo-name"><span class="qo-tag">Option ${i + 1}</span>${escapeHtml(quoteOptionName(o))}</span>`
+          + `<span class="qo-price">${fmt(o.q.total)}</span>`
+          + `<span class="qo-meta">incl. GST ${fmt(gstIn(o.sale))}${meta ? " \u00b7 " + escapeHtml(meta) : ""}</span></div>`;
+      }).join("");
     ledgerCount.textContent = opts.length + " options";
     const low = opts.reduce((a, o) => o.q.total < a.q.total ? o : a, opts[0]);
     const barTotal = document.getElementById("quote-bar-total");
