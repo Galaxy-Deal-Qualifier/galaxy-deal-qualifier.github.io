@@ -1779,3 +1779,6 @@ body.print-view .deal-stage-heading { display: none; }
   @media (prefers-reduced-motion: reduce) { .egg, .egg-card { transition: none; } }
   @media print { .egg { display: none !important; } }
 /* ---- end Easter egg ---- */
+/* ---- Accessories from the price list ---- */
+  .acc-qty.none { color: var(--ink-faint); background: none; }
+/* ---- end Accessories from the price list ---- */

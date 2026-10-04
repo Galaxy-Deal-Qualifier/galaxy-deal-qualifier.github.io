@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v11.3
+  Galaxy Deals v11.4
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=11.3" />
+<link rel="stylesheet" href="styles.css?v=11.4" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -1641,14 +1641,16 @@
     const ask = document.getElementById("acc-ask-q");
     if (!card || !body) return;
     const store = currentStore();
-    if (!store || !stockRows.length) { card.hidden = true; return; }
+    // With no stock file for the store, accessories come from the price list instead, so they
+    // can still go on a quote; only the stock counts are unknown.
+    const fromList = !store || !stockRows.length;
 
     const sel = currentSelection();
     const model = modelIndex[sel.m];
-    const fitted = accessoriesFor(sel.m);
+    const fitted = fromList ? accCatalogFor(sel.m) : accessoriesFor(sel.m);
     // Clearance stock is for ranges the catalog no longer sells, so it fits nothing being quoted.
     // Without this it could never be reached, and the $10 offer would be unusable.
-    const clearance = curated("aged-accessory").length
+    const clearance = !fromList && curated("aged-accessory").length
       ? stockRows.filter(r => r.kind === "accessory" && r.aged && r.price != null
           && fitted.indexOf(r) === -1)
       : [];
@@ -1660,13 +1662,15 @@
     // How many there are is the thing worth knowing before answering, so it goes in the question.
     const available = all.filter(r => r.qty > 0).length;
     if (ask) {
-      ask.textContent = available
+      ask.textContent = fromList
+        ? `${all.length} accessor${all.length === 1 ? "y" : "ies"} on the price list for this device \u2014 show them?`
+        : available
         ? `${available} line${available === 1 ? "" : "s"} in stock for this device — show them?`
         : "Nothing in stock for this device — show the full list anyway?";
     }
     if (!showAccessories) { body.innerHTML = ""; return; }
 
-    const inStock = all.filter(r => r.qty > 0);
+    const inStock = fromList ? all : all.filter(r => r.qty > 0);
     const outOfStock = all.length - inStock.length;
 
     // Device-specific first, then the universal bits, each grouped by what the accessory is.
@@ -1683,7 +1687,7 @@
         Object.keys(byType).filter(t => ACC_TYPE_ORDER.indexOf(t) === -1));
       return order.map(t => `<div class="acc-group">
           <div class="acc-group-head">${escapeHtml(heading ? heading + " · " + t : t)}</div>
-          ${byType[t].sort((a, b) => b.qty - a.qty).map(r => {
+          ${byType[t].sort((a, b) => (b.qty || 0) - (a.qty || 0) || String(a.device).localeCompare(String(b.device))).map(r => {
             const cls = r.qty <= 2 ? "low" : "ok";
             const colour = r.colour ? ` <span class="acc-colour">${escapeHtml(r.colour)}</span>` : "";
             const clearancePrice = r.aged && r.price != null && r.price > AGED_ACC_PRICE
@@ -1699,17 +1703,17 @@
                 + ` aria-label="Add ${escapeHtml(r.device)} to quote">+</button>`
               : `<span class="acc-add-gap"></span>`;
             return `<div class="acc-row"><span class="acc-name">${capHtml(escapeHtml(r.device))}${colour}</span>`
-                 + price + `<span class="acc-qty ${cls}">${r.qty}</span>` + add + `</div>`;
+                 + price + (r.qty == null ? `<span class="acc-qty none" title="No stock file loaded">\u2014</span>` : `<span class="acc-qty ${cls}">${r.qty}</span>`) + add + `</div>`;
           }).join("")}
         </div>`).join("");
     }
 
     const unpriced = inStock.filter(r => r.price == null).length;
-    let html = `<div class="acc-note">Prices are RRP. Press <strong>+</strong> to put one on the quote`
+    let html = `<div class="acc-note">${fromList ? "No stock file is loaded" + (store ? " for " + escapeHtml(store) : "") + ", so these come from the price list and stock isn\u2019t shown. " : ""}Prices are RRP. Press <strong>+</strong> to put one on the quote`
       + (unpriced ? ` — ${unpriced} line${unpriced === 1 ? " has" : "s have"} no price against the item code, shown as \u2014 and can't be added` : "")
       + `.</div>`;
     html += groupHtml(specific, "");
-    if (!specific.length) html += `<div class="acc-none">Nothing specific to this device in stock right now.</div>`;
+    if (!specific.length) html += `<div class="acc-none">${fromList ? "Nothing specific to this device on the price list." : "Nothing specific to this device in stock right now."}</div>`;
     if (universal.length) {
       html += `<details class="acc-universal"><summary>Also fits any device (${universal.length})</summary>`
             + groupHtml(universal, "") + `</details>`;
@@ -5119,6 +5123,26 @@
     return kept;
   }
 
+  // The accessory price list as quotable lines, for a store with no stock file loaded. Built once,
+  // through the same classifier as stock rows, so fit and type are worked out the same way.
+  // (Cached on the function itself: the first redraw runs before a `let` this far down would exist.)
+  // The price list is stored lower-case; this puts it back in the case staff are used to.
+  function accListName(d) {
+    return tidyName(String(d).replace(/\b[a-z]/g, ch => ch.toUpperCase())
+      .replace(/\b(\d+)mah\b/gi, "$1mAh").replace(/\b(\d+)w\b/gi, "$1W")
+      .replace(/\b(usb|ac|dc|led|pd|wc|uk|au|hdmi)\b/gi, w => w.toUpperCase()));
+  }
+  function accCatalogFor(m) {
+    if (!m) return [];
+    if (!accCatalogFor.list) {
+      try {
+        accCatalogFor.list = Object.keys(ACC_PRICES_DESC).map(d => classifyRow({ device: accListName(d), variant: "", colour: "",
+          code: "", gtin: "", qty: null, onHand: null, category: "ACC" }, d)).filter(r => r.price != null);
+      } catch (e) { return []; }   // the price list is defined further down the page; the next redraw has it
+    }
+    return accCatalogFor.list.filter(r => (r.fits && r.fits.indexOf(m) !== -1) || r.universal);
+  }
+
   function accessoriesFor(m) {
     if (!m) return [];
     return stockRows.filter(r => r.kind === "accessory"
@@ -5805,6 +5829,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11.4", d: "4 Oct 2026", t: "Accessories can be added without a stock file",
+      items: [
+        "<strong>Accessories are back on every quote.</strong> The Accessories card only ever showed what was in your store\u2019s loaded stock file, so on a browser without one (a new device, cleared data, or the shared link) it disappeared and nothing could be added. Now, with no stock file loaded, it lists accessories from the price list instead \u2014 the ones that fit the device being quoted, grouped by type, at RRP \u2014 and <strong>+</strong> puts them on the quote as before. Stock shows as a dash because it isn\u2019t known.",
+        "With a stock file loaded nothing changes: you see what\u2019s in stock, the counts, and the $10 clearance on older ranges.",
+        "No prices or offers have changed."
+      ] },
     { v: "11.3", d: "3 Oct 2026", t: "S26 FE SMB shows its own bulletin",
       items: [
         "<strong>The S26 FE on SMB now shows bulletin A260005730</strong> (\u201c15% OFF S26FE\u201d, ends 31 October), as the Sales Kit lists it. It had been picking up the general SMB offer (A260004803, coupon SMB0038), which doesn\u2019t include the S26 FE. The price is the same: $976.65 for 128GB and $1,104.15 for 256GB.",
