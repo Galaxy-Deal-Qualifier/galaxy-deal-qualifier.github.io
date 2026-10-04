@@ -1782,3 +1782,22 @@ body.print-view .deal-stage-heading { display: none; }
 /* ---- Accessories from the price list ---- */
   .acc-qty.none { color: var(--ink-faint); background: none; }
 /* ---- end Accessories from the price list ---- */
+/* ---- Quote as separate options ---- */
+  .quote-layout { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+  .quote-layout[hidden] { display: none; }
+  .quote-layout-label { font-size: 12px; font-weight: 600; color: var(--ink-dim); }
+  .quote-layout .segmented { margin: 0; }
+  .quote-layout .segmented button { padding: 5px 10px; font-size: 12px; }
+  body.quote-as-options .ledger-foot .total-row { display: none; }
+  .quote-options[hidden] { display: none; }
+  .qo-head { margin: 0 0 6px; font-size: 13px; font-weight: 700; }
+  .qo-head span { font-weight: 500; color: var(--ink-faint); margin-left: 4px; }
+  .qo-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid var(--line); }
+  .qo-name { font-size: 13px; font-weight: 600; line-height: 1.4; }
+  .qo-price { display: flex; flex-direction: column; align-items: flex-end; font-size: 20px; font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .qo-sub { margin-top: 2px; font-size: 11px; font-weight: 500; color: var(--ink-faint); white-space: normal; text-align: right; max-width: 220px; }
+  .qo-tag { display: inline-block; margin-right: 4px; padding: 0 7px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; line-height: 18px; vertical-align: 1px; }
+  body.print-view .quote-layout { display: none !important; }
+  body.print-view .qo-tag { background: none !important; border: 1px solid currentColor; color: inherit !important; }
+  @media print { .quote-layout { display: none !important; } .qo-tag { background: none; border: 1px solid #999; color: #000; } }
+/* ---- end Quote as separate options ---- */

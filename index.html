@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v11.4
+  Galaxy Deals v11.5
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=11.4" />
+<link rel="stylesheet" href="styles.css?v=11.5" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -455,12 +455,20 @@
         </section>
       </div>
       <div class="ledger-foot">
+        <div class="quote-layout" id="quote-layout" hidden>
+          <span class="quote-layout-label">Quote as</span>
+          <div class="segmented" role="group" aria-label="How to total this quote">
+            <button type="button" data-layout="sale" aria-pressed="true">One sale</button>
+            <button type="button" data-layout="options" aria-pressed="false">Separate options</button>
+          </div>
+        </div>
         <div class="total-row">
           <span class="total-label">Customer total</span>
           <span class="total-wrap"><span class="total-delta" id="total-delta" aria-hidden="true"></span><span class="total-amount" id="grand-total">$0.00</span></span>
         </div>
         <p id="quote-gst" class="quote-gst" hidden></p>
         <p id="quote-savings" class="quote-savings" hidden></p>
+        <div id="quote-options" class="quote-options" hidden></div>
         <div class="ledger-actions">
           <button class="print-btn" id="print-btn" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print quote</button>
           <button class="clear-btn" id="quote-pdf" type="button">Download PDF</button>
@@ -3389,6 +3397,7 @@
   addBtn2.addEventListener("click", addSelectionToQuote);
   function resetQuote() {
     cart = [];
+    quoteLayout = "sale";
     clearPreparedBy();
     renderLedger();
     renderPromoPreview();
@@ -3460,6 +3469,12 @@
     // and no name doesn't paste with a gap where they would have been.
     const head = ["GALAXY DEALS", "Customer Quote", "Quote Created " + dateStr,
                   validLine, byName ? "Served by " + byName : ""].filter(Boolean);
+    if (quoteOptionsOn()) {
+      return head.concat(["", ledgerBody.innerText, ""], quoteOptionLines(), ["",
+            "This is a quoting aid, not a source of truth. Offers and prices change, and some",
+            "require codes or conditions applied at the register — always confirm the final",
+            "price in POS at the time of the transaction."]).join("\n");
+    }
     return head.concat(["",
             ledgerBody.innerText, "", "TOTAL: " + grandTotalEl.textContent,
             "GST included: " + fmt(gstIn(quoteSale(computeQuote(null)))) + " (on the sale, before trade-in)", "",
@@ -3540,9 +3555,18 @@
     if (quote.manualCredit) line("Trade-in credit: -" + fmt(quote.manualCredit));
     quote.bonuses.forEach(b => line(b.name + ": -" + fmt(b.amount)));
     y += 6;
+    if (quoteOptionsOn()) {
+      line("Separate options - prices are not added together", 14, true); y += 2;
+      quoteOptions().forEach((o, k) => {
+        line("Option " + (k + 1) + ": " + quoteOptionName(o), 12, true);
+        line(fmt(o.q.total), 18, true);
+        line(quoteOptionSub(o), 10); y += 4;
+      });
+    } else {
     line("Customer total: " + fmt(quote.total), 20, true);
     line("Includes GST of " + fmt(gstIn(quoteSale(quote))) + " on the sale, before trade-in", 10);
     if (quote.savings > 0) line("You save " + fmt(quote.savings), 13, true);
+    }
     y += 8;
     line("This is a quoting aid. Offers and prices may change. Always confirm the final price in POS at the time of purchase.", 9);
     savePdfFile(pdf, "Galaxy-Deals-Quote-" + new Date().toISOString().slice(0,10) + ".pdf");
@@ -3675,6 +3699,22 @@
     });
     const date = new Date().toLocaleDateString("en-AU", {day:"numeric",month:"long",year:"numeric"});
     const valid = document.getElementById("print-valid");
+    const totalsHtml = quoteOptionsOn()
+      ? '<div style="border-top:1px solid #d8dbe2;padding:24px 0">'
+        + paragraph("Separate options \u2014 prices are not added together", "font-weight:700;font-size:20px")
+        + quoteOptions().map((o, k) => paragraph("Option " + (k + 1) + ": " + quoteOptionName(o), "font-weight:700;margin-top:16px")
+          + paragraph(fmt(o.q.total), "font-weight:700;font-size:28px")
+          + paragraph(quoteOptionSub(o), "font-size:14px;color:#606473")).join("") + '</div>'
+      : null;
+    if (totalsHtml) {
+      return `<div style="font-family:Arial,sans-serif;font-size:16px;line-height:1.6;background:#fff;color:#20212b;padding:24px;max-width:640px;margin:auto">` +
+        paragraph("Galaxy Deals", "font-weight:700;font-size:20px") + paragraph("Retail pricing & quotes") +
+        '<h1 style="font-size:28px;margin:28px 0 16px">Customer Quote</h1>' +
+        paragraph("Created: " + date) + (valid.hidden ? "" : paragraph(valid.textContent)) +
+        (preparedBy() ? paragraph("Served by " + preparedBy()) : "") + lines + totalsHtml +
+        '<div style="border-top:1px solid #d8dbe2;padding-top:24px">' + paragraph("This is a quoting aid, not a source of truth.","font-weight:700") +
+        paragraph("Offers and prices may change and some require codes or conditions applied at the register. Always confirm the final price in POS at the time of the transaction.") + '</div></div>';
+    }
     return `<div style="font-family:Arial,sans-serif;font-size:16px;line-height:1.6;background:#fff;color:#20212b;padding:24px;max-width:640px;margin:auto">` +
       paragraph("Galaxy Deals", "font-weight:700;font-size:20px") + paragraph("Retail pricing & quotes") +
       '<h1 style="font-size:28px;margin:28px 0 16px">Customer Quote</h1>' +
@@ -4029,9 +4069,12 @@
     }
     if (barTotal) { if (cart.length) gstAfter(barTotal, quoteSale(quote)); else if (barTotal.nextElementSibling && barTotal.nextElementSibling.classList.contains("gst-note")) barTotal.nextElementSibling.textContent = ""; }
     queueLedgerSize();
-    renderAfterpay(quote.total);
-    renderZip(quote.total);
-    renderLatitude(quote.total);
+    // As separate options there is no combined total, so payment options are shown on option 1.
+    const optionOne = renderQuoteOptions();
+    const payTotal = optionOne == null ? quote.total : optionOne;
+    renderAfterpay(payTotal);
+    renderZip(payTotal);
+    renderLatitude(payTotal);
 
     ledgerBody.querySelectorAll(".optional-note input[type=checkbox]").forEach(cb => {
       cb.addEventListener("change", () => {
@@ -5829,6 +5872,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11.5", d: "4 Oct 2026", t: "Quote several devices as separate options",
+      items: [
+        "<strong>Separate options on one quote.</strong> With two or more devices on a quote, a <strong>Quote as</strong> switch appears above the total. <strong>One sale</strong> adds everything up, as before. <strong>Separate options</strong> prices each device on its own and doesn\u2019t add them together \u2014 for a customer choosing between, say, the 256GB and the 512GB. Each option shows its own price after any trade-in, the GST in it and what they save, and the devices are labelled Option 1, Option 2 and so on.",
+        "One page instead of several: the printout, Download PDF, Email quote and Copy quote all show the options the same way. Accessories on the quote go with every option, and each option gets the trade-in and any trade-in bonus it would get on its own.",
+        "No prices or offers have changed."
+      ] },
     { v: "11.4", d: "4 Oct 2026", t: "Accessories can be added without a stock file",
       items: [
         "<strong>Accessories are back on every quote.</strong> The Accessories card only ever showed what was in your store\u2019s loaded stock file, so on a browser without one (a new device, cleared data, or the shared link) it disappeared and nothing could be added. Now, with no stock file loaded, it lists accessories from the price list instead \u2014 the ones that fit the device being quoted, grouped by type, at RRP \u2014 and <strong>+</strong> puts them on the quote as before. Stock shows as a dash because it isn\u2019t known.",
@@ -7177,6 +7226,83 @@
   }
 
   // ---- end Price check ----
+
+  // ---- Quote as separate options ----
+  // Two or more devices can be one sale (added up, the default) or options the customer is choosing
+  // between (each priced alone, nothing added together). An option is priced by running the normal
+  // quote total with only that device in it, plus any accessories, which go with whichever is chosen.
+  // `var`, not `let`: the first redraw runs before this line, and must read it as "not options".
+  var quoteLayout = "sale";
+  function quoteOptionSets() {
+    const devices = cart.filter(c => !c.isAcc), extras = cart.filter(c => c.isAcc);
+    return devices.length < 2 ? null : devices.map(d => [d].concat(extras));
+  }
+  function quoteOptionsOn() { return quoteLayout === "options" && !!quoteOptionSets(); }
+  function quoteOptions() {
+    const sets = quoteOptionSets();
+    if (!sets) return [];
+    const whole = cart;
+    try {
+      return sets.map(set => { cart = set; const q = computeQuote(null); return { item: set[0], extras: set.slice(1), q: q, sale: quoteSale(q) }; });
+    } finally { cart = whole; }
+  }
+  function quoteOptionName(o) {
+    return o.item.n + " " + o.item.v + (o.item.colour ? ", " + o.item.colour : "")
+      + (o.extras.length ? " with " + o.extras.map(x => x.n).join(", ") : "");
+  }
+  function quoteOptionSub(o) {
+    const credit = o.q.manualCredit + o.q.bonuses.reduce((sum, b) => sum + b.amount, 0);
+    return "incl. GST " + fmt(gstIn(o.sale))
+      + (credit > 0 ? " \u00b7 after " + fmt(credit) + " trade-in credit" : "")
+      + (o.q.savings > 0 ? " \u00b7 you save " + fmt(o.q.savings) : "");
+  }
+  function quoteOptionLines() {
+    return ["SEPARATE OPTIONS \u2014 prices are not added together"].concat(quoteOptions().map((o, k) =>
+      "Option " + (k + 1) + ": " + quoteOptionName(o) + " \u2014 " + fmt(o.q.total) + " (" + quoteOptionSub(o) + ")"));
+  }
+
+  // Draws the switch and, as options, each option's price. Returns option 1's total (or null when
+  // the quote is one sale) so the payment options have something sensible to work on.
+  function renderQuoteOptions() {
+    const wrap = document.getElementById("quote-layout"), box = document.getElementById("quote-options");
+    if (!wrap || !box) return null;
+    const sets = quoteOptionSets();
+    wrap.hidden = !sets;
+    const on = quoteOptionsOn();
+    document.body.classList.toggle("quote-as-options", on);
+    wrap.querySelectorAll("button[data-layout]").forEach(b => b.setAttribute("aria-pressed", String((b.dataset.layout === "options") === on)));
+    const barLabel = document.querySelector(".quote-bar-label");
+    if (!on) { box.hidden = true; box.innerHTML = ""; if (barLabel) barLabel.textContent = "Total"; return null; }
+
+    const opts = quoteOptions();
+    // Number the devices in the quote so the printout reads Option 1, Option 2 ...
+    let k = 0;
+    Array.from(ledgerBody.querySelectorAll(".item")).slice(0, cart.length).forEach((el, i) => {
+      if (cart[i] && !cart[i].isAcc) {
+        k++;
+        const name = el.querySelector(".item-name");
+        if (name && !name.querySelector(".qo-tag")) name.insertAdjacentHTML("afterbegin", `<span class="qo-tag">Option ${k}</span> `);
+      }
+    });
+    box.hidden = false;
+    box.innerHTML = `<p class="qo-head">Separate options <span>prices are not added together</span></p>`
+      + opts.map((o, i) => `<div class="qo-row"><span class="qo-name"><span class="qo-tag">Option ${i + 1}</span> ${escapeHtml(quoteOptionName(o))}</span>`
+        + `<span class="qo-price">${fmt(o.q.total)}<span class="qo-sub">${escapeHtml(quoteOptionSub(o))}</span></span></div>`).join("");
+    ledgerCount.textContent = opts.length + " options";
+    const low = opts.reduce((a, o) => o.q.total < a.q.total ? o : a, opts[0]);
+    const barTotal = document.getElementById("quote-bar-total");
+    if (barTotal) { barTotal.textContent = fmt(low.q.total); gstAfter(barTotal, low.sale); }
+    if (barLabel) barLabel.textContent = "From";
+    ["quote-savings", "quote-bar-savings", "quote-gst"].forEach(id => { const el = document.getElementById(id); if (el) el.hidden = true; });
+    return opts[0].q.total;
+  }
+
+  document.getElementById("quote-layout").addEventListener("click", e => {
+    const b = e.target.closest("button[data-layout]");
+    if (!b) return;
+    quoteLayout = b.dataset.layout;
+    renderLedger();
+  });
 
   // ---- Easter egg ----
   // Five quick taps on the sidebar logo, or "galaxy guide" typed into Search.
