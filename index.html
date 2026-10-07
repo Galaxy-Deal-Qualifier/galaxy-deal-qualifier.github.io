@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v11.7
+  Galaxy Deals v11.8
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=11.7" />
+<link rel="stylesheet" href="styles.css?v=11.8" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -125,6 +125,8 @@
       <p class="page-meta"><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>Sales Kit checked on <strong data-sync-date>24 Sept 2026</strong></span><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>Always confirm the final price in POS</span></p>
     </div>
   </div>
+
+  <div id="home-deals" class="home-deals" aria-live="polite" hidden></div>
 
   <div class="col" id="config-col">
     <section class="card" id="device-card">
@@ -4128,7 +4130,7 @@
   window.addEventListener("resize", queueLedgerSize);
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(queueLedgerSize);
-    [".notices", ".shell > .page-head", "#finished-note", "#started-banner", "#print-bar"].forEach(sel => {
+    [".notices", ".shell > .page-head", "#finished-note", "#started-banner", "#home-deals", "#print-bar"].forEach(sel => {
       const n = document.querySelector(sel);
       if (n) ro.observe(n);
     });
@@ -4585,6 +4587,40 @@
     document.getElementById("expiry-hide").addEventListener("click", () => setExpiryHidden(true));
   }
   renderExpirySoon();
+
+  // ---- New and finished deals on the home page ----
+  // A copy of the Sales Kit's ticket boxes, redrawn whenever they change, so the two pages can't
+  // disagree. Buttons in the copy press the Sales Kit's own, so dismissing on either page clears both.
+  (function () {
+    const home = document.getElementById("home-deals");
+    const ids = ["started-banner", "finished-banner"];
+    if (!home) return;
+    function mirror() {
+      home.innerHTML = "";
+      ids.forEach(id => {
+        const src = document.getElementById(id);
+        // The one-line "tickets marked changed" record is Sales Kit housekeeping, not news.
+        if (!src || src.hidden || !src.innerHTML.trim() || src.classList.contains("finished-mini")) return;
+        const copy = src.cloneNode(true);
+        copy.removeAttribute("id");
+        copy.removeAttribute("hidden");
+        copy.querySelectorAll("[id]").forEach(n => { n.setAttribute("data-home-for", n.id); n.removeAttribute("id"); });
+        home.appendChild(copy);
+      });
+      home.hidden = !home.children.length;
+    }
+    home.addEventListener("click", e => {
+      const b = e.target.closest("[data-home-for]");
+      const real = b && document.getElementById(b.getAttribute("data-home-for"));
+      if (real) real.click();
+    });
+    const mo = new MutationObserver(mirror);
+    ids.forEach(id => {
+      const src = document.getElementById(id);
+      if (src) mo.observe(src, { attributes: true, attributeFilter: ["hidden", "class"], childList: true, subtree: true, characterData: true });
+    });
+    mirror();
+  })();
 
   // ---- store & stock ----
   // .xlsx is a zip of XML. The artifact's security policy blocks external libraries, so the
@@ -5872,6 +5908,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "11.8", d: "8 Oct 2026", t: "New and finished deals on the home page",
+      items: [
+        "<strong>New and finished deals now show on the Customer Quote page</strong>, above Step 01, as well as in the Sales Kit. The green box means a deal has just started and the tickets need to go up. The red box means a deal has just finished and the tickets need to go back to normal. Each lists the deals and their bulletin codes.",
+        "<strong>Tickets changed \u2014 dismiss</strong> works on either page and clears the box on both. The green box shows on the day a deal starts and the day after. The red box shows for two days after a deal ends.",
+        "No prices or offers have changed."
+      ] },
     { v: "11.7", d: "6 Oct 2026", t: "Watch Ultra 2 trade-in bonus",
       items: [
         "<strong>Watch Ultra 2 trade-in bonus added.</strong> The Sales Kit lists an extra $200 trade-in credit on a Watch Ultra 2 (47mm LTE) with an eligible trade-in, 2 to 28 Oct 2026, bulletin A260006352, unique code required. It sits alongside the Watch9 $100 bonus under the same bulletin. Not stackable with Education or SMB. Quote prices are unchanged because it is credit against the trade-in."

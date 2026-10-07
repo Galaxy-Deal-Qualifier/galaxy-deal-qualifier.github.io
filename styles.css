@@ -1807,3 +1807,10 @@ body.print-view .deal-stage-heading { display: none; }
   body.print-view .qo-tag { background: none !important; border: 1px solid currentColor; color: inherit !important; }
   @media print { .quote-layout { display: none !important; } .quote-options { background: none; } .qo-tag { background: none; border: 1px solid #999; color: #000; } }
 /* ---- end Quote as separate options ---- */
+/* ---- Deals on the home page ---- */
+  .shell > .home-deals { grid-column: 1; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  .home-deals[hidden] { display: none !important; }
+  .home-deals > .started-banner, .home-deals > .finished-banner { margin: 0; width: 100%; }
+  body.print-view .home-deals { display: none !important; }
+  @media print { .home-deals { display: none !important; } }
+/* ---- end Deals on the home page ---- */
