@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v12.8
+  Galaxy Deals v12.9
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=12.7" />
+<link rel="stylesheet" href="styles.css?v=12.8" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -55,7 +55,7 @@
 <style>@media print{.sheet-sync-controls{display:none!important}}body.print-view .sheet-sync-controls{display:none!important}</style>
 <link rel="stylesheet" href="design-polish.css?v=2" />
 <link rel="stylesheet" href="taste-refine.css?v=1" />
-<link rel="stylesheet" href="galaxy-theme.css?v=1" />
+<link rel="stylesheet" href="galaxy-theme.css?v=2" />
 </head>
 <body>
 <div id="launch-splash" class="launch-splash" role="status" aria-label="Opening Galaxy Deals">
@@ -5916,6 +5916,14 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "12.9", d: "9 Oct 2026", t: "Less purple",
+      items: [
+        "<strong>The galaxy theme is calmer.</strong> Pages are a near-neutral charcoal instead of violet, the glow behind them is much fainter, and the stars are dimmer.",
+        "<strong>Purple only where it means something:</strong> primary buttons, the selected tab, links, focus rings and highlighted text. Section labels, the quote panel edge and sidebar headings are back to neutral.",
+        "Light mode is a plain light grey again instead of lavender.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ]
+    },
     { type: "app", v: "12.8", d: "9 Oct 2026", t: "Galaxy theme",
       items: [
         "<strong>Galaxy Deals is purple now.</strong> The tool opens in a dark violet theme to match the logo and the opening animation, with a faint nebula and stars behind the pages. The cards, prices and totals sit on solid panels, so they read just as clearly as before.",

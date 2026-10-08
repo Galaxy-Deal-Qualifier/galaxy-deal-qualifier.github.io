@@ -1,5 +1,5 @@
-/* Galaxy theme (v12.8). Loads last, after taste-refine.css.
-   Dark violet space by default, matching the logo and the opening animation; a lavender light
+/* Galaxy theme (v12.8, toned down in v12.9). Loads last, after taste-refine.css.
+   Dark by default, near-neutral charcoal with a faint violet glow and still stars; purple only on actions and selection, matching the logo and the opening animation; a lavender light
    mode for anyone who switches. Layout, copy and every behaviour are unchanged; this file only
    remaps the colour tokens and adds the atmosphere behind the pages. Screen only: the printed
    quote, the print preview and the receipt keep their black-on-white paper palette. */
@@ -7,15 +7,15 @@
 @media screen {
   /* ---- Light: lavender paper ---- */
   :root {
-    --bg: #f5f3fb;
+    --bg: #f5f5f8;
     --surface: #ffffff;
-    --surface-2: #f8f6fd;
-    --surface-3: #eeeaf8;
-    --ink: #1a1530;
-    --ink-dim: #463f63;
-    --ink-faint: #625a80;          /* 5.39:1 on --surface-3, the darkest ground it sits on */
-    --line: #e5e0f2;
-    --line-strong: #d0c8e6;
+    --surface-2: #f8f8fb;
+    --surface-3: #efeff4;
+    --ink: #18171f;
+    --ink-dim: #45434f;
+    --ink-faint: #5f5d6c;          /* 5.61:1 on --surface-3, the darkest ground it sits on */
+    --line: #e4e4ec;
+    --line-strong: #cfcfdb;
     --accent: #6835d6;
     --accent-ink: #ffffff;
     --accent-soft: #f0eafd;
@@ -23,33 +23,33 @@
     --violet-fill: #6d3fe6;        /* primary buttons: white text 5.99:1 */
     --violet-fill-hover: #5f32d6;
     --side-bg: #ffffff;
-    --shadow-1: 0 1px 2px rgb(42 22 96 / .05), 0 6px 20px -6px rgb(42 22 96 / .07);
-    --shadow-lift: 0 1px 2px rgb(42 22 96 / .07), 0 14px 32px -10px rgb(42 22 96 / .18);
-    --shadow-float: 0 18px 36px -10px rgb(42 22 96 / .22), 0 4px 10px -4px rgb(42 22 96 / .10);
-    --nebula-a: rgb(124 77 255 / .10);
-    --nebula-b: rgb(236 72 153 / .05);
-    --nebula-c: rgb(59 130 246 / .05);
+    --shadow-1: 0 1px 2px rgb(20 18 40 / .05), 0 6px 20px -6px rgb(20 18 40 / .07);
+    --shadow-lift: 0 1px 2px rgb(20 18 40 / .07), 0 14px 32px -10px rgb(20 18 40 / .18);
+    --shadow-float: 0 18px 36px -10px rgb(20 18 40 / .22), 0 4px 10px -4px rgb(20 18 40 / .10);
+    --nebula-a: rgb(124 77 255 / .04);
+    --nebula-b: transparent;
+    --nebula-c: transparent;
     --star: transparent;
   }
 
   /* ---- Dark: the galaxy ---- */
   :root[data-theme="dark"] {
-    --bg: #0b0818;
-    --surface: #151129;
-    --surface-2: #1b1633;
-    --surface-3: #241d42;
-    --ink: #f2eefc;
-    --ink-dim: #c6bde3;
-    --ink-faint: #a197c6;          /* 5.84:1 on --surface-3, the lightest ground it sits on */
-    --line: #2a2349;
-    --line-strong: #3d3368;
-    --accent: #b79cff;             /* text and icons: 6.93:1 on --surface-3 */
+    --bg: #0e0d13;
+    --surface: #16151d;
+    --surface-2: #1c1b25;
+    --surface-3: #25242f;
+    --ink: #efeef4;
+    --ink-dim: #bdbbc9;
+    --ink-faint: #9a98aa;          /* 5.43:1 on --surface-3, the lightest ground it sits on */
+    --line: #2a2935;
+    --line-strong: #3a3946;
+    --accent: #b79cff;             /* text and icons: 6.71:1 on --surface-3 */
     --accent-ink: #120c24;
-    --accent-soft: #2a2050;
-    --accent-line: #5a479a;
+    --accent-soft: #271f45;
+    --accent-line: #4b3f7a;
     --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
     --violet-fill-hover: #8257ff;
-    --side-bg: rgb(13 10 28 / .82);
+    --side-bg: rgb(14 13 19 / .9);
     --good: #5fdba0;
     --good-bg: #0f2a22;
     --good-line: #1e5a45;
@@ -57,16 +57,16 @@
     --warn-bg: #2a1f12;
     --warn-line: #5e4520;
     --danger: #ff938d;
-    --danger-bg: #2d1424;
-    --danger-line: #66293f;
+    --danger-bg: #2c1618;
+    --danger-line: #5e2c2c;
     --cap-512: #a9b8ff;
     --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
     --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(6 2 20 / .8);
     --shadow-float: 0 20px 44px -12px rgb(6 2 20 / .85), 0 4px 12px -4px rgb(0 0 0 / .5);
-    --nebula-a: rgb(124 77 255 / .22);
-    --nebula-b: rgb(236 72 153 / .10);
-    --nebula-c: rgb(59 130 246 / .12);
-    --star: rgb(232 224 255 / .55);
+    --nebula-a: rgb(124 77 255 / .08);
+    --nebula-b: transparent;
+    --nebula-c: transparent;
+    --star: rgb(236 234 245 / .4);
     color-scheme: dark;
   }
 }
@@ -74,20 +74,20 @@
    stamps dark on first visit, so this only matters if that stamp is ever removed.) */
 @media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0b0818; --surface: #151129; --surface-2: #1b1633; --surface-3: #241d42;
-    --ink: #f2eefc; --ink-dim: #c6bde3; --ink-faint: #a197c6;
-    --line: #2a2349; --line-strong: #3d3368;
-    --accent: #b79cff; --accent-ink: #120c24; --accent-soft: #2a2050; --accent-line: #5a479a;
-    --violet-fill: #7447f0; --violet-fill-hover: #8257ff; --side-bg: rgb(13 10 28 / .82);
+    --bg: #0e0d13; --surface: #16151d; --surface-2: #1c1b25; --surface-3: #25242f;
+    --ink: #efeef4; --ink-dim: #bdbbc9; --ink-faint: #9a98aa;
+    --line: #2a2935; --line-strong: #3a3946;
+    --accent: #b79cff; --accent-ink: #120c24; --accent-soft: #271f45; --accent-line: #4b3f7a;
+    --violet-fill: #7447f0; --violet-fill-hover: #8257ff; --side-bg: rgb(14 13 19 / .9);
     --good: #5fdba0; --good-bg: #0f2a22; --good-line: #1e5a45;
     --warn: #f5b453; --warn-bg: #2a1f12; --warn-line: #5e4520;
-    --danger: #ff938d; --danger-bg: #2d1424; --danger-line: #66293f;
+    --danger: #ff938d; --danger-bg: #2c1618; --danger-line: #5e2c2c;
     --cap-512: #a9b8ff;
     --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
     --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(6 2 20 / .8);
     --shadow-float: 0 20px 44px -12px rgb(6 2 20 / .85), 0 4px 12px -4px rgb(0 0 0 / .5);
-    --nebula-a: rgb(124 77 255 / .22); --nebula-b: rgb(236 72 153 / .10); --nebula-c: rgb(59 130 246 / .12);
-    --star: rgb(232 224 255 / .55);
+    --nebula-a: rgb(124 77 255 / .08); --nebula-b: transparent; --nebula-c: transparent;
+    --star: rgb(236 234 245 / .4);
     color-scheme: dark;
   }
 }
@@ -114,7 +114,7 @@
       radial-gradient(1px 1px at 55% 31%, var(--star), transparent 100%),
       radial-gradient(1px 1px at 6% 52%, var(--star), transparent 100%);
     background-size: 340px 340px, 520px 520px, 610px 610px, 430px 430px, 380px 380px, 700px 700px, 290px 290px, 560px 560px;
-    opacity: .7;
+    opacity: .6;
   }
   body:not(.print-view):not(.print-compare) .main,
   :root[data-theme] body:not(.print-view):not(.print-compare) .main,
@@ -122,49 +122,41 @@
 
   /* ---- Sidebar: a deeper layer the nebula shows through ---- */
   body:not(.print-view) .side { background: var(--side-bg); border-right-color: var(--line); }
-  .tab:hover { background: color-mix(in srgb, var(--accent) 8%, transparent); }
+  .tab:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
   body:not(.print-view):not(.print-compare) .tab[aria-selected="true"] {
-    background: var(--accent-soft); color: var(--accent);
-    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent-line) 60%, transparent);
+    background: var(--accent-soft); color: var(--accent); box-shadow: none;
   }
-  .nav-group-label { color: color-mix(in srgb, var(--accent) 55%, var(--ink-faint)); }
   html body .side-brand .side-mark { background: var(--surface-2); border-color: var(--line-strong); }
 
   /* ---- Surfaces ---- */
   body:not(.print-view):not(.print-compare) .card { border-color: var(--line); }
   body:not(.print-view):not(.print-compare) #config-col > #device-card { border-top-color: var(--line); }
-  .section-kicker { color: var(--accent); }
   .page-meta strong { color: var(--ink); }
 
-  /* The quote panel is the one surface that floats: violet edge, deep shadow. */
+  /* The quote panel is the one surface that floats: a deeper shadow, neutral edge. */
   body:not(.print-view):not(.print-compare) .ledger {
-    border: 1px solid var(--accent-line);
+    border: 1px solid var(--line-strong);
     box-shadow: var(--shadow-float);
   }
-  .ledger-head { background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 7%, var(--surface)), var(--surface)); }
-  .ledger-foot { background: color-mix(in srgb, var(--accent) 5%, var(--surface)); }
-  .ledger-empty .empty-art { box-shadow: inset 0 0 0 1px var(--accent-line); }
 
   /* ---- Controls ---- */
   body:not(.print-view):not(.print-compare) :is(button.primary, .print-btn, .wearable-add, .sg-btn, .stock-upload):not(.is-secondary) {
     background: var(--violet-fill); color: #ffffff;
-    box-shadow: inset 0 1px 0 rgb(255 255 255 / .16), 0 6px 16px -8px rgb(116 71 240 / .7);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 1px 2px rgb(0 0 0 / .2);
   }
   body:not(.print-view):not(.print-compare) :is(button.primary, .print-btn, .wearable-add, .sg-btn, .stock-upload):not(.is-secondary):hover {
     background: var(--violet-fill-hover); filter: none;
   }
-  .segmented button[aria-pressed="true"] { box-shadow: 0 1px 2px rgb(0 0 0 / .12), 0 0 0 1px var(--accent-line); }
   input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
   :root[data-theme="dark"] select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23a197c6' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 6.5 8 9.5l3-3'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239a98aa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 6.5 8 9.5l3-3'/%3E%3C/svg%3E");
   }
-  .tab-dot:not(.danger) { background: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
 
   /* ---- Browser surfaces ---- */
   ::selection { background: color-mix(in srgb, var(--accent) 34%, transparent); color: var(--ink); }
   * { scrollbar-color: var(--line-strong) transparent; }
   ::-webkit-scrollbar-thumb { background-color: var(--line-strong); }
-  ::-webkit-scrollbar-thumb:hover { background-color: var(--accent-line); }
+  ::-webkit-scrollbar-thumb:hover { background-color: var(--ink-faint); }
 
   /* ---- Mobile bar ---- */
   .mobile-nav { background: var(--surface); border-top-color: var(--line); box-shadow: 0 -10px 30px -12px rgb(6 2 20 / .5); }
