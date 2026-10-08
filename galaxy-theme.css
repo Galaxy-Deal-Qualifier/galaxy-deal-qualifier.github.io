@@ -1,5 +1,6 @@
-/* Galaxy theme (v12.8; v12.9 toned it down; v13 solid purple). Loads last, after taste-refine.css.
-   Dark mode is a solid dark purple; light mode a solid light purple. No gradients, no starfield:
+/* Galaxy theme (v12.8; v12.9 toned it down; v13 solid purple; v13.1 grey panels in dark). Loads last, after taste-refine.css.
+   Dark mode: only the page background is purple (a deep flat purple); the sidebar, cards, quote
+   panel and controls are dark grey. Light mode: a solid light purple page. No gradients, no starfield:
    the backgrounds are flat colour, and the cards and quote panel sit on them as solid panels.
    Purple as an accent stays on actions and selection. Layout, copy and every behaviour are
    unchanged; this file only remaps colour tokens. Screen only: the printed quote, the print
@@ -29,37 +30,37 @@
     --shadow-float: 0 18px 36px -10px rgb(42 22 96 / .20), 0 4px 10px -4px rgb(42 22 96 / .10);
   }
 
-  /* ---- Dark: dark purple ---- */
+  /* ---- Dark: a dark purple page under dark grey panels ---- */
   :root[data-theme="dark"] {
-    --bg: #1a1133;
-    --surface: #221840;
-    --surface-2: #291e4b;
-    --surface-3: #322658;
-    --ink: #f1edfb;
-    --ink-dim: #c9c0e4;
-    --ink-faint: #a59bcb;          /* 5.25:1 on --surface-3, the lightest ground it sits on */
-    --line: #33285a;
-    --line-strong: #45386f;
-    --accent: #b99eff;             /* text and icons: 6.05:1 on --surface-3 */
+    --bg: #120a26;               /* the only purple surface in dark mode */
+    --surface: #17161b;
+    --surface-2: #1d1c22;
+    --surface-3: #26252c;
+    --ink: #efeef2;
+    --ink-dim: #bcbbc4;
+    --ink-faint: #9897a3;          /* 5.27:1 on --surface-3, the lightest ground it sits on */
+    --line: #2b2a31;
+    --line-strong: #3b3a42;
+    --accent: #b99eff;             /* text and icons: 6.79:1 on --surface-3 */
     --accent-ink: #140d29;
-    --accent-soft: #3a2a6b;
-    --accent-line: #5d4a9a;
+    --accent-soft: #2a2340;
+    --accent-line: #4a3f6e;
     --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
     --violet-fill-hover: #8257ff;
-    --side-bg: #140d29;
+    --side-bg: #17161b;
     --good: #5fdba0;
-    --good-bg: #13282a;
+    --good-bg: #12261d;
     --good-line: #1e5a45;
     --warn: #f5b453;
-    --warn-bg: #2b1f22;
+    --warn-bg: #2a2014;
     --warn-line: #5e4520;
     --danger: #ff938d;
-    --danger-bg: #301634;
-    --danger-line: #66293f;
+    --danger-bg: #2c1719;
+    --danger-line: #5e2c2c;
     --cap-512: #a9b8ff;
-    --shadow-1: 0 1px 2px rgb(8 3 20 / .45), 0 10px 28px -10px rgb(8 3 20 / .55);
-    --shadow-lift: 0 1px 2px rgb(8 3 20 / .5), 0 18px 40px -12px rgb(8 3 20 / .75);
-    --shadow-float: 0 20px 44px -12px rgb(8 3 20 / .8), 0 4px 12px -4px rgb(8 3 20 / .5);
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
+    --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(0 0 0 / .75);
+    --shadow-float: 0 20px 44px -12px rgb(0 0 0 / .8), 0 4px 12px -4px rgb(0 0 0 / .5);
     color-scheme: dark;
   }
 }
@@ -67,35 +68,35 @@
    stamps dark on first visit, so this only matters if that stamp is ever removed.) */
 @media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #1a1133;
-    --surface: #221840;
-    --surface-2: #291e4b;
-    --surface-3: #322658;
-    --ink: #f1edfb;
-    --ink-dim: #c9c0e4;
-    --ink-faint: #a59bcb;          /* 5.25:1 on --surface-3, the lightest ground it sits on */
-    --line: #33285a;
-    --line-strong: #45386f;
-    --accent: #b99eff;             /* text and icons: 6.05:1 on --surface-3 */
+    --bg: #120a26;               /* the only purple surface in dark mode */
+    --surface: #17161b;
+    --surface-2: #1d1c22;
+    --surface-3: #26252c;
+    --ink: #efeef2;
+    --ink-dim: #bcbbc4;
+    --ink-faint: #9897a3;          /* 5.27:1 on --surface-3, the lightest ground it sits on */
+    --line: #2b2a31;
+    --line-strong: #3b3a42;
+    --accent: #b99eff;             /* text and icons: 6.79:1 on --surface-3 */
     --accent-ink: #140d29;
-    --accent-soft: #3a2a6b;
-    --accent-line: #5d4a9a;
+    --accent-soft: #2a2340;
+    --accent-line: #4a3f6e;
     --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
     --violet-fill-hover: #8257ff;
-    --side-bg: #140d29;
+    --side-bg: #17161b;
     --good: #5fdba0;
-    --good-bg: #13282a;
+    --good-bg: #12261d;
     --good-line: #1e5a45;
     --warn: #f5b453;
-    --warn-bg: #2b1f22;
+    --warn-bg: #2a2014;
     --warn-line: #5e4520;
     --danger: #ff938d;
-    --danger-bg: #301634;
-    --danger-line: #66293f;
+    --danger-bg: #2c1719;
+    --danger-line: #5e2c2c;
     --cap-512: #a9b8ff;
-    --shadow-1: 0 1px 2px rgb(8 3 20 / .45), 0 10px 28px -10px rgb(8 3 20 / .55);
-    --shadow-lift: 0 1px 2px rgb(8 3 20 / .5), 0 18px 40px -12px rgb(8 3 20 / .75);
-    --shadow-float: 0 20px 44px -12px rgb(8 3 20 / .8), 0 4px 12px -4px rgb(8 3 20 / .5);
+    --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
+    --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(0 0 0 / .75);
+    --shadow-float: 0 20px 44px -12px rgb(0 0 0 / .8), 0 4px 12px -4px rgb(0 0 0 / .5);
     color-scheme: dark;
   }
 }
@@ -107,7 +108,7 @@
   :root[data-theme] body:not(.print-view):not(.print-compare) .main,
   :root:not([data-theme="light"]) body:not(.print-view):not(.print-compare) .main { background: var(--bg); }
 
-  /* ---- Sidebar: a deeper purple layer ---- */
+  /* ---- Sidebar ---- */
   body:not(.print-view) .side { background: var(--side-bg); border-right-color: var(--line); }
   .tab:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
   body:not(.print-view):not(.print-compare) .tab[aria-selected="true"] {
