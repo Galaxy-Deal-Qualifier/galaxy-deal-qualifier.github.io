@@ -1,14 +1,13 @@
-/* Galaxy theme (v12.8; v12.9 toned it down; v13 solid purple; v13.1 grey panels in dark). Loads last, after taste-refine.css.
-   Dark mode: only the page background is purple (a deep flat purple); the sidebar, cards, quote
-   panel and controls are dark grey. Light mode: a solid light purple page. No gradients, no starfield:
-   the backgrounds are flat colour, and the cards and quote panel sit on them as solid panels.
-   Purple as an accent stays on actions and selection. Layout, copy and every behaviour are
-   unchanged; this file only remaps colour tokens. Screen only: the printed quote, the print
-   preview and the receipt keep their black-on-white paper palette. */
+/* Light purple theme (v12.8–v13.2). Loads last, after taste-refine.css.
+   LIGHT MODE ONLY: a solid light purple page with white cards and violet primary actions.
+   Dark mode is deliberately untouched by this file, so it looks exactly as it did in v12.7
+   (styles.css + brand-accent.css + taste-refine.css). Every rule is scoped with
+   :where(html[data-theme="light"]), which adds no specificity, so the light look is identical to
+   v13.1. Screen only: the printed quote, the print preview and the receipt keep their
+   black-on-white paper palette. */
 
 @media screen {
-  /* ---- Light: light purple ---- */
-  :root {
+  :root:where([data-theme="light"]) {
     --bg: #efe9fb;
     --surface: #ffffff;
     --surface-2: #f8f5fe;
@@ -30,133 +29,46 @@
     --shadow-float: 0 18px 36px -10px rgb(42 22 96 / .20), 0 4px 10px -4px rgb(42 22 96 / .10);
   }
 
-  /* ---- Dark: a dark purple page under dark grey panels ---- */
-  :root[data-theme="dark"] {
-    --bg: #120a26;               /* the only purple surface in dark mode */
-    --surface: #17161b;
-    --surface-2: #1d1c22;
-    --surface-3: #26252c;
-    --ink: #efeef2;
-    --ink-dim: #bcbbc4;
-    --ink-faint: #9897a3;          /* 5.27:1 on --surface-3, the lightest ground it sits on */
-    --line: #2b2a31;
-    --line-strong: #3b3a42;
-    --accent: #b99eff;             /* text and icons: 6.79:1 on --surface-3 */
-    --accent-ink: #140d29;
-    --accent-soft: #2a2340;
-    --accent-line: #4a3f6e;
-    --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
-    --violet-fill-hover: #8257ff;
-    --side-bg: #17161b;
-    --good: #5fdba0;
-    --good-bg: #12261d;
-    --good-line: #1e5a45;
-    --warn: #f5b453;
-    --warn-bg: #2a2014;
-    --warn-line: #5e4520;
-    --danger: #ff938d;
-    --danger-bg: #2c1719;
-    --danger-line: #5e2c2c;
-    --cap-512: #a9b8ff;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
-    --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(0 0 0 / .75);
-    --shadow-float: 0 20px 44px -12px rgb(0 0 0 / .8), 0 4px 12px -4px rgb(0 0 0 / .5);
-    color-scheme: dark;
-  }
-}
-/* Same dark palette for anyone whose system is dark and who hasn't picked a side. (The page
-   stamps dark on first visit, so this only matters if that stamp is ever removed.) */
-@media screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #120a26;               /* the only purple surface in dark mode */
-    --surface: #17161b;
-    --surface-2: #1d1c22;
-    --surface-3: #26252c;
-    --ink: #efeef2;
-    --ink-dim: #bcbbc4;
-    --ink-faint: #9897a3;          /* 5.27:1 on --surface-3, the lightest ground it sits on */
-    --line: #2b2a31;
-    --line-strong: #3b3a42;
-    --accent: #b99eff;             /* text and icons: 6.79:1 on --surface-3 */
-    --accent-ink: #140d29;
-    --accent-soft: #2a2340;
-    --accent-line: #4a3f6e;
-    --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
-    --violet-fill-hover: #8257ff;
-    --side-bg: #17161b;
-    --good: #5fdba0;
-    --good-bg: #12261d;
-    --good-line: #1e5a45;
-    --warn: #f5b453;
-    --warn-bg: #2a2014;
-    --warn-line: #5e4520;
-    --danger: #ff938d;
-    --danger-bg: #2c1719;
-    --danger-line: #5e2c2c;
-    --cap-512: #a9b8ff;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
-    --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(0 0 0 / .75);
-    --shadow-float: 0 20px 44px -12px rgb(0 0 0 / .8), 0 4px 12px -4px rgb(0 0 0 / .5);
-    color-scheme: dark;
-  }
-}
-
-@media screen {
   /* ---- Backgrounds: flat colour, nothing drawn on them ---- */
-  body:not(.print-view):not(.print-compare) { background: var(--bg); }
-  body:not(.print-view):not(.print-compare) .main,
-  :root[data-theme] body:not(.print-view):not(.print-compare) .main,
-  :root:not([data-theme="light"]) body:not(.print-view):not(.print-compare) .main { background: var(--bg); }
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) { background: var(--bg); }
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) .main,
+  :root:where([data-theme="light"]) body:not(.print-view):not(.print-compare) .main { background: var(--bg); }
 
   /* ---- Sidebar ---- */
-  body:not(.print-view) .side { background: var(--side-bg); border-right-color: var(--line); }
-  .tab:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
-  body:not(.print-view):not(.print-compare) .tab[aria-selected="true"] {
+  :where(html[data-theme="light"]) body:not(.print-view) .side { background: var(--side-bg); border-right-color: var(--line); }
+  :where(html[data-theme="light"]) .tab:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) .tab[aria-selected="true"] {
     background: var(--accent-soft); color: var(--accent); box-shadow: none;
   }
-  html body .side-brand .side-mark { background: var(--surface-2); border-color: var(--line-strong); }
+  html:where([data-theme="light"]) body .side-brand .side-mark { background: var(--surface-2); border-color: var(--line-strong); }
 
   /* ---- Surfaces ---- */
-  body:not(.print-view):not(.print-compare) .card { border-color: var(--line); }
-  body:not(.print-view):not(.print-compare) #config-col > #device-card { border-top-color: var(--line); }
-  .page-meta strong { color: var(--ink); }
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) .card { border-color: var(--line); }
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) #config-col > #device-card { border-top-color: var(--line); }
+  :where(html[data-theme="light"]) .page-meta strong { color: var(--ink); }
 
   /* The quote panel is the one surface that floats: a deeper shadow, neutral edge. */
-  body:not(.print-view):not(.print-compare) .ledger {
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) .ledger {
     border: 1px solid var(--line-strong);
     box-shadow: var(--shadow-float);
   }
 
   /* ---- Controls ---- */
-  body:not(.print-view):not(.print-compare) :is(button.primary, .print-btn, .wearable-add, .sg-btn, .stock-upload):not(.is-secondary) {
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) :is(button.primary, .print-btn, .wearable-add, .sg-btn, .stock-upload):not(.is-secondary) {
     background: var(--violet-fill); color: #ffffff;
     box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 1px 2px rgb(0 0 0 / .2);
   }
-  body:not(.print-view):not(.print-compare) :is(button.primary, .print-btn, .wearable-add, .sg-btn, .stock-upload):not(.is-secondary):hover {
+  :where(html[data-theme="light"]) body:not(.print-view):not(.print-compare) :is(button.primary, .print-btn, .wearable-add, .sg-btn, .stock-upload):not(.is-secondary):hover {
     background: var(--violet-fill-hover); filter: none;
   }
-  input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
-  :root[data-theme="dark"] select {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%239a98aa' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 6.5 8 9.5l3-3'/%3E%3C/svg%3E");
-  }
+  :where(html[data-theme="light"]) :is(input, select, textarea):focus { box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
 
   /* ---- Browser surfaces ---- */
-  ::selection { background: color-mix(in srgb, var(--accent) 34%, transparent); color: var(--ink); }
-  * { scrollbar-color: var(--line-strong) transparent; }
-  ::-webkit-scrollbar-thumb { background-color: var(--line-strong); }
-  ::-webkit-scrollbar-thumb:hover { background-color: var(--ink-faint); }
+  :where(html[data-theme="light"]) ::selection { background: color-mix(in srgb, var(--accent) 34%, transparent); color: var(--ink); }
+  :where(html[data-theme="light"]) * { scrollbar-color: var(--line-strong) transparent; }
+  :where(html[data-theme="light"]) ::-webkit-scrollbar-thumb { background-color: var(--line-strong); }
+  :where(html[data-theme="light"]) ::-webkit-scrollbar-thumb:hover { background-color: var(--ink-faint); }
 
   /* ---- Mobile bar ---- */
-  .mobile-nav { background: var(--surface); border-top-color: var(--line); box-shadow: 0 -10px 30px -12px rgb(6 2 20 / .5); }
-
-  /* ---- Email dialog (its own inline styles are fixed light) ---- */
-  :root[data-theme="dark"] #email-quote-dialog { background: var(--surface) !important; color: var(--ink) !important; border-color: var(--line-strong) !important; }
-  :root[data-theme="dark"] #email-quote-dialog :is(h2, label) { color: var(--ink) !important; }
-  :root[data-theme="dark"] #email-quote-dialog p { color: var(--ink-dim) !important; }
-  :root[data-theme="dark"] #email-quote-dialog input { background: var(--surface-2) !important; color: var(--ink) !important; border-color: var(--line-strong) !important; }
-  :root[data-theme="dark"] #email-quote-dialog input::placeholder { color: var(--ink-faint) !important; }
-  :root[data-theme="dark"] #email-quote-dialog input:focus { border-color: var(--accent) !important; outline-color: var(--accent-soft); }
-  :root[data-theme="dark"] #email-quote-dialog button { background: var(--surface-3) !important; color: var(--ink) !important; border-color: var(--line-strong) !important; }
-  :root[data-theme="dark"] #email-quote-dialog button[type=submit] { background: var(--violet-fill) !important; color: #fff !important; border-color: var(--violet-fill) !important; }
-  :root[data-theme="dark"] #email-quote-dialog::backdrop { background: rgb(6 3 16 / .7); }
+  :where(html[data-theme="light"]) .mobile-nav { background: var(--surface); border-top-color: var(--line); box-shadow: 0 -10px 30px -12px rgb(6 2 20 / .5); }
 }
