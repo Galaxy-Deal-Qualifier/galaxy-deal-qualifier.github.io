@@ -794,10 +794,30 @@
   <div class="saleskit-head">
     <div>
       <h2>What's New</h2>
-      <p class="saleskit-sub">Everything that has changed in the Galaxy Deals, newest first.</p>
+      <p class="saleskit-sub">App improvements, newest first. New versions cover features, fixes and design changes; price and promotion updates appear in Sales Kit.</p>
     </div>
   </div>
   <div id="whatsnew-body"></div>
+  <div class="saleskit-head"><div>
+    <h3>Early Google Apps Script project</h3>
+    <p class="saleskit-sub">Earlier deployments of the project. These use their own version numbers.</p>
+  </div></div>
+  <div class="rel">
+    <div class="rel-head"><span class="rel-ver">Apps Script v3</span><span class="rel-date">23 Aug 2026</span></div>
+    <div class="rel-title">Early web app - third deployment</div>
+    <ul><li>Deployment recorded on 23 August 2026 at 4:07 pm.</li>
+      <li><a href="https://script.google.com/macros/s/AKfycbxOaJnRcGA0kPj-7GJeALhZosNRlYI0csRAtzWUI4rqh3G_7jkYWyTGC5q2C2oP5zri9Q/exec" target="_blank" rel="noopener noreferrer">Open the early Apps Script web app</a></li></ul>
+  </div>
+  <div class="rel">
+    <div class="rel-head"><span class="rel-ver">Apps Script v2</span><span class="rel-date">14 Aug 2026</span></div>
+    <div class="rel-title">Early web app - second deployment</div>
+    <ul><li>Deployment recorded on 14 August 2026 at 7:49 pm.</li></ul>
+  </div>
+  <div class="rel">
+    <div class="rel-head"><span class="rel-ver">Apps Script v1</span><span class="rel-date">14 Aug 2026</span></div>
+    <div class="rel-title">Early web app - first deployment</div>
+    <ul><li>Deployment recorded on 14 August 2026 at 5:36 pm.</li></ul>
+  </div>
 </section>
 
 <section id="panel-saleskit" class="saleskit" hidden>
@@ -5903,42 +5923,46 @@
   renderStockTable();
 
   // ---- what's new ----
-  // Newest first. Add a block at the top whenever something ships; the dot on the tab appears
+  // Newest first. Add a block only for app features, fixes or design changes.
+  // Price, promo, expiry-date and trade-in-value updates are data maintenance:
+  // do not add a CHANGELOG entry or bump the app version for those updates.
+  // The dot on the tab appears
   // for anyone who has not opened the latest version yet.
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
-    { v: "12.6", d: "8 Oct 2026", t: "Polished quote PDFs and recent improvements",
+    { type: "app", v: "12.6", d: "8 Oct 2026", t: "Polished quote PDFs and recent improvements",
       items: [
+        "<strong>Feature versions only:</strong> price, promo and catalogue updates are excluded from What’s New and its new-version dot. Automated updates are hidden unless explicitly classified as an app release.",
         "<strong>Customer PDFs redesigned</strong> with a text-only Galaxy Deals header, embedded fonts, aligned prices, light grey total and savings panels, and a tidy footer. No logo or coloured accents. Longer quotes continue across pages; separate options keep their own totals.",
         "<strong>New opening animation:</strong> the cosmic tag logo gently zooms in with a blue orbit sweep and solid white GALAXY DEALS text, then fades into the app after about 1.5 seconds. Reduced motion uses a short fade.",
         "<strong>Receipt printing:</strong> fixed 80mm layout, with 20mm below the disclaimer and a small end marker to help preserve the gap when a docket printer trims blank paper.",
         "<strong>Simpler print controls:</strong> one line with sideways scrolling on small screens. Removed the docket roll selector and Copy quote option.",
-        "<strong>Sales Kit alerts:</strong> new-deal and deal-finished boxes stay in Sales Kit, with the attention dot on its tab. Includes the recent Tab S12+ accessories and offer updates."
+        "<strong>Sales Kit alerts:</strong> new-deal and deal-finished boxes stay in Sales Kit, with the attention dot on its tab."
       ]
     },
-    { v: "12.5", d: "8 Oct 2026", t: "Galaxy opening animation",
+    { type: "app", v: "12.5", d: "8 Oct 2026", t: "Galaxy opening animation",
       items: ["Your cosmic tag logo now opens the app with a gentle zoom, a blue orbit sweep and solid white GALAXY DEALS text. The screen fades into the quote page after about 1.5 seconds, with a short fade for reduced motion."]
     },
-    { v: "12.4", d: "8 Oct 2026", t: "Receipt printing and print controls",
+    { type: "app", v: "12.4", d: "8 Oct 2026", t: "Receipt printing and print controls",
       items: [
         "<strong>Quote receipts use an 80mm roll.</strong> A 20mm space and a small end marker follow the disclaimer to help preserve the bottom space when the printer trims blank paper.",
         "<strong>Print controls stay on one line</strong>, with sideways scrolling on smaller screens. The roll selector and Copy quote option have been removed."
       ]
     },
-    { v: "12.3", d: "8 Oct 2026", t: "Deal tickets only in the Sales Kit",
+    { type: "app", v: "12.3", d: "8 Oct 2026", t: "Deal tickets only in the Sales Kit",
       items: [
         "<strong>The new-deal and deal-finished boxes now show in the Sales Kit only.</strong> They no longer appear above Step 01 on the Customer Quote page. The Sales Kit boxes and their \u201cTickets changed \u2014 dismiss\u201d buttons work as before, and the Sales Kit tab dot still lights when one needs attention.",
         "No prices or offers have changed."
       ]
     },
-    { v: "12.2", d: "8 Oct 2026", t: "Tab S12+ accessories",
+    { type: "data", v: "12.2", d: "8 Oct 2026", t: "Tab S12+ accessories",
       items: [
         "<strong>Tab S12+ accessories added to the accessory list</strong>: Book Cover $179, Book Cover Keyboard Slim $329, Pro Keyboard $499 and Anti-Reflective Screen Protector $59. They show under the Tab S12+ in the Accessories card.",
         "No device prices or offers have changed."
       ]
     },
-    { v: "12.1", d: "8 Oct 2026", t: "Tab S12+ and S12 Ultra pre-orders, S25 Ultra to 4 Nov",
+    { type: "data", v: "12.1", d: "8 Oct 2026", t: "Tab S12+ and S12 Ultra pre-orders, S25 Ultra to 4 Nov",
       items: [
         "<strong>Galaxy Tab S12 Ultra and Tab S12+ added</strong>, using the store prices. S12 Ultra: Wi-Fi $2,249 (256GB), $2,549 (512GB), $3,149 (1TB); LTE $2,499, $2,799, $3,399. S12+: Wi-Fi $1,949 (256GB), $2,249 (512GB); LTE $2,199, $2,499.",
         "<strong>Pre-order offers, 8 Oct:</strong> $400 credit (A260006533, to 21 Oct, not with Education or SMB); RNPL $100 voucher (A260006532, to 19 Nov, not with SMB); Boosted Education 25% (A260006534, to 19 Nov).",
@@ -5946,108 +5970,108 @@
         "Accessories for the S12 have no prices in the accessory list yet, so the 40% S12 accessory offer (A260006535) is not in the tool."
       ]
     },
-    { v: "12", d: "8 Oct 2026", t: "S25 Ultra Save $500",
+    { type: "data", v: "12", d: "8 Oct 2026", t: "S25 Ultra Save $500",
       items: [
         "<strong>Galaxy S25 Ultra Save $500</strong> (512GB), from 8 Oct 2026, bulletin A260006530. Not with Education or SMB. S25 Ultra 512GB $2,349 -> $1,849.",
         "The Sales Kit heading says this ends 14 Oct but the body says 4 Nov. It is set to end 14 Oct until that is confirmed."
       ]
     },
-    { v: "11.9", d: "8 Oct 2026", t: "Tab S10 FE Save $150",
+    { type: "data", v: "11.9", d: "8 Oct 2026", t: "Tab S10 FE Save $150",
       items: [
         "<strong>Galaxy Tab S10 FE Save $150</strong> (all four Wi-Fi and LTE versions), 8 to 28 Oct 2026, bulletin A260006531. Not with Education or SMB. Tab S10 FE 128GB Wi-Fi $849 -> $699, 256GB Wi-Fi $1,049 -> $899, 128GB LTE $1,049 -> $899, 256GB LTE $1,249 -> $1,099.",
         "Tab S10 FE+ is not on this offer."
       ]
     },
-    { v: "11.8", d: "8 Oct 2026", t: "New and finished deals on the home page",
+    { type: "app", v: "11.8", d: "8 Oct 2026", t: "New and finished deals on the home page",
       items: [
         "<strong>New and finished deals now show on the Customer Quote page</strong>, above Step 01, as well as in the Sales Kit. The green box means a deal has just started and the tickets need to go up. The red box means a deal has just finished and the tickets need to go back to normal. Each lists the deals and their bulletin codes.",
         "<strong>Tickets changed \u2014 dismiss</strong> works on either page and clears the box on both. The green box shows on the day a deal starts and the day after. The red box shows for two days after a deal ends.",
         "No prices or offers have changed."
       ] },
-    { v: "11.7", d: "6 Oct 2026", t: "Watch Ultra 2 trade-in bonus",
+    { type: "data", v: "11.7", d: "6 Oct 2026", t: "Watch Ultra 2 trade-in bonus",
       items: [
         "<strong>Watch Ultra 2 trade-in bonus added.</strong> The Sales Kit lists an extra $200 trade-in credit on a Watch Ultra 2 (47mm LTE) with an eligible trade-in, 2 to 28 Oct 2026, bulletin A260006352, unique code required. It sits alongside the Watch9 $100 bonus under the same bulletin. Not stackable with Education or SMB. Quote prices are unchanged because it is credit against the trade-in."
       ]
     },
-    { v: "11.6", d: "4 Oct 2026", t: "Cleaner separate options on the quote",
+    { type: "app", v: "11.6", d: "4 Oct 2026", t: "Cleaner separate options on the quote",
       items: [
         "<strong>Separate options have more room.</strong> The options now sit with the quote rather than in the pinned footer, so the device list isn\u2019t squeezed. Each option is a tidy block: its label and name, the price on the right, and one line underneath with the GST, any trade-in and the saving.",
         "\u201cSame quote, priced three ways\u201d is hidden while quoting separate options, because it adds the devices together.",
         "The GST on <strong>Best deal on this device</strong> now sits under the price instead of between the prices.",
         "No prices or offers have changed."
       ] },
-    { v: "11.5", d: "4 Oct 2026", t: "Quote several devices as separate options",
+    { type: "app", v: "11.5", d: "4 Oct 2026", t: "Quote several devices as separate options",
       items: [
         "<strong>Separate options on one quote.</strong> With two or more devices on a quote, a <strong>Quote as</strong> switch appears above the total. <strong>One sale</strong> adds everything up, as before. <strong>Separate options</strong> prices each device on its own and doesn\u2019t add them together \u2014 for a customer choosing between, say, the 256GB and the 512GB. Each option shows its own price after any trade-in, the GST in it and what they save, and the devices are labelled Option 1, Option 2 and so on.",
         "One page instead of several: the printout, Download PDF, Email quote and Copy quote all show the options the same way. Accessories on the quote go with every option, and each option gets the trade-in and any trade-in bonus it would get on its own.",
         "No prices or offers have changed."
       ] },
-    { v: "11.4", d: "4 Oct 2026", t: "Accessories can be added without a stock file",
+    { type: "app", v: "11.4", d: "4 Oct 2026", t: "Accessories can be added without a stock file",
       items: [
         "<strong>Accessories are back on every quote.</strong> The Accessories card only ever showed what was in your store\u2019s loaded stock file, so on a browser without one (a new device, cleared data, or the shared link) it disappeared and nothing could be added. Now, with no stock file loaded, it lists accessories from the price list instead \u2014 the ones that fit the device being quoted, grouped by type, at RRP \u2014 and <strong>+</strong> puts them on the quote as before. Stock shows as a dash because it isn\u2019t known.",
         "With a stock file loaded nothing changes: you see what\u2019s in stock, the counts, and the $10 clearance on older ranges.",
         "No prices or offers have changed."
       ] },
-    { v: "11.3", d: "3 Oct 2026", t: "S26 FE SMB shows its own bulletin",
+    { type: "app", v: "11.3", d: "3 Oct 2026", t: "S26 FE SMB shows its own bulletin",
       items: [
         "<strong>The S26 FE on SMB now shows bulletin A260005730</strong> (\u201c15% OFF S26FE\u201d, ends 31 October), as the Sales Kit lists it. It had been picking up the general SMB offer (A260004803, coupon SMB0038), which doesn\u2019t include the S26 FE. The price is the same: $976.65 for 128GB and $1,104.15 for 256GB.",
         "No other prices or offers have changed."
       ] },
-    { v: "11.2", d: "3 Oct 2026", t: "Prices shown as $ rather than A$",
+    { type: "app", v: "11.2", d: "3 Oct 2026", t: "Prices shown as $ rather than A$",
       items: [
         "<strong>Prices now read $1,699.00 instead of A$1,699.00</strong> everywhere: on screen, in the bottom bar, in the copied, emailed and PDF quotes, and in the price boxes you type into. It\u2019s an Australian tool, so the A added nothing. Older What\u2019s New entries are left as they were written.",
         "No prices or offers have changed."
       ] },
-    { v: "11.1", d: "3 Oct 2026", t: "GST included, shown beside every price",
+    { type: "app", v: "11.1", d: "3 Oct 2026", t: "GST included, shown beside every price",
       items: [
         "<strong>Every price we charge now shows the GST inside it</strong>: the retail price and best deal, each quote line and plan, the customer total (on screen, in the bottom bar, in the copied and emailed quote and the PDF), Deal Builder, Compare, Price Check, Repair or Upgrade and accessories. Prices are GST-inclusive, so the GST is one eleventh of the price \u2014 for example A$1,699.00 includes A$154.45.",
         "<strong>Trade-ins don\u2019t reduce the GST.</strong> Trade-in credit and trade-in bonuses are payment towards the sale, not a discount on it, so the GST is worked out on the sale before they come off; the total says so when a trade-in is on the quote. Discounts and ECO vouchers do lower the price, so they lower the GST.",
         "Competitors\u2019 prices and trade-in values aren\u2019t prices we charge, so they carry no GST note. No prices or offers have changed."
       ] },
-    { v: "11", d: "3 Oct 2026", t: "Search everything, trade-in condition checklist, price match request",
+    { type: "app", v: "11", d: "3 Oct 2026", t: "Search everything, trade-in condition checklist, price match request",
       items: [
         "<strong>Search everything.</strong> A Search button at the top of the sidebar (or press <strong>/</strong>, or Ctrl+K) finds any page, device, offer or bulletin code, repair model or trade-in, and takes you straight to it. Picking a device opens it in the quote; a bulletin code opens the Sales Kit filtered to it; a repair opens Repair or Upgrade on that model; a trade-in fills the next free trade-in slot.",
         "<strong>Trade-in condition checklist.</strong> Each trade-in device has a checklist under its pickers. The first group (won\u2019t power on, liquid damage, parts missing, account locks still on, lost or stolen, overseas or not genuine, not theirs to sell) is from Samsung\u2019s Trade-In terms: ticking any of them takes the credit off, with a reminder to remove account locks first. The second group (cracked glass, display faults, bent frame, things not working) switches the device to not working order and uses that value. Asurion\u2019s own questions still decide the final grade.",
         "<strong>Price match request.</strong> On Price Check, when a retailer has the device for less than us, a card sums it up for your manager: the retailer, their price and listing, our price and how much a match takes off, with a short list of what to check first and a Copy request button. A Harvey Norman price you type in counts too.",
         "No prices or offers have changed."
       ] },
-    { v: "10.9", d: "3 Oct 2026", t: "Faster first load; sheet sync moved to Store & Stock",
+    { type: "app", v: "10.9", d: "3 Oct 2026", t: "Faster first load; sheet sync moved to Store & Stock",
       items: [
         "<strong>The page opens faster.</strong> The shared trade-in sheet (about 8,600 rows) froze the page for most of a second while it was read; it now reads in a fraction of that, and only after the page has finished loading, so you can start quoting straight away. The sidebar logo is now a small copy (16 KB, was 1.7 MB), and the PDF library no longer holds up the first paint.",
         "<strong>Refresh sheet data has moved to Store &amp; Stock</strong>, inside the Stock on Hand card, with its status line (trade-in models loaded and your store\u2019s stock).",
         "No prices or offers have changed."
       ] },
-    { v: "10.8", d: "2 Oct 2026", t: "Download PDF works in the Claude artifact",
+    { type: "app", v: "10.8", d: "2 Oct 2026", t: "Download PDF works in the Claude artifact",
       items: [
         "<strong>Download PDF now works in the Claude artifact.</strong> Harsha\u2019s Download PDF button (on the quote and on the print screen) did nothing there, because the artifact can\u2019t download files by itself. It now opens a save prompt showing the file name and size; accept it to save the quote as a PDF. On the GitHub site it downloads straight away, as before.",
         "No prices or offers have changed."
       ] },
-    { v: "10.7", d: "2 Oct 2026", t: "Tap a bulletin code to copy it",
+    { type: "app", v: "10.7", d: "2 Oct 2026", t: "Tap a bulletin code to copy it",
       items: [
         "<strong>Tap any bulletin code to copy it</strong>, ready to key into POS. It works wherever a code shows: offer cards, the Sales Kit, Expired Deals, the new-deal and finished-deal banners, quote lines and What\u2019s New. Codes have a dotted underline and a small copy icon, and a \u201cCopied A260006352\u201d message confirms it.",
         "If a browser blocks copying, the code is selected instead, so a long-press or Ctrl+C finishes the job.",
         "No prices or offers have changed."
       ] },
-    { v: "10.6", d: "2 Oct 2026", t: "Sales Kit: Tab S10 Lite $100 off and S26 $600 trade-in bonus",
+    { type: "data", v: "10.6", d: "2 Oct 2026", t: "Sales Kit: Tab S10 Lite $100 off and S26 $600 trade-in bonus",
       items: [
         "<strong>Tab S10 Lite: save $100</strong> (A260006441), 3 to 14 Oct 2026. 128GB Wi-Fi $629 \u2192 $529, 256GB Wi-Fi and 128GB LTE $799 \u2192 $699, 256GB LTE $999 \u2192 $899. Not with Education or SMB.",
         "<strong>Galaxy S26: $600 trade-in bonus</strong> (A260006461), 3 to 28 Oct 2026. Extra $600 off the sale when an eligible device is traded in towards an S26. Not with Education or SMB."
       ] },
-    { v: "10.5", d: "2 Oct 2026", t: "Repairs: search, grouped models and the highest screen price",
+    { type: "app", v: "10.5", d: "2 Oct 2026", t: "Repairs: search, grouped models and the highest screen price",
       items: [
         "<strong>Search repairs.</strong> Repair or Upgrade now has a search box at the top, like trade-ins: type any part of a model or its code \u2014 \u201cs23 ultra\u201d, \u201cfold5\u201d, \u201cwatch6 classic\u201d, \u201cSM-S918\u201d \u2014 and pick from the list. It searches phones, tablets and wearables at once and sets the category and model for you.",
         "<strong>The Model list is grouped by series</strong>, newest first: Galaxy S26 series down to S20, Galaxy Z Fold, Galaxy Z Flip, then the Galaxy A range by year; Tab S11 down to Tab S7 and Tab A; Watch Ultra, Watch9 down to Watch4, Watch Active, Buds and Ring. The separate Series dropdown is gone.",
         "<strong>Highest screen repair price shown for every model.</strong> Picking a model shows the most a screen repair can cost on it, and which option that is (Screen Repair or Screen Replacement). Folds and Flips show the main and cover screens separately, e.g. Z Fold7 main screen up to A$999, cover screen A$319. Each search result shows \u201cScreen up to\u201d too, and the Display buttons now read \u201cup to\u201d the top price instead of \u201cfrom\u201d the lowest.",
         "No prices, offers or repair estimates have changed."
       ] },
-    { v: "10.4", d: "2 Oct 2026", t: "Watch9 trade-in bonus, SMB devices, new Education bulletin",
+    { type: "data", v: "10.4", d: "2 Oct 2026", t: "Watch9 trade-in bonus, SMB devices, new Education bulletin",
       items: [
         "<strong>Watch9 trade-in bonus, $100</strong> (A260006352), 2 to 28 October. It comes off the sale when a Watch9 is quoted with a trade-in. It needs a unique code and stacks with everything except Education and SMB.",
         "<strong>SMB 15% now covers the devices the Sales Kit lists</strong> (A260004803, SMB0038). Added: XCover7 Pro, S25 Ultra, S25 Edge, Z Flip7, Watch9, Watch Ultra 2 and Watch Ultra. Watch8 and Watch8 Classic stay off SMB because their 50% clearance price is lower. For example, a Watch9 40mm Bluetooth on SMB is now A$551.65 (was A$649).",
         "<strong>Education now shows its new bulletin, A260006390.</strong> The rate stays at 20% and Education stays on with no end date.",
         "No other prices have changed."
       ] },
-    { v: "10.3", d: "2 Oct 2026", t: "Trade-ins: grouped models and a search box",
+    { type: "app", v: "10.3", d: "2 Oct 2026", t: "Trade-ins: grouped models and a search box",
       items: [
         "<strong>Search trade-ins.</strong> Each trade-in device now has a search box at the top: type any part of the model and storage \u2014 \u201cs23 ultra 256\u201d, \u201ciphone 14 pro\u201d, \u201cwatch6\u201d \u2014 and pick from the list. Brand, type, model and storage are set in one go, with the good-working-order value shown beside each match.",
         "<strong>The Model list is grouped by series</strong>, newest first: Galaxy S25 series, Galaxy Z Fold, Galaxy Z Flip, Galaxy A56 series and so on; iPhone 17 series down to iPhone 11; iPad Pro, iPad Air, iPad mini; Pixel by generation.",
@@ -6055,7 +6079,7 @@
         "Also in this version: Harsha\u2019s design polish \u2014 a button to collapse the sidebar, a bottom menu on phones, and a friendlier empty quote.",
         "No prices, offers or trade-in values have changed."
       ] },
-    { v: "10.2", d: "1 Oct 2026", t: "New Trade-Up values, to 4 November",
+    { type: "data", v: "10.2", d: "1 Oct 2026", t: "New Trade-Up values, to 4 November",
       items: [
         "<strong>The trade-in values are from Asurion\u2019s new catalogue and run to 4 November 2026</strong> (a few to 3 November). The old list ended 30 September. 368 of the 496 values changed: 160 went up, 88 went down, and on the rest only the not-working figure moved.",
         "<strong>Newly accepted:</strong> iPhone 17, iPhone 17 Pro, iPhone 17 Pro Max and iPhone Air, and a separate <strong>Galaxy S25 Ultra (Retail Exclusive)</strong> 512GB at A$620 good working order.",
@@ -6063,31 +6087,31 @@
         "<strong>Not-working values:</strong> where Asurion lists a negative figure (now -10, -15 and -20 as well as -50) the tool treats it as \u201cwon\u2019t take it in that condition\u201d, as before. Some phones, such as the iPhone 12 range, now show <strong>A$0</strong> when not working: accepted, but nothing to credit.",
         "As before, where the catalogue gives two figures for one device (23 variants, mostly iPads and the Tab S8+ Wi-Fi) the lower one is filled in and flagged \u2014 check the Asurion app before committing."
       ] },
-    { v: "10.1", d: "1 Oct 2026", t: "Compare: magnetic charging needs a magnetic case",
+    { type: "app", v: "10.1", d: "1 Oct 2026", t: "Compare: magnetic charging needs a magnetic case",
       items: [
         "<strong>The Wireless charging row on Compare now says, for every phone, that magnetic charging needs a MagSafe-style magnetic case.</strong> That includes the S26 Ultra and S26+, which GSMArena lists as having magnets built in \u2014 the comparison now follows how we sell it rather than the spec sheet.",
         "The charging standard and speed still show (Qi2.2 25W, Qi2 Ready 15W, Qi 15W and so on), and the \u201cWhat these terms mean\u201d note and the source line under the table say the same thing. Ordinary pad charging still works without a case.",
         "No prices, offers or deal rules have changed."
       ] },
-    { v: "10", d: "1 Oct 2026", t: "The Sales Kit page, and Expired Deals folds away",
+    { type: "app", v: "10", d: "1 Oct 2026", t: "The Sales Kit page, and Expired Deals folds away",
       items: [
         "<strong>\u201cOffers &amp; Eligibility\u201d is now called Sales Kit</strong> in the sidebar, matching what everyone calls it.",
         "<strong>Expired Deals is now a dropdown</strong> under the current offers, shut by default with a count of how many there are. It opens on its own when you search for a device, offer or bulletin code that matches something in it, so an old deal is still one search away.",
         "No prices, offers or deal rules have changed."
       ] },
-    { v: "9.9", d: "1 Oct 2026", t: "Harvey Norman\u2019s price match, on the tile",
+    { type: "app", v: "9.9", d: "1 Oct 2026", t: "Harvey Norman\u2019s price match, on the tile",
       items: [
         "<strong>The Harvey Norman tile on Price Check now says what their price match covers</strong>: they match genuine advertised prices from leading Australian retailers, on request through their Live Chat with proof of the competitor\u2019s price. It links to their policy page \u2014 read that for the full terms, as this is a short summary.",
         "No prices, offers or deal rules have changed."
       ] },
-    { v: "9.8", d: "1 Oct 2026", t: "A cleaner Price Check, and tidier titles",
+    { type: "app", v: "9.8", d: "1 Oct 2026", t: "A cleaner Price Check, and tidier titles",
       items: [
         "<strong>Price Check has been laid out again.</strong> Each retailer is now a single tile \u2014 name, price, and a green or red tag saying how much cheaper here or there \u2014 four across the page.",
         "<strong>The telcos are one line each</strong> in a table: device, plan, extras and the total over the term, with the same cheaper-here tag. The term is a row of buttons (12, 24, 36, 48 months), and <strong>Buying Here</strong> sits at the foot of the table with the box for a cheaper SIM plan.",
         "<strong>Titles across the tool now use capitals consistently</strong> \u2014 Build a Customer Quote, Choose Your Device, Repair or Upgrade, Price Check \u2014 in the sidebar and on every page.",
         "No prices, offers or deal rules have changed."
       ] },
-    { v: "9.7", d: "1 Oct 2026", t: "Price check: us against the retailers and the telcos",
+    { type: "app", v: "9.7", d: "1 Oct 2026", t: "Price check: us against the retailers and the telcos",
       items: [
         "<strong>New Price check page</strong> under Products &amp; offers. Pick a device (it opens on the one you\u2019re quoting) and it shows our price today beside <strong>JB Hi-Fi, The Good Guys and Officeworks</strong>, with how much cheaper or dearer we are and a link to each listing.",
         "<strong>Retailer prices are collected automatically twice a day</strong> and show when they were captured. Every figure can be typed over, so if the customer has a different price on their phone, use that. <strong>Harvey Norman</strong> isn\u2019t collected automatically \u2014 there\u2019s a link to look it up and a box to type it in.",
@@ -6095,42 +6119,42 @@
         "Telcos charge the same plan fee with or without a phone, so on the same plan the gap is the device price. If the customer would use a cheaper SIM-only plan instead, enter it and the comparison uses that.",
         "Telco device prices are listed for the base storage only, and some include a discount that is lost if the customer leaves early \u2014 the page says so where it applies. Introductory plan prices are counted for the months they run."
       ] },
-    { v: "9.6", d: "1 Oct 2026", t: "The S26 price rise switches itself on",
+    { type: "app", v: "9.6", d: "1 Oct 2026", t: "The S26 price rise switches itself on",
       items: [
         "<strong>Galaxy S26 retail prices go up on Sunday 11 October, and the tool will change over by itself that morning.</strong> Until then every S26 price is exactly as it is today.",
         "From 11 October: <strong>S26</strong> $1,549 \u2192 $1,649 (256GB) and $1,849 \u2192 $1,949 (512GB); <strong>S26+</strong> $1,849 \u2192 $1,949 and $2,149 \u2192 $2,249; <strong>S26 Ultra</strong> $2,199 \u2192 $2,299, $2,499 \u2192 $2,599 and $2,949 \u2192 $3,199 (1TB).",
         "Education, SMB and any offer on these devices are worked out from the new price from that day. A quote printed before the 11th shows the old price, so re-quote anything a customer comes back for after the change."
       ] },
-    { v: "9.5", d: "1 Oct 2026", t: "\u201cEnds in\u201d tags look three days ahead too",
+    { type: "app", v: "9.5", d: "1 Oct 2026", t: "\u201cEnds in\u201d tags look three days ahead too",
       items: [
         "<strong>The \u201cends in 3 days\u201d tags beside individual offers now start three days out</strong>, matching the amber strip at the top. An offer with more than three days to run no longer carries a tag; \u201cends today\u201d and \u201cends tomorrow\u201d are unchanged.",
         "The sidebar logo has been adjusted for dark mode."
       ] },
-    { v: "9.4", d: "1 Oct 2026", t: "A tidier Service page",
+    { type: "app", v: "9.4", d: "1 Oct 2026", t: "A tidier Service page",
       items: [
         "<strong>The repair price now sits right under the faults you pick</strong>, in one card, instead of in a separate box further down the page. That card stays in view while you scroll the upgrades.",
         "<strong>Faults are compact buttons</strong> \u2014 Display, Battery, Charge Port \u2014 each with its price, two to a row. Where Samsung offers a repair or a replacement, the two sit side by side as a switch.",
         "<strong>Each upgrade is one clean line</strong>: the device, its storage, today\u2019s price with how much more or less it is than the repair underneath, and a Quote button.",
         "Nothing about the prices or how they are worked out has changed."
       ] },
-    { v: "9.3", d: "1 Oct 2026", t: "The ending-soon strip looks three days ahead",
+    { type: "app", v: "9.3", d: "1 Oct 2026", t: "The ending-soon strip looks three days ahead",
       items: [
         "<strong>The amber strip at the top now lists offers ending within 3 days</strong>, down from 7, so it only shows what needs acting on now. The \u201cends in 5 days\u201d tags beside individual offers are unchanged.",
         "The sidebar has a new purple logo and a single purple accent in place of the colour picker."
       ] },
-    { v: "9.2", d: "1 Oct 2026", t: "Compare fills itself in",
+    { type: "app", v: "9.2", d: "1 Oct 2026", t: "Compare fills itself in",
       items: [
         "<strong>Compare now opens on what you\u2019re already working with.</strong> The device you\u2019ve picked on the Deal Qualifier, with its storage, goes into <strong>Device 1</strong>, and the device you\u2019ve picked for repair on the Service page goes into <strong>Device 2</strong> \u2014 so a customer\u2019s S23 and the S26 they\u2019re looking at are side by side without choosing either again.",
         "It only fills in when you change the device at its source, so anything you pick by hand on the Compare page stays put. Compare holds specifications for most phones, tablets and watches back to 2021; a repair device it doesn\u2019t know (buds, the Ring, some older models) leaves Device 2 as it was."
       ] },
-    { v: "9.1", d: "1 Oct 2026", t: "Service gets its own section, and a new logo",
+    { type: "app", v: "9.1", d: "1 Oct 2026", t: "Service gets its own section, and a new logo",
       items: [
         "<strong>Repair or upgrade has its own Service section in the sidebar</strong>, instead of sitting under Store tools.",
         "<strong>New Galaxy Deals logo</strong> at the top of the sidebar, in a light and a dark version that follow the theme.",
         "The date at the top of the Deal Qualifier now reads <strong>Sales Kit checked on</strong>, and a notice appears if the Sales Kit hasn\u2019t been checked in the last 24 hours.",
         "No prices, offers or deal rules have changed."
       ] },
-    { v: "9", d: "1 Oct 2026", t: "Service: repair or upgrade",
+    { type: "app", v: "9", d: "1 Oct 2026", t: "Service: repair or upgrade",
       items: [
         "<strong>New Service page in the sidebar.</strong> Pick the customer\u2019s phone, tablet or wearable and what\u2019s wrong with it, and it shows what Samsung charges to repair it out of warranty \u2014 screen, battery, back glass, charge port, cameras, and buds, cradle and ring replacements.",
         "<strong>Then it shows the upgrade.</strong> Beside the repair price is every current device in the same range with today\u2019s price, offers already applied, and <strong>how much more (or less) it is than repairing</strong>. Switch between Standard, Education and SMB, change the storage, or open other ranges \u2014 an S24 owner can look at the A Series or a Fold.",
@@ -6138,19 +6162,19 @@
         "If the customer already has a repair quote, type it in and the comparison uses that instead. <strong>Start a quote</strong> on any upgrade takes you straight to the Deal Qualifier with that device picked.",
         "Repair prices are Samsung Australia\u2019s published estimates (GST included), captured 1 October 2026. They are estimates: the final price is set after a technician assesses the device."
       ] },
-    { v: "8.9", d: "1 Oct 2026", t: "SMB is back on, and permanent",
+    { type: "app", v: "8.9", d: "1 Oct 2026", t: "SMB is back on, and permanent",
       items: [
         "<strong>SMB pricing is back.</strong> The general 15% SMB offer (coupon SMB0038) lapsed in the tool on 30 September; it\u2019s switched back on and <strong>no longer has an end date</strong>. The S26 FE SMB offer is open-ended too.",
         "<strong>Education and SMB are now both permanent.</strong> They show as Ongoing, never switch themselves off at month end, and no longer pull down the \u201cpricing valid until\u201d date on a quote.",
         "The note at the bottom of the page is up to date: retail offers are checked against the Sales Kit twice a day."
       ] },
-    { v: "8.8", d: "1 Oct 2026", t: "One layout everywhere",
+    { type: "app", v: "8.8", d: "1 Oct 2026", t: "One layout everywhere",
       items: [
         "<strong>The Deal Qualifier now walks you through a quote in three steps</strong> \u2014 <em>Choose Your Device</em>, <em>Tailor the Deal</em>, <em>Review Your Quote</em> \u2014 with each step labelled on the page. This is Harsha\u2019s layout, already live on the GitHub address, and both addresses now look the same.",
         "<strong>The sidebar is grouped</strong> under Quote, Products &amp; offers, Store tools and Help &amp; updates, and the total on the quote is labelled <strong>Customer total</strong>.",
         "No prices, offers or deal rules have changed."
       ] },
-    { v: "8.7", d: "1 Oct 2026", t: "Education is always on, and October\u2019s new prices",
+    { type: "app", v: "8.7", d: "1 Oct 2026", t: "Education is always on, and October\u2019s new prices",
       items: [
         "<strong>The 20% Education rate no longer has an end date.</strong> It lapsed in the tool on 30 September, which left Education mode discounting nothing. The three Education offers (mobile, tablet and wearable, coupon EDU0152) now show as Ongoing and won’t switch themselves off again.",
         "<strong>New retail prices from 1 October</strong>, matching Pronto. Galaxy A17 5G $379 \u2192 $399, A27 5G $499 \u2192 $549, A37 5G $599 \u2192 $649, and A57 5G $749 \u2192 $849 (128GB) and $849 \u2192 $949 (256GB).",
@@ -6158,7 +6182,7 @@
         "Live offers on these devices now come off the new price, so the A17 with its $80 saving is $319 and the A57 with its $150 saving is $699 / $799. Education, SMB and every other device are worked out exactly as before.",
         "SMB is unchanged: the general 15% SMB offer ended 30 September in the tool and is still waiting on a decision."
       ] },
-    { v: "8.6", d: "30 Sept 2026", t: "The total is on screen from the start",
+    { type: "app", v: "8.6", d: "30 Sept 2026", t: "The total is on screen from the start",
       items: [
         "<strong>The total and Print are visible the moment the page opens</strong>, not only after you scroll. The quote panel now starts level with the page title and sizes itself to the window, so on a store screen you see the final price straight away.",
         "<strong>On a narrower window or a phone, the total, Print and a View quote button ride along the bottom of the screen</strong>, so the quote never goes out of reach there either.",
@@ -6166,7 +6190,7 @@
         "The page is calmer: the best deal, the trade-in devices, the payment options and your store are laid out as simple rows instead of boxes inside boxes, the title carries just the offers date and the reminder to check POS, and text sizes follow one strict scale with the total the largest number on the page.",
         "The print preview no longer shows the moving change-in-total figure, and the comparison preview stays inside the window."
       ] },
-    { v: "8.5", d: "30 Sept 2026", t: "A new look, and a quote that stays with you",
+    { type: "app", v: "8.5", d: "30 Sept 2026", t: "A new look, and a quote that stays with you",
       items: [
         "<strong>The whole tool has been redesigned.</strong> It’s now a clean, light workspace: the pages sit in a sidebar on the left, the working area is one tidy surface instead of a stack of boxes, and every dollar figure lines up in its column. Nothing about the pricing has changed — every deal rule, stack and total works exactly as before.",
         "<strong>The quote now stays on screen while you work.</strong> It’s pinned to the right of the Deal Qualifier, so filling in a trade-in, New Galaxy Club or an ECO bundle no longer means scrolling back up. The <strong>total and Print sit at the bottom of the panel and never scroll away</strong>, and the lines scroll inside the panel when a quote gets long.",
@@ -6177,12 +6201,12 @@
         "<strong>Proper icons throughout</strong> in place of emoji, text that’s never smaller than 12px, and every piece of text checked for readable contrast in both light and dark mode.",
         "The <strong>printed quote and the printed comparison are unchanged</strong> in content and order — lines, total, payment plan, then the advisory — and the comparison still fits one page."
       ] },
-    { v: "8.4", d: "28 Sept 2026", t: "Add to quote sits under the trade-in too",
+    { type: "app", v: "8.4", d: "28 Sept 2026", t: "Add to quote sits under the trade-in too",
       items: [
         "<strong>A second Add to quote button under the Trade-In card</strong>, so filling in a trade-up no longer means scrolling back to the top of the page to add the device. The one on the Device card is still there \u2014 both do the same thing.",
         "It <strong>names the device it will add</strong> \u2014 \u201c+ Add Galaxy S26 Ultra 512GB to quote\u201d \u2014 and follows the picker, so it can\u2019t be mistaken for a button that adds the trade-in. The trade-in belongs to the whole quote, not to a line, and still needs no adding."
       ] },
-    { v: "8.3", d: "28 Sept 2026", t: "Trade-Up values built in",
+    { type: "app", v: "8.3", d: "28 Sept 2026", t: "Trade-Up values built in",
       items: [
         "<strong>The trade-in section now looks the value up instead of asking you to remember it.</strong> Pick the brand, the type, the model and the storage and the Asurion figure fills itself in, along with the wording that goes on the quote. <strong>189 models, 493 variants</strong> \u2014 Samsung, Apple and Google phones, tablets and watches \u2014 from Werribee\u2019s own catalogue export.",
         "<strong>Both conditions are priced.</strong> The status line shows what Asurion pays in good working order and what it pays if the device is not working, and switching Condition swaps which one goes on the quote. Where a device <strong>is not accepted at all</strong> in poor condition \u2014 <strong>every watch on the list</strong>, 30 of the phones and 23 of the tablets \u2014 it says so and credits nothing rather than quietly putting a figure up. It is not an age rule either: the iPhone 16e, the Pixel 8a, the A56 and the S25 Edge are all on that list alongside the Note 20.",
@@ -6190,54 +6214,54 @@
         "<strong>16 tablet variants are flagged rather than guessed.</strong> The export holds two different figures for the same variant on a few iPads and the Tab S8+ Wi-Fi, because the labels the source uses disagree with each other. Those fill in with <strong>the lower figure</strong> and say so, so the quote is never above what Asurion pays \u2014 check the app before committing to the higher one.",
         "A value typed over the top of a looked-up one is <strong>kept, not overwritten</strong>, and the line says which figure the quote is using. Anything not on the list still goes in by hand under <strong>Other / not listed</strong>."
       ] },
-    { v: "8.2", d: "24 Sept 2026", t: "S26 Ultra offer renewed",
+    { type: "data", v: "8.2", d: "24 Sept 2026", t: "S26 Ultra offer renewed",
       items: [
         "<strong>S26 Ultra Save $500 renewed</strong> under bulletin A260006135, 24 Sept – 4 Oct 2026, picking up right after the previous bulletin (A260005553) lapsed on 23 Sept. Same $500 flat off, same stacking (excludes Education & SMB): 256GB $1,699, 512GB $1,999, 1TB $2,449.",
         "Sales Kit sync run — everything else on the Sales Kit already matched the tool."
       ] },
-    { v: "8.1", d: "21 Sept 2026", t: "Stray escape codes on the Deal Builder",
+    { type: "app", v: "8.1", d: "21 Sept 2026", t: "Stray escape codes on the Deal Builder",
       items: [
         "<strong>Fixed: three places on the Deal Builder were showing a raw escape code instead of a dash or an ellipsis</strong> \u2014 the opening paragraph, the search box placeholder, and the note about applying adjustments at the register. Same mistake as the Compare tab had: the code for a character written into the page text, where nothing turns it back into the character.",
         "The whole page was then checked the way it is actually read \u2014 every tab, plus placeholders and labels \u2014 rather than only the file. Nothing else is left. The one on the What\u2019s New page under v7 is deliberate: that entry quotes the code to explain the original bug."
       ] },
-    { v: "8", d: "21 Sept 2026", t: "Deal Builder",
+    { type: "app", v: "8", d: "21 Sept 2026", t: "Deal Builder",
       items: [
         "<strong>A new Deal Builder tab</strong> for putting a deal together yourself. Pick a device and it shows what is already coming off it, the coded offers you can switch on, and lets you add <strong>anything the Sales Kit has no bulletin for</strong> \u2014 a price match against the online store, or a call made on the floor \u2014 as a dollar amount or a percentage.",
         "A Watch9 reads it all out: $649, less the $50 ECO offer, less the $100 Wallet code once ticked, less a <strong>$75 price match</strong> you typed in \u2014 <strong>$424, 35% off retail</strong>. It warns you if the adjustments take the price to nothing.",
         "<strong>Add to quote carries it straight through</strong> to the quote and the printed copy, where every hand-entered line is tagged <strong>manual</strong> so nobody downstream reads it as something a bulletin authorised. The builder says plainly that these still need whatever your store requires at the register \u2014 SAU code, manager approval \u2014 and the reason on the ticket.",
         "Coded offers that clash are shown ticked-out with what blocked them, rather than quietly missing."
       ] },
-    { v: "7.9", d: "21 Sept 2026", t: "Bigger type on the printed sheet",
+    { type: "app", v: "7.9", d: "21 Sept 2026", t: "Bigger type on the printed sheet",
       items: [
         "<strong>The printed comparison now uses the rest of the page.</strong> Type is about 13% larger \u2014 the table went from roughly 6.8pt to 7.6pt and the glossary from 6.3 to 6.8 \u2014 with the row padding trimmed so the extra height goes to the words rather than the white space around them.",
         "<strong>Fixed: the auto-fit was fighting itself.</strong> The sheet is widened as it scales down so it still fills the page, which means the text re-wraps and the content can jump a hundred points shorter in one step. Working the scale out by division therefore flipped between two answers forever \u2014 0.90 gave 934 points, 0.999 gave 1147, and round again. It now tries the scales in turn and takes the largest that genuinely measures as fitting.",
         "Nothing animates while the sheet is being measured either; heights read mid-transition were sending it after a number that had already moved."
       ] },
-    { v: "7.8", d: "21 Sept 2026", t: "The printed sheet actually fits now",
+    { type: "app", v: "7.8", d: "21 Sept 2026", t: "The printed sheet actually fits now",
       items: [
         "<strong>Fixed: the glossary was being sliced off the bottom of the printed page.</strong> Sizing the type to fit an A4 page was never going to be reliable \u2014 the printer keeps its own margins, and a browser set to print headers and footers takes more again, so the real printable area is smaller than the paper.",
         "<strong>The sheet now measures itself when you hit print and scales to fit.</strong> It closes in over a few passes, because scaling widens the sheet and the text re-wraps at the new width. Three foldables, the widest case, come out at 94%; most comparisons are 97\u201398%, which is not visible on paper.",
         "<strong>\u201cWater / dust\u201d is now \u201cWater / dust resistance.\u201d</strong>"
       ] },
-    { v: "7.7", d: "21 Sept 2026", t: "Tab S9+ and Tab A9+, and the sheet prints on one page",
+    { type: "app", v: "7.7", d: "21 Sept 2026", t: "Tab S9+ and Tab A9+, and the sheet prints on one page",
       items: [
         "<strong>Galaxy Tab S9+ and Tab A9+ added</strong> \u2014 the two I had to leave out before because I could not get a verified page for them. That is <strong>103 devices</strong> on the Compare tab now. The Tab A9+ is the one named in the Sales Kit\u2019s Tablet Education Offer, so it is worth being able to put it beside a Tab S11.",
         "<strong>The printed comparison now fits on a single page</strong>, whichever three devices are picked. Tighter type and spacing for print only \u2014 the screen is unchanged \u2014 and the table and glossary are both kept from splitting across a page break. Worst case measured is 961 of the 1047 points an A4 page gives, so there is room to spare rather than a sheet that only just fits.",
         "<strong>Fixed:</strong> the print sizing had been set twice in the stylesheet, and the older block further down was quietly winning. The table was still printing at 11px with the original padding no matter what the newer rules asked for. The two are now one."
       ] },
-    { v: "7.6", d: "21 Sept 2026", t: "Plain English beside every row",
+    { type: "app", v: "7.6", d: "21 Sept 2026", t: "Plain English beside every row",
       items: [
         "<strong>Each row on the comparison now explains itself in the space beside its label</strong> \u2014 <em>Charging \u2192 how fast it refills on a cable</em>, <em>Updates \u2192 how long it keeps getting new Android versions</em>, <em>Offer ends \u2192 when this price goes back up</em>. The label column was mostly empty; now it earns its width.",
         "Nineteen rows carry one, in lighter type so the numbers still lead. On a phone the note drops underneath its label instead of squeezing the table sideways.",
         "The glossary underneath stays for the terms that turn up <em>inside</em> the values rather than in a label \u2014 AMOLED, nits, OIS, IP ratings, Qi2 \u2014 where a few words beside a row would not be enough."
       ] },
-    { v: "7.5", d: "20 Sept 2026", t: "The glossary reads as sentences",
+    { type: "app", v: "7.5", d: "20 Sept 2026", t: "The glossary reads as sentences",
       items: [
         "<strong>Each term and its meaning now run on together as one line</strong> \u2014 <em>Nits \u2014 brightness. The higher the number, the easier the screen is to read in direct sun.</em> The old two-column layout squeezed the terms into a narrow strip and broke every definition over four or five lines.",
         "Most entries are a single line now, and the whole glossary is shorter on the page. Where a definition does wrap, the bold terms stay lined up down the left.",
         "<strong>On paper it sets in two columns</strong>, since the printed sheet is wider than the text needs, and no entry is split across the gap."
       ] },
-    { v: "7.4", d: "20 Sept 2026", t: "How long it gets updates, and what the jargon means",
+    { type: "app", v: "7.4", d: "20 Sept 2026", t: "How long it gets updates, and what the jargon means",
       items: [
         "<strong>An Updates row on the comparison</strong>, saying how long each device keeps getting new Android versions. An S26 is <strong>7 major updates from Android 16, roughly to 2033</strong>; a traded-in <strong>S21 had 4 from Android 11 and ran out around 2025</strong>. That contrast is the upgrade conversation in one line.",
         "Where a device only has a ceiling rather than a promise it says so \u2014 a <strong>Z Flip3 tops out at Android 15</strong> \u2014 and where Samsung never published a commitment, it says <strong>Not published</strong> instead of guessing. 35 of the 67 retired devices have a published figure; the watches and older tablets mostly do not.",
@@ -6245,26 +6269,26 @@
         "It sits closed on screen so it stays out of the way, and <strong>prints open</strong>, because the printed sheet is the one that ends up in the customer\u2019s hands with nobody beside it to explain.",
         "The Software row now just says what the device runs; the update commitment has its own row rather than being crammed into the same line."
       ] },
-    { v: "7.3", d: "20 Sept 2026", t: "Watch8 end-of-life \u2014 50% off",
+    { type: "data", v: "7.3", d: "20 Sept 2026", t: "Watch8 end-of-life \u2014 50% off",
       items: [
         "<strong>The Watch8 and Watch8 Classic are now 50% off as an end-of-life sellout</strong>, till stock runs out. <strong>Watch8 40mm Bluetooth $274.50</strong> (was $649), 44mm LTE $349.50; <strong>Watch8 Classic 46mm Bluetooth $399.50</strong> (was $899), LTE $449.50.",
         "Those prices include the <strong>$50 ECO offer on top</strong>, which stacks because RTL11 stacks with everything and the end-of-life bulletin only excludes Education and SMB. The $50 lapses on 30 September; the 50% carries on while stock lasts.",
         "<strong>Education is now the wrong call on these.</strong> It drops the sellout and lands at $469.20 on a Watch8 \u2014 <strong>$194.70 worse</strong> \u2014 and $669.20 on the Classic. The best-deal card says so on screen.",
         "Entered under the standing end-of-life bulletin <strong>RPG31</strong>, matching every other sellout line on the Sales Kit\u2019s EOL page. The page itself has not listed the Watch8 yet \u2014 it still stops at the Watch6."
       ] },
-    { v: "7.2", d: "20 Sept 2026", t: "Offer end dates and wireless charging on the comparison",
+    { type: "app", v: "7.2", d: "20 Sept 2026", t: "Offer end dates and wireless charging on the comparison",
       items: [
         "<strong>The comparison now says when each deal ends</strong>, directly under the price, with the same urgency badge the rest of the tool uses \u2014 an S26 Ultra today reads <strong>23 Sept 2026, ends in 3 days</strong>. Where two offers make up one price and lapse on different days, both dates show: a Watch9 is <strong>28 Sept then 30 Sept</strong>, because the Wallet code goes first and the ECO $50 follows.",
         "<strong>A wireless charging row</strong>, separate from the wired charging line. It names the standard and what that means in the hand: the S26 Ultra and S26+ are <strong>Qi2.2 with magnets built in</strong>, while the S26 and S25 Ultra are <strong>Qi2 Ready \u2014 Qi2 alignment only once a magnetic case is on</strong>. Older phones read <strong>Qi, no magnets</strong>, tablets and the A series say <strong>No wireless charging</strong>, and watches use their own charging cradle.",
         "GSMArena publishes the standard but never lists the magnets outright, so the magnet half of that line follows from what each standard requires. The sheet says so under the table rather than leaving it to be assumed."
       ] },
-    { v: "7.1", d: "20 Sept 2026", t: "The header date keeps itself honest",
+    { type: "app", v: "7.1", d: "20 Sept 2026", t: "The header date keeps itself honest",
       items: [
         "<strong>\u201cSales Kit checked on\u201d now reads the offer data instead of a date typed in by hand.</strong> It had been stuck on <strong>17 Aug 2026</strong> for a month while offers kept changing underneath it \u2014 the one line on the page whose whole job is to say how fresh the tool is, and it was the most out of date thing on it.",
         "It shows the <strong>newest day an offer in the tool actually began</strong>, so it moves on its own whenever a bulletin lands. Today that is <strong>18 Sept 2026</strong>, the day the S26 / S26 Ultra trade-in bonus started.",
         "A deal entered ahead of its start date is ignored until it begins, so loading next month\u2019s bulletin early can\u2019t make the header claim the tool is fresher than it is."
       ] },
-    { v: "7", d: "18 Sept 2026", t: "The whole range back to 2021",
+    { type: "app", v: "7", d: "18 Sept 2026", t: "The whole range back to 2021",
       items: [
         "<strong>41 more retired devices on the Compare tab</strong> \u2014 the A series, tablets and watches now go back to 2021 alongside the S and Z phones added earlier. <strong>101 devices in total</strong>: everything on the shelf, plus 67 we no longer sell.",
         "A series from the <strong>A22 5G, A32, A52 and A72</strong> through every generation to the A56. Tablets from the <strong>Tab S7 FE, Tab A7 Lite and Tab A8</strong> through the S8, S9 and S10 families. Watches from the <strong>Watch4 and Watch4 Classic</strong> through to the Watch7 and Watch FE.",
@@ -6272,21 +6296,21 @@
         "The search box reaches across the lot: \u201cwatch\u201d returns all 13, \u201ca5\u201d finds the A57 next to the A52 and A52s, \u201ctab s9\u201d the four S9s.",
         "<strong>Fixed:</strong> the Compare tab\u2019s opening line was showing a stray <code>\\u2014</code> instead of a dash \u2014 an escape code written into the page text where nothing was there to turn it back into a character."
       ] },
-    { v: "6.9", d: "18 Sept 2026", t: "Every S and Z phone back to the S21",
+    { type: "app", v: "6.9", d: "18 Sept 2026", t: "Every S and Z phone back to the S21",
       items: [
         "<strong>26 devices we no longer sell are now on the Compare tab</strong> \u2014 every S series phone and every Fold and Flip from the <strong>S21 and Z Fold3 (2021)</strong> through to today. The upgrade conversation starts with what the customer is holding, and that is rarely something on the shelf.",
         "They carry <strong>specifications only, and say \u201cnot sold here\u201d where a price would be</strong>, so nothing old can be quoted from by accident. The cheapest-price highlight ignores them too.",
         "<strong>The device list is grouped and searchable.</strong> The dropdown is split into S Series, Z Series, A Series, Tablets, Wearables and Rugged, with everything retired under its own \u201cnot sold here\u201d headings. Type in the search box above it to narrow the list \u2014 \u201cfold\u201d brings back all seven Folds, \u201cs21\u201d the four S21s. Your current pick is kept if it still matches.",
         "Same source and method as before: GSMArena, read today, <strong>Australian variants</strong> with the AU model number on each. It shows where the silicon split by region \u2014 an S22 sold here is a Snapdragon 8 Gen 1, while Europe got the Exynos 2200, and an S24 here is the Exynos 2400 against America\u2019s Snapdragon 8 Gen 3."
       ] },
-    { v: "6.8", d: "18 Sept 2026", t: "Sales Kit dates, S26 FE SMB, printable comparison",
+    { type: "app", v: "6.8", d: "18 Sept 2026", t: "Sales Kit dates, S26 FE SMB, printable comparison",
       items: [
         "<strong>Education and SMB now carry the Sales Kit's end dates.</strong> Both were open-ended in the tool. The three Education offers and the general SMB offer <strong>end 30 September 2026</strong>, and each now shows its coupon code on the offer line \u2014 <strong>EDU0152</strong> for Education, <strong>SMB0038</strong> for SMB.",
         "<strong>New: SMB Offer S26 FE, 15% off, through 31 October 2026</strong> (bulletin A260005730). It outlasts the general SMB offer by a month, so from 1 October an S26 FE is the one device still quotable at the SMB rate \u2014 <strong>$976.65</strong> on the 128GB.",
         "<strong>The comparison can be printed.</strong> A Print comparison button on the Compare tab strips the pickers, tabs and page furniture and lays the table out black on white, with the date on it \u2014 something to hand across the counter. Back to editing returns you to the screen.",
         "Checked against the Sales Kit directly rather than taken on trust: the <strong>$10 aged accessory rule already matches</strong> the site (any N-1 or older accessory, bulletin RTL05, to 31 Dec 2026), so nothing changed there."
       ] },
-    { v: "6.7", d: "18 Sept 2026", t: "Compare devices",
+    { type: "app", v: "6.7", d: "18 Sept 2026", t: "Compare devices",
       items: [
         "<strong>A new Compare tab</strong> puts two or three devices side by side \u2014 what they cost here today, and how they actually differ. Prices come from the same engine as the quote, so the best deal, Education and SMB figures on that screen are the ones you can give.",
         "<strong>The specifications are the Australian variants</strong>, which matters more than it sounds. An S26 sold here runs an <strong>Exynos 2600</strong>; the Snapdragon every American review talks about is US, Canada and China only. Each device also shows the AU model number \u2014 SM-S942B for an S26 \u2014 so there is no doubt which variant is being quoted.",
@@ -6294,12 +6318,12 @@
         "<strong>Buds4, Buds4 Pro, Buds3 FE, the Galaxy Ring and Fit 3 have no specification data</strong> \u2014 GSMArena does not list them. The tool says so and compares those on price alone rather than inventing figures.",
         "A link opens the full technical comparison on GSMArena for whichever devices are selected."
       ] },
-    { v: "6.6", d: "18 Sept 2026", t: "S26 / S26 Ultra Trade-In Bonus",
+    { type: "data", v: "6.6", d: "18 Sept 2026", t: "S26 / S26 Ultra Trade-In Bonus",
       items: [
         "<strong>New $300 trade-in bonus on the Galaxy S26 and S26 Ultra</strong> (bulletin A260006089), 18–30 Sept 2026 — shown as a credit on top of the customer's trade-in value, applied after any sell-out rate. Not stackable with Education or SMB, matching the Sales Kit's stacking note for this bulletin.",
         "No device retail price changed — this only adds the trade-in credit line for m1 and m3 when a trade-in is on the sale."
       ] },
-    { v: "6.5", d: "17 Sept 2026", t: "Six new bulletin offers from the Sales Kit",
+    { type: "data", v: "6.5", d: "17 Sept 2026", t: "Six new bulletin offers from the Sales Kit",
       items: [
         "<strong>Z Flip8 and Z Fold8 Ultra now save $300</strong> (bulletin A260005825), to 7 Oct 2026. Flip8 256GB is <strong>$1,649</strong>, 512GB <strong>$1,949</strong>; Fold8 Ultra 256GB is <strong>$2,699</strong>, 512GB <strong>$2,999</strong>, 1TB <strong>$3,599</strong>.",
         "<strong>A17 saves $80 again</strong> under a new bulletin (A260005825, to 7 Oct 2026) after the last A17 offer lapsed — 128GB is now <strong>$299</strong>.",
@@ -6308,26 +6332,26 @@
         "<strong>Tab A11+ saves $80</strong> under the same bulletin (A260005870, to 30 Sept 2026) — 128GB Wi-Fi is <strong>$399</strong>, 256GB Wi-Fi <strong>$519</strong>.",
         "All six came straight off the Sales Kit's S Series, Z Series, A Series and Tablets pages, matched to an existing device with the stated amount and end date, and set to exclude Education and SMB as the Kit specifies. Every other price on the tool was recomputed and only these lines moved."
       ] },
-    { v: "6.4", d: "14 Sept 2026", t: "Education on every eligible device",
+    { type: "app", v: "6.4", d: "14 Sept 2026", t: "Education on every eligible device",
       items: [
         "<strong>The S25 Ultra, S25 Edge, Z Flip7 and Watch8 now get the Education discount</strong> \u2014 they were the last phones and watches missing from the list. On Education: S25 Ultra <strong>$1,879.20</strong>, S25 Edge <strong>$1,719.20</strong>, Z Flip7 <strong>$1,679.20</strong>, Watch8 40mm Bluetooth <strong>$469.20</strong>.",
         "Like every other device, the rate comes off the <strong>original retail price</strong>, and the $50 ECO offer still comes off on top for the Watch8.",
         "All 246 prices were checked again against a separate calculation and match to the cent."
       ] },
-    { v: "6.3", d: "14 Sept 2026", t: "Education comes off the full retail price",
+    { type: "app", v: "6.3", d: "14 Sept 2026", t: "Education comes off the full retail price",
       items: [
         "<strong>The Education rate is now always a percentage of the original retail price.</strong> It was being taken off whatever was left after other offers, so wherever the $50 ECO offer applied the 20% was calculated on $50 less. A <strong>Watch Ultra 2 on Education is $989.20</strong> ($1,299 \u2212 $259.80 \u2212 $50), not $999.20. Every tablet, watch and buds on Education was out by $10 the same way.",
         "<strong>The Watch Ultra (2025) was missing from the Education list entirely</strong>, so it quoted $1,249 for a student instead of <strong>$989.20</strong>. It is on the list now.",
         "<strong>Every price has been checked.</strong> All 82 variants across Standard, Education and SMB \u2014 246 prices \u2014 were recalculated separately from the offer data and compared against the quote. They match to the cent."
       ] },
-    { v: "6.2", d: "7 Sept 2026", t: "Best deal in the ECO bundler too",
+    { type: "app", v: "6.2", d: "7 Sept 2026", t: "Best deal in the ECO bundler too",
       items: [
         "<strong>The best-deal card now sits in the ECO Device Bundle as well.</strong> A watch, buds or tablet bundled onto a quote is bought under the same offers as one sold on its own, so it gets the same answer \u2014 same card, same engine, no second opinion to keep in sync.",
         "It reads the quote as it stands. With a <strong>Watch9 and nothing else in the sale</strong> it says $499, and offers the 30% MBO as a what-if. <strong>Put an S26 in the quote and it becomes $354.30</strong> \u2014 the MBO plus the Wallet code \u2014 with the what-if gone, because the discount is now real.",
         "The warning follows too. On that same bundled Watch9, <strong>Education comes out at $454.30, a full $100 worse</strong>, because it drops the Wallet code. Worth knowing before the student card comes out.",
         "The price line above the card still shows what the quote will charge on the current settings; the card shows the best the device can do. The gap between them is the offer nobody has ticked yet."
       ] },
-    { v: "6.1", d: "7 Sept 2026", t: "Best deal on this device",
+    { type: "app", v: "6.1", d: "7 Sept 2026", t: "Best deal on this device",
       items: [
         "<strong>Pick a device and the tool now tells you the cheapest it can legitimately go</strong>, and what it takes to get there. The headline is the price with no conditions attached \u2014 nothing to qualify for, nothing extra to buy \u2014 with the offers that make it up.",
         "Under it, every cheaper route with the one thing it depends on: <em>if Education \u2014 needs a student or staff ID</em>, <em>if they take New Galaxy Club in the same sale</em>, <em>if sold with a Flip8, Fold8 or S26</em>. Each shows what it saves against the headline.",
@@ -6335,7 +6359,7 @@
         "Trade-in credit and ECO vouchers are listed beside the price, never folded into it \u2014 they come off the sale, not the device.",
         "<strong>Fixed: two different offers worth the same amount were being merged into one.</strong> Found while building this. A <strong>Buds4 Pro</strong> was losing its $50 ECO offer to the $50 bulletin \u2014 it should be <strong>$249</strong>, not $299, and $279.20 rather than $319.20 on Education. Offers are now matched by which offer they are, not by what they are worth."
       ] },
-    { v: "6", d: "7 Sept 2026", t: "Readable in dark mode",
+    { type: "app", v: "6", d: "7 Sept 2026", t: "Readable in dark mode",
       items: [
         "<strong>The dimmest text is now readable in dark mode.</strong> One colour was doing a lot of work \u2014 stock table headings, the stock summary line, offer notes and bulletin codes, card titles, the sales kit device lists \u2014 and it sat at 3.5:1 against the cards it was printed on, under the 4.5:1 that body text needs. <strong>349 pieces of text across every tab</strong> were affected.",
         "<strong>Light mode was worse, at 2.8:1</strong>, and nobody had reported it. Both are fixed and every tab now measures clean in both themes.",
@@ -6343,143 +6367,143 @@
         "If your phone or Mac switches to dark at sunset on its own, <strong>the colour names redraw with it</strong>. They used to keep the old theme\u2019s tints until the page was reloaded.",
         "The printed quote is unchanged \u2014 it stays black on white."
       ] },
-    { v: "5.9", d: "7 Sept 2026", t: "Samsung Wallet Offer stacks",
+    { type: "app", v: "5.9", d: "7 Sept 2026", t: "Samsung Wallet Offer stacks",
       items: [
         "The <strong>Samsung Wallet Offer now stacks with everything except SMB and Education</strong>, as bulletin A260005188 says it does \u2014 it had been set to block on any other discount, which quietly killed it on every ECO product once the $50 landed. A Watch9 is <strong>$649 \u2212 $50 \u2212 $100 = $499</strong>, and it stacks on the 30% MBO too: bundled with an S26 that is <strong>$354.30</strong>.",
         "<strong>Coded offers can now be ticked in the ECO Device Bundle.</strong> The tick box only ever existed on the main device card, so a watch added through the bundler could never carry its Wallet code. The ticks clear when the device changes and when the line is added, so a code never follows the operator onto the next sale.",
         "<strong>Fixed: a ticked code was named on an MBO line but never came off the price.</strong> The bundle total counted the 30% alone and ignored anything ticked beside it \u2014 so the Wallet Offer, the memory upgrade and Grace\u2019s Special all printed on the quote without being deducted.",
         "The <strong>Galaxy Ring is not an ECO product</strong> and stays out of the ECO list \u2014 confirmed, not an oversight."
       ] },
-    { v: "5.8", d: "7 Sept 2026", t: "ECO Device Bundle keeps itself current",
+    { type: "app", v: "5.8", d: "7 Sept 2026", t: "ECO Device Bundle keeps itself current",
       items: [
         "The ECO Device Bundle now <strong>lists every offer running on a Watch, Buds or Tablet</strong> \u2014 read from the offer data rather than written by hand. It used to name only the 30% MBO, and went stale the moment a second ECO deal landed. Add an ECO deal from now on and it names itself here.",
         "Each line gives the <strong>offer, what it comes off, and the day it finishes</strong>. Anything covering every ECO product leads, then soonest-to-finish; the three most pressing stay visible and the rest sit behind one click.",
         "The <strong>MBO now says what it displaces</strong>. A Watch9 bundled with an S26 reads \u201c$454.30 \u2014 30% off (displaces $50 OFF ANY ECO PRODUCT $50.00)\u201d, so the offer being given up is on the screen instead of silently dropped. The MBO still does not stack \u2014 bulletin A260005184 says so."
       ] },
-    { v: "5.7", d: "7 Sept 2026", t: "Zip Pay",
+    { type: "app", v: "5.7", d: "7 Sept 2026", t: "Zip Pay",
       items: [
         "<strong>Zip Pay sits beside Afterpay</strong>, and is presented as what it is \u2014 a line of credit repaid flexibly, not a fixed instalment plan. It shows the <strong>$40 minimum monthly repayment</strong> and how many months that would take: a $249 Buds4 is 7 months at the minimum, a $599 Watch9 is 15.",
         "<strong>Zip Pay tops out at $1,000</strong>, so a bigger sale says so plainly instead of quoting a plan that cannot be used. That message is guidance for whoever is quoting and stays off the printed copy.",
         "The terms are stated on the line: interest free, subject to Zip approval and the customer\u2019s own limit, and a <strong>$9.95 monthly account fee waived when the balance is paid in full</strong> by the statement due date."
       ] },
-    { v: "5.6", d: "7 Sept 2026", t: "$50 off any ECO product",
+    { type: "data", v: "5.6", d: "7 Sept 2026", t: "$50 off any ECO product",
       items: [
         "<strong>$50 off every Watch, Buds and Tablet</strong> \u2014 7 to 30 Sept, RTL funded, bulletin RTL11. It comes off automatically when the product is scanned in Pronto, so it applies itself here too across all 17 ECO products.",
         "<strong>It stacks with everything running.</strong> Tab S11 Ultra takes it on top of its $500 (now $1,549), Watch8 Classic on top of the 25% ($624.25), and it stacks with the Education rate as well. Buds4 $249, Fit 3 $99, Watch9 $599.",
         "The 30% wearable MBO still replaces every other offer on a watch, so a Watch9 bundled with an S26 stays at $454.30 rather than taking both."
       ] },
-    { v: "5.5", d: "4 Sept 2026", t: "Afterpay, and a quote that prints dark",
+    { type: "app", v: "5.5", d: "4 Sept 2026", t: "Afterpay, and a quote that prints dark",
       items: [
         "<strong>Everything on a printed quote is now black.</strong> Colour carried no meaning on a page the customer takes away, and a mid-tone green or amber is the first thing a low-ink printer or a photocopy loses. Size and weight carry the hierarchy instead. The on-screen print view matches the paper, so what you see is what comes out.",
         "<strong>Afterpay</strong> \u2014 tick it and the total splits into 4 equal fortnightly payments, the first taken at purchase. It says plainly that it is subject to approval and the customer\u2019s own spending limit, and excludes Afterpay\u2019s fees.",
         "<strong>Latitude\u2019s 24-month term is now a tick of its own</strong>, since it isn\u2019t offered to everyone. Latitude shows 12 months by default; the 24-month box only appears once Latitude is on.",
         "Afterpay and Latitude are independent \u2014 show either, both, or neither."
       ] },
-    { v: "5.4", d: "4 Sept 2026", t: "Hide the ending-soon strip",
+    { type: "app", v: "5.4", d: "4 Sept 2026", t: "Hide the ending-soon strip",
       items: [
         "<strong>The amber \u201cending within 7 days\u201d strip can be put away.</strong> Press <strong>Hide</strong> and it collapses to a single line that still says how many are ending; <strong>Show them</strong> brings the list back. With thirteen offers running out at once it was taking most of the screen.",
         "It stays hidden between visits, and reopens on its own when a new offer enters the 7-day window \u2014 so putting it away today can\u2019t bury tomorrow\u2019s news."
       ] },
-    { v: "5.3", d: "4 Sept 2026", t: "Galaxy S26 FE",
+    { type: "data", v: "5.3", d: "4 Sept 2026", t: "Galaxy S26 FE",
       items: [
         "<strong>S26 FE added</strong> \u2014 128GB $1,149 and 256GB $1,299, in Pistachio, Graphite and Blueberry, with <strong>S26FE SAVE $250</strong> running 4 Sept to 1 Oct (A260005623). $1,149 \u2192 <strong>$899</strong>.",
         "<strong>Its ten accessories are priced</strong>: Clear Case $49, Anti-reflecting Film $49, Clear and Silicone Magnet Cases $69, Slim Magnet Case $89 \u2014 matched by item code and by name, so they land whichever way a stock file writes them.",
         "The rule that decides what an accessory fits reads <strong>S26 FE before plain S26</strong>, so FE cases no longer land on the base S26.",
         "<strong>S26 FE now takes Education and SMB.</strong> Both are written as covering the S26 family, but the target lists are per-model and it was in neither."
       ] },
-    { v: "5.2", d: "3 Sept 2026", t: "September tablet offers",
+    { type: "data", v: "5.2", d: "3 Sept 2026", t: "September tablet offers",
       items: [
         "<strong>TAB S11 ULTRA SAVE $500</strong> and <strong>TAB S10+ SAVE 30%</strong> to 30 Sept (A260005753), and <strong>TAB S10LITE SAVE $100</strong> to 16 Sept (A260005562). All stack with everything except Education and SMB.",
         "S11 Ultra 256GB Wi-Fi $2,099 \u2192 <strong>$1,599</strong>. Tab S10+ 256GB Wi-Fi $1,799 \u2192 <strong>$1,259.30</strong>. Tab S10 Lite $629 \u2192 <strong>$529</strong>.",
         "The four that finished on 2 Sept \u2014 S26 SAVE $550, S25 FE SAVE $500, TAB S11 SAVE $300 and TAB A11+ SAVE $100 \u2014 lapsed on their own dates and are in Expired Deals with their bulletin codes."
       ] },
-    { v: "5.1", d: "31 Aug 2026", t: "Grace\u2019s Special",
+    { type: "data", v: "5.1", d: "31 Aug 2026", t: "Grace\u2019s Special",
       items: [
         "<strong>$50 off the Buds4 range and Fit 3</strong>, 31 Aug to COB Sunday 6 Sept. Stacks with what is already on the line \u2014 a Buds4 Pro goes $399 \u2192 $349 on its own offer, then $299 with this one.",
         "<strong>Held back as a closing tool.</strong> It never applies itself: it sits on the line as a tick box reading <em>closing tool only \u2014 apply via SAU, reason \u201cGrace\u2019s Special\u201d</em>, and only comes off the price once someone decides to use it.",
         "The ECO bundler now names discretionary offers like this one instead of showing a plain price, so a closing tool doesn\u2019t sit there unnoticed."
       ] },
-    { v: "5", d: "29 Aug 2026", t: "Every wearable discount shows in the bundler",
+    { type: "app", v: "5", d: "29 Aug 2026", t: "Every wearable discount shows in the bundler",
       items: [
         "<strong>The ECO Device Bundle shows whatever discount actually applies.</strong> It priced wearables with its own logic that only knew about the 30% MBO and the Education rate, so a Watch8 Classic sat there at $899 while the quote charged $674.25.",
         "It runs the same pricing engine as the quote now, at the mode the device would be added under \u2014 so retail offers, Education, boosted Education and the MBO all reach it, and anything added later reaches it for free.",
         "Watch8 Classic $899 \u2192 <strong>$674.25</strong>, Buds4 Pro $399 \u2192 <strong>$349</strong>, Tab S11 $1,399 \u2192 <strong>$1,099</strong>, and a Watch9 beside an S26 still shows its 30% MBO at $454.30. The figure in the bundler and the line in the quote are the same number."
       ] },
-    { v: "4.9", d: "29 Aug 2026", t: "Two offers that reach accessories",
+    { type: "app", v: "4.9", d: "29 Aug 2026", t: "Two offers that reach accessories",
       items: [
         "<strong>Fold8 / Fold8 Ultra & Flip8 Accessory MBO</strong> \u2014 30% off cases, power and Smart Tags bought with one of those handsets, to 9 Sept (A260004694). A $69 Fold8 Ultra case comes to $48.30. Screen protectors and bands are not in the bulletin, so they stay full price.",
         "<strong>$10 aged accessory clearance</strong> (RTL05). Deliberately narrow: <strong>S25 and older phones, Fold7/Flip7 and older, and Tab S10 / Tab S10 Ultra</strong>. S25 FE, Watch8, the Tab S10 FE, FE+ and Lite are all current and keep their price.",
         "Clearance stock fits ranges the catalog no longer sells, so it would never have shown against a device being quoted. It gets its own <strong>$10 clearance</strong> section in the accessories card, priced at $10 with the old price struck through.",
         "The two do not stack with each other: a clearance line is $10 flat, and the MBO applies to everything else."
       ] },
-    { v: "4.8", d: "29 Aug 2026", t: "Sales Kit sweep",
+    { type: "data", v: "4.8", d: "29 Aug 2026", t: "Sales Kit sweep",
       items: [
         "<strong>TAB S10FE SAVE $150</strong> added, 27 Aug to 16 Sept (A260005080). This is the Tab S10 FE, not the FE+ \u2014 that one\u2019s $200 offer ended on the 26th.",
         "<strong>Samsung Wallet Offer now ends 28 Sept</strong>, not 9 Sept. The tool had it lapsing nearly three weeks early.",
         "<strong>Bulletin codes filled in</strong> for S26+ SAVE $500, S26 Ultra SAVE $500 and A37 SAVE $100 \u2014 all A260005553.",
         "Education and SMB confirmed as ongoing, with no end date."
       ] },
-    { v: "4.7", d: "29 Aug 2026", t: "A27, Watch8 Classic and Buds4 Pro",
+    { type: "data", v: "4.7", d: "29 Aug 2026", t: "A27, Watch8 Classic and Buds4 Pro",
       items: [
         "<strong>A27 SAVE $80</strong> to 23 Sept (A260005624), <strong>Watch8 Classic save 25%</strong> and <strong>Buds4 Pro save $50</strong> to 9 Sept (both A260005701). All stack with everything except Education and SMB.",
         "<strong>A percentage retail offer works properly now.</strong> The engine read every retail offer as a dollar figure, so \u201csave 25%\u201d would have taken $25 off a Watch8 Classic instead of $224.75. Percentages come off the device price as they should.",
         "Checked against the bulletin\u2019s own figures: A27 $419, Watch8 Classic $674.25 Bluetooth and $749.25 LTE, Buds4 Pro $349."
       ] },
-    { v: "4.6", d: "26 Aug 2026", t: "Three deals queued for the 27th",
+    { type: "data", v: "4.6", d: "26 Aug 2026", t: "Three deals queued for the 27th",
       items: [
         "<strong>A37 SAVE $100</strong> \u2014 27 Aug to 16 Sept 2026.",
         "<strong>S26+ SAVE $500</strong> and <strong>S26 Ultra SAVE $500</strong> \u2014 27 Aug to 23 Sept 2026.",
         "All three stack with everything except Education and SMB, and all three are <strong>loaded but dated forward</strong> \u2014 nothing shows against those devices until the 27th, when they appear in the Sales Kit and in the green \u201cchange to promo tickets\u201d box on their own."
       ] },
-    { v: "4.5", d: "21 Aug 2026", t: "Latitude $599 minimum",
+    { type: "app", v: "4.5", d: "21 Aug 2026", t: "Latitude $599 minimum",
       items: [
         "<strong>Latitude only shows on a sale of $599 or more.</strong> Under that, the panel says what the quote comes to and why there is nothing to split, rather than quietly showing nothing.",
         "It reads the total <em>after</em> discounts and trade-in, which is the number that counts \u2014 an S25 FE at $1,099 comes to exactly $599 once its $500 is off, and qualifies on the line.",
         "The under-minimum note is for whoever is quoting, so it stays off the printed copy."
       ] },
-    { v: "4.4", d: "21 Aug 2026", t: "Latitude Finance payments",
+    { type: "app", v: "4.4", d: "21 Aug 2026", t: "Latitude Finance payments",
       items: [
         "<strong>A Latitude Finance option under the quote total</strong> \u2014 tick it and the total splits into equal monthly payments over <strong>12 and 24 months</strong>. It follows the quote as it changes, so applying Education or adding an accessory moves the monthly figure with it.",
         "<strong>It says plainly what it is not:</strong> subject to Latitude approval, and <strong>not inclusive of any Latitude fees or charges</strong> \u2014 establishment, monthly account and anything else are additional and set by Latitude. Figures are indicative and the total payment may differ.",
         "The tick box stays off the printed quote; the payment figures print with it."
       ] },
-    { v: "4.3", d: "21 Aug 2026", t: "Trade-in bonus dates",
+    { type: "data", v: "4.3", d: "21 Aug 2026", t: "Trade-in bonus dates",
       items: [
         "<strong>Trade-in bonuses now print their end date</strong> like every other offer. They were the one kind of line built without one, so a printed quote showed the Education Trade-In Bonus with no expiry against it.",
         "<strong>They also count towards how long the quote is good for.</strong> The \u201cpricing valid until\u201d date ignored them, so a quote could promise a price for longer than one of the offers on it actually ran \u2014 with a New Galaxy Club trade-in it read 9 Sept when the bonus stopped on the 2nd. Worse, on an Education quote with a trade-in it printed no date at all, because the Education rate is ongoing and the bonus was the only dated thing on the page."
       ] },
-    { v: "4.2", d: "21 Aug 2026", t: "Tidier header and tab bar",
+    { type: "app", v: "4.2", d: "21 Aug 2026", t: "Tidier header and tab bar",
       items: [
         "<strong>The header is a solid block of colour</strong> \u2014 the striped panel on the right is gone.",
         "<strong>What's New and Suggestions moved under a More menu</strong> on the right of the tab bar, leaving Deal Qualifier, Sales Kit and Store &amp; Stock as the three you use. The unseen-changes dot now shows on More.",
         "On a phone the three tabs scroll and More stays put beside them, so it is always reachable and its menu never gets clipped."
       ] },
-    { v: "4.1", d: "20 Aug 2026", t: "Last season back in the list",
+    { type: "app", v: "4.1", d: "20 Aug 2026", t: "Last season back in the list",
       items: [
         "<strong>Eight variants added</strong>, all of them sitting in stock with no way to quote them: S25 Ultra 512GB $2,349, S25 Edge 512GB $2,149, Z Flip7 512GB $2,099, Watch Ultra (2025) $1,299, and Watch8 in 40mm and 44mm, Bluetooth and LTE, $649 to $799.",
         "The stock file writes the 2025 Watch Ultra two different ways \u2014 \u201cWatch Ultra 2025\u201d and \u201cGALAXY WATCH ULTRA LTE\u201d \u2014 and both now land on it without stealing the Watch Ultra2 lines beside them.",
         "<strong>The new watches count as ECO products</strong>, so a Fold or Flip voucher can be spent on one, and they appear in the ECO bundler. They carry no 30% MBO: that offer names Watch9 and Watch Ultra 2 only.",
         "The line after a stock upload counted a few accessories as matched devices \u2014 an accessory can echo a device name, like \u201cWatch Ultra Marine\u201d. It counts after sorting devices from accessories now, so the figure can no longer come out higher than the number of device lines."
       ] },
-    { v: "4", d: "20 Aug 2026", t: "Accessories on the quote",
+    { type: "app", v: "4", d: "20 Aug 2026", t: "Accessories on the quote",
       items: [
         "<strong>Accessories can go on the quote.</strong> Every priced line in the accessories card has a <strong>+</strong> against it \u2014 press it and the accessory joins the quote at RRP, prints on it, and comes off with the same \u2715 as anything else.",
         "<strong>They go on at RRP and stay there.</strong> No bulletin discounts an accessory, so Education and SMB don\u2019t touch them and an ECO voucher can\u2019t be spent on one \u2014 a voucher is for a Watch, Buds or Tablet. An S26 Ultra on Education still takes its 20%; the case beside it does not.",
         "Lines with no price still show a dash and have no <strong>+</strong>, since there is nothing to put on a quote."
       ] },
-    { v: "3.9", d: "20 Aug 2026", t: "SMB is ongoing too",
+    { type: "app", v: "3.9", d: "20 Aug 2026", t: "SMB is ongoing too",
       items: [
         "<strong>The SMB rate no longer carries an end date.</strong> Like the base Education rate it runs year round, so it shows as Ongoing and stops dragging down the \u201cpricing valid until\u201d line on a quote.",
         "The Pronto step now reads <strong>\u201cOnly if QOH &gt; 0\u201d</strong>.",
         "<strong>TAB S11 SAVE $300 is the base Tab S11 only</strong>, confirmed \u2014 an Ultra discount would be named as one."
       ] },
-    { v: "3.8", d: "20 Aug 2026", t: "Tablet price corrections",
+    { type: "data", v: "3.8", d: "20 Aug 2026", t: "Tablet price corrections",
       items: [
         "<strong>Tab A11+ repriced</strong> \u2014 $479 / $599 Wi-Fi, $549 / $699 5G. The old figures had the 256GB 5G listed <em>below</em> the 128GB, which is what gave the error away.",
         "<strong>Tab S10 FE 128GB Wi-Fi is $849</strong>, not $699.",
         "A17 5G stays at $379 and Tab Active5 is unchanged \u2014 both confirmed against the store, not the SKU list."
       ] },
-    { v: "3.7", d: "20 Aug 2026", t: "Accessory prices",
+    { type: "data", v: "3.7", d: "20 Aug 2026", t: "Accessory prices",
       items: [
         "<strong>Accessories now show a price.</strong> Around 1,400 item codes and 980 product names from the Samsung SKU list are built in, so an uploaded stock file gets RRP against each accessory line. \u201cPrices coming soon\u201d is gone.",
         "Two ways of finding a price, because the source has two kinds of row: older accessories carry an item code, while the current generation \u2014 every S26, Fold8, Flip8, Watch9 and Buds4 case and band \u2014 is listed with a price but <em>no code yet</em>, so those are found by name instead.",
@@ -6488,58 +6512,58 @@
         "<strong>Buds cases now list under Buds.</strong> The price list writes them \u201cBuds4|Pro\u201d, and the rule that decides what an accessory fits was looking for \u201cBuds\u201d as a whole word, so all eight of them fit nothing at all.",
         "<strong>Matched on barcode as well as item code</strong>, which is what makes the current generation work: the price list has no item code for those, but the stock file\u2019s Item GTIN column lines up with it exactly. Checked against a real 711-row export \u2014 <strong>581 of 583 accessory lines priced</strong>. The two left are a Tab A7 Lite cover that isn\u2019t in the price list, and the Ring sizing kit, which is listed at $0."
       ] },
-    { v: "3.6", d: "20 Aug 2026", t: "Vouchers apply themselves",
+    { type: "app", v: "3.6", d: "20 Aug 2026", t: "Vouchers apply themselves",
       items: [
         "<strong>A Fold or Flip ECO voucher now ticks itself on the moment a Watch, Buds or Tablet joins the quote.</strong> It was only ever worth something once there was an ECO product to spend it against, and forgetting to tick it was money the customer didn\u2019t get. Tick it yourself and nothing changes.",
         "<strong>The voucher can still be switched off</strong>, and switching it off sticks \u2014 it will not turn itself back on. It also stays listed once off, so a mistaken untick can be undone; that used to be one-way.",
         "<strong>The base Education rate no longer carries an end date.</strong> The 20% runs year round, so it shows as Ongoing and no longer drags down the \u201cpricing valid until\u201d date on a quote. Boosted Education keeps its 9 Sept end."
       ] },
-    { v: "3.5", d: "20 Aug 2026", t: "Readable on paper",
+    { type: "app", v: "3.5", d: "20 Aug 2026", t: "Readable on paper",
       items: [
         "<strong>Printing from dark mode was printing the dark palette</strong> \u2014 near-white text and bright green figures on white paper. The paper palette was written as a plain <code>:root</code>, which loses to the dark theme\u2019s own more specific rule, so it was only ever taking effect in light mode. It now wins whatever the screen is set to.",
         "Measured from dark mode, every line on the quote is <strong>7.4:1 or better against white</strong> \u2014 headings and totals black, secondary lines dark grey, discounts a deep green.",
         "<strong>\u201cPrepared by\u201d is now \u201cServed by\u201d</strong>, on the print bar, the quote itself and the copied text."
       ] },
-    { v: "3.4", d: "20 Aug 2026", t: "Print quote fix",
+    { type: "app", v: "3.4", d: "20 Aug 2026", t: "Print quote fix",
       items: [
         "<strong>The printed quote was showing the whole left-hand column</strong> \u2014 store picker, device list, colour chips, trade-in, New Galaxy Club, the ECO bundler and the Active Offers Reference. It was being hidden by its position on the page, and the two ticket banners added above it moved it, so the rule stopped matching. It is hidden by name now, which nothing can shift.",
         "<strong>The \u201ccannot stack\u201d notes no longer appear on the quote or in the copied text.</strong> They exist to tell whoever is quoting what a line gave up; a customer doesn\u2019t need to read it."
       ] },
-    { v: "3.3", d: "20 Aug 2026", t: "Tickets up as well as down",
+    { type: "app", v: "3.3", d: "20 Aug 2026", t: "Tickets up as well as down",
       items: [
         "<strong>A green box on the Deal Qualifier when a deal goes live</strong> \u2014 NEW DEAL LIVE, CHANGE TO PROMO TICKETS \u2014 with each deal, its bulletin code and the date it started. The other half of the job the red box was already covering.",
         "It shows on the day a deal starts and the day after, and dismisses with \u201cTickets changed\u201d once the tickets are up. Deliberately not in the Sales Kit: a live deal is already listed there among the active offers.",
         "Neither box prints on a customer quote."
       ] },
-    { v: "3.2", d: "20 Aug 2026", t: "Two new tablet deals",
+    { type: "data", v: "3.2", d: "20 Aug 2026", t: "Two new tablet deals",
       items: [
         "<strong>TAB S11 SAVE $300</strong> and <strong>TAB A11+ SAVE $100</strong>, both running 20 Aug \u2013 2 Sept 2026 under bulletin A260005079. Both stack with everything except Education and SMB.",
         "The Pronto export steps on Store &amp; Stock now match the current screens \u2014 Inventory first, store number into <em>warehouse</em>, Y into \u201cOnly if QOH &gt; 0\u201d, and 99999 into <em>Max Search Count</em>. The export step now says to save it as an <strong>Excel Workbook (.xlsx)</strong>."
       ] },
-    { v: "3.1", d: "20 Aug 2026", t: "Expired deals kept on file",
+    { type: "app", v: "3.1", d: "20 Aug 2026", t: "Expired deals kept on file",
       items: [
         "<strong>An Expired Deals section at the bottom of the Sales Kit</strong> \u2014 every finished promotion with its bulletin code and the date it ended. A deal still gets queried at the register after it finishes, and the code is what the query needs. The filter box searches it too.",
         "<strong>Dismissing the ticket reminder now shrinks it rather than hiding it</strong>. The Sales Kit keeps a one-line record that the tickets were done, with \u201cShow them\u201d to bring the full list back. The notice on the Deal Qualifier and the dot on the tab both go."
       ] },
-    { v: "3", d: "20 Aug 2026", t: "S and A apart",
+    { type: "app", v: "3", d: "20 Aug 2026", t: "S and A apart",
       items: [
         "<strong>Galaxy S and Galaxy A are separate groups now</strong>, in the device list and in the Sales Kit. They were sharing one \u201cS / A Series\u201d heading, which made a list of nine phones to scan through when you wanted one of four.",
         "XCover7 Pro sits under its own <strong>Galaxy XCover \u2014 Rugged</strong> heading rather than being filed with the S phones."
       ] },
-    { v: "2.9", d: "20 Aug 2026", t: "Tickets back to BAU",
+    { type: "app", v: "2.9", d: "20 Aug 2026", t: "Tickets back to BAU",
       items: [
         "<strong>The morning after a deal ends, the Sales Kit opens with a red box naming it</strong> \u2014 DEAL FINISHED, CHANGE TICKETS TO BAU. The tickets on the shelf are still showing the promotion at that point, and nothing else in the tool was saying so.",
         "<strong>A matching line on the Deal Qualifier and a red dot on the Sales Kit tab</strong>, so it is visible without going looking. The line takes you straight to the list.",
         "<strong>It stays up for two days, or until someone dismisses it</strong> with \u201cTickets changed\u201d. Two days so a Saturday finish is still flagged on the Monday; dismissing clears only the deals on screen, so anything that finishes tomorrow comes back on its own.",
         "Deals ending today still show in the amber \u201cending within 7 days\u201d strip, as before, and none of this prints on a customer quote."
       ] },
-    { v: "2.8", d: "19 Aug 2026", t: "Suggestions",
+    { type: "app", v: "2.8", d: "19 Aug 2026", t: "Suggestions",
       items: [
         "<strong>A Suggestions tab</strong>, linking straight to a Microsoft Form. Anything missing, wrong, or slower than it should be \u2014 it is gathered from there and taken into consideration.",
         "<strong>A QR code alongside it</strong>, so the form can be filled in on a phone without typing the address.",
         "The tab lists what makes a suggestion easy to act on: the device and offer you were quoting, what you expected versus what happened, anything you had to work out by hand, and any feature you\u2019d like the Deal Qualifier to have."
       ] },
-    { v: "2.7", d: "19 Aug 2026", t: "Education follows the bundle",
+    { type: "app", v: "2.7", d: "19 Aug 2026", t: "Education follows the bundle",
       items: [
         "<strong>An ECO device bundled onto an Education quote is now priced as Education too.</strong> It used to go on at full retail while the handset took the rate \u2014 a Buds4 Pro on an Education quote was A$79.80 dearer than it should have been.",
         "<strong>Where a better deal already applies, it still wins.</strong> The 30% wearable MBO replaces every other offer on a watch, Education included, so a Watch9 bundled with an S26 stays on the MBO. Remove the bundle and it falls back to the 25% boosted Education rate.",
@@ -6547,38 +6571,38 @@
         "Bundling follows the whole quote: if anything already added was priced as Education, the ECO device is too. SMB is unchanged \u2014 no watch, buds or tablet carries an SMB rate.",
         "Device catalog details now credited to <strong>Pronto</strong>."
       ] },
-    { v: "2.6.3", d: "19 Aug 2026", t: "Accessories on request",
+    { type: "app", v: "2.6.3", d: "19 Aug 2026", t: "Accessories on request",
       items: [
         "<strong>Accessories are now a Yes/No question</strong> rather than a list that is always open. The card says how many lines fit the device you have selected, and shows them when you answer Yes.",
         "The answer sticks as you move between devices, so working through a basket doesn\u2019t mean answering again for every handset. It resets to No when the tool is next opened \u2014 these are shared devices."
       ] },
-    { v: "2.6.2", d: "19 Aug 2026", t: "Colours you can see",
+    { type: "app", v: "2.6.2", d: "19 Aug 2026", t: "Colours you can see",
       items: [
         "<strong>Colour names in the stock list are written in their own colour</strong>, so a line can be found by eye instead of read word by word. Lines naming two colours get each one tinted.",
         "Every tint is darkened or lightened until it clears the contrast ratio the accessibility standard asks of body text \u2014 so a pale \u201cCream\u201d or \u201cWhite\u201d is still a warm or neutral tone, but never a faint one. It follows light and dark mode as you switch.",
         "Colours the catalog has never listed now tint too \u2014 accessory shades like Sand, Mocha or Dark Olive are read off the plain colour word in the name. \u201cClear\u201d and \u201cTransparent\u201d name no colour, so they stay as ordinary text.",
         "On a printed quote colour names go back to plain dark text, so a quote printed from dark mode doesn\u2019t come out faint."
       ] },
-    { v: "2.6.1", d: "19 Aug 2026", t: "Fit 3 stock fix",
+    { type: "app", v: "2.6.1", d: "19 Aug 2026", t: "Fit 3 stock fix",
       items: [
         "<strong>Fit 3 reads its stock properly now.</strong> Pronto writes it \u201cFit3\u201d while the catalog says \u201cFit 3\u201d, so every Fit 3 line came up unmatched and the ECO bundler said there was none in the store. The matcher now ignores the space either way \u2014 the same quirk that would have hit any future model named like this.",
         "Stock already saved on your device fixes itself the next time you open the tool \u2014 no need to upload the file again.",
         "<strong>Fit 3 bands now list under Fit 3</strong> instead of nowhere. Watch bands and watch chargers still stay on the watches, since the Fit takes neither.",
         "Fit 3 was also sitting under Phones in the device list. It is filed with the wearables now, in both the Deal Qualifier and the Sales Kit."
       ] },
-    { v: "2.6", d: "19 Aug 2026", t: "Galaxy Fit 3",
+    { type: "data", v: "2.6", d: "19 Aug 2026", t: "Galaxy Fit 3",
       items: [
         "<strong>Galaxy Fit 3 added at $149</strong>, in Grey and Pink Gold. It sits under Watches in the ECO bundler, takes an ECO voucher, and matches your stock file instead of reading as unmatched.",
         "It carries no MBO and no Education or SMB rate — none of the current bulletins list it, and none have been assumed on its behalf."
       ] },
-    { v: "2.5", d: "19 Aug 2026", t: "Bundle any ECO device",
+    { type: "app", v: "2.5", d: "19 Aug 2026", t: "Bundle any ECO device",
       items: [
         "<strong>Wearable Bundle is now ECO Device Bundle</strong> — every watch, buds and tablet an ECO voucher can be spent on, grouped so the watches don't get lost among the tablets.",
         "<strong>Stock on hand shows in the bundler</strong>, down to the colour, the same as the main device picker.",
         "<strong>Only Watch9 and Watch Ultra 2 carry the 30% MBO.</strong> Everything else goes on at its normal price and says so, instead of dangling a discount that will never apply to it.",
         "The section no longer disappears if the MBO offer lapses — bundling an ECO device is how a voucher gets spent, offer or no offer."
       ] },
-    { v: "2.4", d: "19 Aug 2026", t: "Selling New Galaxy Club",
+    { type: "app", v: "2.4", d: "19 Aug 2026", t: "Selling New Galaxy Club",
       items: [
         "<strong>A panel in the New Galaxy Club section you can turn around and show a customer</strong> — what the plan costs, every offer it unlocks, and the price with and without it side by side.",
         "It counts only what the club actually changes. Offers that apply either way are left out so the comparison isn't muddied, and both totals come from the quote itself rather than a separate sum.",
@@ -6588,7 +6612,7 @@
         "<strong>No green in the NGC panel.</strong> It used to highlight whichever side was cheaper, which meant highlighting <em>Without NGC</em> whenever the plan cost more. The New Galaxy Club side now always carries the emphasis, in the site accent rather than a green tick.",
         "<strong>Printed quotes use darker ink.</strong> The green on discounts was the weakest colour on paper and is now noticeably deeper, expiry badges print on a light background instead of a dark one, and every colour on a printed quote now clears 7:1 contrast. On-screen colours are unchanged."
       ] },
-    { v: "2.3", d: "18 Aug 2026", t: "Watch Ultra2 stock, and tidier stock rows",
+    { type: "app", v: "2.3", d: "18 Aug 2026", t: "Watch Ultra2 stock, and tidier stock rows",
       items: [
         "<strong>Watch Ultra2 now matches your stock.</strong> The catalog calls it 47mm LTE and the export doesn't mention 47mm, so it read as unmatched. A device sold in only one configuration is now matched on its name alone.",
         "<strong>Colours run on without a separator are picked up</strong> — \"Watch Ultra2 ULTRA LTE Titanium Grey\" now files as Titanium Grey rather than losing the colour entirely.",
@@ -6597,7 +6621,7 @@
         "Watch colours listed per size are recognised too, so Watch9 lines carry their colour instead of leaving it in the name.",
         "<strong>Every device colour now sits in the Colour column</strong> rather than trailing off the description — including lines the catalog doesn't recognise, and ones where Pronto cuts the colour off mid-word."
       ] },
-    { v: "2.2", d: "18 Aug 2026", t: "Built for phones",
+    { type: "app", v: "2.2", d: "18 Aug 2026", t: "Built for phones",
       items: [
         "<strong>The header no longer sits on top of its own title</strong> on a phone — the theme and accent controls run above it instead of floating over it.",
         "<strong>Roughly a screen and a half less scrolling to reach the tool.</strong> Banners before the first control took two thirds of a phone screen; now a little over half.",
@@ -6605,7 +6629,7 @@
         "The stock table drops the part-code column on a phone, cutting a chunk of side-scrolling, and the quote panel no longer floats over the page when the layout stacks.",
         "Desktop is deliberately untouched — every change is scoped to narrow screens."
       ] },
-    { v: "2.1", d: "18 Aug 2026", t: "Tidier accessory lists",
+    { type: "app", v: "2.1", d: "18 Aug 2026", t: "Tidier accessory lists",
       items: [
         "<strong>Watch chargers only appear on watches</strong> instead of against every device.",
         "<strong>Lapsed deals no longer appear on the quote.</strong> They already stopped applying on their end date; the leftover \"ended, no longer applies\" line was just confusing.",
@@ -6613,58 +6637,58 @@
         "The <em>fits any device</em> list is now power and charging only.",
         "<strong>Accessories moved below Wearable Bundle</strong>, keeping everything that changes the price together."
       ] },
-    { v: "2.0", d: "18 Aug 2026", t: "Grouped stock, loan units removed",
+    { type: "app", v: "2.0", d: "18 Aug 2026", t: "Grouped stock, loan units removed",
       items: [
         "<strong>Stock on Hand is sorted by product</strong> — every capacity and colour of one line sits together, and accessories gather under what kind of thing they are with a running total.",
         "<strong>Loan units are left out.</strong> Anything with an LM or LD item code is excluded everywhere — it can't be sold, so it shouldn't read as stock.",
         "<strong>Smart Tags and the Ring Sizing Kit file as accessories</strong>, not devices. Anything whose part code isn't SM- is an accessory, whatever the export's category column says."
       ] },
-    { v: "1.9", d: "18 Aug 2026", t: "How to pull your stock file",
+    { type: "app", v: "1.9", d: "18 Aug 2026", t: "How to pull your stock file",
       items: [
         "<strong>Step-by-step instructions on the Store & Stock tab</strong> for exporting stock from Pronto — Selective Inventory Enquiry, store number, quantity &gt; 0, quantity 99999, export."
       ] },
-    { v: "1.8", d: "18 Aug 2026", t: "Accessories",
+    { type: "app", v: "1.8", d: "18 Aug 2026", t: "Accessories",
       items: [
         "<strong>Accessories load from the same stock file</strong> as your devices — no second upload.",
         "<strong>Pick a device and only its accessories show:</strong> cases, screen protection, bands, covers and S Pens that actually fit it, with stock counts. Chargers, cables and grips sit under a separate <em>fits any device</em> list.",
         "<strong>Store & Stock lists devices first, then accessories</strong>, each under its own heading.",
         "The stock export carries no prices, so accessories show availability only for now and are not in the quote total — <strong>prices coming soon</strong>."
       ] },
-    { v: "1.7", d: "18 Aug 2026", t: "Storage colours and this tab",
+    { type: "app", v: "1.7", d: "18 Aug 2026", t: "Storage colours and this tab",
       items: [
         "<strong>Storage sizes are colour-coded</strong> everywhere they appear — 64GB orange, 128GB pink, 256GB yellow, 512GB dark blue, 1TB lime. Shades shift a little between light and dark mode so each stays readable.",
         "<strong>This What's New tab</strong>, listing every change by version."
       ] },
-    { v: "1.6", d: "18 Aug 2026", t: "Stock on hand reads the colour",
+    { type: "app", v: "1.6", d: "18 Aug 2026", t: "Stock on hand reads the colour",
       items: [
         "<strong>Stock now matches model, storage <em>and</em> colour.</strong> It was adding every colour together, so the number never moved when you changed colour.",
         "Colours Samsung sells that your store does not stock say so directly, and tell you how many are on the shelf in other colours.",
         "Colour name differences between the catalogue and your stock export no longer matter — \"Icy Blue\" finds \"Icyblue\", \"Silver\" finds \"Silver Shadow\"."
       ] },
-    { v: "1.5", d: "18 Aug 2026", t: "Who wrote the quote",
+    { type: "app", v: "1.5", d: "18 Aug 2026", t: "Who wrote the quote",
       items: [
         "<strong>Prepared by</strong> field on the print screen — the name prints onto the quote and is included when you copy it.",
         "The name is deliberately <strong>not remembered</strong>, and clears with the quote, since shop-floor devices are shared."
       ] },
-    { v: "1.4", d: "18 Aug 2026", t: "Guided tour",
+    { type: "app", v: "1.4", d: "18 Aug 2026", t: "Guided tour",
       items: [
         "<strong>A tour that runs itself once</strong> on a first visit, walking through what the tool does. Skip it at any point, or reopen it from <strong>Take a tour</strong> in the header.",
         "It only reads the page, so replaying it mid-sale cannot disturb a quote in progress."
       ] },
-    { v: "1.3", d: "18 Aug 2026", t: "Store picker and shared stock",
+    { type: "app", v: "1.3", d: "18 Aug 2026", t: "Store picker and shared stock",
       items: [
         "<strong>Store picker on the quoting screen</strong>, linked to the one on Store & Stock — change either and both follow.",
         "<strong>Share a store's stock</strong> with a code. One person loads the file, everyone else pastes the code and sees the same numbers.",
         "Every view of stock now says how old it is, since shared stock goes stale fast."
       ] },
-    { v: "1.2", d: "18 Aug 2026", t: "Fixes found in testing",
+    { type: "app", v: "1.2", d: "18 Aug 2026", t: "Fixes found in testing",
       items: [
         "<strong>Unique-code offers can be switched back off.</strong> Ticking Memory Upgrade or Samsung Wallet used to be one-way, and the tick carried silently onto later quotes.",
         "<strong>New Galaxy Club follows the device.</strong> A Fold8 quote was pricing the S Series plan — $140 under — unless you remembered to change the series by hand.",
         "Sales Kit no longer claims the Samsung Wallet offer stacks; it cannot.",
         "Softened the red in dark mode."
       ] },
-    { v: "1.1", d: "17–18 Aug 2026", t: "Stores, stock and the Sales Kit",
+    { type: "app", v: "1.1", d: "17–18 Aug 2026", t: "Stores, stock and the Sales Kit",
       items: [
         "<strong>Store selection</strong> across VIC/WA and NSW/QLD, with per-store stock uploaded from your own .xlsx or .csv export.",
         "<strong>Sales Kit tab</strong> — every live offer, what it stacks with, what it needs and when it ends.",
@@ -6672,16 +6696,19 @@
         "<strong>Print quote</strong>, stamped with the date and each deal's end date, plus expiry warnings for offers about to lapse.",
         "Colour themes and a light mode."
       ] },
-    { v: "1.0", d: "12 Aug 2026", t: "First build",
+    { type: "app", v: "1.0", d: "12 Aug 2026", t: "First build",
       items: [
         "The first version had very basic functionality: device pricing only."
       ] }
   ];
 
+  // Opt in: unclassified automated entries and data updates are never app releases.
+  const APP_RELEASES = CHANGELOG.filter(entry => entry.type === "app");
+
   function renderWhatsNew() {
     const body = document.getElementById("whatsnew-body");
     if (!body) return;
-    body.innerHTML = CHANGELOG.map((r, i) => `
+    body.innerHTML = APP_RELEASES.map((r, i) => `
       <div class="rel${i === 0 ? " latest" : ""}">
         <div class="rel-head">
           <span class="rel-ver">v${escapeHtml(r.v)}</span>
@@ -6695,18 +6722,18 @@
   renderWhatsNew();
 
   // The dot nags once per release, and only until the tab is opened.
-  const LATEST_VERSION = CHANGELOG[0].v;
+  const LATEST_VERSION = APP_RELEASES[0]?.v || "";
   const whatsNewDot = document.getElementById("whatsnew-dot");
   function refreshWhatsNewDot() {
     let seen = "";
     try { seen = localStorage.getItem("galaxyWhatsNewSeen") || ""; } catch (e) {}
-    const seenIt = seen === LATEST_VERSION;
+    const seenIt = !LATEST_VERSION || seen === LATEST_VERSION;
     if (whatsNewDot) whatsNewDot.hidden = seenIt;
     const itemDot = document.getElementById("whatsnew-dot-item");
     if (itemDot) itemDot.hidden = seenIt;
   }
   function markWhatsNewSeen() {
-    try { localStorage.setItem("galaxyWhatsNewSeen", LATEST_VERSION); } catch (e) {}
+    try { if (LATEST_VERSION) localStorage.setItem("galaxyWhatsNewSeen", LATEST_VERSION); } catch (e) {}
     refreshWhatsNewDot();
   }
   refreshWhatsNewDot();
