@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v12.8
+  Galaxy Deals v12.9
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=12.7" />
+<link rel="stylesheet" href="styles.css?v=12.9" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -73,6 +73,7 @@
     <span class="side-name">Galaxy Deals<small>Retail pricing &amp; quotes</small></span>
   </div>
 
+  <button type="button" class="side-store-chip none" id="side-store-chip" aria-label="Your store: none picked. Choose a store"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9.5 5.5 4.5h13L20 9.5"/><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/><path d="M5.5 11.5v8h13v-8"/><path d="M10 19.5v-4.5h4v4.5"/></svg></span><span class="ssc-text"><span class="ssc-label">Your Store</span><span class="ssc-name" id="side-store-chip-name">Pick your store</span></span></button>
   <nav class="tabs" role="tablist" aria-label="Sections" aria-orientation="vertical"><div class="tabs-group gs-group"><button type="button" class="tab gs-open" id="gs-open" aria-haspopup="dialog"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span><span>Search</span><kbd class="gs-kbd" aria-hidden="true">/</kbd></button></div><div class="tabs-group"><span class="nav-group-label">Quote</span><button type="button" class="tab" data-panel="quote" role="tab" aria-selected="true"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-2.2-1.4-2.1 1.4-2.2-1.4-2.2 1.4-2.3-1.4z"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"/></svg></span><span>Customer Quote</span></button><button type="button" class="tab" data-panel="builder" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Deal Builder</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Products & Offers</span><button type="button" class="tab" data-panel="compare" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="7" height="15" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="15" rx="1.5"/></svg></span><span>Compare</span></button><button type="button" class="tab" data-panel="pricecheck" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M7 7l-3 7a3.2 3.2 0 0 0 6 0zM17 7l-3 7a3.2 3.2 0 0 0 6 0zM12 4v16M8.500 20h7"/></svg></span><span>Price Check</span></button><button type="button" class="tab" data-panel="saleskit" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span>Sales Kit</span><span class="tab-dot danger" id="saleskit-dot" hidden></span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Store Tools</span><button type="button" class="tab" data-panel="store" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></svg></span><span>Store &amp; Stock</span></button></div>
@@ -4607,6 +4608,66 @@
   }
   renderExpirySoon();
 
+  // ---- Ticket boxes fold to one line once seen ----
+  // Shown in full the first time their deals appear on the Sales Kit page, then a single line with
+  // a Show button. A new deal joining the list counts as unseen, so the full box comes back.
+  (function () {
+    const SEEN_KEY = "galaxyTicketBoxSeen";
+    const open = {};   // boxes opened with Show, for this visit only
+    const boxes = [
+      { id: "started-banner", head: ".started-head", list: () => startedDeals(false), noun: "deal" },
+      { id: "finished-banner", head: ".finished-head", list: () => finishedDeals(false), noun: "deal" }
+    ];
+    function seenMap() { try { return JSON.parse(localStorage.getItem(SEEN_KEY) || "{}") || {}; } catch (e) { return {}; } }
+    function markSeen() {
+      const map = seenMap(), now = Date.now();
+      boxes.forEach(b => {
+        const el = document.getElementById(b.id);
+        if (el && !el.hidden && !el.classList.contains("finished-mini")) b.list().forEach(d => { map[d.key] = now; });
+      });
+      // Deals stay in these boxes for two days at most, so a fortnight of history is plenty.
+      Object.keys(map).forEach(k => { if (now - map[k] > 14 * 864e5) delete map[k]; });
+      try { localStorage.setItem(SEEN_KEY, JSON.stringify(map)); } catch (e) {}
+    }
+    function fold() {
+      const map = seenMap();
+      boxes.forEach(b => {
+        const el = document.getElementById(b.id);
+        if (!el || el.hidden || el.classList.contains("finished-mini")) return;
+        const head = el.querySelector(b.head);
+        if (!head) return;
+        const deals = b.list();
+        const allSeen = deals.length > 0 && deals.every(d => map[d.key]);
+        el.classList.toggle("tb-folded", allSeen && !open[b.id]);
+        let tools = head.querySelector(".tb-tools");
+        if (!allSeen) { if (tools) tools.remove(); return; }
+        if (!tools) {
+          tools = document.createElement("span");
+          tools.className = "tb-tools";
+          tools.innerHTML = '<span class="tb-count"></span><button type="button" class="tb-toggle"></button>';
+          tools.querySelector(".tb-toggle").addEventListener("click", () => { open[b.id] = !open[b.id]; fold(); });
+          head.appendChild(tools);
+        }
+        tools.querySelector(".tb-count").textContent = deals.length + " " + b.noun + (deals.length === 1 ? "" : "s");
+        const btn = tools.querySelector(".tb-toggle");
+        btn.textContent = open[b.id] ? "Hide" : "Show";
+        btn.setAttribute("aria-expanded", open[b.id] ? "true" : "false");
+      });
+    }
+    // Redraws replace the box's contents, so fold again after each one.
+    const wrapStarted = renderStartedDeals, wrapFinished = renderFinishedDeals;
+    renderStartedDeals = function () { wrapStarted.apply(this, arguments); fold(); };
+    renderFinishedDeals = function () { wrapFinished.apply(this, arguments); fold(); };
+    // Seen means the Sales Kit page was opened while the box was on it. The fold waits for the
+    // next visit, so a box never collapses under the person reading it.
+    document.addEventListener("click", e => {
+      if (e.target.closest('.tab[data-panel="saleskit"]')) setTimeout(markSeen, 0);
+    });
+    const panel = document.getElementById("panel-saleskit");
+    if (panel && !panel.hidden) markSeen();
+    fold();
+  })();
+
   // Keep offer and ticket alerts in Sales Kit; the tab dot signals when one needs attention.
   (function () {
     const dot = document.getElementById("saleskit-dot");
@@ -5552,6 +5613,41 @@
     applyStore();
   })();
 
+  // ---- Your store, at the top of the sidebar ----
+  // The picker is at the foot of the sidebar, often below the fold, so the store being quoted
+  // from is named up here too. Kept in step by watching the "Quoting as" line the picker writes.
+  (function () {
+    const chip = document.getElementById("side-store-chip");
+    const name = document.getElementById("side-store-chip-name");
+    const status = document.getElementById("store-current-q");
+    if (!chip || !name) return;
+    function sync() {
+      const store = currentStore();
+      name.textContent = store || "Pick your store";
+      chip.classList.toggle("none", !store);
+      chip.setAttribute("aria-label", store ? "Your store: " + store + ". Change store" : "Your store: none picked. Choose a store");
+      chip.title = store ? "Quoting as " + store + ". Click to change." : "No store picked. Click to choose one.";
+    }
+    chip.addEventListener("click", () => {
+      const side = document.getElementById("store-select-q");
+      const sideVisible = side && side.offsetParent !== null;
+      if (sideVisible) {
+        const card = document.getElementById("store-card");
+        card.scrollIntoView({ block: "nearest", behavior: "smooth" });
+        card.classList.remove("flash"); void card.offsetWidth; card.classList.add("flash");
+        const region = document.getElementById("region-select-q");
+        (currentStore() || !region ? side : region).focus({ preventScroll: true });
+      } else {
+        const tab = document.querySelector('.tab[data-panel="store"]');
+        if (tab) tab.click();
+        const sel = document.getElementById("store-select");
+        if (sel) { sel.scrollIntoView({ block: "center", behavior: "smooth" }); sel.focus({ preventScroll: true }); }
+      }
+    });
+    if (status) new MutationObserver(sync).observe(status, { childList: true, characterData: true, subtree: true });
+    sync();
+  })();
+
   // ---- stock file ----
   function stockStatus(msg, kind) {
     const el = document.getElementById("stock-status");
@@ -5916,6 +6012,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "12.9", d: "9 Oct 2026", t: "Your store at the top, shorter ticket boxes",
+      items: [
+        "<strong>Your store is named at the top of the sidebar</strong>, under the logo. The store picker sits at the bottom of the sidebar, which is often off-screen, so you can now always see which store you're quoting from. If no store is picked, it says <strong>Pick your store</strong> in amber. Click it to go straight to the store picker.",
+        "<strong>The new-deal and finished-deal boxes in the Sales Kit shrink to one line</strong> after you've seen them, for example \u201cNEW DEAL LIVE, CHANGE TO PROMO TICKETS \u00b7 6 deals \u00b7 Show\u201d. That keeps the current offers near the top. Press <strong>Show</strong> to open the list again. If another deal starts or finishes, the box opens in full again. <strong>Tickets changed \u2014 dismiss</strong> still clears a box completely.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "12.8", d: "9 Oct 2026", t: "Purple light mode",
       items: [
         "<strong>Light mode has a light purple background</strong> with white cards, and the main buttons are a deeper purple.",
