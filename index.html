@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v12.3
+  Galaxy Deals v12.4
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=12.3" />
+<link rel="stylesheet" href="styles.css?v=12.4" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -135,8 +135,6 @@
       <p class="page-meta"><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>Sales Kit checked on <strong data-sync-date>24 Sept 2026</strong></span><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>Always confirm the final price in POS</span></p>
     </div>
   </div>
-
-  <div id="home-deals" class="home-deals" aria-live="polite" hidden></div>
 
   <div class="col" id="config-col">
     <section class="card" id="device-card">
@@ -3659,7 +3657,7 @@
         + `<div class="receipt-muted">GST included ${escapeHtml(fmt(gstIn(quoteSale(q))))} (on the sale, before trade-in)</div>`
         + (q.savings > 0 ? `<div class="receipt-save">You save ${escapeHtml(fmt(q.savings))}</div>` : "");
     }
-    receiptSheet.innerHTML = content + `<footer class="receipt-footer">Quote only. Offers and prices may change. Confirm final price in POS at purchase.</footer>`;
+    receiptSheet.innerHTML = content + `<footer class="receipt-footer">Quote only. Offers and prices may change. Confirm final price in POS at purchase.<div class="receipt-tail" aria-hidden="true"></div></footer>`;
   }
   function printReceipt() {
     if (!cart.length) { printStatus("Add at least one device before printing a receipt.", "warn"); return; }
@@ -4181,7 +4179,7 @@
   window.addEventListener("resize", queueLedgerSize);
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(queueLedgerSize);
-    [".notices", ".shell > .page-head", "#finished-note", "#started-banner", "#home-deals", "#print-bar"].forEach(sel => {
+    [".notices", ".shell > .page-head", "#finished-note", "#started-banner", "#print-bar"].forEach(sel => {
       const n = document.querySelector(sel);
       if (n) ro.observe(n);
     });
@@ -4635,42 +4633,6 @@
     document.getElementById("expiry-hide").addEventListener("click", () => setExpiryHidden(true));
   }
   renderExpirySoon();
-
-  // ---- New and finished deals on the home page ----
-  // A copy of the Sales Kit's ticket boxes, redrawn whenever they change, so the two pages can't
-  // disagree. Buttons in the copy press the Sales Kit's own, so dismissing on either page clears both.
-  (function () {
-    const home = document.getElementById("home-deals");
-    const ids = ["started-banner", "finished-banner"];
-    if (!home) return;
-    // Sales Kit only: no copy of the ticket boxes on the Customer Quote page.
-    home.hidden = true; home.remove(); return;
-    function mirror() {
-      home.innerHTML = "";
-      ids.forEach(id => {
-        const src = document.getElementById(id);
-        // The one-line "tickets marked changed" record is Sales Kit housekeeping, not news.
-        if (!src || src.hidden || !src.innerHTML.trim() || src.classList.contains("finished-mini")) return;
-        const copy = src.cloneNode(true);
-        copy.removeAttribute("id");
-        copy.removeAttribute("hidden");
-        copy.querySelectorAll("[id]").forEach(n => { n.setAttribute("data-home-for", n.id); n.removeAttribute("id"); });
-        home.appendChild(copy);
-      });
-      home.hidden = !home.children.length;
-    }
-    home.addEventListener("click", e => {
-      const b = e.target.closest("[data-home-for]");
-      const real = b && document.getElementById(b.getAttribute("data-home-for"));
-      if (real) real.click();
-    });
-    const mo = new MutationObserver(mirror);
-    ids.forEach(id => {
-      const src = document.getElementById(id);
-      if (src) mo.observe(src, { attributes: true, attributeFilter: ["hidden", "class"], childList: true, subtree: true, characterData: true });
-    });
-    mirror();
-  })();
 
   // Keep offer and ticket alerts in Sales Kit; the tab dot signals when one needs attention.
   (function () {
@@ -5978,6 +5940,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "12.4", d: "8 Oct 2026", t: "Receipt printing and print controls",
+      items: [
+        "<strong>Quote receipts use an 80mm roll.</strong> A 20mm space and a small end marker follow the disclaimer to help preserve the bottom space when the printer trims blank paper.",
+        "<strong>Print controls stay on one line</strong>, with sideways scrolling on smaller screens. The roll selector and Copy quote option have been removed."
+      ]
+    },
     { v: "12.3", d: "8 Oct 2026", t: "Deal tickets only in the Sales Kit",
       items: [
         "<strong>The new-deal and deal-finished boxes now show in the Sales Kit only.</strong> They no longer appear above Step 01 on the Customer Quote page. The Sales Kit boxes and their \u201cTickets changed \u2014 dismiss\u201d buttons work as before, and the Sales Kit tab dot still lights when one needs attention.",

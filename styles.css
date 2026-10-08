@@ -1844,7 +1844,7 @@ body.print-view .deal-stage-heading { display: none; }
   body.print-receipt { display: block !important; margin: 0 !important; padding: 0 !important; background: #fff !important; color: #000 !important; }
   body.print-receipt > :not(#receipt-sheet) { display: none !important; }
   body.print-receipt #receipt-sheet {
-    page: receipt; display: block !important; box-sizing: border-box; margin: 0; padding: 3mm 0 20mm;
+    page: receipt; display: block !important; box-sizing: border-box; margin: 0; padding: 3mm 0 3mm;
     font: 9pt/1.3 Arial, sans-serif; color: #000; background: #fff;
     overflow-wrap: anywhere; -webkit-print-color-adjust: economy; print-color-adjust: economy;
   }
@@ -1863,13 +1863,9 @@ body.print-view .deal-stage-heading { display: none; }
   #receipt-sheet .receipt-subtotal { border-top: 1px dotted #777; padding-top: 1mm; }
   #receipt-sheet .receipt-total { border-top: 2px solid #000; padding-top: 2mm; margin-top: 2mm; font-size: 1.15em; font-weight: 700; }
   #receipt-sheet .receipt-save { text-align: right; font-weight: 700; margin-top: 1mm; }
-  #receipt-sheet .receipt-footer { border-top: 1px dashed #000; margin-top: 3mm; padding-top: 2mm; font-size: .85em; }
+  #receipt-sheet .receipt-footer { border-top: 1px dashed #000; margin-top: 3mm; padding-top: 2mm; font-size: .85em; break-inside: avoid; }
+  /* Some roll drivers trim all whitespace after the last ink. Place a small end mark
+     after the spacer so the 20 mm gap is part of the printed content. */
+  #receipt-sheet .receipt-tail { height: 20mm; width: 8mm; margin: 0 auto; border-bottom: 1px solid #000; }
   #receipt-sheet .receipt-center { font-size: .9em; font-weight: 700; }
 }
-/* ---- Deals on the home page ---- */
-  .shell > .home-deals { grid-column: 1; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
-  .home-deals[hidden] { display: none !important; }
-  .home-deals > .started-banner, .home-deals > .finished-banner { margin: 0; width: 100%; }
-  body.print-view .home-deals { display: none !important; }
-  @media print { .home-deals { display: none !important; } }
-/* ---- end Deals on the home page ---- */
