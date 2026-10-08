@@ -1,72 +1,65 @@
-/* Galaxy theme (v12.8, toned down in v12.9). Loads last, after taste-refine.css.
-   Dark by default, near-neutral charcoal with a faint violet glow and still stars; purple only on actions and selection, matching the logo and the opening animation; a lavender light
-   mode for anyone who switches. Layout, copy and every behaviour are unchanged; this file only
-   remaps the colour tokens and adds the atmosphere behind the pages. Screen only: the printed
-   quote, the print preview and the receipt keep their black-on-white paper palette. */
+/* Galaxy theme (v12.8; v12.9 toned it down; v13 solid purple). Loads last, after taste-refine.css.
+   Dark mode is a solid dark purple; light mode a solid light purple. No gradients, no starfield:
+   the backgrounds are flat colour, and the cards and quote panel sit on them as solid panels.
+   Purple as an accent stays on actions and selection. Layout, copy and every behaviour are
+   unchanged; this file only remaps colour tokens. Screen only: the printed quote, the print
+   preview and the receipt keep their black-on-white paper palette. */
 
 @media screen {
-  /* ---- Light: lavender paper ---- */
+  /* ---- Light: light purple ---- */
   :root {
-    --bg: #f5f5f8;
+    --bg: #efe9fb;
     --surface: #ffffff;
-    --surface-2: #f8f8fb;
-    --surface-3: #efeff4;
-    --ink: #18171f;
-    --ink-dim: #45434f;
-    --ink-faint: #5f5d6c;          /* 5.61:1 on --surface-3, the darkest ground it sits on */
-    --line: #e4e4ec;
-    --line-strong: #cfcfdb;
+    --surface-2: #f8f5fe;
+    --surface-3: #ece6f9;
+    --ink: #1a1530;
+    --ink-dim: #463f63;
+    --ink-faint: #5e5680;          /* 5.53:1 on --surface-3, the darkest ground it sits on */
+    --line: #e3dcf3;
+    --line-strong: #cfc4ea;
     --accent: #6835d6;
     --accent-ink: #ffffff;
-    --accent-soft: #f0eafd;
+    --accent-soft: #ebe2fc;
     --accent-line: #ccb8f3;
     --violet-fill: #6d3fe6;        /* primary buttons: white text 5.99:1 */
     --violet-fill-hover: #5f32d6;
-    --side-bg: #ffffff;
-    --shadow-1: 0 1px 2px rgb(20 18 40 / .05), 0 6px 20px -6px rgb(20 18 40 / .07);
-    --shadow-lift: 0 1px 2px rgb(20 18 40 / .07), 0 14px 32px -10px rgb(20 18 40 / .18);
-    --shadow-float: 0 18px 36px -10px rgb(20 18 40 / .22), 0 4px 10px -4px rgb(20 18 40 / .10);
-    --nebula-a: rgb(124 77 255 / .04);
-    --nebula-b: transparent;
-    --nebula-c: transparent;
-    --star: transparent;
+    --side-bg: #f7f3fe;
+    --shadow-1: 0 1px 2px rgb(42 22 96 / .05), 0 6px 20px -6px rgb(42 22 96 / .07);
+    --shadow-lift: 0 1px 2px rgb(42 22 96 / .07), 0 14px 32px -10px rgb(42 22 96 / .16);
+    --shadow-float: 0 18px 36px -10px rgb(42 22 96 / .20), 0 4px 10px -4px rgb(42 22 96 / .10);
   }
 
-  /* ---- Dark: the galaxy ---- */
+  /* ---- Dark: dark purple ---- */
   :root[data-theme="dark"] {
-    --bg: #0e0d13;
-    --surface: #16151d;
-    --surface-2: #1c1b25;
-    --surface-3: #25242f;
-    --ink: #efeef4;
-    --ink-dim: #bdbbc9;
-    --ink-faint: #9a98aa;          /* 5.43:1 on --surface-3, the lightest ground it sits on */
-    --line: #2a2935;
-    --line-strong: #3a3946;
-    --accent: #b79cff;             /* text and icons: 6.71:1 on --surface-3 */
-    --accent-ink: #120c24;
-    --accent-soft: #271f45;
-    --accent-line: #4b3f7a;
+    --bg: #1a1133;
+    --surface: #221840;
+    --surface-2: #291e4b;
+    --surface-3: #322658;
+    --ink: #f1edfb;
+    --ink-dim: #c9c0e4;
+    --ink-faint: #a59bcb;          /* 5.25:1 on --surface-3, the lightest ground it sits on */
+    --line: #33285a;
+    --line-strong: #45386f;
+    --accent: #b99eff;             /* text and icons: 6.05:1 on --surface-3 */
+    --accent-ink: #140d29;
+    --accent-soft: #3a2a6b;
+    --accent-line: #5d4a9a;
     --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
     --violet-fill-hover: #8257ff;
-    --side-bg: rgb(14 13 19 / .9);
+    --side-bg: #140d29;
     --good: #5fdba0;
-    --good-bg: #0f2a22;
+    --good-bg: #13282a;
     --good-line: #1e5a45;
     --warn: #f5b453;
-    --warn-bg: #2a1f12;
+    --warn-bg: #2b1f22;
     --warn-line: #5e4520;
     --danger: #ff938d;
-    --danger-bg: #2c1618;
-    --danger-line: #5e2c2c;
+    --danger-bg: #301634;
+    --danger-line: #66293f;
     --cap-512: #a9b8ff;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
-    --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(6 2 20 / .8);
-    --shadow-float: 0 20px 44px -12px rgb(6 2 20 / .85), 0 4px 12px -4px rgb(0 0 0 / .5);
-    --nebula-a: rgb(124 77 255 / .08);
-    --nebula-b: transparent;
-    --nebula-c: transparent;
-    --star: rgb(236 234 245 / .4);
+    --shadow-1: 0 1px 2px rgb(8 3 20 / .45), 0 10px 28px -10px rgb(8 3 20 / .55);
+    --shadow-lift: 0 1px 2px rgb(8 3 20 / .5), 0 18px 40px -12px rgb(8 3 20 / .75);
+    --shadow-float: 0 20px 44px -12px rgb(8 3 20 / .8), 0 4px 12px -4px rgb(8 3 20 / .5);
     color-scheme: dark;
   }
 }
@@ -74,53 +67,47 @@
    stamps dark on first visit, so this only matters if that stamp is ever removed.) */
 @media screen and (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0e0d13; --surface: #16151d; --surface-2: #1c1b25; --surface-3: #25242f;
-    --ink: #efeef4; --ink-dim: #bdbbc9; --ink-faint: #9a98aa;
-    --line: #2a2935; --line-strong: #3a3946;
-    --accent: #b79cff; --accent-ink: #120c24; --accent-soft: #271f45; --accent-line: #4b3f7a;
-    --violet-fill: #7447f0; --violet-fill-hover: #8257ff; --side-bg: rgb(14 13 19 / .9);
-    --good: #5fdba0; --good-bg: #0f2a22; --good-line: #1e5a45;
-    --warn: #f5b453; --warn-bg: #2a1f12; --warn-line: #5e4520;
-    --danger: #ff938d; --danger-bg: #2c1618; --danger-line: #5e2c2c;
+    --bg: #1a1133;
+    --surface: #221840;
+    --surface-2: #291e4b;
+    --surface-3: #322658;
+    --ink: #f1edfb;
+    --ink-dim: #c9c0e4;
+    --ink-faint: #a59bcb;          /* 5.25:1 on --surface-3, the lightest ground it sits on */
+    --line: #33285a;
+    --line-strong: #45386f;
+    --accent: #b99eff;             /* text and icons: 6.05:1 on --surface-3 */
+    --accent-ink: #140d29;
+    --accent-soft: #3a2a6b;
+    --accent-line: #5d4a9a;
+    --violet-fill: #7447f0;        /* primary buttons: white text 5.38:1 */
+    --violet-fill-hover: #8257ff;
+    --side-bg: #140d29;
+    --good: #5fdba0;
+    --good-bg: #13282a;
+    --good-line: #1e5a45;
+    --warn: #f5b453;
+    --warn-bg: #2b1f22;
+    --warn-line: #5e4520;
+    --danger: #ff938d;
+    --danger-bg: #301634;
+    --danger-line: #66293f;
     --cap-512: #a9b8ff;
-    --shadow-1: 0 1px 2px rgb(0 0 0 / .45), 0 10px 28px -10px rgb(0 0 0 / .55);
-    --shadow-lift: 0 1px 2px rgb(0 0 0 / .5), 0 18px 40px -12px rgb(6 2 20 / .8);
-    --shadow-float: 0 20px 44px -12px rgb(6 2 20 / .85), 0 4px 12px -4px rgb(0 0 0 / .5);
-    --nebula-a: rgb(124 77 255 / .08); --nebula-b: transparent; --nebula-c: transparent;
-    --star: rgb(236 234 245 / .4);
+    --shadow-1: 0 1px 2px rgb(8 3 20 / .45), 0 10px 28px -10px rgb(8 3 20 / .55);
+    --shadow-lift: 0 1px 2px rgb(8 3 20 / .5), 0 18px 40px -12px rgb(8 3 20 / .75);
+    --shadow-float: 0 20px 44px -12px rgb(8 3 20 / .8), 0 4px 12px -4px rgb(8 3 20 / .5);
     color-scheme: dark;
   }
 }
 
 @media screen {
-  /* ---- Atmosphere: a nebula and a still starfield behind every page ---- */
-  body:not(.print-view):not(.print-compare) {
-    background-color: var(--bg);
-    background-image:
-      radial-gradient(1100px 680px at 88% -12%, var(--nebula-a), transparent 62%),
-      radial-gradient(900px 620px at -8% 108%, var(--nebula-b), transparent 60%),
-      radial-gradient(760px 520px at 46% 118%, var(--nebula-c), transparent 62%);
-    background-attachment: fixed;
-  }
-  body:not(.print-view):not(.print-compare)::before {
-    content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
-    background-image:
-      radial-gradient(1px 1px at 12% 18%, var(--star), transparent 100%),
-      radial-gradient(1px 1px at 68% 9%, var(--star), transparent 100%),
-      radial-gradient(1.5px 1.5px at 37% 63%, var(--star), transparent 100%),
-      radial-gradient(1px 1px at 84% 44%, var(--star), transparent 100%),
-      radial-gradient(1px 1px at 22% 86%, var(--star), transparent 100%),
-      radial-gradient(1.5px 1.5px at 93% 77%, var(--star), transparent 100%),
-      radial-gradient(1px 1px at 55% 31%, var(--star), transparent 100%),
-      radial-gradient(1px 1px at 6% 52%, var(--star), transparent 100%);
-    background-size: 340px 340px, 520px 520px, 610px 610px, 430px 430px, 380px 380px, 700px 700px, 290px 290px, 560px 560px;
-    opacity: .6;
-  }
+  /* ---- Backgrounds: flat colour, nothing drawn on them ---- */
+  body:not(.print-view):not(.print-compare) { background: var(--bg); }
   body:not(.print-view):not(.print-compare) .main,
   :root[data-theme] body:not(.print-view):not(.print-compare) .main,
-  :root:not([data-theme="light"]) body:not(.print-view):not(.print-compare) .main { background: transparent; }
+  :root:not([data-theme="light"]) body:not(.print-view):not(.print-compare) .main { background: var(--bg); }
 
-  /* ---- Sidebar: a deeper layer the nebula shows through ---- */
+  /* ---- Sidebar: a deeper purple layer ---- */
   body:not(.print-view) .side { background: var(--side-bg); border-right-color: var(--line); }
   .tab:hover { background: color-mix(in srgb, var(--ink) 6%, transparent); }
   body:not(.print-view):not(.print-compare) .tab[aria-selected="true"] {
