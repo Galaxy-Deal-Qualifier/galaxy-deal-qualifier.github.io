@@ -1866,3 +1866,10 @@ body.print-view .deal-stage-heading { display: none; }
   #receipt-sheet .receipt-footer { border-top: 1px dashed #000; margin-top: 3mm; padding-top: 2mm; font-size: .85em; }
   #receipt-sheet .receipt-center { font-size: .9em; font-weight: 700; }
 }
+/* ---- Deals on the home page ---- */
+  .shell > .home-deals { grid-column: 1; display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  .home-deals[hidden] { display: none !important; }
+  .home-deals > .started-banner, .home-deals > .finished-banner { margin: 0; width: 100%; }
+  body.print-view .home-deals { display: none !important; }
+  @media print { .home-deals { display: none !important; } }
+/* ---- end Deals on the home page ---- */
