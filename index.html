@@ -107,16 +107,14 @@
         <label for="print-by-input">Served by</label>
         <input type="text" id="print-by-input" placeholder="Your name" autocomplete="off" maxlength="60" />
       </span>
-      <span id="print-copy-status" class="print-copy-status"></span>
       <button type="button" id="print-pdf">Download PDF</button>
       <button type="button" id="print-preview">Print</button>
-      <label class="receipt-size" for="receipt-width">Docket roll <select id="receipt-width" aria-label="Docket roll width"><option value="80">80 mm</option><option value="58">58 mm</option></select></label>
       <button type="button" id="print-receipt">Print receipt</button>
-      <button type="button" id="print-copy">Copy quote</button>
       <button type="button" id="print-email">Email quote</button>
       <button type="button" id="print-new">New quote</button>
       <button type="button" id="print-back">Back to editing</button>
     </span>
+    <span id="print-copy-status" class="print-copy-status" role="status"></span>
   </div>
 </div>
 
@@ -834,7 +832,7 @@
   <div class="footer-inner">
   <p><strong>How ECO vouchers work here.</strong> An ECO voucher is never taken off the device that earns it. Tick it on, and it is spent against an eligible <strong>Watch, Buds or Tablet</strong> elsewhere in the same quote — capped at what that product costs, with any unused balance called out. With no eligible ECO product in the quote, it stays listed but reduces nothing. Offers needing a <strong>unique code</strong> (Memory Upgrade, Samsung Wallet) only come off once ticked, since they're keyed in manually at POS.</p>
   <p><strong>Stacking rules.</strong> <strong>SMB</strong> replaces every other offer on a line (flat 15% off). <strong>Education</strong> applies the education rate and drops any sales-kit offer marked education/SMB-exclusive; for Watch9 and Watch Ultra 2 the boosted 25% rate replaces the standard 20% rather than adding to it. The <strong>wearable MBO</strong> (30% off a watch bundled with a Flip8/Fold8/Fold8 Ultra/S26) replaces all other offers on that watch. Fold/Flip <strong>ECO vouchers and trade-in bonuses cannot be combined</strong> — with a trade-in active the bonus is paid and the voucher is shown as unavailable. New Galaxy Club carries two separate offers: a <strong>$100 bonus off the device</strong>, and a <strong>plan discount that comes off the NGC price itself</strong>.</p>
-  <p><strong>Printing.</strong> "Print quote" strips the page back to the customer quote — lines, credits and total, stamped <em>Quote Created</em> with today's date — then print it with your browser's own print command (Ctrl/⌘+P). "Copy quote" puts the same thing on your clipboard for pasting into an email.</p>
+  <p><strong>Printing.</strong> "Print quote" strips the page back to the customer quote — lines, credits and total, stamped <em>Quote Created</em> with today's date. "Print receipt" formats it for an 80 mm docket roll. You can also download a PDF or email the quote.</p>
   <p>Device catalogue details come from <strong>Pronto</strong>. Scheduled checks refresh Education and supported retail offers from the <a href="https://sites.google.com/view/samsungsaleskit/home" target="_blank" rel="noopener">Samsung Sales Kit</a>. Trade-in, bundle, voucher and other complex rules are reviewed separately. Always confirm the final price in POS.</p>
   <p class="copyright">&copy; <span class="copyright-year">2026</span> Isaiah Graham &amp; Harsha Parthiban</p>
   </div>
@@ -3424,7 +3422,7 @@
   // This page runs in a sandboxed frame with no allow-modals, so window.print() and alert()
   // are blocked, and the downloads capability is unavailable on publicly shared artifacts.
   // So "Print quote" switches the page into a print-only view and hands off to the browser's
-  // own print command, with a clipboard copy as a fallback.
+  // own print command.
   // Whoever wrote the quote. Deliberately NOT remembered: shop-floor devices are shared, so a
   // stored name would quietly put one person's name on someone else's quote. It is typed per
   // quote and cleared with it.
@@ -3641,8 +3639,7 @@
   function renderReceipt() {
     const valid = document.getElementById("print-valid");
     const date = new Date().toLocaleString("en-AU", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
-    const width = document.getElementById("receipt-width").value;
-    receiptSheet.className = width === "58" ? "receipt-58" : "receipt-80";
+    receiptSheet.className = "receipt-80";
     const options = quoteOptionsOn();
     const q = computeQuote(null);
     let content = `<header class="receipt-head"><strong>GALAXY DEALS</strong><div>CUSTOMER QUOTE</div><small>${escapeHtml(date)}</small>`
@@ -3730,27 +3727,6 @@
     window.scrollTo(0, 0);
   });
 
-  document.getElementById("print-copy").addEventListener("click", async () => {
-    const text = plainTextQuote();
-    const bar = document.getElementById("print-copy-status");
-    let ok = false;
-    try {
-      await navigator.clipboard.writeText(text);
-      ok = true;
-    } catch (e) {
-      // Clipboard API is often unavailable in a sandboxed frame; fall back to execCommand.
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.opacity = "0";
-      document.body.appendChild(ta);
-      ta.select();
-      try { ok = document.execCommand("copy"); } catch (e2) { ok = false; }
-      document.body.removeChild(ta);
-    }
-    bar.textContent = ok ? "Quote copied to clipboard." : "Couldn't copy — select the quote and copy manually.";
-  });
-
   function formattedEmailQuote() {
     const safe = value => escapeHtml(String(value || ""));
     const paragraph = (text, style = "") => `<p style="margin:8px 0;${style}">${safe(text)}</p>`;
@@ -3813,7 +3789,7 @@
     bytes.forEach(byte => binary += String.fromCharCode(byte));
     const url = "https://script.google.com/macros/s/AKfycbwmgBDkLSvVuaI19MU3k2_UzFX7GC40867Wfo19IO0_6PPiqtfaPkYvwb1P1NYRM6fgtg/exec?quote=" + encodeURIComponent(btoa(binary));
     if (url.length > 16000) {
-      status.textContent = "This quote is too large for the Gmail window. Split it into smaller quotes or use Copy quote.";
+      status.textContent = "This quote is too large for the Gmail window. Split it into smaller quotes or download the PDF.";
       return;
     }
     const opened = window.open(url, "_blank");
@@ -7884,8 +7860,8 @@
     },
     {
       target: () => document.querySelector(".ledger-actions"),
-      title: "Print or copy it",
-      text: "Print strips the page back to the customer quote, stamped with today's date and every deal's end date. Copy puts the same thing on your clipboard to paste into an email.",
+      title: "Print or email it",
+      text: "Print strips the page back to the customer quote, stamped with today's date and every deal's end date. Print receipt formats it for an 80 mm docket roll. You can also download a PDF or email the quote.",
       panel: "quote"
     },
     {
