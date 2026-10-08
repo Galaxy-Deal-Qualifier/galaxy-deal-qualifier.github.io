@@ -100,6 +100,8 @@
       <span id="print-copy-status" class="print-copy-status"></span>
       <button type="button" id="print-pdf">Download PDF</button>
       <button type="button" id="print-preview">Print</button>
+      <label class="receipt-size" for="receipt-width">Docket roll <select id="receipt-width" aria-label="Docket roll width"><option value="80">80 mm</option><option value="58">58 mm</option></select></label>
+      <button type="button" id="print-receipt">Print receipt</button>
       <button type="button" id="print-copy">Copy quote</button>
       <button type="button" id="print-email">Email quote</button>
       <button type="button" id="print-new">New quote</button>
@@ -125,8 +127,6 @@
       <p class="page-meta"><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>Sales Kit checked on <strong data-sync-date>24 Sept 2026</strong></span><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>Always confirm the final price in POS</span></p>
     </div>
   </div>
-
-  <div id="home-deals" class="home-deals" aria-live="polite" hidden></div>
 
   <div class="col" id="config-col">
     <section class="card" id="device-card">
@@ -473,6 +473,7 @@
         <div id="quote-options" class="quote-options" hidden></div>
         <div class="ledger-actions">
           <button class="print-btn" id="print-btn" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M7 9V3.5h10V9"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6.5H7z"/></svg>Print quote</button>
+          <button class="clear-btn" id="quote-receipt" type="button">Print receipt</button>
           <button class="clear-btn" id="quote-pdf" type="button">Download PDF</button>
           <button class="clear-btn" id="clear-btn" type="button">Clear</button>
         </div>
@@ -3601,7 +3602,69 @@
     window.print();
   });
 
+  // Print a compact customer quote on a receipt printer's configured paper roll.
+  // The printer driver controls the paper length and cutter; the selected width controls layout.
+  const receiptSheet = document.createElement("section");
+  receiptSheet.id = "receipt-sheet";
+  receiptSheet.setAttribute("aria-label", "Receipt quote for printing");
+  document.body.appendChild(receiptSheet);
+
+  function receiptLine(label, amount, className = "") {
+    return `<div class="receipt-row ${className}"><span>${escapeHtml(label)}</span><strong>${escapeHtml(amount)}</strong></div>`;
+  }
+  function receiptItems(q) {
+    return q.items.map(({ item, mode, result, ecoApplied, lineTotal }) => {
+      const details = [item.v, item.colour, mode === "edu" ? "Education" : mode === "smb" ? "SMB" : ""].filter(Boolean).join(" · ");
+      return `<div class="receipt-item"><strong class="receipt-item-name">${escapeHtml(item.n)}</strong>`
+        + (details ? `<div class="receipt-muted">${escapeHtml(details)}</div>` : "")
+        + receiptLine("Regular price", fmt(item.p))
+        + result.lines.map(l => receiptLine(l.name + (l.end ? " · Ends " + l.end : ""), "-" + fmt(l.amount))).join("")
+        + ecoApplied.map(l => receiptLine(l.name, "-" + fmt(l.amount))).join("")
+        + receiptLine("Item price", fmt(lineTotal), "receipt-subtotal") + `</div>`;
+    }).join("");
+  }
+  function receiptExtras(q) {
+    return (q.ngcLine ? receiptLine("New Galaxy Club (" + q.ngcLine.plan.term + ")", fmt(q.ngcLine.planPrice)) : "")
+      + (q.manualCredit ? receiptLine("Trade-in credit", "-" + fmt(q.manualCredit)) : "")
+      + q.bonuses.map(b => receiptLine(b.name, "-" + fmt(b.amount))).join("");
+  }
+  function renderReceipt() {
+    const valid = document.getElementById("print-valid");
+    const date = new Date().toLocaleString("en-AU", { day: "numeric", month: "short", year: "numeric", hour: "numeric", minute: "2-digit" });
+    const width = document.getElementById("receipt-width").value;
+    receiptSheet.className = width === "58" ? "receipt-58" : "receipt-80";
+    const options = quoteOptionsOn();
+    const q = computeQuote(null);
+    let content = `<header class="receipt-head"><strong>GALAXY DEALS</strong><div>CUSTOMER QUOTE</div><small>${escapeHtml(date)}</small>`
+      + (!valid.hidden ? `<small>${escapeHtml(valid.textContent)}</small>` : "")
+      + (preparedBy() ? `<small>Served by ${escapeHtml(preparedBy())}</small>` : "") + `</header>`;
+    if (options) {
+      content += `<p class="receipt-center">SEPARATE OPTIONS<br>Prices are not added together</p>`;
+      content += quoteOptions().map((o, k) => `<div class="receipt-option"><strong>OPTION ${k + 1}: ${escapeHtml(quoteOptionName(o))}</strong>`
+        + receiptItems(o.q) + receiptExtras(o.q)
+        + receiptLine("OPTION " + (k + 1) + " TOTAL", fmt(o.q.total), "receipt-total")
+        + `<div class="receipt-muted">GST included ${escapeHtml(fmt(gstIn(o.sale)))} (before trade-in)</div></div>`).join("");
+    } else {
+      content += receiptItems(q) + receiptExtras(q)
+        + receiptLine("CUSTOMER TOTAL", fmt(q.total), "receipt-total")
+        + `<div class="receipt-muted">GST included ${escapeHtml(fmt(gstIn(quoteSale(q))))} (on the sale, before trade-in)</div>`
+        + (q.savings > 0 ? `<div class="receipt-save">You save ${escapeHtml(fmt(q.savings))}</div>` : "");
+    }
+    receiptSheet.innerHTML = content + `<footer class="receipt-footer">Quote only. Offers and prices may change. Confirm final price in POS at purchase.</footer>`;
+  }
+  function printReceipt() {
+    if (!cart.length) { printStatus("Add at least one device before printing a receipt.", "warn"); return; }
+    stampPrintDate();
+    renderReceipt();
+    document.body.classList.add("print-receipt");
+    window.print();
+  }
+  document.getElementById("print-receipt").addEventListener("click", printReceipt);
+  document.getElementById("quote-receipt").addEventListener("click", printReceipt);
+  window.addEventListener("afterprint", () => document.body.classList.remove("print-receipt"));
+
   document.getElementById("print-back").addEventListener("click", () => {
+    document.body.classList.remove("print-receipt");
     setPrintView(false);
     document.body.classList.remove("print-compare");
     const cmpPanel = document.getElementById("panel-compare");
@@ -4130,7 +4193,7 @@
   window.addEventListener("resize", queueLedgerSize);
   if (window.ResizeObserver) {
     const ro = new ResizeObserver(queueLedgerSize);
-    [".notices", ".shell > .page-head", "#finished-note", "#started-banner", "#home-deals", "#print-bar"].forEach(sel => {
+    [".notices", ".shell > .page-head", "#finished-note", "#started-banner", "#print-bar"].forEach(sel => {
       const n = document.querySelector(sel);
       if (n) ro.observe(n);
     });
@@ -4426,12 +4489,10 @@
 
   function renderFinishedDeals() {
     const banner = document.getElementById("finished-banner");
-    const dot = document.getElementById("saleskit-dot");
     const done = finishedDeals(false);
     // Nothing outstanding: the tab dot goes, and the Sales Kit keeps a
     // one-line record of what was cleared for as long as the deals are still in the window.
     if (!done.length) {
-      if (dot) dot.hidden = true;
       const cleared = finishedDeals(true);
       if (!cleared.length) {
         banner.hidden = true;
@@ -4458,7 +4519,6 @@
     banner.hidden = false;
     document.getElementById("finished-done").addEventListener("click", dismissFinishedDeals);
 
-    if (dot) dot.hidden = false;
   }
 
   renderFinishedDeals();
@@ -4588,38 +4648,22 @@
   }
   renderExpirySoon();
 
-  // ---- New and finished deals on the home page ----
-  // A copy of the Sales Kit's ticket boxes, redrawn whenever they change, so the two pages can't
-  // disagree. Buttons in the copy press the Sales Kit's own, so dismissing on either page clears both.
+  // Keep offer and ticket alerts in Sales Kit; the tab dot signals when one needs attention.
   (function () {
-    const home = document.getElementById("home-deals");
-    const ids = ["started-banner", "finished-banner"];
-    if (!home) return;
-    function mirror() {
-      home.innerHTML = "";
-      ids.forEach(id => {
-        const src = document.getElementById(id);
-        // The one-line "tickets marked changed" record is Sales Kit housekeeping, not news.
-        if (!src || src.hidden || !src.innerHTML.trim() || src.classList.contains("finished-mini")) return;
-        const copy = src.cloneNode(true);
-        copy.removeAttribute("id");
-        copy.removeAttribute("hidden");
-        copy.querySelectorAll("[id]").forEach(n => { n.setAttribute("data-home-for", n.id); n.removeAttribute("id"); });
-        home.appendChild(copy);
+    const dot = document.getElementById("saleskit-dot");
+    const ids = ["started-banner", "finished-banner", "expiry-banner", "sync-warning"];
+    function refreshDot() {
+      dot.hidden = !ids.some(id => {
+        const el = document.getElementById(id);
+        return el && !el.hidden && !el.classList.contains("finished-mini") && !el.classList.contains("expiry-mini");
       });
-      home.hidden = !home.children.length;
     }
-    home.addEventListener("click", e => {
-      const b = e.target.closest("[data-home-for]");
-      const real = b && document.getElementById(b.getAttribute("data-home-for"));
-      if (real) real.click();
-    });
-    const mo = new MutationObserver(mirror);
+    const mo = new MutationObserver(refreshDot);
     ids.forEach(id => {
       const src = document.getElementById(id);
-      if (src) mo.observe(src, { attributes: true, attributeFilter: ["hidden", "class"], childList: true, subtree: true, characterData: true });
+      if (src) mo.observe(src, { attributes: true, attributeFilter: ["hidden", "class"] });
     });
-    mirror();
+    refreshDot();
   })();
 
   // ---- store & stock ----
