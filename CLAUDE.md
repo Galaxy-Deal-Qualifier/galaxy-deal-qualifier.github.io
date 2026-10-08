@@ -13,3 +13,5 @@ For these updates:
 Only a real feature, bug fix, design change or change in application behavior may create an app release. Its CHANGELOG entry must explicitly include `type: "app"`. Entries with `type: "data"` or no type are excluded from What's New and the notification dot. Keep this filtering in place during every automatic update.
 
 Historical data entries are retained internally for reference and remain hidden; do not reclassify them as app releases. Keep existing version numbers rather than renumbering history.
+
+Major Galaxy Deals feature additions, behavior changes, significant fixes and design changes must be added to What's New with a new app version and an explicit `type: "app"` entry. Describe the final customer-visible changes. Price and promotion data maintenance remains excluded.
