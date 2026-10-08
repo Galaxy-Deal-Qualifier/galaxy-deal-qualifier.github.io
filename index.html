@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v12.9
+  Galaxy Deals v13
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -81,20 +81,6 @@
 <div class="tabs-group"><span class="nav-group-label">Help & Updates</span><button type="button" class="tab" data-panel="whatsnew" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v3.8h3.8"/><path d="M12 8v4.2l2.8 1.8"/></svg></span><span>What&#8217;s New</span><span class="tab-dot" id="whatsnew-dot-item" hidden></span></button><button type="button" class="tab" data-panel="suggest" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 5.5h15v10h-10l-5 4z"/></svg></span><span>Suggestions</span></button></div></nav>
 
   <div class="side-foot">
-    <div class="side-store" id="store-card">
-      <p class="side-store-title">Your Store</p>
-      <div class="storebar-row">
-        <div class="storebar-field">
-          <label class="field-label" for="region-select-q">Region</label>
-          <select id="region-select-q" data-store-region></select>
-        </div>
-        <div class="storebar-field">
-          <label class="field-label" for="store-select-q">Store</label>
-          <select id="store-select-q" data-store-select></select>
-        </div>
-      </div>
-      <div id="store-current-q" class="bundle-status pending"></div>
-    </div>
     <p class="side-meta">Sales Kit checked on <strong id="sync-date">17 Aug 2026</strong>. Rules checked against the Samsung Sales Kit; catalogue from Pronto.</p>
     <div class="side-tools">
       <button id="tour-btn" class="icon-btn tour-btn" type="button" aria-label="Take a tour of this tool"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="8.5"/><path d="M9.7 9.5a2.4 2.4 0 1 1 3.3 2.2c-.6.3-1 .8-1 1.4v.3"/><path d="M12 16.5h.01"/></svg></span><span class="tour-btn-label">Tour</span></button>
@@ -1047,7 +1033,7 @@
     "m10", "m11", "m17", "m18", "m19", "m23", "m24", "m26"  // Tabs
   ];
 
-  const STORE_REGIONS = [{"region": "VIC / WA", "stores": ["SES Werribee", "SES Highpoint", "SES Chadstone", "SES Carousel", "SS Fountain Gate", "SS Doncaster"]}, {"region": "NSW / QLD", "stores": ["SES George Street", "SES Parramatta", "SPS Blacktown", "SES Mt Gravatt", "SES Chermside", "SS Robina"]}];
+  const STORE_REGIONS = [{"region": "VIC", "stores": ["SES Werribee", "SES Highpoint", "SES Chadstone", "SS Fountain Gate", "SS Doncaster"]}];
 
   // Device colours verified against Samsung Australia (Aug 2026). Anything not listed here
   // falls back to free-text entry -- better an operator types it than the tool invents one.
@@ -5613,6 +5599,14 @@
     applyStore();
   })();
 
+  // ---- One region: no Region field ----
+  // With every store in one region, the Region dropdown could only ever show that region.
+  if (STORE_REGIONS.length < 2) document.querySelectorAll("[data-store-region]").forEach(sel => {
+    sel.style.display = "none";
+    const label = sel.id && document.querySelector('label[for="' + sel.id + '"]');
+    if (label) label.style.display = "none";
+  });
+
   // ---- Your store, at the top of the sidebar ----
   // The picker is at the foot of the sidebar, often below the fold, so the store is named up here
   // too, and this label is a dropdown of every store. Kept in step by watching the "Quoting as"
@@ -5621,17 +5615,19 @@
     const chip = document.getElementById("side-store-chip");
     const name = document.getElementById("side-store-chip-name");
     const sel = document.getElementById("side-store-chip-select");
-    const status = document.getElementById("store-current-q");
+    // The sidebar's own picker was removed in v13; Store & Stock's "Quoting as" line is the one left.
+    const status = document.getElementById("store-current") || document.getElementById("store-current-q");
     if (!chip || !name || !sel) return;
     const SEP = "||";
     const none = new Option("Pick your store", "");
     none.disabled = true;
     sel.appendChild(none);
     STORE_REGIONS.forEach(r => {
-      const group = document.createElement("optgroup");
-      group.label = r.region;
+      // One region needs no heading; several are grouped under theirs.
+      const group = STORE_REGIONS.length > 1 ? document.createElement("optgroup") : sel;
+      if (group !== sel) group.label = r.region;
       r.stores.forEach(st => group.appendChild(new Option(st, r.region + SEP + st)));
-      sel.appendChild(group);
+      if (group !== sel) sel.appendChild(group);
     });
     function sync() {
       const store = currentStore();
@@ -6018,6 +6014,13 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "13", d: "9 Oct 2026", t: "Victorian stores only, one store picker",
+      items: [
+        "<strong>Only the Victorian stores are listed</strong>: SES Werribee, SES Highpoint, SES Chadstone, SS Fountain Gate and SS Doncaster.",
+        "<strong>The Region and Store dropdowns at the bottom of the sidebar are gone.</strong> Change store from <strong>Your Store</strong> at the top of the sidebar, or on the Store & Stock tab. The Region field on Store & Stock is gone too, because all the stores are in Victoria.",
+        "If this computer was set to a store that's no longer listed, it will ask you to pick your store again.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "12.9", d: "9 Oct 2026", t: "Your store at the top, shorter ticket boxes",
       items: [
         "<strong>Your store is named at the top of the sidebar</strong>, under the logo. The store picker at the bottom of the sidebar is often off-screen, so you can now always see which store you're quoting from. <strong>It's also a dropdown:</strong> click it to change store, with stores listed by region. If no store is picked, it says <strong>Pick your store</strong> in amber.",
@@ -7989,9 +7992,9 @@
       panel: "quote"
     },
     {
-      target: () => el("store-card"),
+      target: () => el("side-store-chip"),
       title: "Start with your store",
-      text: "Your store drives the stock-on-hand figures shown against each device, so set it once, down here in the sidebar. It's remembered on this browser, and the same picker sits on the Store & Stock tab.",
+      text: "Your store drives the stock-on-hand figures shown against each device, so set it once, here at the top of the sidebar. It's remembered on this browser, and you can also change it on the Store & Stock tab.",
       panel: "quote"
     },
     {
