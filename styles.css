@@ -1809,6 +1809,37 @@ body.print-view .deal-stage-heading { display: none; }
   body.print-view .qo-tag { background: none !important; border: 1px solid currentColor; color: inherit !important; }
   @media print { .quote-layout { display: none !important; } .quote-options { background: none; } .qo-tag { background: none; border: 1px solid #999; color: #000; } }
 /* ---- end Quote as separate options ---- */
+/* Opening animation for the website and installed web app. */
+.launch-splash {
+  position: fixed; inset: 0; z-index: 1200; overflow: hidden;
+  display: grid; place-items: center; isolation: isolate;
+  background: radial-gradient(circle at 50% 46%, #29204a 0, #141122 39%, #090b14 100%);
+  color: #fff; font-family: var(--font-display); text-align: center;
+  opacity: 1; transition: opacity 340ms ease, visibility 340ms ease;
+}
+.launch-splash.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
+.launch-content { position: relative; z-index: 1; width: min(280px, calc(100vw - 48px)); }
+.launch-mark { width: 112px; height: 112px; margin: 0 auto 15px; display: grid; place-items: center;
+  border-radius: 30px; background: rgba(255,255,255,.055); border: 1px solid rgba(199,169,255,.20);
+  box-shadow: 0 18px 60px #09041180, inset 0 1px #ffffff21;
+  animation: launch-appear 650ms cubic-bezier(.2,.8,.2,1) both;
+}
+.launch-mark img { display: block; width: 88px; height: auto; filter: drop-shadow(0 6px 15px #9e50ff80); }
+.launch-title { font-size: 25px; font-weight: 750; letter-spacing: -.04em; animation: launch-appear 600ms 100ms both; }
+.launch-caption { margin-top: 3px; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: #c8bbdf;
+  animation: launch-appear 600ms 180ms both; }
+.launch-progress { height: 2px; margin: 26px auto 0; width: 124px; overflow: hidden; border-radius: 4px; background: #ffffff29; }
+.launch-progress span { display: block; width: 100%; height: 100%; transform-origin: left; background: linear-gradient(90deg,#8846fa,#dd91ff);
+  animation: launch-fill 950ms 120ms ease-out both; }
+.launch-orbit { position: absolute; left: 50%; top: 50%; width: 290px; height: 290px; border: 1px solid #a675e622;
+  border-radius: 50%; transform: translate(-50%,-50%) rotate(-24deg) scaleX(1.65); pointer-events: none; }
+.launch-orbit-one { animation: launch-orbit 1100ms ease-out both; }
+.launch-orbit-two { width: 370px; height: 370px; opacity: .55; animation: launch-orbit 1100ms 120ms ease-out both; }
+@keyframes launch-appear { from { opacity: 0; transform: translateY(16px) scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes launch-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes launch-orbit { from { opacity: 0; scale: .75; } to { opacity: .8; scale: 1; } }
+@media (prefers-reduced-motion: reduce) { .launch-splash { display: none; } }
+@media print { .launch-splash { display: none !important; } }
 /* Docket roll: the printer driver supplies continuous paper and the cut length. */
 #receipt-sheet { display: none; }
 @page receipt { size: auto; margin: 0; }
