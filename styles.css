@@ -1810,32 +1810,43 @@ body.print-view .deal-stage-heading { display: none; }
 .launch-splash {
   position: fixed; inset: 0; z-index: 1200; overflow: hidden;
   display: grid; place-items: center; isolation: isolate;
-  background: radial-gradient(circle at 50% 46%, #29204a 0, #141122 39%, #090b14 100%);
+  background: radial-gradient(ellipse at 50% 44%, #121a36 0, #080c18 48%, #03050b 100%);
   color: #fff; font-family: var(--font-display); text-align: center;
   opacity: 1; transition: opacity 340ms ease, visibility 340ms ease;
+  animation: launch-dismiss 340ms 3s both;
 }
 .launch-splash.is-leaving { opacity: 0; visibility: hidden; pointer-events: none; }
-.launch-content { position: relative; z-index: 1; width: min(280px, calc(100vw - 48px)); }
-.launch-mark { width: 112px; height: 112px; margin: 0 auto 15px; display: grid; place-items: center;
-  border-radius: 30px; background: rgba(255,255,255,.055); border: 1px solid rgba(199,169,255,.20);
-  box-shadow: 0 18px 60px #09041180, inset 0 1px #ffffff21;
-  animation: launch-appear 650ms cubic-bezier(.2,.8,.2,1) both;
+.launch-content { position: relative; z-index: 1; width: min(340px, calc(100vw - 40px)); }
+.launch-mark { position: relative; width: min(240px, 60vw); margin: 0 auto 24px;
+  animation: launch-appear 700ms cubic-bezier(.2,.8,.2,1) both;
 }
-.launch-mark img { display: block; width: 88px; height: auto; filter: drop-shadow(0 6px 15px #9e50ff80); }
-.launch-title { font-size: 25px; font-weight: 750; letter-spacing: -.04em; animation: launch-appear 600ms 100ms both; }
-.launch-caption { margin-top: 3px; font-size: 12px; letter-spacing: .09em; text-transform: uppercase; color: #c8bbdf;
-  animation: launch-appear 600ms 180ms both; }
-.launch-progress { height: 2px; margin: 26px auto 0; width: 124px; overflow: hidden; border-radius: 4px; background: #ffffff29; }
-.launch-progress span { display: block; width: 100%; height: 100%; transform-origin: left; background: linear-gradient(90deg,#8846fa,#dd91ff);
-  animation: launch-fill 950ms 120ms ease-out both; }
-.launch-orbit { position: absolute; left: 50%; top: 50%; width: 290px; height: 290px; border: 1px solid #a675e622;
-  border-radius: 50%; transform: translate(-50%,-50%) rotate(-24deg) scaleX(1.65); pointer-events: none; }
-.launch-orbit-one { animation: launch-orbit 1100ms ease-out both; }
-.launch-orbit-two { width: 370px; height: 370px; opacity: .55; animation: launch-orbit 1100ms 120ms ease-out both; }
-@keyframes launch-appear { from { opacity: 0; transform: translateY(16px) scale(.92); } to { opacity: 1; transform: none; } }
-@keyframes launch-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-@keyframes launch-orbit { from { opacity: 0; scale: .75; } to { opacity: .8; scale: 1; } }
-@media (prefers-reduced-motion: reduce) { .launch-splash { display: none; } }
+.launch-mark img { position: relative; z-index: 1; display: block; width: 100%; height: auto;
+  filter: drop-shadow(0 0 24px #397aff45); }
+.launch-title { color: #fff; font-size: clamp(23px, 5vw, 29px); font-weight: 750; letter-spacing: .12em;
+  animation: launch-appear 550ms 260ms both; }
+.launch-caption { margin-top: 9px; font-size: 11px; letter-spacing: .13em; text-transform: uppercase; color: #aab9d4;
+  animation: launch-appear 500ms 360ms both; }
+.launch-orbit { position: absolute; z-index: 2; left: -12%; top: -20%; width: 124%; aspect-ratio: 1;
+  border-radius: 50%; border: 1px solid #579eff18; pointer-events: none;
+  animation: launch-sweep 1000ms 140ms cubic-bezier(.2,.7,.3,1) both; }
+.launch-orbit::after { content: ""; position: absolute; top: 11%; left: 11%; width: 5px; height: 5px;
+  border-radius: 50%; background: #d5f5ff; box-shadow: 0 0 10px 3px #429dff, 0 0 28px 5px #347aff80; }
+.launch-stars { position: absolute; inset: 0; opacity: .55;
+  background-image: radial-gradient(circle at 18% 23%, #a4cdff 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 18%, #b8c9ff 0 1px, transparent 2px),
+    radial-gradient(circle at 85% 65%, #8dafff 0 1px, transparent 2px),
+    radial-gradient(circle at 24% 78%, #9dc8ff 0 1px, transparent 2px),
+    radial-gradient(circle at 65% 84%, #b8c9ff 0 1px, transparent 2px);
+  animation: launch-stars 1000ms ease-out both; }
+@keyframes launch-appear { from { opacity: 0; transform: translateY(10px) scale(.88); } to { opacity: 1; transform: none; } }
+@keyframes launch-sweep { 0% { opacity: 0; transform: rotate(-65deg); } 15% { opacity: 1; } 85% { opacity: 1; } 100% { opacity: 0; transform: rotate(295deg); } }
+@keyframes launch-stars { from { opacity: 0; } to { opacity: .55; } }
+@keyframes launch-dismiss { to { opacity: 0; visibility: hidden; pointer-events: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .launch-splash { transition-duration: 120ms; animation: launch-dismiss 120ms both; }
+  .launch-mark, .launch-title, .launch-caption, .launch-stars { animation: none; }
+  .launch-orbit { display: none; }
+}
 @media print { .launch-splash { display: none !important; } }
 /* Docket roll: the printer driver supplies continuous paper and the cut length. */
 #receipt-sheet { display: none; }

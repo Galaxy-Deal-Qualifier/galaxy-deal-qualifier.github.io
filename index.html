@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v12.4
+  Galaxy Deals v12.5
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,7 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=12.4" />
+<link rel="stylesheet" href="styles.css?v=12.5" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -53,13 +53,11 @@
 </head>
 <body>
 <div id="launch-splash" class="launch-splash" role="status" aria-label="Opening Galaxy Deals">
-  <div class="launch-orbit launch-orbit-one" aria-hidden="true"></div>
-  <div class="launch-orbit launch-orbit-two" aria-hidden="true"></div>
+  <div class="launch-stars" aria-hidden="true"></div>
   <div class="launch-content">
-    <div class="launch-mark"><img src="logo-96.png?v=1" width="96" height="84" alt="" /></div>
-    <div class="launch-title">Galaxy Deals</div>
+    <div class="launch-mark"><span class="launch-orbit" aria-hidden="true"></span><img src="launch-logo.png?v=12.5" width="240" height="197" alt="" fetchpriority="high" /></div>
+    <div class="launch-title">GALAXY DEALS</div>
     <div class="launch-caption">Retail pricing &amp; quotes</div>
-    <div class="launch-progress" aria-hidden="true"><span></span></div>
   </div>
 </div>
 <div class="app">
@@ -5940,6 +5938,9 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "12.5", d: "8 Oct 2026", t: "Galaxy opening animation",
+      items: ["Your cosmic tag logo now opens the app with a gentle zoom, a blue orbit sweep and solid white GALAXY DEALS text. The screen fades into the quote page after about 1.5 seconds, with a short fade for reduced motion."]
+    },
     { v: "12.4", d: "8 Oct 2026", t: "Receipt printing and print controls",
       items: [
         "<strong>Quote receipts use an 80mm roll.</strong> A 20mm space and a small end marker follow the disclaimer to help preserve the bottom space when the printer trims blank paper.",
@@ -8090,9 +8091,9 @@
     function finish() {
       if (!splash.isConnected || splash.classList.contains("is-leaving")) return;
       splash.classList.add("is-leaving");
-      window.setTimeout(() => splash.remove(), reduceMotion ? 0 : 360);
+      window.setTimeout(() => splash.remove(), reduceMotion ? 140 : 360);
     }
-    window.setTimeout(finish, reduceMotion ? 0 : 1100);
+    window.setTimeout(finish, reduceMotion ? 0 : 1150);
     window.addEventListener("pageshow", e => { if (e.persisted) finish(); });
   })();
 </script>
