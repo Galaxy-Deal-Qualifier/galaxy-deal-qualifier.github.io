@@ -1,0 +1,12 @@
+/* Samsung store typefaces (v13.1). Loads after galaxy-theme.css.
+   Headings and product names follow Samsung Sharp Sans, everything else follows SamsungOne.
+   The real faces are used where they're installed; elsewhere the closest free matches load from
+   Google Fonts (Outfit for Sharp Sans, Inter for SamsungOne). Only the fonts change here. */
+html:root, html:root[data-theme] {
+  --font-display: "SamsungSharpSans", "Samsung Sharp Sans", "Outfit", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+  --font-body: "SamsungOne", "Samsung One", "Inter", "Helvetica Neue", Arial, sans-serif;
+}
+/* Samsung sets every heading and product name in Sharp Sans */
+h1, h2, h3, h4, .card-title, .sec-title, .page-title, .tour-card h3, .side-name {
+  font-family: var(--font-display);
+}
