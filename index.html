@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v12.5
+  Galaxy Deals v12.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -20,7 +20,9 @@
 <meta name="apple-mobile-web-app-title" content="Galaxy Deals" />
 <script src="brand-icons.js?v=transparent1" defer></script>
 <script src="jspdf.umd.min.js" defer></script>
-<link rel="stylesheet" href="styles.css?v=12.5" />
+<script src="quote-pdf-fonts.js?v=12.6" defer></script>
+<script src="quote-pdf.js?v=12.6" defer></script>
+<link rel="stylesheet" href="styles.css?v=12.6" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -3535,49 +3537,17 @@
   function downloadQuotePdf() {
     if (!cart.length) { printStatus("Add at least one device before downloading a quote.", "warn"); return; }
     if (!window.jspdf) { printStatus("PDF download is unavailable. Refresh the page and try again.", "warn"); return; }
-    const pdf = new window.jspdf.jsPDF();
-    const quote = computeQuote();
-    let y = 22;
-    const clean = value => String(value).replace(/−/g, "-").replace(/—/g, "-").replace(/·/g, "|");
-    function line(text, size = 11, bold = false) {
-      pdf.setFont("helvetica", bold ? "bold" : "normal"); pdf.setFontSize(size);
-      const rows = pdf.splitTextToSize(clean(text), 170);
-      rows.forEach(row => { if (y > 275) { pdf.addPage(); y = 22; } pdf.text(row, 20, y); y += size * 0.45 + 2; });
+    if (!window.renderGalaxyQuotePdf || !window.galaxyQuoteFonts) {
+      printStatus("PDF layout is still loading. Try again in a moment.", "warn"); return;
     }
-    line("Galaxy Deals", 12, true);
-    line("Customer Quote", 24, true);
-    line("Quote created " + new Date().toLocaleDateString("en-AU"));
     const valid = document.getElementById("print-valid");
-    if (!valid.hidden) line(valid.textContent);
-    if (preparedBy()) line("Served by " + preparedBy());
-    y += 8;
-    quote.items.forEach(({item, result, ecoApplied, lineTotal}) => {
-      line(item.n, 14, true);
-      line(item.v + (item.colour ? " | " + item.colour : ""));
-      line("Regular price: " + fmt(item.p));
-      result.lines.forEach(discount => line(discount.name + ": -" + fmt(discount.amount)));
-      ecoApplied.forEach(discount => line(discount.name + ": -" + fmt(discount.amount)));
-      line("Line total: " + fmt(lineTotal), 12, true);
-      line("incl. GST " + fmt(gstIn(lineTotal)), 10); y += 6;
+    const pdf = window.renderGalaxyQuotePdf({
+      quote: computeQuote(),
+      options: quoteOptionsOn() ? quoteOptions().map(o => ({ name: quoteOptionName(o), q: o.q })) : [],
+      date: new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" }).toUpperCase(),
+      valid: valid.hidden ? "" : valid.textContent,
+      servedBy: preparedBy(), fmt, gstIn, quoteSale
     });
-    if (quote.ngcLine) line("New Galaxy Club (" + quote.ngcLine.plan.term + "): " + fmt(quote.ngcLine.planPrice));
-    if (quote.manualCredit) line("Trade-in credit: -" + fmt(quote.manualCredit));
-    quote.bonuses.forEach(b => line(b.name + ": -" + fmt(b.amount)));
-    y += 6;
-    if (quoteOptionsOn()) {
-      line("Separate options - prices are not added together", 14, true); y += 2;
-      quoteOptions().forEach((o, k) => {
-        line("Option " + (k + 1) + ": " + quoteOptionName(o), 12, true);
-        line(fmt(o.q.total), 18, true);
-        line(quoteOptionSub(o), 10); y += 4;
-      });
-    } else {
-    line("Customer total: " + fmt(quote.total), 20, true);
-    line("Includes GST of " + fmt(gstIn(quoteSale(quote))) + " on the sale, before trade-in", 10);
-    if (quote.savings > 0) line("You save " + fmt(quote.savings), 13, true);
-    }
-    y += 8;
-    line("This is a quoting aid. Offers and prices may change. Always confirm the final price in POS at the time of purchase.", 9);
     savePdfFile(pdf, "Galaxy-Deals-Quote-" + new Date().toISOString().slice(0,10) + ".pdf");
   }
 
@@ -5938,6 +5908,15 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { v: "12.6", d: "8 Oct 2026", t: "Polished quote PDFs and recent improvements",
+      items: [
+        "<strong>Customer PDFs redesigned</strong> with a text-only Galaxy Deals header, embedded fonts, aligned prices, light grey total and savings panels, and a tidy footer. No logo or coloured accents. Longer quotes continue across pages; separate options keep their own totals.",
+        "<strong>New opening animation:</strong> the cosmic tag logo gently zooms in with a blue orbit sweep and solid white GALAXY DEALS text, then fades into the app after about 1.5 seconds. Reduced motion uses a short fade.",
+        "<strong>Receipt printing:</strong> fixed 80mm layout, with 20mm below the disclaimer and a small end marker to help preserve the gap when a docket printer trims blank paper.",
+        "<strong>Simpler print controls:</strong> one line with sideways scrolling on small screens. Removed the docket roll selector and Copy quote option.",
+        "<strong>Sales Kit alerts:</strong> new-deal and deal-finished boxes stay in Sales Kit, with the attention dot on its tab. Includes the recent Tab S12+ accessories and offer updates."
+      ]
+    },
     { v: "12.5", d: "8 Oct 2026", t: "Galaxy opening animation",
       items: ["Your cosmic tag logo now opens the app with a gentle zoom, a blue orbit sweep and solid white GALAXY DEALS text. The screen fades into the quote page after about 1.5 seconds, with a short fade for reduced motion."]
     },
