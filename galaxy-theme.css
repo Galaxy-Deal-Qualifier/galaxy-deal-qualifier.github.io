@@ -1,10 +1,19 @@
-/* Light purple theme (v12.8–v13.2). Loads last, after taste-refine.css.
-   LIGHT MODE ONLY: a solid light purple page with white cards and violet primary actions.
-   Dark mode is deliberately untouched by this file, so it looks exactly as it did in v12.7
-   (styles.css + brand-accent.css + taste-refine.css). Every rule is scoped with
+/* Purple theme (v12.8). Loads last, after taste-refine.css.
+   LIGHT MODE: a solid light purple page with white cards and violet primary actions.
+   DARK MODE: only the page background changes, to a very dark purple; everything else is the
+   v12.7 dark look (styles.css + brand-accent.css + taste-refine.css), untouched by this file. Every rule is scoped with
    :where(html[data-theme="light"]), which adds no specificity, so the light look is identical to
    v13.1. Screen only: the printed quote, the print preview and the receipt keep their
    black-on-white paper palette. */
+
+/* Dark mode: the page background only. #0F0B1A is darker than the v12.7 cards (#14171F), so
+   they still read as raised; same violet hue as the dark accent. */
+@media screen {
+  :root[data-theme="dark"] { --bg: #0f0b1a; }
+}
+@media screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --bg: #0f0b1a; }
+}
 
 @media screen {
   :root:where([data-theme="light"]) {
