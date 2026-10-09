@@ -81,9 +81,13 @@
 }
 
 /* v13.2: the logo badge uses the same fill and edge as the "Your Store" box under it (both themes),
-   without the accent glow. Overrides logo-theme.css, which stays as Harsha left it. */
+   keeping its soft accent glow. Overrides logo-theme.css, which stays as Harsha left it. */
 html body .side-brand .side-mark.side-mark {
   background: var(--surface-2);
   border-color: var(--line);
-  box-shadow: none;
+  width: 38px; min-width: 38px; height: 38px; flex: 0 0 38px;
 }
+/* The logo, the collapse button and the Your Store box share the sidebar's edges, and the
+   tagline sits on one line in the body font so the name block centres on the badge. */
+body:not(.print-view):not(.print-compare):not(.sidebar-collapsed) .side-brand { padding-left: 0; padding-right: 0; }
+body:not(.print-view):not(.print-compare) .side-name small { font-family: var(--font-body); white-space: nowrap; }
