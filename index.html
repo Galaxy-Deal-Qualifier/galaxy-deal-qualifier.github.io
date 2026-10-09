@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v13.5
+  Galaxy Deals v13.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -567,7 +567,7 @@
   <div class="saleskit-head">
     <div>
       <h2>Presets</h2>
-      <p class="saleskit-sub">Start a common quote in one click. Quotes made often on this computer are added automatically.</p>
+      <p class="saleskit-sub">Start a common Education or SMB quote in one click. Quotes made often on this computer are added automatically.</p>
     </div>
   </div>
   <div id="presets-body"></div>
@@ -6066,6 +6066,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "13.6", d: "9 Oct 2026", t: "Presets are Education and SMB only",
+      items: [
+        "<strong>Presets only show Education and SMB quotes.</strong> The Standard presets are gone, and a Standard quote is no longer added under Most made on this computer, because it is quick to pick by hand.",
+        "The Education presets stay: Galaxy S26 Ultra 256GB, Galaxy S26 256GB and Galaxy Tab S11 128GB Wi-Fi.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "13.5", d: "9 Oct 2026", t: "Presets",
       items: [
         "<strong>A new Presets page</strong>, under Customer Quote in the sidebar. One click starts a common quote, such as a Galaxy S26 Ultra 256GB on Education, with the customer type, device and Trade-In already set. Offers apply exactly as if you'd picked it yourself.",
@@ -6918,7 +6924,7 @@
   // One summary per day for What's New (keyed by the entries' d). See patches/zzz-whatsnew-days.py.
   const WHATS_NEW_DAYS = {
     "9 Oct 2026": { t: "Presets, a tidier quote page and Samsung fonts", items: [
-      "<strong>Presets:</strong> a new page that starts a common quote in one click, and learns the quotes made most on each computer.",
+      "<strong>Presets:</strong> a new page that starts a common Education or SMB quote in one click, and learns the ones made most on each computer.",
       "<strong>A tidier Customer Quote:</strong> Standard, Education or SMB is picked at the top, the retail price shows once, Tailor the Deal is one card, and an empty quote has nothing to print until a device is added.",
       "<strong>A calmer interface:</strong> flatter backgrounds, plain card edges, prices that line up digit for digit, and the same press feel on every button. Light mode is light purple with white cards; dark mode is the default and looks as it did.",
       "<strong>Samsung store fonts:</strong> headings and device names use the same style of typeface as the Samsung online store, and the logo badge matches the Your Store box.",
@@ -7113,14 +7119,12 @@
   // is on. Starting one replays the normal steps, so pricing is exactly what picking by hand gives.
   const PRESETS_BUILTIN = [
     { items: [{ m: "m1", v: "256GB", mode: "edu" }] },
-    { items: [{ m: "m1", v: "256GB", mode: "none" }] },
-    { items: [{ m: "m3", v: "256GB", mode: "none" }], tradeIn: true },
     { items: [{ m: "m3", v: "256GB", mode: "edu" }] },
-    { items: [{ m: "m5", v: "256GB", mode: "none" }] },
-    { items: [{ m: "m6", v: "256GB", mode: "none" }] },
-    { items: [{ m: "m7", v: "128GB", mode: "none" }] },
     { items: [{ m: "m11", v: "128GB Wi-Fi", mode: "edu" }] }
   ];
+  // Presets are for Education and SMB quotes only (v13.6): a Standard quote is quick to pick by
+  // hand, so any quote with a Standard device on it is never offered as a preset.
+  const presetNotStandard = p => p.items.every(i => i.mode && i.mode !== "none");
   const PRESET_KEY = "galaxyPresetStats";
   const PRESET_MODE = { none: "Standard", edu: "Education", smb: "SMB" };
   const presetSig = p => p.items.map(i => i.m + "|" + i.v + "|" + i.mode).sort().join(";") + (p.tradeIn ? "#ti" : "");
@@ -7210,12 +7214,12 @@
     const st = presetStats();
     const builtSigs = new Set(PRESETS_BUILTIN.map(presetSig));
     const popular = Object.keys(st).map(k => st[k])
-      .filter(e => e.count >= 2 && presetUsable(e) && !builtSigs.has(presetSig(e)))
+      .filter(e => e.count >= 2 && presetUsable(e) && presetNotStandard(e) && !builtSigs.has(presetSig(e)))
       .sort((a, b) => b.count - a.count || String(b.last).localeCompare(String(a.last)))
       .slice(0, 6);
     const lookup = {};
     PRESETS_BUILTIN.concat(popular).forEach(p => { lookup[presetSig(p)] = p; });
-    const builtIn = PRESETS_BUILTIN.filter(presetUsable)
+    const builtIn = PRESETS_BUILTIN.filter(p => presetUsable(p) && presetNotStandard(p))
       .map(p => ({ p, made: st[presetSig(p)] }))
       .sort((a, b) => ((b.made && b.made.count) || 0) - ((a.made && a.made.count) || 0));
     body.innerHTML = `
@@ -7224,10 +7228,10 @@
           ${popular.length ? '<button type="button" class="link-row preset-reset" id="preset-reset">Clear these</button>' : ""}</div>
         ${popular.length
           ? `<div class="preset-grid">${popular.map(e => presetCard(e, e)).join("")}</div>`
-          : `<p class="preset-empty">Quotes printed, downloaded or emailed here are counted. When the same quote has been made twice, it appears here as a preset.</p>`}
+          : `<p class="preset-empty">Education and SMB quotes printed, downloaded or emailed here are counted. When the same quote has been made twice, it appears here as a preset.</p>`}
       </section>
       <section class="preset-section">
-        <div class="preset-head"><h3 class="card-title">Standard presets</h3></div>
+        <div class="preset-head"><h3 class="card-title">Common quotes</h3></div>
         <div class="preset-grid">${builtIn.map(x => presetCard(x.p, x.made && x.made.count >= 1 ? x.made : null)).join("")}</div>
       </section>`;
     body.querySelectorAll("[data-preset]").forEach(b => {
