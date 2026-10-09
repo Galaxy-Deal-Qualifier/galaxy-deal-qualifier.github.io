@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v13.6
+  Galaxy Deals v13.7
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -6066,6 +6066,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "13.7", d: "9 Oct 2026", t: "More Education presets",
+      items: [
+        "<strong>Five more Education presets</strong> under Common quotes: Galaxy Z Fold8, Z Flip8, Z Fold8 Ultra, S26+ (all 256GB) and Tab S11 Ultra 256GB Wi-Fi.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "13.6", d: "9 Oct 2026", t: "Presets are Education and SMB only",
       items: [
         "<strong>Presets only show Education and SMB quotes.</strong> The Standard presets are gone, and a Standard quote is no longer added under Most made on this computer, because it is quick to pick by hand.",
@@ -6924,7 +6929,7 @@
   // One summary per day for What's New (keyed by the entries' d). See patches/zzz-whatsnew-days.py.
   const WHATS_NEW_DAYS = {
     "9 Oct 2026": { t: "Presets, a tidier quote page and Samsung fonts", items: [
-      "<strong>Presets:</strong> a new page that starts a common Education or SMB quote in one click, and learns the ones made most on each computer.",
+      "<strong>Presets:</strong> a new page that starts a common Education or SMB quote in one click (S26 series, Fold8, Flip8 and Tab S11), and learns the ones made most on each computer.",
       "<strong>A tidier Customer Quote:</strong> Standard, Education or SMB is picked at the top, the retail price shows once, Tailor the Deal is one card, and an empty quote has nothing to print until a device is added.",
       "<strong>A calmer interface:</strong> flatter backgrounds, plain card edges, prices that line up digit for digit, and the same press feel on every button. Light mode is light purple with white cards; dark mode is the default and looks as it did.",
       "<strong>Samsung store fonts:</strong> headings and device names use the same style of typeface as the Samsung online store, and the logo badge matches the Your Store box.",
@@ -7119,7 +7124,12 @@
   // is on. Starting one replays the normal steps, so pricing is exactly what picking by hand gives.
   const PRESETS_BUILTIN = [
     { items: [{ m: "m1", v: "256GB", mode: "edu" }] },
+    { items: [{ m: "m2", v: "256GB", mode: "edu" }] },
     { items: [{ m: "m3", v: "256GB", mode: "edu" }] },
+    { items: [{ m: "m4", v: "256GB", mode: "edu" }] },
+    { items: [{ m: "m5", v: "256GB", mode: "edu" }] },
+    { items: [{ m: "m6", v: "256GB", mode: "edu" }] },
+    { items: [{ m: "m10", v: "256GB Wi-Fi", mode: "edu" }] },
     { items: [{ m: "m11", v: "128GB Wi-Fi", mode: "edu" }] }
   ];
   // Presets are for Education and SMB quotes only (v13.6): a Standard quote is quick to pick by
