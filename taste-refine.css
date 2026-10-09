@@ -113,3 +113,43 @@ body:not(.print-view):not(.print-compare) .side-name small { font-family: var(--
 .rel-sub li { font-size: 13px; }
 @media (prefers-reduced-motion: reduce) { .rel-more > summary::before { transition: none; } }
 @media print { .rel-more { display: none; } }
+
+/* v13.4: Customer Quote tidy. */
+/* Customer type sits beside the page title. */
+.page-head .customer-type { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; }
+.page-head .customer-type .field-label { margin: 0; }
+#quote-modes button { min-width: 88px; }
+/* Step 02 is one card; its sections are rows divided by a rule. */
+#deal-stage > .deal-stage-head { margin-bottom: 2px; }
+#deal-stage > .card {
+  background: none; border: 0; border-top: 1px solid var(--line); border-radius: 0;
+  box-shadow: none; padding: 18px 0; margin: 0;
+}
+#deal-stage > .card:last-of-type { padding-bottom: 6px; }
+.deal-offers-link { border-top: 1px solid var(--line); padding-top: 14px; margin-top: 6px; }
+.link-row {
+  background: none; border: 0; padding: 0; font: inherit; font-size: 13px; font-weight: 600;
+  color: var(--accent); cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+}
+.link-row::after { content: "\2192"; }
+.link-row:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* An empty quote shows no total or payment options, and nothing to print. */
+#ledger-panel.is-empty .pay-opts,
+#ledger-panel.is-empty .total-row,
+#ledger-panel.is-empty #quote-gst,
+#ledger-panel.is-empty #quote-savings { display: none !important; }
+#ledger-panel .ledger-actions button:disabled,
+#quote-bar-print:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+/* Accessories: four lines per type until asked. */
+.acc-group:not(.open) .acc-extra { display: none; }
+.acc-more {
+  background: none; border: 0; padding: 6px 0 2px; font: inherit; font-size: 13px; font-weight: 600;
+  color: var(--accent); cursor: pointer;
+}
+.acc-more:hover { text-decoration: underline; text-underline-offset: 3px; }
+/* The stacking notes, now at the foot of the Sales Kit. */
+.sk-rules { margin-top: 20px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); padding: 4px 20px; }
+.sk-rules > summary { cursor: pointer; padding: 14px 0; font-weight: 600; color: var(--ink); }
+.sk-rules[open] > summary { border-bottom: 1px solid var(--line); margin-bottom: 8px; }
+.sk-rules p { font-size: 13px; line-height: 1.65; color: var(--ink-dim); max-width: 90ch; }
+@media print { .deal-offers-link, .sk-rules { display: none; } }

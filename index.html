@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v13.3
+  Galaxy Deals v13.4
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -54,7 +54,7 @@
 </style>
 <style>@media print{.sheet-sync-controls{display:none!important}}body.print-view .sheet-sync-controls{display:none!important}</style>
 <link rel="stylesheet" href="design-polish.css?v=2" />
-<link rel="stylesheet" href="taste-refine.css?v=b4af0189dc" />
+<link rel="stylesheet" href="taste-refine.css?v=b4b9d8196d" />
 <link rel="stylesheet" href="galaxy-theme.css?v=81a505c64a" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..800&family=Inter:wght@400..700&display=swap" />
 <link rel="stylesheet" href="samsung-font.css?v=c47b15d136" />
@@ -127,6 +127,14 @@
       <p class="workspace-eyebrow">SALES WORKSPACE</p><h1 class="page-title">Build a Customer Quote</h1><p class="page-sub">Choose a device, tailor the deal, and review the final price.</p>
       <p class="page-meta"><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="4" y="5.5" width="16" height="14.5" rx="2"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg>Sales Kit checked on <strong data-sync-date>24 Sept 2026</strong></span><span><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 19 6v5.5c0 4.3-3 7.6-7 9-4-1.4-7-4.7-7-9V6z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg>Always confirm the final price in POS</span></p>
     </div>
+    <div class="customer-type">
+      <span class="field-label" id="quote-modes-label">Customer</span>
+      <div class="segmented" id="quote-modes" role="group" aria-labelledby="quote-modes-label">
+        <button type="button" data-mode="none" aria-pressed="true">Standard</button>
+        <button type="button" data-mode="edu" aria-pressed="false">Education</button>
+        <button type="button" data-mode="smb" aria-pressed="false">SMB</button>
+      </div>
+    </div>
   </div>
 
   <div class="col" id="config-col">
@@ -160,11 +168,6 @@
           <span class="field-label">Retail price</span>
           <div id="price-readout" class="price-readout">$0.00</div>
         </div>
-        <div class="segmented" role="group" aria-label="Customer pricing type">
-          <button type="button" data-mode="none" aria-pressed="true">Standard</button>
-          <button type="button" data-mode="edu" aria-pressed="false">Education</button>
-          <button type="button" data-mode="smb" aria-pressed="false">SMB</button>
-        </div>
       </div>
 
       <div id="stock-indicator"></div>
@@ -174,7 +177,8 @@
       <button class="primary" id="add-btn" type="button"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 5v14M5 12h14"/></svg>Add to quote</button>
     </section>
 
-    <div class="deal-stage-heading"><p class="section-kicker">STEP 02</p><h2 class="sec-title">Tailor the Deal</h2><p class="sec-desc">Enable the options that apply to your customer.</p></div>
+    <section class="card" id="deal-stage">
+    <div class="sec-head deal-stage-head"><div><p class="section-kicker">STEP 02</p><h2 class="sec-title">Tailor the Deal</h2><span class="sec-desc">Enable the options that apply to your customer.</span></div></div>
     <section class="card" id="tradein-card">
       <label class="sec-switch">
         <span class="sec-switch-text">
@@ -393,8 +397,10 @@
       </div>
       <div id="accessories-body"></div>
     </section>
+    <div class="deal-offers-link"><button type="button" class="link-row" id="open-saleskit">See every live offer in the Sales Kit</button></div>
+    </section>
 
-    <details class="card">
+    <details class="card" hidden>
       <summary>
         <span class="sec-title">Active Offers Reference</span>
         <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m9 6 6 6-6 6"/></svg>
@@ -815,6 +821,12 @@
   </div>
   <div id="saleskit-body"></div>
   <div id="expired-deals" class="sk-expired" hidden></div>
+  <details class="sk-rules" id="sk-rules">
+    <summary>How offers stack, ECO vouchers and printing</summary>
+    <p><strong>How ECO vouchers work here.</strong> An ECO voucher is never taken off the device that earns it. Tick it on, and it is spent against an eligible <strong>Watch, Buds or Tablet</strong> elsewhere in the same quote — capped at what that product costs, with any unused balance called out. With no eligible ECO product in the quote, it stays listed but reduces nothing. Offers needing a <strong>unique code</strong> (Memory Upgrade, Samsung Wallet) only come off once ticked, since they're keyed in manually at POS.</p>
+    <p><strong>Stacking rules.</strong> <strong>SMB</strong> replaces every other offer on a line (flat 15% off). <strong>Education</strong> applies the education rate and drops any sales-kit offer marked education/SMB-exclusive; for Watch9 and Watch Ultra 2 the boosted 25% rate replaces the standard 20% rather than adding to it. The <strong>wearable MBO</strong> (30% off a watch bundled with a Flip8/Fold8/Fold8 Ultra/S26) replaces all other offers on that watch. Fold/Flip <strong>ECO vouchers and trade-in bonuses cannot be combined</strong> — with a trade-in active the bonus is paid and the voucher is shown as unavailable. New Galaxy Club carries two separate offers: a <strong>$100 bonus off the device</strong>, and a <strong>plan discount that comes off the NGC price itself</strong>.</p>
+    <p><strong>Printing.</strong> "Print quote" strips the page back to the customer quote — lines, credits and total, stamped <em>Quote Created</em> with today's date. "Print receipt" formats it for an 80 mm docket roll. You can also download a PDF or email the quote.</p>
+  </details>
 </section>
 
 
@@ -824,9 +836,6 @@
 
 <footer class="footer">
   <div class="footer-inner">
-  <p><strong>How ECO vouchers work here.</strong> An ECO voucher is never taken off the device that earns it. Tick it on, and it is spent against an eligible <strong>Watch, Buds or Tablet</strong> elsewhere in the same quote — capped at what that product costs, with any unused balance called out. With no eligible ECO product in the quote, it stays listed but reduces nothing. Offers needing a <strong>unique code</strong> (Memory Upgrade, Samsung Wallet) only come off once ticked, since they're keyed in manually at POS.</p>
-  <p><strong>Stacking rules.</strong> <strong>SMB</strong> replaces every other offer on a line (flat 15% off). <strong>Education</strong> applies the education rate and drops any sales-kit offer marked education/SMB-exclusive; for Watch9 and Watch Ultra 2 the boosted 25% rate replaces the standard 20% rather than adding to it. The <strong>wearable MBO</strong> (30% off a watch bundled with a Flip8/Fold8/Fold8 Ultra/S26) replaces all other offers on that watch. Fold/Flip <strong>ECO vouchers and trade-in bonuses cannot be combined</strong> — with a trade-in active the bonus is paid and the voucher is shown as unavailable. New Galaxy Club carries two separate offers: a <strong>$100 bonus off the device</strong>, and a <strong>plan discount that comes off the NGC price itself</strong>.</p>
-  <p><strong>Printing.</strong> "Print quote" strips the page back to the customer quote — lines, credits and total, stamped <em>Quote Created</em> with today's date. "Print receipt" formats it for an 80 mm docket roll. You can also download a PDF or email the quote.</p>
   <p>Device catalogue details come from <strong>Pronto</strong>. Scheduled checks refresh Education and supported retail offers from the <a href="https://sites.google.com/view/samsungsaleskit/home" target="_blank" rel="noopener">Samsung Sales Kit</a>. Trade-in, bundle, voucher and other complex rules are reviewed separately. Always confirm the final price in POS.</p>
   <p class="copyright">&copy; <span class="copyright-year">2026</span> Isaiah Graham &amp; Harsha Parthiban</p>
   </div>
@@ -1460,7 +1469,7 @@
   const addBtn2 = document.getElementById("add-btn-2");
   // Scoped to the device card: the accessories question is a segmented group too, and it must
   // not be wired into the pricing-mode handler.
-  const segButtons = Array.from(document.querySelectorAll("#device-card .segmented button"));
+  const segButtons = Array.from(document.querySelectorAll("#quote-modes button"));
   const tradeinToggle = document.getElementById("tradein-toggle");
   const tradeinRows = document.getElementById("tradein-rows");
   const ti1desc = document.getElementById("ti1-desc"), ti1val = document.getElementById("ti1-val");
@@ -1633,7 +1642,7 @@
       return;
     }
     const qty = res.qty;
-    const cls = qty <= 0 ? "zero" : qty <= 2 ? "low" : "ok";
+    const cls = qty <= 0 ? "zero" : qty <= 1 ? "low" : "ok";
     const word = qty <= 0 ? "Out of stock" : qty === 1 ? "1 in stock" : qty + " in stock";
     const which = res.byColour ? ` (${escapeHtml(colour)})` : "";
     el.innerHTML = `<div class="stock-badge ${cls}">${word}${which} at ${escapeHtml(store)}</div>${freshness}`;
@@ -1674,11 +1683,14 @@
 
     // How many there are is the thing worth knowing before answering, so it goes in the question.
     const available = all.filter(r => r.qty > 0).length;
+    // Chargers and cables fit everything, so they swamp the count; lead with what's made for it.
+    const madeFor = all.filter(r => (fromList || r.qty > 0) && !r.universal && clearance.indexOf(r) === -1).length;
     if (ask) {
       ask.textContent = fromList
-        ? `${all.length} accessor${all.length === 1 ? "y" : "ies"} on the price list for this device \u2014 show them?`
+        ? `${madeFor || all.length} accessor${(madeFor || all.length) === 1 ? "y" : "ies"} on the price list for this device \u2014 show them?`
         : available
-        ? `${available} line${available === 1 ? "" : "s"} in stock for this device — show them?`
+        ? (madeFor ? `${madeFor} made for this device in stock` : "Nothing made for this device in stock")
+          + (available - madeFor > 0 ? `, plus ${available - madeFor} that fit any device` : "") + " \u2014 show them?"
         : "Nothing in stock for this device — show the full list anyway?";
     }
     if (!showAccessories) { body.innerHTML = ""; return; }
@@ -1700,7 +1712,7 @@
         Object.keys(byType).filter(t => ACC_TYPE_ORDER.indexOf(t) === -1));
       return order.map(t => `<div class="acc-group">
           <div class="acc-group-head">${escapeHtml(heading ? heading + " · " + t : t)}</div>
-          ${byType[t].sort((a, b) => (b.qty || 0) - (a.qty || 0) || String(a.device).localeCompare(String(b.device))).map(r => {
+          ${byType[t].sort((a, b) => (b.qty || 0) - (a.qty || 0) || String(a.device).localeCompare(String(b.device))).map((r, i) => {
             const cls = r.qty <= 2 ? "low" : "ok";
             const colour = r.colour ? ` <span class="acc-colour">${escapeHtml(r.colour)}</span>` : "";
             const clearancePrice = r.aged && r.price != null && r.price > AGED_ACC_PRICE
@@ -1715,9 +1727,9 @@
               ? `<button type="button" class="acc-add" data-acc-add="${escapeHtml(accKey(r))}"`
                 + ` aria-label="Add ${escapeHtml(r.device)} to quote">+</button>`
               : `<span class="acc-add-gap"></span>`;
-            return `<div class="acc-row"><span class="acc-name">${capHtml(escapeHtml(r.device))}${colour}</span>`
+            return `<div class="acc-row${i >= 4 ? " acc-extra" : ""}"><span class="acc-name">${capHtml(escapeHtml(r.device))}${colour}</span>`
                  + price + (r.qty == null ? `<span class="acc-qty none" title="No stock file loaded">\u2014</span>` : `<span class="acc-qty ${cls}">${r.qty}</span>`) + add + `</div>`;
-          }).join("")}
+          }).join("")}${byType[t].length > 4 ? `<button type="button" class="acc-more" data-more="${byType[t].length - 4}">Show ${byType[t].length - 4} more</button>` : ""}
         </div>`).join("");
     }
 
@@ -2531,13 +2543,17 @@
     if (!d.open) { el.hidden = true; return; }
     el.hidden = false;
     const saved = d.rrp - d.open.subtotal;
+    // On the device card the retail price sits just above, so the best deal shows a price only
+    // when it is lower, and never repeats the retail price itself.
+    const onCard = el.id === "best-deal";
     let html = `<div class="bd-head">
-      <div class="bd-label">Best deal on this device</div>
-      <div class="bd-price"><span class="bd-now">${fmt(d.open.subtotal)}</span>${gstNote(d.open.subtotal)}`
-      + (saved > 0.005 ? `<span class="bd-was">${fmt(d.rrp)}</span><span class="bd-off">save ${fmt(saved)}</span>` : "")
-      + `</div>`
+      <div class="bd-label">Best deal on this device</div>`
+      + (onCard && saved <= 0.005 ? "" : `<div class="bd-price"><span class="bd-now">${fmt(d.open.subtotal)}</span>${gstNote(d.open.subtotal)}`
+      + (saved > 0.005 ? (onCard ? "" : `<span class="bd-was">${fmt(d.rrp)}</span>`) + `<span class="bd-off">save ${fmt(saved)}</span>` : "")
+      + `</div>`)
       + `<p class="bd-stack">${d.open.names.length
           ? escapeHtml(d.open.names.join(" + "))
+          : onCard ? "No offer is running on this device today, so the retail price above is the best price."
           : "No offer is running on this device today \u2014 this is the retail price."}`
       + (d.open.conds.length ? " \u00b7 " + escapeHtml(d.open.conds.join(" \u00b7 ")) : "")
       + `</p></div>`;
@@ -3190,8 +3206,8 @@
     const SHOWN = 3;
     el.classList.remove("open");
     el.innerHTML = offers.map((o, i) => `<div class="eco-offer${i >= SHOWN ? " eo-extra" : ""}">
-        <span><span class="eo-name">${escapeHtml(o.name)} — ${escapeHtml(o.amount)}</span>
-        <span class="eo-scope">on ${escapeHtml(o.scope)}${o.note ? ", " + escapeHtml(o.note) : ""}</span></span>
+        <span><span class="eo-name">${escapeHtml(ecoTidy(o.name, o.amount).line)}</span>
+        ${ecoTidy(o.name, o.amount).scoped(o.scope) || o.note ? `<span class="eo-scope">${ecoTidy(o.name, o.amount).scoped(o.scope) ? "on " + escapeHtml(o.scope) : ""}${o.note ? (ecoTidy(o.name, o.amount).scoped(o.scope) ? ", " : "") + escapeHtml(o.note) : ""}</span>` : ""}</span>
         ${o.end ? `<span class="eo-end">to ${escapeHtml(fmtDate(o.end))}</span>` : ""}
       </div>`).join("");
     if (offers.length > SHOWN) {
@@ -3204,6 +3220,30 @@
       more.addEventListener("click", () => { el.classList.toggle("open"); more.textContent = label(); });
       el.appendChild(more);
     }
+  }
+
+  // Sales Kit names arrive in capitals with the saving in them ("TAB S10LITE SAVE $100"). The ECO
+  // list reads them as "Tab S10 Lite: $100 off", and leaves out "on ..." when the name says it.
+  function ecoTidy(name, amount) {
+    let n = String(name || "");
+    if (n === n.toUpperCase()) {
+      n = n.replace(/\s*[\u2014-]\s*\d+% OFF$/i, "").replace(/\s+SAVE \$[\d,.]+$/i, "")
+        .split(/\s+/).map(w => {
+          let m = w.match(/^([A-Z]\d+)([A-Z]+)$/);
+          if (m) return m[1] + " " + (m[2].length <= 2 ? m[2] : m[2][0] + m[2].slice(1).toLowerCase());
+          m = w.match(/^([A-Z])([A-Z]+)(\d+)$/);
+          if (m) return m[1] + m[2].toLowerCase() + m[3];
+          if (/\d/.test(w) || /^(FE|MBO|ECO|SMB|NGC|RRP)$/.test(w)) return w;
+          if (/^(OF|AND|ON|THE|TO|WITH|FOR)$/.test(w)) return w.toLowerCase();
+          return w.charAt(0) + w.slice(1).toLowerCase();
+        }).join(" ");
+    }
+    const amt = String(amount || "").replace(/\.00\b/g, "");
+    const flat = t => String(t).toLowerCase().replace(/[^a-z0-9]/g, "");
+    return {
+      line: amt ? n + ": " + amt : n,
+      scoped: scope => !!scope && !flat(n).includes(flat(scope))
+    };
   }
 
   // The bundler needs its own pending opt-ins: a coded offer ticked on the device card belongs to
@@ -3311,7 +3351,7 @@
       return;
     }
     const qty = res.qty;
-    const cls = qty <= 0 ? "zero" : qty <= 2 ? "low" : "ok";
+    const cls = qty <= 0 ? "zero" : qty <= 1 ? "low" : "ok";
     const word = qty <= 0 ? "Out of stock" : qty === 1 ? "1 in stock" : qty + " in stock";
     const which = res.byColour ? ` (${escapeHtml(colour)})` : "";
     el.innerHTML = `<div class="stock-badge ${cls}">${word}${which} at ${escapeHtml(store)}</div>${freshness}`;
@@ -6016,6 +6056,15 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "13.4", d: "9 Oct 2026", t: "A tidier Customer Quote",
+      items: [
+        "<strong>Standard, Education or SMB is picked at the top of the page</strong>, next to the title. It sets the price of each device as you add it to the quote.",
+        "<strong>The retail price shows once.</strong> Best deal on this device only shows a price when it is lower, with the Education and SMB prices underneath.",
+        "<strong>Tailor the Deal is one card</strong>, with Trade-In, New Galaxy Club, the ECO Device Bundle and Accessories as rows, so there is less scrolling.",
+        "<strong>An empty quote is quieter:</strong> Payment Options and the total appear once a device is added, and Print, Print receipt and Download PDF wait until there is something to print.",
+        "ECO offers read plainly (\u201cTab S10 Lite: $100 off\u201d), 2 in stock shows green, the accessories question counts what's made for the device and shows four of each type until you ask for more, and the stacking notes have moved to the bottom of the Sales Kit.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "13.3", d: "9 Oct 2026", t: "What's New by day",
       items: [
         "<strong>What's New shows one summary per day</strong> instead of every version. Each day lists its version numbers, and <strong>Show all changes</strong> opens the full notes for that day.",
@@ -6852,7 +6901,8 @@
 
   // One summary per day for What's New (keyed by the entries' d). See patches/zzz-whatsnew-days.py.
   const WHATS_NEW_DAYS = {
-    "9 Oct 2026": { t: "Calmer look, Samsung fonts and Victorian stores", items: [
+    "9 Oct 2026": { t: "A tidier quote page, Samsung fonts and Victorian stores", items: [
+      "<strong>A tidier Customer Quote:</strong> Standard, Education or SMB is picked at the top, the retail price shows once, Tailor the Deal is one card, and an empty quote has nothing to print until a device is added.",
       "<strong>A calmer interface:</strong> flatter backgrounds, plain card edges, prices that line up digit for digit, and the same press feel on every button. Light mode is light purple with white cards; dark mode is the default and looks as it did.",
       "<strong>Samsung store fonts:</strong> headings and device names use the same style of typeface as the Samsung online store, and the logo badge matches the Your Store box.",
       "<strong>Victorian stores only:</strong> the five VIC stores are listed, and you change store from Your Store at the top of the sidebar.",
@@ -7014,6 +7064,32 @@
   refreshWhatsNewDot();
 
 
+
+  // ---- Quote page tidy (v13.4) ----
+  (function quoteTidy() {
+    const panel = document.getElementById("ledger-panel");
+    const count = document.getElementById("ledger-count");
+    // Nothing to print, download or pay for until something is on the quote.
+    const idle = ["print-btn", "quote-receipt", "quote-pdf", "quote-bar-print"];
+    function syncEmpty() {
+      if (!panel || !count) return;
+      const empty = /^0\s/.test(count.textContent.trim());
+      panel.classList.toggle("is-empty", empty);
+      idle.forEach(id => { const b = document.getElementById(id); if (b) b.disabled = empty; });
+    }
+    if (count) new MutationObserver(syncEmpty).observe(count, { childList: true, characterData: true, subtree: true });
+    syncEmpty();
+    document.getElementById("open-saleskit")?.addEventListener("click", () => {
+      document.querySelector('.tab[data-panel="saleskit"]')?.click();
+    });
+    document.getElementById("accessories-body")?.addEventListener("click", e => {
+      const b = e.target.closest(".acc-more");
+      if (!b) return;
+      const g = b.closest(".acc-group");
+      const open = g.classList.toggle("open");
+      b.textContent = open ? "Show fewer" : "Show " + b.dataset.more + " more";
+    });
+  })();
 
   // ---- Service: repair or upgrade ----
   // Repair prices are Samsung Australia's Repair Cost Estimator figures (GST included), captured by
@@ -8148,9 +8224,9 @@
       panel: "quote"
     },
     {
-      target: () => document.querySelector("#device-card .segmented"),
+      target: () => document.getElementById("quote-modes"),
       title: "Standard, Education or SMB",
-      text: "Switch customer type here and the pricing follows. Education drops any sales-kit deal that excludes it, and SMB replaces every other offer with a flat 15%.",
+      text: "Pick the customer type at the top of the page before adding the device, and its price follows. Education drops any sales-kit deal that excludes it, and SMB replaces every other offer with a flat 15%.",
       panel: "quote"
     },
     {
