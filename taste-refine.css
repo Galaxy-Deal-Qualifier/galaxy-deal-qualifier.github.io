@@ -79,3 +79,11 @@
 @media screen and (prefers-reduced-motion: reduce) {
   :is(button, .tab, .colour-chip, .icon-btn, .segmented button):active { transform: none; }
 }
+
+/* v13.2: the logo badge uses the same fill and edge as the "Your Store" box under it (both themes),
+   without the accent glow. Overrides logo-theme.css, which stays as Harsha left it. */
+html body .side-brand .side-mark.side-mark {
+  background: var(--surface-2);
+  border-color: var(--line);
+  box-shadow: none;
+}
