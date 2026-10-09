@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v13.2
+  Galaxy Deals v13.3
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -54,7 +54,7 @@
 </style>
 <style>@media print{.sheet-sync-controls{display:none!important}}body.print-view .sheet-sync-controls{display:none!important}</style>
 <link rel="stylesheet" href="design-polish.css?v=2" />
-<link rel="stylesheet" href="taste-refine.css?v=ed309a9f23" />
+<link rel="stylesheet" href="taste-refine.css?v=b4af0189dc" />
 <link rel="stylesheet" href="galaxy-theme.css?v=81a505c64a" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300..800&family=Inter:wght@400..700&display=swap" />
 <link rel="stylesheet" href="samsung-font.css?v=c47b15d136" />
@@ -6016,6 +6016,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "13.3", d: "9 Oct 2026", t: "What's New by day",
+      items: [
+        "<strong>What's New shows one summary per day</strong> instead of every version. Each day lists its version numbers, and <strong>Show all changes</strong> opens the full notes for that day.",
+        "Nothing about pricing, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "13.2", d: "9 Oct 2026", t: "Logo badge matches Your Store",
       items: [
         "<strong>The square behind the logo is the same colour as the Your Store box</strong> under it, in light and dark mode.",
@@ -6845,22 +6850,149 @@
       ] }
   ];
 
+  // One summary per day for What's New (keyed by the entries' d). See patches/zzz-whatsnew-days.py.
+  const WHATS_NEW_DAYS = {
+    "9 Oct 2026": { t: "Calmer look, Samsung fonts and Victorian stores", items: [
+      "<strong>A calmer interface:</strong> flatter backgrounds, plain card edges, prices that line up digit for digit, and the same press feel on every button. Light mode is light purple with white cards; dark mode is the default and looks as it did.",
+      "<strong>Samsung store fonts:</strong> headings and device names use the same style of typeface as the Samsung online store, and the logo badge matches the Your Store box.",
+      "<strong>Victorian stores only:</strong> the five VIC stores are listed, and you change store from Your Store at the top of the sidebar.",
+      "<strong>What's New shows one summary per day</strong>, with every change a click away.",
+      "The new-deal and finished-deal boxes in the Sales Kit fold to one line once you've seen them. Nothing about pricing, offers or the printed quote changed."
+    ] },
+    "8 Oct 2026": { t: "Opening animation, receipt printing and new PDFs", items: [
+      "<strong>New customer PDFs</strong> with a text-only Galaxy Deals header, aligned prices and a tidy footer.",
+      "<strong>An opening animation</strong> of the Galaxy Deals logo, about a second and a half.",
+      "<strong>Receipt printing</strong> on an 80mm roll, and print controls on one line.",
+      "The new-deal and finished-deal boxes live in the Sales Kit, with a dot on its tab. What's New lists feature releases only."
+    ] },
+    "4 Oct 2026": { t: "Separate options, and accessories on every quote", items: [
+      "<strong>Quote as separate options:</strong> with two or more devices, price each one on its own instead of as one sale. Print, PDF, email and copy all follow the switch.",
+      "<strong>Accessories without a stock file:</strong> the Accessories card works on any browser, from the price list.",
+      "No prices or offers changed."
+    ] },
+    "3 Oct 2026": { t: "Search, GST and trade-in checks", items: [
+      "<strong>Search everything</strong> from the top of the sidebar, or press / or Ctrl+K: pages, devices, offers, bulletin codes, repairs and trade-ins.",
+      "<strong>A trade-in condition checklist</strong>, and a <strong>price match request</strong> card on Price Check.",
+      "<strong>GST shown beside every price</strong> we charge, worked out on the sale before trade-in. Prices read $ instead of A$.",
+      "The S26 FE on SMB shows its own bulletin (A260005730), and the page opens faster."
+    ] },
+    "2 Oct 2026": { t: "Search trade-ins and repairs, tap to copy codes", items: [
+      "<strong>Search boxes for trade-ins and repairs</strong>, with model lists grouped by series, newest first. Each repair model shows its highest screen repair price.",
+      "<strong>Tap any bulletin code to copy it</strong>, ready for POS.",
+      "Download PDF works in the Claude artifact, and Harsha's design polish arrived: a sidebar that collapses, a bottom menu on phones and a friendlier empty quote."
+    ] },
+    "1 Oct 2026": { t: "Service, Price Check and one layout", items: [
+      "<strong>Service: repair or upgrade</strong> puts Samsung's out-of-warranty repair price beside today's upgrade price.",
+      "<strong>Price Check</strong> compares our price with JB Hi-Fi, The Good Guys, Officeworks and the telcos' totals over the term.",
+      "<strong>One layout everywhere:</strong> three quote steps, a grouped sidebar, the Sales Kit page, a new logo and Expired Deals folded away. Compare fills itself in from the device you're quoting.",
+      "<strong>Education and SMB are permanent</strong>, October's new prices are in, and the S26 price rise on 11 October switches itself on."
+    ] },
+    "30 Sept 2026": { t: "A new look, with the quote always on screen", items: [
+      "<strong>The whole tool was redesigned:</strong> pages in a sidebar on the left, one clean working area, and proper icons in place of emoji.",
+      "<strong>The quote is pinned on screen</strong> with the total visible from the start. On a phone it rides along the bottom.",
+      "The printed quote and comparison didn't change."
+    ] },
+    "28 Sept 2026": { t: "Trade-Up values built in", items: [
+      "<strong>Trade-in values look themselves up</strong> from the Asurion catalogue, for good working order and not working, with the catalogue's expiry on each line.",
+      "A second Add to quote button sits under the Trade-In card."
+    ] },
+    "21 Sept 2026": { t: "Deal Builder, and a printed comparison that fits", items: [
+      "<strong>Deal Builder:</strong> put a deal together yourself from coded offers and manual lines, then add it to the quote.",
+      "<strong>The printed comparison fits one page</strong>, with larger type and a plain-English note beside every row.",
+      "Tab S9+ and Tab A9+ were added to Compare."
+    ] },
+    "20 Sept 2026": { t: "Updates and plain English on Compare", items: [
+      "<strong>An Updates row</strong> says how long each device keeps getting new Android versions, and a <strong>glossary</strong> explains the jargon for the customer.",
+      "Compare shows each deal's end date and a wireless charging row.",
+      "Sales Kit checked on reads the offer data instead of a typed date."
+    ] },
+    "18 Sept 2026": { t: "Compare devices", items: [
+      "<strong>A new Compare tab</strong> puts two or three devices side by side, with today's price and the Australian specifications.",
+      "<strong>Retired devices back to 2021</strong> can be compared too, marked not sold here.",
+      "The comparison prints, and the S26 FE SMB offer was added."
+    ] },
+    "14 Sept 2026": { t: "Education fixed across the range", items: [
+      "<strong>Education always comes off the full retail price</strong>, and the S25 Ultra, S25 Edge, Z Flip7, Watch8 and Watch Ultra now get it.",
+      "All 246 prices were checked against a separate calculation."
+    ] },
+    "7 Sept 2026": { t: "Best deal on this device, Zip Pay and dark mode", items: [
+      "<strong>Best deal on this device</strong> shows the cheapest a device can go and what it takes, on its own and in the ECO bundler.",
+      "<strong>Zip Pay</strong> sits beside Afterpay.",
+      "The ECO bundler lists every live offer, the Samsung Wallet offer stacks as the bulletin says, and faint text is readable in dark mode."
+    ] },
+    "4 Sept 2026": { t: "Afterpay and darker printed quotes", items: [
+      "<strong>Afterpay</strong> splits the total into four payments, and Latitude's 24 months is its own option.",
+      "Printed quotes are black throughout, and the ending-soon strip can be hidden."
+    ] },
+    "29 Aug 2026": { t: "Accessory offers and bundler pricing", items: [
+      "The ECO Device Bundle uses the same pricing engine as the quote, so every wearable discount shows.",
+      "Two accessory offers: the Fold8 and Flip8 accessory MBO, and the $10 aged accessory clearance."
+    ] },
+    "23 Aug 2026": { t: "Apps Script deployment 3", items: [
+      "The early Google Apps Script web app was deployed a third time, and the combined build was discussed as V8."
+    ] },
+    "21 Aug 2026": { t: "Latitude Finance and a tidier header", items: [
+      "<strong>Latitude Finance</strong> splits the total into monthly payments over 12 or 24 months, on sales of $599 or more.",
+      "What's New and Suggestions moved under a More menu."
+    ] },
+    "20 Aug 2026": { t: "Accessories on the quote, and ticket reminders", items: [
+      "<strong>Accessories can go on the quote</strong> at RRP, and last season's devices are back in the list.",
+      "<strong>Ticket reminders:</strong> a green box when a deal goes live, a red one when it finishes, and an Expired Deals list in the Sales Kit.",
+      "ECO vouchers apply themselves, Education and SMB run year round, quotes print readably from dark mode, and Galaxy S and A are listed separately."
+    ] },
+    "19 Aug 2026": { t: "Suggestions, New Galaxy Club and the ECO bundle", items: [
+      "<strong>A Suggestions tab</strong> linking to a Microsoft Form, with a QR code.",
+      "<strong>A New Galaxy Club comparison</strong> to show the customer, and an <strong>ECO Device Bundle</strong> for every watch, buds and tablet.",
+      "Education carries through to bundled devices, colours in the stock list are tinted, and Fit 3 stock matches."
+    ] },
+    "18 Aug 2026": { t: "Stock, accessories and the first fixes", items: [
+      "<strong>Stock on hand</strong> matches model, storage and colour, groups by product, leaves out loan units, and can be shared with a code.",
+      "<strong>Accessories</strong> that fit the selected device, from the same stock file.",
+      "A guided tour, a name on printed quotes, colour-coded storage and a phone layout. This What's New tab started here."
+    ] }
+  };
+
   // Opt in: unclassified automated entries and data updates are never app releases.
   const APP_RELEASES = CHANGELOG.filter(entry => entry.type === "app");
 
   function renderWhatsNew() {
     const body = document.getElementById("whatsnew-body");
     if (!body) return;
-    body.innerHTML = APP_RELEASES.map((r, i) => `
+    // One card per day: newest first, the day's versions inside it (see WHATS_NEW_DAYS).
+    const days = [];
+    APP_RELEASES.forEach(r => {
+      let day = days.find(x => x.d === r.d);
+      if (!day) days.push(day = { d: r.d, list: [] });
+      day.list.push(r);
+    });
+    const verOf = r => "v" + escapeHtml(r.v);
+    body.innerHTML = days.map((day, i) => {
+      const list = day.list;
+      const sum = WHATS_NEW_DAYS[day.d];
+      const one = list.length === 1;
+      const head = sum || (one ? list[0] : { t: list[0].t, items: list.map(r => `<strong>${verOf(r)}</strong> ${escapeHtml(r.t)}`) });
+      const range = one ? verOf(list[0]) : `${verOf(list[list.length - 1])} – ${verOf(list[0])}`;
+      const platform = list.find(r => r.platform)?.platform;
+      const more = (one && !sum) ? "" : `
+        <details class="rel-more">
+          <summary>${one ? "Show the full notes" : `Show all ${list.length} changes`}</summary>
+          ${list.map(r => `
+            <div class="rel-sub">
+              <div class="rel-sub-head"><span class="rel-sub-ver">${verOf(r)}</span> ${escapeHtml(r.t)}</div>
+              <ul>${r.items.map(x => `<li>${capHtml(x)}</li>`).join("")}</ul>
+            </div>`).join("")}
+        </details>`;
+      return `
       <div class="rel${i === 0 ? " latest" : ""}">
         <div class="rel-head">
-          <span class="rel-ver">v${escapeHtml(r.v)}${r.platform ? " · " + escapeHtml(r.platform) : ""}</span>
-          <span class="rel-date">${escapeHtml(r.d)}</span>
+          <span class="rel-ver">${escapeHtml(day.d)}</span>
+          <span class="rel-date">${range}${platform ? " · " + escapeHtml(platform) : ""}</span>
           ${i === 0 ? '<span class="rel-new">Latest</span>' : ""}
         </div>
-        <div class="rel-title">${escapeHtml(r.t)}</div>
-        <ul>${r.items.map(x => `<li>${capHtml(x)}</li>`).join("")}</ul>
-      </div>`).join("");
+        <div class="rel-title">${escapeHtml(head.t)}</div>
+        <ul>${head.items.map(x => `<li>${capHtml(x)}</li>`).join("")}</ul>${more}
+      </div>`;
+    }).join("");
   }
   renderWhatsNew();
 
