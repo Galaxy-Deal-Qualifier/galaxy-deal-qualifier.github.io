@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v13.7
+  Galaxy Deals v13.8
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -648,6 +648,9 @@
   MagSafe-style magnetic case on every phone here</strong>, including the ones GSMArena lists with magnets built in:
   that is how we sell it, so that is what the comparison says.
   Specifications captured from GSMArena on 18–20 September 2026 against the Australian model numbers.
+  The iPhones and iPads are international models captured from GSMArena on 12 October 2026, for comparison only:
+  they are not sold here, so they carry no prices, and Apple’s MagSafe is shown as Apple publishes it, with the
+  magnets built in.
   Prices and offers are live from this tool. <span id="cmp-gsm-wrap" hidden>Full technical comparison:
   <a id="cmp-gsm" href="#" target="_blank" rel="noopener">open on GSMArena</a>.</span></p>
 </section>
@@ -1877,6 +1880,304 @@
   // devices per comparison page, each checked by name. Australian variants, so where Samsung split
   // the silicon by region the chip named first is the one sold here.
   const LEGACY_SPECS = [{"id": "L_s21", "n": "Galaxy S21", "year": 2021, "group": "S Series", "gsm": 10693, "auModel": "SM-G991B", "display": "6.2\" Dynamic AMOLED 2X, 120Hz", "chipset": "Exynos 2100 (Australia) · Snapdragon 888 in US/China", "ram": "8GB + 128/256GB", "rear": "12MP wide + 64MP 3× tele + 12MP ultrawide", "selfie": "10MP", "battery": "4000 mAh", "charge": "25W wired · 15W wireless", "weight": "169 g", "dims": "151.7 × 71.2 × 7.9 mm", "ip": "IP68", "os": "Android 11", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 11 — roughly to 2025"}, {"id": "L_s21p", "n": "Galaxy S21+", "year": 2021, "group": "S Series", "gsm": 10625, "auModel": "SM-G996B", "display": "6.7\" Dynamic AMOLED 2X, 120Hz", "chipset": "Exynos 2100 (Australia) · Snapdragon 888 in US/China", "ram": "8GB + 128/256GB", "rear": "12MP wide + 64MP 3× tele + 12MP ultrawide", "selfie": "10MP", "battery": "4800 mAh", "charge": "25W wired · 15W wireless", "weight": "200 g", "dims": "161.5 × 75.6 × 7.8 mm", "ip": "IP68", "os": "Android 11", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 11 — roughly to 2025"}, {"id": "L_s21u", "n": "Galaxy S21 Ultra", "year": 2021, "group": "S Series", "gsm": 10596, "auModel": "SM-G998B", "display": "6.8\" Dynamic AMOLED 2X, 120Hz, 1440×3200", "chipset": "Exynos 2100 (Australia) · Snapdragon 888 in US/China", "ram": "up to 16GB + 512GB", "rear": "108MP wide + 10MP 3× tele + 10MP 10× periscope + 12MP ultrawide", "selfie": "40MP", "battery": "5000 mAh", "charge": "25W wired · 15W wireless", "weight": "227 g", "dims": "165.1 × 75.6 × 8.9 mm", "ip": "IP68", "os": "Android 11", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 11 — roughly to 2025"}, {"id": "L_s21fe", "n": "Galaxy S21 FE", "year": 2022, "group": "S Series", "gsm": 10954, "auModel": "SM-G990B", "display": "6.4\" Dynamic AMOLED 2X, 120Hz", "chipset": "Snapdragon 888 or Exynos 2100 (varies by region)", "ram": "6/8GB + 128/256GB", "rear": "12MP wide + 8MP 3× tele + 12MP ultrawide", "selfie": "32MP", "battery": "4500 mAh", "charge": "25W wired · 15W wireless", "weight": "177 g", "dims": "155.7 × 74.5 × 7.9 mm", "ip": "IP68", "os": "Android 12", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_s22", "n": "Galaxy S22", "year": 2022, "group": "S Series", "gsm": 11253, "auModel": "SM-S901B", "display": "6.1\" Dynamic AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Gen 1 (Australia) · Exynos 2200 in Europe", "ram": "8GB + 128/256GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "10MP", "battery": "3700 mAh", "charge": "25W wired · 15W wireless", "weight": "167 g", "dims": "146 × 70.6 × 7.6 mm", "ip": "IP68", "os": "Android 12", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_s22p", "n": "Galaxy S22+", "year": 2022, "group": "S Series", "gsm": 11252, "auModel": "SM-S906B", "display": "6.6\" Dynamic AMOLED 2X, 120Hz, 1750 nits peak", "chipset": "Snapdragon 8 Gen 1 (Australia) · Exynos 2200 in Europe", "ram": "8GB + 128/256GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "10MP", "battery": "4500 mAh", "charge": "45W wired · 15W wireless", "weight": "195 g", "dims": "157.4 × 75.8 × 7.6 mm", "ip": "IP68", "os": "Android 12", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_s22u", "n": "Galaxy S22 Ultra", "year": 2022, "group": "S Series", "gsm": 11251, "auModel": "SM-S908B", "display": "6.8\" Dynamic AMOLED 2X, 120Hz, 1440×3088", "chipset": "Snapdragon 8 Gen 1 (Australia) · Exynos 2200 in Europe", "ram": "8–12GB + 128GB–1TB", "rear": "108MP wide + 10MP 3× tele + 10MP 10× periscope + 12MP ultrawide", "selfie": "40MP", "battery": "5000 mAh", "charge": "45W wired · 15W wireless", "weight": "228 g", "dims": "163.3 × 77.9 × 8.9 mm", "ip": "IP68 · S Pen built in", "os": "Android 12", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_s23", "n": "Galaxy S23", "year": 2023, "group": "S Series", "gsm": 12082, "auModel": "SM-S911B", "display": "6.1\" Dynamic AMOLED 2X, 120Hz, 1750 nits peak", "chipset": "Snapdragon 8 Gen 2 (all regions)", "ram": "8GB + 128/256/512GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "12MP", "battery": "3900 mAh", "charge": "25W wired · 15W wireless", "weight": "168 g", "dims": "146.3 × 70.9 × 7.6 mm", "ip": "IP68", "os": "Android 13", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_s23p", "n": "Galaxy S23+", "year": 2023, "group": "S Series", "gsm": 12083, "auModel": "SM-S916B", "display": "6.6\" Dynamic AMOLED 2X, 120Hz, 1750 nits peak", "chipset": "Snapdragon 8 Gen 2 (all regions)", "ram": "8GB + 256/512GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "12MP", "battery": "4700 mAh", "charge": "45W wired · 15W wireless", "weight": "196 g", "dims": "157.8 × 76.2 × 7.6 mm", "ip": "IP68", "os": "Android 13", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_s23u", "n": "Galaxy S23 Ultra", "year": 2023, "group": "S Series", "gsm": 12024, "auModel": "SM-S918B", "display": "6.8\" Dynamic AMOLED 2X, 120Hz, 1440×3088", "chipset": "Snapdragon 8 Gen 2 (all regions)", "ram": "8–12GB + 256GB–1TB", "rear": "200MP wide + 10MP 3× tele + 10MP 10× periscope + 12MP ultrawide", "selfie": "12MP", "battery": "5000 mAh", "charge": "45W wired · 15W wireless", "weight": "234 g", "dims": "163.4 × 78.1 × 8.9 mm", "ip": "IP68 · S Pen built in", "os": "Android 13", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_s23fe", "n": "Galaxy S23 FE", "year": 2023, "group": "S Series", "gsm": 12520, "auModel": "SM-S711B", "display": "6.4\" Dynamic AMOLED 2X, 120Hz", "chipset": "Exynos 2200 (Australia) · Snapdragon 8 Gen 1 in USA", "ram": "8GB + 128/256GB", "rear": "50MP wide + 8MP 3× tele + 12MP ultrawide", "selfie": "10MP", "battery": "4500 mAh", "charge": "25W wired · 15W wireless", "weight": "209 g", "dims": "158 × 76.5 × 8.2 mm", "ip": "IP68", "os": "Android 13", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_s24", "n": "Galaxy S24", "year": 2024, "group": "S Series", "gsm": 12773, "auModel": "SM-S921B", "display": "6.2\" Dynamic LTPO AMOLED 2X, 120Hz", "chipset": "Exynos 2400 (Australia) · Snapdragon 8 Gen 3 in US/CA/CN", "ram": "8–12GB + 128/256/512GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "12MP", "battery": "4000 mAh", "charge": "25W wired · 15W wireless", "weight": "167 g", "dims": "147 × 70.6 × 7.6 mm", "ip": "IP68", "os": "Android 14", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 14 — roughly to 2031"}, {"id": "L_s24p", "n": "Galaxy S24+", "year": 2024, "group": "S Series", "gsm": 12772, "auModel": "SM-S926B", "display": "6.7\" Dynamic LTPO AMOLED 2X, 120Hz, 2600 nits peak", "chipset": "Exynos 2400 (Australia) · Snapdragon 8 Gen 3 in US/CA/CN", "ram": "12GB + 256/512GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "12MP", "battery": "4900 mAh", "charge": "45W wired · 15W wireless", "weight": "196 g", "dims": "158.5 × 75.9 × 7.7 mm", "ip": "IP68", "os": "Android 14", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 14 — roughly to 2031"}, {"id": "L_s24u", "n": "Galaxy S24 Ultra", "year": 2024, "group": "S Series", "gsm": 12771, "auModel": "SM-S928B", "display": "6.8\" Dynamic LTPO AMOLED 2X, 120Hz, 2600 nits peak", "chipset": "Snapdragon 8 Gen 3 (all regions)", "ram": "12GB + 256/512GB/1TB", "rear": "200MP wide + 10MP 3× tele + 50MP 5× periscope + 12MP ultrawide", "selfie": "12MP", "battery": "5000 mAh", "charge": "45W wired · 15W wireless", "weight": "232 g", "dims": "162.3 × 79 × 8.6 mm", "ip": "IP68 · S Pen built in", "os": "Android 14", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 14 — roughly to 2031"}, {"id": "L_s24fe", "n": "Galaxy S24 FE", "year": 2024, "group": "S Series", "gsm": 13262, "auModel": "SM-S721B", "display": "6.7\" Dynamic AMOLED 2X, 120Hz, 1900 nits peak", "chipset": "Exynos 2400e (all regions)", "ram": "8GB + 128/256/512GB", "rear": "50MP wide + 8MP 3× tele + 12MP ultrawide", "selfie": "10MP", "battery": "4700 mAh", "charge": "25W wired · 15W wireless", "weight": "213 g", "dims": "162 × 77.3 × 8 mm", "ip": "IP68", "os": "Android 14", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 14 — roughly to 2031"}, {"id": "L_s25", "n": "Galaxy S25", "year": 2025, "group": "S Series", "gsm": 13610, "auModel": "SM-S931B", "display": "6.2\" Dynamic LTPO AMOLED 2X, 120Hz, 2600 nits peak", "chipset": "Snapdragon 8 Elite (all regions)", "ram": "12GB + 128/256/512GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "12MP", "battery": "4000 mAh", "charge": "25W wired · 15W wireless", "weight": "162 g", "dims": "146.9 × 70.5 × 7.2 mm", "ip": "IP68", "os": "Android 15", "wireless": "Qi2 Ready, 15W — magnetic charging needs a MagSafe-style magnetic case · 4.5W reverse", "support": "7 major Android updates from Android 15 — roughly to 2032"}, {"id": "L_s25p", "n": "Galaxy S25+", "year": 2025, "group": "S Series", "gsm": 13609, "auModel": "SM-S936B", "display": "6.7\" Dynamic LTPO AMOLED 2X, 120Hz, 1440×3120", "chipset": "Snapdragon 8 Elite (all regions)", "ram": "12GB + 256/512GB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "12MP", "battery": "4900 mAh", "charge": "45W wired · 15W wireless", "weight": "190 g", "dims": "158.4 × 75.8 × 7.3 mm", "ip": "IP68", "os": "Android 15", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 15 — roughly to 2032"}, {"id": "L_fold3", "n": "Galaxy Z Fold3", "year": 2021, "group": "Z Series", "gsm": 10906, "auModel": "SM-F926B", "display": "7.6\" foldable Dynamic AMOLED 2X, 120Hz", "cover": "6.2\" Dynamic AMOLED 2X, 120Hz", "chipset": "Snapdragon 888", "ram": "12GB + 256/512GB", "rear": "12MP wide + 12MP 2× tele + 12MP ultrawide", "selfie": "4MP under-display · 10MP cover", "battery": "4400 mAh", "charge": "25W wired · 11W wireless", "weight": "271 g", "dims": "158.2 × 128.1 × 6.4 mm open · 158.2 × 67.1 × 16 folded", "ip": "IPX8 — no dust rating", "os": "Android 11", "wireless": "Qi, 11W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 11 — roughly to 2025"}, {"id": "L_fold4", "n": "Galaxy Z Fold4", "year": 2022, "group": "Z Series", "gsm": 11737, "auModel": "SM-F936B", "display": "7.6\" foldable Dynamic AMOLED 2X, 120Hz", "cover": "6.2\" Dynamic AMOLED 2X, 120Hz", "chipset": "Snapdragon 8+ Gen 1", "ram": "12GB + 256GB/512GB/1TB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "4MP under-display · 10MP cover", "battery": "4400 mAh", "charge": "25W wired · 15W wireless", "weight": "263 g", "dims": "155.1 × 130.1 × 6.3 mm open · 155.1 × 67.1 × 15.8 folded", "ip": "IPX8 — no dust rating", "os": "Android 12L", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_fold5", "n": "Galaxy Z Fold5", "year": 2023, "group": "Z Series", "gsm": 12418, "auModel": "SM-F946B", "display": "7.6\" foldable Dynamic AMOLED 2X, 120Hz", "cover": "6.2\" Dynamic AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Gen 2", "ram": "12GB + 256GB/512GB/1TB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "4MP under-display · 10MP cover", "battery": "4400 mAh", "charge": "25W wired · 15W wireless", "weight": "253 g", "dims": "154.9 × 129.9 × 6.1 mm open · 154.9 × 67.1 × 13.4 folded", "ip": "IPX8 — no dust rating", "os": "Android 13", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_fold6", "n": "Galaxy Z Fold6", "year": 2024, "group": "Z Series", "gsm": 13147, "auModel": "SM-F956B", "display": "7.6\" foldable LTPO AMOLED 2X, 120Hz", "cover": "6.3\" LTPO AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Gen 3", "ram": "12GB + 256GB/512GB/1TB", "rear": "50MP wide + 10MP 3× tele + 12MP ultrawide", "selfie": "4MP under-display · 10MP cover", "battery": "4400 mAh", "charge": "25W wired · 15W wireless", "weight": "239 g", "dims": "153.5 × 132.6 × 5.6 mm open · 153.5 × 68.1 × 12.1 folded", "ip": "IP48", "os": "Android 14", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 14 — roughly to 2031"}, {"id": "L_fold7", "n": "Galaxy Z Fold7", "year": 2025, "group": "Z Series", "gsm": 13826, "auModel": "SM-F966B", "display": "8.0\" foldable LTPO AMOLED 2X, 120Hz", "cover": "6.5\" LTPO AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Elite", "ram": "12GB + 256GB/512GB/1TB", "rear": "200MP wide + 10MP tele + 12MP ultrawide", "selfie": "10MP inner · 10MP cover", "battery": "4400 mAh", "charge": "25W wired · 15W wireless", "weight": "215 g", "dims": "158.4 × 143.2 × 4.2 mm open · 158.4 × 72.8 × 8.9 folded", "ip": "IP48", "os": "Android 16, One UI 8", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "7 major Android updates from Android 16 — roughly to 2032"}, {"id": "L_flip3", "n": "Galaxy Z Flip3", "year": 2021, "group": "Z Series", "gsm": 11044, "auModel": "SM-F711B", "display": "6.7\" foldable Dynamic AMOLED 2X, 120Hz", "cover": "1.9\" Super AMOLED, 260×512", "chipset": "Snapdragon 888", "ram": "8GB + 128/256GB", "rear": "12MP wide + 12MP ultrawide", "selfie": "10MP", "battery": "3300 mAh", "charge": "15W wired · 10W wireless", "weight": "183 g", "dims": "166 × 72.2 × 6.9 mm open · 86.4 × 72.2 × 17.1 folded", "ip": "IPX8 — no dust rating", "os": "Android 11", "wireless": "Qi, 10W — magnetic charging needs a MagSafe-style magnetic case", "support": "Tops out at Android 15 — no further updates after that"}, {"id": "L_flip4", "n": "Galaxy Z Flip4", "year": 2022, "group": "Z Series", "gsm": 11538, "auModel": "SM-F721B", "display": "6.7\" foldable Dynamic AMOLED 2X, 120Hz", "cover": "1.9\" Super AMOLED, 260×512", "chipset": "Snapdragon 8+ Gen 1", "ram": "8GB + 128/256/512GB", "rear": "12MP wide + 12MP ultrawide", "selfie": "10MP", "battery": "3700 mAh", "charge": "25W wired · 15W wireless", "weight": "187 g", "dims": "165.2 × 71.9 × 6.9 mm open · 84.9 × 71.9 × 17.1 folded", "ip": "IPX8 — no dust rating", "os": "Android 12", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "Tops out at Android 16 — no further updates after that"}, {"id": "L_flip5", "n": "Galaxy Z Flip5", "year": 2023, "group": "Z Series", "gsm": 12252, "auModel": "SM-F731B", "display": "6.7\" foldable Dynamic AMOLED 2X, 120Hz", "cover": "3.4\" Super AMOLED, 60Hz", "chipset": "Snapdragon 8 Gen 2", "ram": "8GB + 256/512GB", "rear": "12MP wide + 12MP ultrawide", "selfie": "10MP", "battery": "3700 mAh", "charge": "25W wired · 15W wireless", "weight": "187 g", "dims": "165.1 × 71.9 × 6.9 mm open · 85.1 × 71.9 × 15.1 folded", "ip": "IPX8 — no dust rating", "os": "Android 13", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "Tops out at Android 16 — no further updates after that"}, {"id": "L_flip6", "n": "Galaxy Z Flip6", "year": 2024, "group": "Z Series", "gsm": 13192, "auModel": "SM-F741B", "display": "6.7\" foldable LTPO AMOLED 2X, 120Hz, 2600 nits peak", "cover": "3.4\" Super AMOLED, 60Hz", "chipset": "Snapdragon 8 Gen 3", "ram": "12GB + 128/256/512GB", "rear": "50MP wide + 12MP ultrawide", "selfie": "10MP", "battery": "4000 mAh", "charge": "25W wired · 15W wireless", "weight": "187 g", "dims": "165.1 × 71.9 × 6.9 mm open · 85.1 × 71.9 × 14.9 folded", "ip": "IP48", "os": "Android 14", "wireless": "Qi, 15W — magnetic charging needs a MagSafe-style magnetic case", "support": "Not published"}, {"id": "L_a22", "n": "Galaxy A22 5G", "year": 2021, "group": "A Series", "gsm": 10873, "auModel": "SM-A226B", "display": "6.6\" TFT LCD, 90Hz", "chipset": "Dimensity 700", "ram": "4–8GB + 64/128GB", "rear": "48MP wide + 5MP ultrawide", "selfie": "8MP", "battery": "5000 mAh", "charge": "15W wired", "weight": "203 g", "dims": "167.2 × 76.4 × 9 mm", "ip": "Not rated", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a32", "n": "Galaxy A32", "year": 2021, "group": "A Series", "gsm": 10753, "auModel": "SM-A325F", "display": "6.4\" Super AMOLED, 90Hz", "chipset": "Helio G80", "ram": "4–8GB + 64/128GB", "rear": "64MP wide + 8MP ultrawide + 5MP macro", "selfie": "20MP", "battery": "5000 mAh", "charge": "15W wired", "weight": "184 g", "dims": "158.9 × 73.6 × 8.4 mm", "ip": "IP67", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a52", "n": "Galaxy A52", "year": 2021, "group": "A Series", "gsm": 10641, "auModel": "SM-A525F", "display": "6.5\" Super AMOLED, 90Hz", "chipset": "Snapdragon 720G", "ram": "4–8GB + 128/256GB", "rear": "64MP wide OIS + 12MP ultrawide + 5MP macro", "selfie": "32MP", "battery": "4500 mAh", "charge": "25W wired", "weight": "189 g", "dims": "159.9 × 75.1 × 8.4 mm", "ip": "IP67", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a52s", "n": "Galaxy A52s 5G", "year": 2021, "group": "A Series", "gsm": 11039, "auModel": "SM-A528B", "display": "6.5\" Super AMOLED, 120Hz", "chipset": "Snapdragon 778G", "ram": "up to 8GB + 256GB", "rear": "64MP wide OIS + 12MP ultrawide + 5MP macro", "selfie": "32MP", "battery": "4500 mAh", "charge": "25W wired", "weight": "189 g", "dims": "159.9 × 75.1 × 8.4 mm", "ip": "IP67", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a72", "n": "Galaxy A72", "year": 2021, "group": "A Series", "gsm": 10469, "auModel": "SM-A725F", "display": "6.7\" Super AMOLED, 90Hz", "chipset": "Snapdragon 720G", "ram": "up to 8GB + 256GB", "rear": "64MP wide OIS + 8MP 3× tele + 12MP ultrawide + 5MP macro", "selfie": "32MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "203 g", "dims": "165 × 77.4 × 8.4 mm", "ip": "IP67", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a13", "n": "Galaxy A13", "year": 2022, "group": "A Series", "gsm": 11402, "auModel": "SM-A135F", "display": "6.6\" PLS LCD", "chipset": "Exynos 850", "ram": "up to 6GB + 128GB", "rear": "50MP wide + 5MP ultrawide + 2MP macro", "selfie": "8MP", "battery": "5000 mAh", "charge": "15W wired", "weight": "195 g", "dims": "165.1 × 76.4 × 8.8 mm", "ip": "Not rated", "os": "Android 12", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a23", "n": "Galaxy A23", "year": 2022, "group": "A Series", "gsm": 11373, "auModel": "SM-A235F", "display": "6.6\" PLS LCD, 90Hz", "chipset": "Snapdragon 680", "ram": "up to 6GB + 128GB · microSD", "rear": "50MP wide OIS + 5MP ultrawide + 2MP macro", "selfie": "8MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "195 g", "dims": "165.4 × 76.9 × 8.4 mm", "ip": "Not rated", "os": "Android 12", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a33", "n": "Galaxy A33 5G", "year": 2022, "group": "A Series", "gsm": 11429, "auModel": "SM-A336B", "display": "6.4\" Super AMOLED, 90Hz", "chipset": "Exynos 1280", "ram": "up to 8GB + 256GB · microSD", "rear": "48MP wide + 8MP ultrawide + 5MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "186 g", "dims": "159.7 × 74 × 8.1 mm", "ip": "IP67", "os": "Android 12", "wireless": "No wireless charging", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_a53", "n": "Galaxy A53 5G", "year": 2022, "group": "A Series", "gsm": 11268, "auModel": "SM-A536B", "display": "6.5\" Super AMOLED, 120Hz", "chipset": "Exynos 1280", "ram": "up to 8GB + 256GB · microSD", "rear": "64MP wide + 12MP ultrawide + 5MP macro", "selfie": "32MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "189 g", "dims": "159.6 × 74.8 × 8.1 mm", "ip": "IP67", "os": "Android 12", "wireless": "No wireless charging", "support": "4 major Android updates from Android 12 — roughly to 2026"}, {"id": "L_a14", "n": "Galaxy A14 5G", "year": 2023, "group": "A Series", "gsm": 12004, "auModel": "SM-A146B", "display": "6.6\" PLS LCD, 90Hz", "chipset": "Exynos 1330 or Dimensity 700", "ram": "4–8GB + 64/128GB", "rear": "50MP wide + 2MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "15W wired", "weight": "202 g", "dims": "167.7 × 78 × 9.1 mm", "ip": "Not rated", "os": "Android 13", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a34", "n": "Galaxy A34", "year": 2023, "group": "A Series", "gsm": 12074, "auModel": "SM-A346B", "display": "6.6\" Super AMOLED, 120Hz", "chipset": "Dimensity 1080", "ram": "4–8GB + 128/256GB", "rear": "48MP wide + 8MP ultrawide + 5MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "199 g", "dims": "161.3 × 78.1 × 8.2 mm", "ip": "IP67", "os": "Android 13", "wireless": "No wireless charging", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_a54", "n": "Galaxy A54", "year": 2023, "group": "A Series", "gsm": 12070, "auModel": "SM-A546B", "display": "6.4\" Super AMOLED, 120Hz", "chipset": "Exynos 1380", "ram": "4–8GB + 128/256GB", "rear": "50MP wide + 12MP ultrawide + 5MP macro", "selfie": "32MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "202 g", "dims": "158.2 × 76.7 × 8.2 mm", "ip": "IP67", "os": "Android 13", "wireless": "No wireless charging", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_a15", "n": "Galaxy A15", "year": 2023, "group": "A Series", "gsm": 12637, "auModel": "SM-A155F", "display": "6.5\" Super AMOLED, 90Hz", "chipset": "Helio G99", "ram": "up to 8GB + 256GB", "rear": "50MP wide + 5MP ultrawide + 2MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "200 g", "dims": "160.1 × 76.8 × 8.4 mm", "ip": "Not rated", "os": "Android 14", "wireless": "No wireless charging", "support": "4 major Android updates from Android 14 — roughly to 2027"}, {"id": "L_a25", "n": "Galaxy A25", "year": 2023, "group": "A Series", "gsm": 12555, "auModel": "SM-A256B", "display": "6.5\" Super AMOLED, 120Hz", "chipset": "Exynos 1280", "ram": "up to 8GB + 256GB", "rear": "50MP wide OIS + 8MP ultrawide + 2MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "197 g", "dims": "161 × 76.5 × 8.3 mm", "ip": "Not rated", "os": "Android 14", "wireless": "No wireless charging", "support": "4 major Android updates from Android 14 — roughly to 2027"}, {"id": "L_a35", "n": "Galaxy A35", "year": 2024, "group": "A Series", "gsm": 12705, "auModel": "SM-A356B", "display": "6.6\" Super AMOLED, 120Hz", "chipset": "Exynos 1380", "ram": "up to 12GB + 256GB", "rear": "50MP wide OIS + 8MP ultrawide + 5MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "209 g", "dims": "161.7 × 78 × 8.2 mm", "ip": "Not rated", "os": "Android 14", "wireless": "No wireless charging", "support": "4 major Android updates from Android 14 — roughly to 2028"}, {"id": "L_a55", "n": "Galaxy A55", "year": 2024, "group": "A Series", "gsm": 12824, "auModel": "SM-A556B", "display": "6.6\" Super AMOLED, 120Hz", "chipset": "Exynos 1480", "ram": "6–12GB + 128/256GB", "rear": "50MP wide OIS + 12MP ultrawide + 5MP macro", "selfie": "32MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "213 g", "dims": "161.1 × 77.4 × 8.2 mm", "ip": "IP67", "os": "Android 14", "wireless": "No wireless charging", "support": "4 major Android updates from Android 14 — roughly to 2028"}, {"id": "L_a16", "n": "Galaxy A16 5G", "year": 2024, "group": "A Series", "gsm": 13346, "auModel": "SM-A166B", "display": "6.7\" Super AMOLED, 90Hz", "chipset": "Exynos 1330 or Dimensity 6300", "ram": "4–8GB + 128/256GB", "rear": "50MP wide + 5MP ultrawide + 2MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "200 g", "dims": "164.4 × 77.9 × 7.9 mm", "ip": "IP54 — splashes only", "os": "Android 14", "wireless": "No wireless charging", "support": "6 major Android updates from Android 14 — roughly to 2030"}, {"id": "L_a26", "n": "Galaxy A26", "year": 2025, "group": "A Series", "gsm": 13679, "auModel": "SM-A266B", "display": "6.7\" Super AMOLED, 120Hz", "chipset": "Exynos 1380", "ram": "4–8GB + 128/256GB", "rear": "50MP wide OIS + 8MP ultrawide + 2MP macro", "selfie": "13MP", "battery": "5000 mAh", "charge": "25W wired", "weight": "200 g", "dims": "164 × 77.5 × 7.7 mm", "ip": "IP67", "os": "Android 15", "wireless": "No wireless charging", "support": "6 major Android updates from Android 15 — roughly to 2031"}, {"id": "L_a36", "n": "Galaxy A36", "year": 2025, "group": "A Series", "gsm": 13497, "auModel": "SM-A366B", "display": "6.7\" Super AMOLED, 120Hz, 1900 nits peak", "chipset": "Snapdragon 6 Gen 3", "ram": "6–12GB + 128/256GB", "rear": "50MP wide OIS + 8MP ultrawide + 5MP macro", "selfie": "12MP", "battery": "5000 mAh", "charge": "45W wired", "weight": "195 g", "dims": "162.9 × 78.2 × 7.4 mm", "ip": "IP67", "os": "Android 15, One UI 8.5", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_a56", "n": "Galaxy A56", "year": 2025, "group": "A Series", "gsm": 13603, "auModel": "SM-A566B", "display": "6.7\" Super AMOLED, 120Hz, 1900 nits peak", "chipset": "Exynos 1580", "ram": "6–12GB + 128/256GB", "rear": "50MP wide + 12MP ultrawide + 5MP macro", "selfie": "12MP", "battery": "5000 mAh", "charge": "45W wired", "weight": "198 g", "dims": "162.2 × 77.5 × 7.4 mm", "ip": "IP67", "os": "Android 15, One UI 8.5", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts7fe", "n": "Galaxy Tab S7 FE", "year": 2021, "group": "Tablets", "gsm": 10922, "auModel": "SM-T736B", "display": "12.4\" TFT LCD", "chipset": "Snapdragon 750G", "ram": "4–8GB + 64/256GB", "rear": "8MP wide", "selfie": "5MP", "battery": "10090 mAh", "charge": "45W wired", "weight": "608 g", "dims": "284.8 × 185 × 6.3 mm", "ip": "Not rated", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ta7l", "n": "Galaxy Tab A7 Lite", "year": 2021, "group": "Tablets", "gsm": 10933, "auModel": "SM-T225", "display": "8.7\" TFT LCD", "chipset": "Helio P22T", "ram": "up to 4GB + 32/64GB", "rear": "8MP wide", "selfie": "2MP", "battery": "5100 mAh", "charge": "15W wired", "weight": "366 g", "dims": "212.5 × 124.7 × 8 mm", "ip": "Not rated", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ta8", "n": "Galaxy Tab A8 10.5", "year": 2021, "group": "Tablets", "gsm": 11265, "auModel": "SM-X205", "display": "10.5\" TFT LCD", "chipset": "Unisoc Tiger T618", "ram": "2–4GB + 32–128GB", "rear": "8MP wide", "selfie": "5MP", "battery": "7040 mAh", "charge": "15W wired", "weight": "508 g", "dims": "246.8 × 161.9 × 6.9 mm", "ip": "Not rated", "os": "Android 11", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts6l", "n": "Galaxy Tab S6 Lite (2022)", "year": 2022, "group": "Tablets", "gsm": 11524, "auModel": "SM-P619", "display": "10.4\" TFT LCD", "chipset": "Snapdragon 720G/732G", "ram": "4GB + 64/128GB", "rear": "8MP wide", "selfie": "5MP", "battery": "7040 mAh", "charge": "15W wired", "weight": "465 g", "dims": "244.5 × 154.3 × 7 mm", "ip": "Not rated", "os": "Android 12", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts8", "n": "Galaxy Tab S8", "year": 2022, "group": "Tablets", "gsm": 11343, "auModel": "SM-X706B", "display": "11\" TFT LCD, 120Hz", "chipset": "Snapdragon 8 Gen 1", "ram": "8–12GB + 128/256GB", "rear": "13MP wide + 6MP ultrawide", "selfie": "12MP ultrawide", "battery": "8000 mAh", "charge": "45W wired", "weight": "503 g", "dims": "253.8 × 165.3 × 6.3 mm", "ip": "Not rated", "os": "Android 12", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts8p", "n": "Galaxy Tab S8+", "year": 2022, "group": "Tablets", "gsm": 11342, "auModel": "SM-X806B", "display": "12.4\" Super AMOLED, 120Hz", "chipset": "Snapdragon 8 Gen 1", "ram": "up to 16GB + 512GB", "rear": "13MP wide + 6MP ultrawide", "selfie": "12MP ultrawide", "battery": "10090 mAh", "charge": "45W wired", "weight": "567 g", "dims": "285 × 185 × 5.7 mm", "ip": "Not rated", "os": "Android 12", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts8u", "n": "Galaxy Tab S8 Ultra", "year": 2022, "group": "Tablets", "gsm": 11274, "auModel": "SM-X906B", "display": "14.6\" Super AMOLED, 120Hz", "chipset": "Snapdragon 8 Gen 1", "ram": "up to 16GB + 512GB", "rear": "13MP wide + 6MP ultrawide", "selfie": "dual 12MP", "battery": "11200 mAh", "charge": "45W wired", "weight": "726 g", "dims": "326.4 × 208.6 × 5.5 mm", "ip": "Not rated", "os": "Android 12", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts9", "n": "Galaxy Tab S9", "year": 2023, "group": "Tablets", "gsm": 12439, "auModel": "SM-X716B", "display": "11\" AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Gen 2", "ram": "8GB + 128/256GB", "rear": "13MP wide", "selfie": "12MP ultrawide", "battery": "8400 mAh", "charge": "45W wired", "weight": "498 g", "dims": "254.3 × 165.8 × 5.9 mm", "ip": "IP68", "os": "Android 13", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts9u", "n": "Galaxy Tab S9 Ultra", "year": 2023, "group": "Tablets", "gsm": 12217, "auModel": "SM-X916B", "display": "14.6\" AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Gen 2", "ram": "up to 16GB + 1TB", "rear": "13MP wide + 8MP ultrawide", "selfie": "dual 12MP", "battery": "11200 mAh", "charge": "45W wired", "weight": "732 g", "dims": "326.4 × 208.6 × 5.5 mm", "ip": "IP68", "os": "Android 13", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts9fe", "n": "Galaxy Tab S9 FE", "year": 2023, "group": "Tablets", "gsm": 12517, "auModel": "SM-X516B", "display": "10.9\" IPS LCD, 90Hz", "chipset": "Exynos 1380", "ram": "6–8GB + 128/256GB", "rear": "8MP wide", "selfie": "12MP ultrawide", "battery": "8000 mAh", "charge": "45W wired", "weight": "523 g", "dims": "254.3 × 165.8 × 6.5 mm", "ip": "IP68", "os": "Android 13", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts9fep", "n": "Galaxy Tab S9 FE+", "year": 2023, "group": "Tablets", "gsm": 12609, "auModel": "SM-X616B", "display": "12.4\" IPS LCD, 90Hz", "chipset": "Exynos 1380", "ram": "up to 12GB + 256GB", "rear": "8MP wide + 8MP ultrawide", "selfie": "12MP ultrawide", "battery": "10090 mAh", "charge": "45W wired", "weight": "627 g", "dims": "285.4 × 185.4 × 6.5 mm", "ip": "IP68", "os": "Android 13", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ta9", "n": "Galaxy Tab A9", "year": 2023, "group": "Tablets", "gsm": 12616, "auModel": "SM-X115", "display": "8.7\" TFT LCD", "chipset": "Helio G99", "ram": "up to 8GB + 128GB", "rear": "8MP wide", "selfie": "2MP", "battery": "5100 mAh", "charge": "15W wired", "weight": "332 g", "dims": "211 × 124.7 × 8 mm", "ip": "Not rated", "os": "Android 13", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_ts10u", "n": "Galaxy Tab S10 Ultra", "year": 2024, "group": "Tablets", "gsm": 13362, "auModel": "SM-X926B", "display": "14.6\" AMOLED 2X, 120Hz", "chipset": "Dimensity 9300+", "ram": "up to 16GB + 1TB", "rear": "13MP wide + 8MP ultrawide", "selfie": "dual 12MP", "battery": "11200 mAh", "charge": "45W wired", "weight": "718 g", "dims": "326.4 × 208.6 × 5.4 mm", "ip": "IP68", "os": "Android 14", "wireless": "No wireless charging", "support": "Not published"}, {"id": "L_w4", "n": "Galaxy Watch4", "year": 2021, "group": "Wearables", "gsm": 11045, "auModel": "SM-R870", "display": "1.4\" Super AMOLED, 450×450", "chipset": "Exynos W920", "ram": "1.5GB + 16GB", "battery": "361 mAh", "charge": "Wireless", "weight": "30.3 g (44mm)", "dims": "44.4 × 43.3 × 9.8 mm", "ip": "IP68, 50m", "os": "Wear OS 4", "wireless": "Wireless charging cradle", "support": "Not published"}, {"id": "L_w4c", "n": "Galaxy Watch4 Classic", "year": 2021, "group": "Wearables", "gsm": 11046, "auModel": "SM-R890", "display": "1.4\" Super AMOLED, 450×450", "chipset": "Exynos W920", "ram": "1.5GB + 16GB", "battery": "361 mAh", "charge": "Wireless", "weight": "52 g (46mm)", "dims": "45.5 × 45.5 × 11 mm", "ip": "IP68, 50m", "os": "Wear OS 4", "wireless": "Wireless charging cradle", "support": "Not published"}, {"id": "L_w5", "n": "Galaxy Watch5", "year": 2022, "group": "Wearables", "gsm": 11748, "auModel": "SM-R915F", "display": "1.4\" Super AMOLED, 450×450", "chipset": "Exynos W920", "ram": "1.5GB + 16GB", "battery": "410 mAh", "charge": "10W wireless", "weight": "33.5 g (44mm)", "dims": "44.4 × 43.3 × 9.8 mm", "ip": "IP68, 50m", "os": "Wear OS 4", "wireless": "Wireless charging cradle, 10W", "support": "Not published"}, {"id": "L_w5p", "n": "Galaxy Watch5 Pro", "year": 2022, "group": "Wearables", "gsm": 11749, "auModel": "SM-R925F", "display": "1.4\" Super AMOLED, 450×450", "chipset": "Exynos W920", "ram": "1.5GB + 16GB", "battery": "590 mAh", "charge": "10W wireless", "weight": "46.5 g", "dims": "45.4 × 45.4 × 10.5 mm", "ip": "IP68, 50m", "os": "Wear OS 4", "wireless": "Wireless charging cradle, 10W", "support": "Not published"}, {"id": "L_w6", "n": "Galaxy Watch6", "year": 2023, "group": "Wearables", "gsm": 12437, "auModel": "SM-R940", "display": "1.5\" Super AMOLED, 480×480, 2000 nits", "chipset": "Exynos W930", "ram": "2GB + 16GB", "battery": "425 mAh", "charge": "10W wireless", "weight": "33.3 g (44mm)", "dims": "42.8 × 44.4 × 9 mm", "ip": "IP68, 50m", "os": "Wear OS 4", "wireless": "Wireless charging cradle, 10W", "support": "Not published"}, {"id": "L_w6c", "n": "Galaxy Watch6 Classic", "year": 2023, "group": "Wearables", "gsm": 12438, "auModel": "SM-R960", "display": "1.5\" Super AMOLED, 480×480, 2000 nits", "chipset": "Exynos W930", "ram": "2GB + 16GB", "battery": "425 mAh", "charge": "10W wireless", "weight": "59 g (47mm)", "dims": "46.5 × 46.5 × 10.9 mm", "ip": "IP68, 50m", "os": "Wear OS 4", "wireless": "Wireless charging cradle, 10W", "support": "Not published"}, {"id": "L_w7", "n": "Galaxy Watch7", "year": 2024, "group": "Wearables", "gsm": 13128, "auModel": "SM-L315F", "display": "1.5\" Super AMOLED, 480×480, 2000 nits", "chipset": "Exynos W1000", "ram": "2GB + 32GB", "battery": "425 mAh", "charge": "10W wireless", "weight": "33.8 g (44mm)", "dims": "44.4 × 44.4 × 9.7 mm", "ip": "IP68, 5ATM", "os": "Wear OS 5", "wireless": "Wireless charging cradle, 10W", "support": "Not published"}, {"id": "L_wfe", "n": "Galaxy Watch FE", "year": 2024, "group": "Wearables", "gsm": 13112, "auModel": "SM-R866", "display": "1.2\" Super AMOLED, 396×396", "chipset": "Exynos W920", "ram": "1.5GB + 16GB", "battery": "247 mAh", "charge": "Wireless", "weight": "26.6 g", "dims": "40.4 × 39.3 × 9.8 mm", "ip": "IP68", "os": "Wear OS 4", "wireless": "Wireless charging cradle", "support": "Not published"}, {"id": "L_ts9p", "n": "Galaxy Tab S9+", "year": 2023, "group": "Tablets", "gsm": 12440, "auModel": "SM-X816B", "display": "12.4\" AMOLED 2X, 120Hz", "chipset": "Snapdragon 8 Gen 2", "ram": "12GB + 256/512GB", "rear": "13MP wide + 8MP ultrawide", "selfie": "12MP ultrawide", "battery": "10090 mAh", "charge": "45W wired", "weight": "586 g", "dims": "285.4 × 185.4 × 5.7 mm", "ip": "IP68", "os": "Android 13", "wireless": "No wireless charging", "support": "4 major Android updates from Android 13 — roughly to 2027"}, {"id": "L_ta9p", "n": "Galaxy Tab A9+", "year": 2023, "group": "Tablets", "gsm": 12617, "auModel": "SM-X216B", "display": "11\" TFT LCD, 90Hz", "chipset": "Snapdragon 695 5G", "ram": "4–8GB + 64/128/256GB · microSD", "rear": "8MP wide", "selfie": "5MP", "battery": "7040 mAh", "charge": "15W wired", "weight": "480 g", "dims": "257.1 × 168.7 × 6.9 mm", "ip": "Not rated", "os": "Android 13", "wireless": "No wireless charging", "support": "Tops out at Android 16 — no further updates after that"}];
+  /* apple-compare:start */
+  // Apple devices for Compare only: specs from each device's GSMArena page (12 Oct 2026), nothing sold,
+  // no prices. Field names match SPECS and LEGACY_SPECS.
+  const APPLE_SPECS = [
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_duo",
+     "n": "iPhone Duo",
+     "when": "expected 23 Oct 2026",
+     "gsm": 13804,
+     "display": "7.6\" foldable LTPO OLED, 120Hz, 1878×2670, 3000 nits peak",
+     "cover": "5.4\" LTPO OLED, 120Hz, 1398×2034, 3000 nits peak",
+     "chipset": "Apple A20 Pro (2nm)",
+     "ram": "12GB + 256GB/512GB/1TB/2TB",
+     "rear": "48MP wide + 48MP ultrawide",
+     "selfie": "Under-display inner camera · 12MP cover",
+     "battery": "Not published",
+     "charge": "PD 3.2 wired (50% in 20 min) · 25W wireless",
+     "weight": "254 g",
+     "dims": "117.8 × 164.6 × 5.2 mm open · 117.8 × 84.1 × 11.3 mm folded",
+     "os": "iOS 27",
+     "wireless": "MagSafe / Qi2, 25W"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_18_pro_max",
+     "n": "iPhone 18 Pro Max",
+     "when": "released 18 Sep 2026",
+     "gsm": 14716,
+     "display": "6.9\" LTPO OLED, 120Hz, 1320×2868, 3000 nits peak",
+     "chipset": "Apple A20 Pro (2nm)",
+     "ram": "12GB + 256GB/512GB/1TB/2TB",
+     "rear": "48MP wide + 48MP 4× periscope tele + 48MP ultrawide",
+     "selfie": "18MP",
+     "battery": "5391 mAh",
+     "charge": "PD 3.2 wired (50% in 15 min) · 25W wireless",
+     "weight": "249 g",
+     "dims": "163.4 × 78 × 8.8 mm",
+     "os": "iOS 27",
+     "wireless": "MagSafe / Qi2, 25W · 4.5W reverse wired"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_18_pro",
+     "n": "iPhone 18 Pro",
+     "when": "released 18 Sep 2026",
+     "gsm": 14934,
+     "display": "6.3\" LTPO OLED, 120Hz, 1206×2622, 3000 nits peak",
+     "chipset": "Apple A20 Pro (2nm)",
+     "ram": "12GB + 256GB/512GB/1TB/2TB",
+     "rear": "48MP wide + 48MP 4× periscope tele + 48MP ultrawide",
+     "selfie": "18MP",
+     "battery": "4056 mAh",
+     "charge": "PD 3.2 wired (50% in 15 min) · 25W wireless",
+     "weight": "211 g",
+     "dims": "150 × 71.9 × 8.8 mm",
+     "os": "iOS 27",
+     "wireless": "MagSafe / Qi2, 25W · 4.5W reverse wired"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_17e",
+     "n": "iPhone 17e",
+     "when": "released 11 Mar 2026",
+     "gsm": 14487,
+     "display": "6.1\" OLED, 1170×2532, 1200 nits peak",
+     "chipset": "Apple A19 (3nm)",
+     "ram": "8GB + 256GB/512GB",
+     "rear": "48MP wide",
+     "selfie": "12MP",
+     "battery": "4005 mAh",
+     "charge": "15W wired (50% in 30 min) · 15W wireless",
+     "weight": "169 g",
+     "dims": "146.7 × 71.5 × 7.8 mm",
+     "os": "iOS 26.3, upgradable to iOS 27",
+     "wireless": "MagSafe / Qi2, 15W"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_17_pro_max",
+     "n": "iPhone 17 Pro Max",
+     "when": "released 19 Sep 2025",
+     "gsm": 13964,
+     "display": "6.9\" LTPO OLED, 120Hz, 1320×2868, 3000 nits peak",
+     "chipset": "Apple A19 Pro (3nm)",
+     "ram": "12GB + 256GB/512GB/1TB/2TB",
+     "rear": "48MP wide + 48MP 4× periscope tele + 48MP ultrawide",
+     "selfie": "18MP",
+     "battery": "4823 mAh",
+     "charge": "PD 3.2 wired (50% in 20 min) · 25W wireless",
+     "weight": "233 g",
+     "dims": "163.4 × 78 × 8.8 mm",
+     "os": "iOS 26, upgradable to iOS 27",
+     "wireless": "MagSafe / Qi2, 25W"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_17_pro",
+     "n": "iPhone 17 Pro",
+     "when": "released 19 Sep 2025",
+     "gsm": 14049,
+     "display": "6.3\" LTPO OLED, 120Hz, 1206×2622, 3000 nits peak",
+     "chipset": "Apple A19 Pro (3nm)",
+     "ram": "12GB + 256GB/512GB/1TB",
+     "rear": "48MP wide + 48MP 4× periscope tele + 48MP ultrawide",
+     "selfie": "18MP",
+     "battery": "3998 mAh",
+     "charge": "PD 3.2 wired (50% in 20 min) · 25W wireless",
+     "weight": "206 g",
+     "dims": "150 × 71.9 × 8.8 mm",
+     "os": "iOS 26, upgradable to iOS 27",
+     "wireless": "MagSafe / Qi2, 25W"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_air",
+     "n": "iPhone Air",
+     "when": "released 19 Sep 2025",
+     "gsm": 13502,
+     "display": "6.5\" LTPO OLED, 120Hz, 1260×2736, 3000 nits peak",
+     "chipset": "Apple A19 Pro (3nm)",
+     "ram": "12GB + 256GB/512GB/1TB",
+     "rear": "48MP wide",
+     "selfie": "18MP",
+     "battery": "3149 mAh",
+     "charge": "PD 2.0 wired (50% in 30 min) · 20W wireless",
+     "weight": "165 g",
+     "dims": "156.2 × 74.7 × 5.6 mm",
+     "os": "iOS 26, upgradable to iOS 27",
+     "wireless": "MagSafe / Qi2, 20W"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPhone",
+     "ip": "IP68",
+     "support": "Not published",
+     "id": "A_iphone_17",
+     "n": "iPhone 17",
+     "when": "released 19 Sep 2025",
+     "gsm": 14050,
+     "display": "6.3\" LTPO OLED, 120Hz, 1206×2622, 3000 nits peak",
+     "chipset": "Apple A19 (3nm)",
+     "ram": "8GB + 256GB/512GB",
+     "rear": "48MP wide + 48MP ultrawide",
+     "selfie": "18MP",
+     "battery": "3692 mAh",
+     "charge": "PD 3.2 wired (50% in 20 min) · 25W wireless",
+     "weight": "177 g",
+     "dims": "149.6 × 71.5 × 8 mm",
+     "os": "iOS 26, upgradable to iOS 27",
+     "wireless": "MagSafe / Qi2, 25W"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPad",
+     "ip": "Not rated",
+     "wireless": "No wireless charging",
+     "support": "Not published",
+     "id": "A_ipad_pro_13",
+     "n": "iPad Pro 13-inch (M5)",
+     "when": "released 22 Oct 2025",
+     "gsm": 14233,
+     "display": "13\" Ultra Retina Tandem OLED, 120Hz, 2064×2752, 1600 nits peak",
+     "chipset": "Apple M5",
+     "ram": "12GB + 256GB/512GB · 16GB + 1TB/2TB",
+     "rear": "12MP wide + LiDAR",
+     "selfie": "12MP ultrawide",
+     "battery": "10290 mAh",
+     "charge": "40W wired (50% in 30 min)",
+     "weight": "579 g (Wi-Fi)",
+     "dims": "281.6 × 215.5 × 5.1 mm",
+     "os": "iPadOS 26, upgradable to iPadOS 27"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPad",
+     "ip": "Not rated",
+     "wireless": "No wireless charging",
+     "support": "Not published",
+     "id": "A_ipad_pro_11",
+     "n": "iPad Pro 11-inch (M5)",
+     "when": "released 22 Oct 2025",
+     "gsm": 14234,
+     "display": "11\" Ultra Retina Tandem OLED, 120Hz, 1668×2420, 1600 nits peak",
+     "chipset": "Apple M5",
+     "ram": "12GB + 256GB/512GB · 16GB + 1TB/2TB",
+     "rear": "12MP wide + LiDAR",
+     "selfie": "12MP ultrawide",
+     "battery": "8160 mAh",
+     "charge": "40W wired (50% in 30 min)",
+     "weight": "444 g (Wi-Fi)",
+     "dims": "249.7 × 177.5 × 5.3 mm",
+     "os": "iPadOS 26, upgradable to iPadOS 27"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPad",
+     "ip": "Not rated",
+     "wireless": "No wireless charging",
+     "support": "Not published",
+     "id": "A_ipad_air_13",
+     "n": "iPad Air 13-inch (M4)",
+     "when": "released 11 Mar 2026",
+     "gsm": 14521,
+     "display": "13\" Liquid Retina IPS LCD, 2048×2732, 600 nits",
+     "chipset": "Apple M4",
+     "ram": "12GB + 128GB/256GB/512GB/1TB",
+     "rear": "12MP wide",
+     "selfie": "12MP ultrawide",
+     "battery": "9705 mAh",
+     "weight": "616 g (Wi-Fi)",
+     "dims": "280.6 × 214.9 × 6.1 mm",
+     "os": "iPadOS 26.3, upgradable to iPadOS 27"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPad",
+     "ip": "Not rated",
+     "wireless": "No wireless charging",
+     "support": "Not published",
+     "id": "A_ipad_air_11",
+     "n": "iPad Air 11-inch (M4)",
+     "when": "released 11 Mar 2026",
+     "gsm": 14520,
+     "display": "11\" Liquid Retina IPS LCD, 1640×2360, 500 nits",
+     "chipset": "Apple M4",
+     "ram": "12GB + 128GB/256GB/512GB/1TB",
+     "rear": "12MP wide",
+     "selfie": "12MP ultrawide",
+     "battery": "7606 mAh",
+     "weight": "464 g (Wi-Fi)",
+     "dims": "247.6 × 178.5 × 6.1 mm",
+     "os": "iPadOS 26.3, upgradable to iPadOS 27"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPad",
+     "ip": "Not rated",
+     "wireless": "No wireless charging",
+     "support": "Not published",
+     "id": "A_ipad_a16",
+     "n": "iPad (A16)",
+     "when": "released 12 Mar 2025",
+     "gsm": 13702,
+     "display": "11\" Liquid Retina IPS LCD, 1640×2360, 500 nits",
+     "chipset": "Apple A16 Bionic (4nm)",
+     "ram": "6GB + 128GB/256GB/512GB",
+     "rear": "12MP wide",
+     "selfie": "12MP ultrawide",
+     "battery": "28.93 Wh",
+     "charge": "45W wired",
+     "weight": "477 g (Wi-Fi)",
+     "dims": "248.6 × 179.5 × 7 mm",
+     "os": "iPadOS 18.3.2, upgradable to iPadOS 27"
+    },
+    {
+     "brand": "Apple",
+     "group": "Apple iPad",
+     "ip": "Not rated",
+     "wireless": "No wireless charging",
+     "support": "Not published",
+     "id": "A_ipad_mini",
+     "n": "iPad mini (A17 Pro)",
+     "when": "released 23 Oct 2024",
+     "gsm": 13437,
+     "display": "8.3\" Liquid Retina IPS LCD, 1488×2266, 500 nits",
+     "chipset": "Apple A17 Pro (3nm)",
+     "ram": "8GB + 128GB/256GB/512GB",
+     "rear": "12MP wide",
+     "selfie": "12MP ultrawide",
+     "battery": "5078 mAh",
+     "weight": "293 g (Wi-Fi)",
+     "dims": "195.4 × 134.8 × 6.3 mm",
+     "os": "iPadOS 18, upgradable to iPadOS 27"
+    }
+  ];
+  /* apple-compare:end */
 
   // ---- deal builder ----------------------------------------------------------------------------
   // The quote screen answers "what does this device cost". This answers "what can I put together",
@@ -2056,13 +2357,15 @@
     const rows = [];
     models.forEach(mo => rows.push({ v: mo.m, n: mo.n, group: groupOf(mo.n), sold: true }));
     LEGACY_SPECS.forEach(d => rows.push({ v: d.id, n: d.n + " (" + d.year + ")", group: "Older " + d.group + " — not sold here", sold: false }));
+    APPLE_SPECS.forEach(d => rows.push({ v: d.id, n: d.n, group: d.group + " — not sold here", sold: false }));
     return rows;
   }
 
   function cmpOptionsHtml(slot, filter) {
     const q = String(filter || "").trim().toLowerCase();
-    const rows = cmpCatalogue().filter(r => !q || r.n.toLowerCase().indexOf(q) !== -1);
-    const order = ["S Series", "Z Series", "A Series", "Tablets", "Wearables", "Rugged"];
+    const rows = cmpCatalogue().filter(r => !q || (r.n + " " + r.group).toLowerCase().indexOf(q) !== -1);
+    const order = ["S Series", "Z Series", "A Series", "Tablets", "Wearables", "Rugged",
+                   "Apple iPhone \u2014 not sold here", "Apple iPad \u2014 not sold here"];
     const groups = [];
     rows.forEach(r => { if (groups.indexOf(r.group) === -1) groups.push(r.group); });
     groups.sort((a, b) => {
@@ -2124,7 +2427,7 @@
     if (!mo) {
       // A device we don't sell has no variant to price, so the control says so rather than sitting
       // there empty and looking broken.
-      const legacy = LEGACY_SPECS.find(d => d.id === ms.value);
+      const legacy = LEGACY_SPECS.concat(APPLE_SPECS).find(d => d.id === ms.value);
       vs.innerHTML = `<option value="">${legacy ? "Not sold here \u2014 specs only" : "\u2014"}</option>`;
       vs.disabled = true;
       return;
@@ -2137,7 +2440,7 @@
     const ms = document.getElementById("cmp-model-" + slot);
     const vs = document.getElementById("cmp-variant-" + slot);
     if (!ms || !ms.value) return null;
-    const legacy = LEGACY_SPECS.find(d => d.id === ms.value);
+    const legacy = LEGACY_SPECS.concat(APPLE_SPECS).find(d => d.id === ms.value);
     if (legacy) return { m: legacy.id, n: legacy.n, v: String(legacy.year), p: null, legacy: legacy };
     const mo = modelIndex[ms.value];
     if (!mo) return null;
@@ -2321,7 +2624,7 @@
     "Size": "height \u00d7 width \u00d7 thickness",
     "Water / dust resistance": "what it survives",
     "Software": "what it runs today",
-    "Updates": "how long it keeps getting new Android versions",
+    "Updates": "how long it keeps getting new software versions",
     "AU model": "the model number sold here"
   };
   const cmpLabel = label => `<th class="cmp-row-label">${escapeHtml(label)}`
@@ -2423,7 +2726,7 @@
     ];
     const anySpec = cols.some(c => c.spec);
     if (anySpec) {
-      rows.push(`<tr class="cmp-sec"><th class="cmp-row-label">Specifications — Australian variants</th>${cols.map(() => "<td></td>").join("")}</tr>`);
+      rows.push(`<tr class="cmp-sec"><th class="cmp-row-label">${cols.some(c => c.spec && c.spec.brand === "Apple") ? "Specifications — Samsung Australian variants, Apple international models" : "Specifications — Australian variants"}</th>${cols.map(() => "<td></td>").join("")}</tr>`);
       SPEC_ROWS.forEach(([label, key]) => {
         if (!cols.some(c => c.spec && c.spec[key])) return;
         rows.push(`<tr>${cmpLabel(label)}` + cols.map(c =>
@@ -2432,7 +2735,7 @@
     }
     const noSpec = cols.filter(c => c.sold && !c.spec).map(c => c.sel.n);
     out.innerHTML = `<div class="cmp-scroll"><table class="cmp-table"><thead><tr><th class="cmp-row-label"></th>`
-      + cols.map(c => `<th>${escapeHtml(c.sel.n)}<br><span class="cmp-offers">${c.sold ? capHtml(escapeHtml(c.sel.v)) : "released " + escapeHtml(c.sel.v)}</span></th>`).join("")
+      + cols.map(c => `<th>${escapeHtml(c.sel.n)}<br><span class="cmp-offers">${c.sold ? capHtml(escapeHtml(c.sel.v)) : escapeHtml(c.sel.legacy && c.sel.legacy.when ? c.sel.legacy.when : "released " + c.sel.v)}</span></th>`).join("")
       + `</tr></thead><tbody>${rows.join("")}</tbody></table></div>`
       + (noSpec.length ? `<p class="cmp-none comparison-missing-specs">No published specifications for ${escapeHtml(noSpec.join(" and "))} — GSMArena does not list ${noSpec.length === 1 ? "it" : "them"}, so ${noSpec.length === 1 ? "it compares" : "they compare"} on price only.</p>` : "");
 
@@ -6068,6 +6371,14 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "13.8", d: "12 Oct 2026", t: "iPhones and iPads on Compare",
+      items: [
+        "<strong>Compare now includes Apple devices.</strong> Pick an iPhone or iPad in any of the three slots and set it beside a Galaxy. The iPhones are the 18 Pro Max, 18 Pro, 17e, 17 Pro Max, 17 Pro, Air and 17, plus the iPhone Duo (expected 23 October). The iPads are the Pro 13-inch and 11-inch (M5), Air 13-inch and 11-inch (M4), iPad (A16) and iPad mini (A17 Pro).",
+        "<strong>Specifications only.</strong> We don't sell Apple devices, so every price row says \u201cnot sold here\u201d, the same as older Samsungs. The figures come from GSMArena, and a figure GSMArena doesn't list shows a dash rather than a guess. The iPhone Duo's cover screen fills the Cover screen row, like the Fold8.",
+        "<strong>Easy to find:</strong> they sit under <em>Apple iPhone</em> and <em>Apple iPad</em> in the device list, and typing \u201capple\u201d, \u201ciphone\u201d or \u201cipad\u201d in the search box finds them.",
+        "<strong>Wireless charging for iPhones</strong> shows Apple\u2019s MagSafe as Apple publishes it. The \u201cneeds a MagSafe-style magnetic case\u201d line still applies to Samsung phones only.",
+        "The Updates row now says \u201cnew software versions\u201d rather than \u201cnew Android versions\u201d. Nothing about prices, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "13.7", d: "9 Oct 2026", t: "More Education presets",
       items: [
         "<strong>Five more Education presets</strong> under Common quotes: Galaxy Z Fold8, Z Flip8, Z Fold8 Ultra, S26+ (all 256GB) and Tab S11 Ultra 256GB Wi-Fi.",
