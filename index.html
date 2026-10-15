@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v13.8
+  Galaxy Deals v14.3
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=ccc153aadc" />
+<link rel="stylesheet" href="styles.css?v=2b312810ab" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -138,6 +138,24 @@
   </div>
 
   <div class="col" id="config-col">
+    <section class="card ask-card" id="ask-card" aria-label="Ask for a quote in plain words">
+      <div class="ask-row">
+        <span class="ask-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3.5 13.9 9l5.6 1.9-5.6 1.9L12 18.5l-1.9-5.7L4.5 10.9 10.1 9z"/><path d="M19 3.5v3M17.5 5h3"/></svg></span>
+        <input type="text" id="ask-input" class="ask-input" placeholder="Ask: S26 Ultra 512GB black, Education, trade in iPhone 15" autocomplete="off" spellcheck="false" aria-label="Describe the quote in plain words" />
+        <button type="button" id="ask-go" class="ask-go" aria-label="Fill the quote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+      </div>
+      <div class="ask-budget-row">
+        <label class="ask-budget-label" for="ask-budget">Customer budget</label>
+        <span class="ask-money"><span aria-hidden="true">$</span><input type="text" id="ask-budget" inputmode="numeric" placeholder="No limit" autocomplete="off" /></span>
+        <button type="button" id="ask-budget-clear" class="ask-clear" hidden>Clear</button>
+        <span class="ask-budget-help">Hides devices and storage sizes over it.</span>
+      </div>
+      <p id="ask-budget-note" class="ask-note" hidden></p>
+      <div id="ask-hints" class="ask-hints"></div>
+      <div id="ask-chips" class="ask-chips" aria-live="polite"></div>
+      <div id="ask-result" class="ask-result" aria-live="polite"></div>
+    </section>
+
     <section class="card" id="device-card">
       <div class="sec-head"><div><p class="section-kicker">STEP 01</p><h2 class="sec-title">Choose Your Device</h2><span class="sec-desc">Select a model, storage, and colour to see pricing and stock.</span></div></div>
 
@@ -3019,7 +3037,8 @@
   searchInput.addEventListener("input", () => {
     const q = searchInput.value.trim().toLowerCase();
     if (!q) { suggestionsBox.hidden = true; return; }
-    const matches = searchIndex.filter(d => d.key.includes(q)).slice(0, 12);
+    const matches = searchIndex.filter(d => d.key.includes(q)
+      && (!window.askWithin || window.askWithin(d.m, d.v, d.p))).slice(0, 12);
     if (!matches.length) { suggestionsBox.hidden = true; return; }
     suggestionsBox.innerHTML = "";
     matches.forEach(d => {
@@ -6365,6 +6384,15 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "14.3", d: "16 Oct 2026", t: "Ask for a quote in plain words, and a customer budget",
+      items: [
+        "<strong>Ask box on Customer Quote.</strong> Type what the customer wants, like \u201cS26 Ultra 512GB cobalt violet, Education, trade in iPhone 15 128GB\u201d, and press Enter. It picks the device, storage, colour and customer type, switches on Trade-In and New Galaxy Club when they are mentioned, and adds it to the quote. Prices are the same as picking it by hand.",
+        "<strong>It shows what it understood</strong> as a row of tags above the answer, and says in words anything it had to assume, such as \u201cthe lowest storage, 256GB\u201d or \u201cWi-Fi, as no cellular was asked for\u201d. Edit the words and ask again: it replaces its own lines, and <strong>Undo</strong> takes them off the quote.",
+        "<strong>Several devices and quantities:</strong> \u201c2x Tab S11 128GB LTE, SMB\u201d or \u201cFold8 256GB and Watch9 44mm LTE\u201d work too. It adds to the quote, so it never clears one in progress.",
+        "<strong>Customer budget.</strong> Type one in the Customer budget box, or say \u201cunder $1,500\u201d, and devices and storage sizes over it disappear from the device list, the storage list and the device search. It uses what the customer pays today for the customer type chosen, after offers that apply by themselves and before any trade-in. Reset quote clears it.",
+        "<strong>Budget with no device</strong>, like \u201cphone under $1,200 Education\u201d, lists what fits with the largest storage that stays within the budget. A device you name that is over the budget isn't added; it shows how far over it is and has an Add anyway button.",
+        "A trade-in is read as good working order unless the words say \u201cnot working\u201d, \u201cbroken\u201d or \u201ccracked\u201d, so check the condition checklist as usual. Nothing about prices, offers or the printed quote has changed."
+      ] },
     { type: "Offer", v: "14.2", d: "15 Oct 2026", t: "Tab S12 $400 credit is for other items, and Compare drops Best deal",
       items: [
         "<strong>Tab S12+ / S12 Ultra pre-order $400 credit</strong> (A260006533, to 21 Oct) is a credit to spend on something else in the same sale. It no longer comes off the tablet price, and the best price for an S12 no longer counts it. Not with Education or SMB.",
@@ -7445,6 +7473,674 @@
       b.textContent = open ? "Show fewer" : "Show " + b.dataset.more + " more";
     });
   })();
+
+  // ---- Ask: a quote in plain words, and the customer's budget ----
+  // "S26 Ultra 512GB black, Education, trade in iPhone 15" fills the quote the way picking it by hand
+  // would: the normal steps are replayed, so every price is the engine's. Nothing is guessed silently:
+  // what was read shows as chips, and what had to be assumed is said in words under them.
+  // The customer's budget hides devices and storage sizes over it in the pickers.
+  (function () {
+    const card = document.getElementById("ask-card");
+    if (!card) return;
+    const $ = id => document.getElementById(id);
+    const textEl = $("ask-input"), goBtn = $("ask-go"), budgetEl = $("ask-budget"), budgetClear = $("ask-budget-clear"),
+          noteEl = $("ask-budget-note"), chipsEl = $("ask-chips"), outEl = $("ask-result"), hintsEl = $("ask-hints");
+    const MODE_NAME = { none: "Standard", edu: "Education", smb: "SMB" };
+    const MODE_NEEDS = { edu: "needs a student or staff ID", smb: "needs an ABN" };
+    const esc = escapeHtml;
+    const dollars = n => (n % 1 ? fmt(n) : "$" + Number(n).toLocaleString("en-AU"));
+    const regexEsc = x => x.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    let budget = null;       // dollars, or null for no limit
+    let undoInfo = null;     // what the last ask put on the quote, so Undo can take it back
+    const cache = {};
+
+    // ---- price: what the customer pays today in a customer type ----
+    // The engine's price after the offers that apply on their own. Trade-in, vouchers and codes
+    // are not in it, so a budget compares like with like.
+    function priceOf(m, v, p, mode) {
+      const k = m + "|" + v + "|" + mode;
+      if (!(k in cache)) {
+        let r = null;
+        try { r = pricingFor(m, v, p, mode, { ngc: false, bundleWearable: false, tradeIn: false, optIns: [], item: null }); } catch (e) {}
+        cache[k] = r && r.subtotal != null ? r.subtotal : p;
+      }
+      return cache[k];
+    }
+    const within = (m, v, p, mode) => budget == null || priceOf(m, v, p, mode || currentMode) <= budget + 0.005;
+    window.askWithin = (m, v, p) => within(m, v, p);
+
+    // ---- the budget, applied to the pickers ----
+    function flag(opt, hide) { opt.hidden = hide; opt.disabled = hide; }
+    function flagVariants(refresh) {
+      const mo = modelIndex[deviceSelect.value];
+      if (!mo) return;
+      const opts = Array.prototype.slice.call(variantSelect.options);
+      const fits = opts.map(o => { const v = mo.variants.find(x => x.v === o.value); return !v || within(mo.m, v.v, v.p); });
+      const any = fits.some(Boolean);
+      opts.forEach((o, i) => flag(o, budget != null && any && !fits[i]));
+      if (budget != null && any) {
+        const cur = opts.findIndex(o => o.value === variantSelect.value);
+        if (cur === -1 || !fits[cur]) {
+          // The largest size that fits is the most the customer can have for the money.
+          variantSelect.value = opts[fits.lastIndexOf(true)].value;
+          if (refresh) variantSelect.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+      }
+    }
+    function applyBudget() {
+      const mode = currentMode;
+      const opts = Array.prototype.slice.call(deviceSelect.options);
+      const fit = opts.map(o => { const mo = modelIndex[o.value]; return !mo || mo.variants.some(v => within(mo.m, v.v, v.p, mode)); });
+      const shown = fit.filter(Boolean).length;
+      const none = budget != null && shown === 0;
+      opts.forEach((o, i) => flag(o, budget != null && !none && !fit[i]));
+      Array.prototype.forEach.call(deviceSelect.querySelectorAll("optgroup"), g => {
+        const kids = Array.prototype.slice.call(g.children);
+        g.hidden = kids.length > 0 && kids.every(k => k.hidden);
+      });
+      const cur = deviceSelect.selectedOptions[0];
+      if (budget != null && !none && (!cur || cur.hidden)) {
+        const first = opts[fit.indexOf(true)];
+        if (first) { deviceSelect.value = first.value; deviceSelect.dispatchEvent(new Event("change", { bubbles: true })); }
+      } else {
+        flagVariants(true);
+      }
+      budgetClear.hidden = budget == null;
+      noteEl.hidden = budget == null;
+      noteEl.classList.toggle("is-warn", none);
+      if (budget == null) { noteEl.textContent = ""; return; }
+      if (none) {
+        let low = null;
+        models.forEach(mo => mo.variants.forEach(v => {
+          const pr = priceOf(mo.m, v.v, v.p, mode);
+          if (!low || pr < low.p) low = { p: pr, n: mo.n + " " + v.v };
+        }));
+        noteEl.textContent = "Nothing is at or under " + dollars(budget) + " for " + MODE_NAME[mode] + ". The lowest is "
+          + (low ? fmt(low.p) + " (" + low.n + ")" : "higher") + ", so the lists below aren't filtered.";
+      } else {
+        noteEl.textContent = "Showing " + shown + " of " + opts.length + " devices at or under " + dollars(budget) + " for "
+          + MODE_NAME[mode] + ". That is what the customer pays today after automatic offers, before any trade-in.";
+      }
+    }
+    function setBudget(n, fromText) {
+      budget = n != null && isFinite(n) && n > 0 ? Math.round(n * 100) / 100 : null;
+      budgetEl.value = budget == null ? "" : (budget % 1 ? String(budget) : String(budget).replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+      applyBudget();
+      if (!fromText) refresh();
+    }
+    function refresh() {
+      if (!lastRead) return;
+      if (lastRead.list) run(); else render(lastRead, true);
+    }
+    function readBudgetField() {
+      const t = budgetEl.value.trim().toLowerCase().replace(/[$,\s]/g, "");
+      if (!t) return null;
+      const m = /^(\d+(?:\.\d+)?)(k?)$/.exec(t);
+      return m ? parseFloat(m[1]) * (m[2] ? 1000 : 1) : NaN;
+    }
+    let budgetTimer = null;
+    budgetEl.addEventListener("input", () => {
+      clearTimeout(budgetTimer);
+      budgetTimer = setTimeout(() => {
+        const n = readBudgetField();
+        if (n === null) { budget = null; applyBudget(); }
+        else if (!isNaN(n)) { budget = n; applyBudget(); }
+        refresh();
+      }, 250);
+    });
+    budgetEl.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); budgetEl.dispatchEvent(new Event("input")); } });
+    budgetClear.addEventListener("click", () => { setBudget(null); budgetEl.focus(); });
+
+    // The pickers: variants of the chosen device honour the budget, and so does a customer-type change.
+    const basePopulate = populateVariants;
+    populateVariants = function () { basePopulate.apply(this, arguments); if (budget != null) flagVariants(false); };
+    document.querySelectorAll("#quote-modes button").forEach(b => b.addEventListener("click", () => {
+      if (budget != null) { applyBudget(); refresh(); }
+    }));
+
+    // ---- reading the words ----
+    const JOIN = /\b(fold|flip|watch|buds|ultra|xcover|fit)\s+(\d)(?!\d|\s?(?:gb|tb|mm)\b)/g;
+    function clean(raw) {
+      return " " + String(raw).toLowerCase()
+        .replace(/[’‘`]/g, "'")
+        .replace(/(\d),(\d{3})/g, "$1$2")
+        .replace(/([a-z]\d+)\s+plus\b/g, "$1+")
+        .replace(/\bfe\s+plus\b/g, "fe+")
+        .replace(/\bwi[\s-]?fi\b/g, "wifi")
+        .replace(/\bblu?e?tooth\b/g, "bluetooth")
+        .replace(/\b(?:galaxy|samsung)\b/g, " ")
+        .replace(JOIN, "$1$2")
+        .replace(/\b(\d+(?:\.\d+)?)\s+(gb|tb|mm)\b/g, "$1$2")
+        .replace(/[^a-z0-9+$.\s'-]/g, " ")
+        .replace(/\s+/g, " ") + " ";
+    }
+
+    let ALIASES = null;
+    function aliases() {
+      if (ALIASES) return ALIASES;
+      ALIASES = [];
+      models.forEach(mo => {
+        const base = clean(mo.n).trim();                       // "s26 ultra", "z fold8 ultra", "tab s11 ultra"
+        const set = {};
+        const add = a => { a = a.trim(); if (a.length >= 2) set[a] = 1; };
+        add(base);
+        add(base.replace(/^z\s+/, ""));                        // "fold8 ultra"
+        add(base.replace(/\s+5g$/, ""));                       // "a57"
+        add(base.replace(/^tab\s+/, ""));                      // "s11 ultra"
+        add(base.replace(/\s+/g, ""));                         // "s26ultra"
+        const u = /^s(\d+) ultra$/.exec(base);
+        if (u) add("s" + u[1] + "u");                          // "s26u"
+        Object.keys(set).forEach(a => ALIASES.push({ a: a, m: mo.m }));
+      });
+      ALIASES.sort((x, y) => y.a.length - x.a.length);          // longest first: "s26 ultra" beats "s26"
+      return ALIASES;
+    }
+    function findDevices(t) {
+      const taken = [], out = [];
+      aliases().forEach(al => {
+        const re = new RegExp("(^|[^a-z0-9+])(" + regexEsc(al.a) + ")(?![a-z0-9+])", "g");
+        let m;
+        while ((m = re.exec(t))) {
+          const start = m.index + m[1].length, end = start + m[2].length;
+          re.lastIndex = end;
+          if (taken.some(r => start < r[1] && end > r[0])) continue;
+          taken.push([start, end]);
+          out.push({ m: al.m, start: start, end: end });
+        }
+      });
+      return out.sort((a, b) => a.start - b.start);
+    }
+
+    function qtyFor(t, d) {
+      const before = t.slice(Math.max(0, d.start - 16), d.start);
+      const after = t.slice(d.end, d.end + 6);
+      const WORDS = { two: 2, three: 3, four: 4, five: 5, six: 6 };
+      let q = 1, m;
+      if ((m = /(?:^|\s)(\d)\s*x?\s*$/.exec(before))) q = +m[1];
+      else if ((m = /(?:^|\s)(two|three|four|five|six)\s+(?:of\s+)?$/.exec(before))) q = WORDS[m[1]];
+      else if (/(?:^|\s)pair\s+of\s*$/.test(before)) q = 2;
+      else if ((m = /^\s*x\s*(\d)\b/.exec(after))) q = +m[1];
+      return Math.max(1, Math.min(6, q));
+    }
+    function readSpec(txt) {
+      const sp = {};
+      let m;
+      if ((m = /(\d+(?:\.\d+)?)(gb|tb)\b/.exec(txt))) sp.cap = m[1] + m[2];
+      else if ((m = /(?:^|\s)(64|128|256|512|1024)(?:\s|$)/.exec(txt))) sp.cap = m[1] + "gb";
+      if ((m = /(\d{2})mm\b/.exec(txt))) sp.mm = m[1] + "mm";
+      if (/\b(?:lte|cellular|4g|esim|data)\b/.test(txt)) sp.conn = "lte";
+      else if (/\bwifi\b/.test(txt)) sp.conn = "wifi";
+      else if (/\b(?:bluetooth|bt)\b/.test(txt)) sp.conn = "bluetooth";
+      return sp;
+    }
+
+    // Budget: "under $1,500", "budget 1200", "max 2k", "$900 budget". Returns { value, text }.
+    function readBudget(raw) {
+      const t = String(raw).toLowerCase().replace(/(\d),(\d{3})/g, "$1$2").replace(/\bpro max\b/g, "promax");
+      const num = "\\$?\\s*(\\d+(?:\\.\\d+)?)\\s*(k)?";
+      const stop = "(?!\\s*(?:gb|tb|mm|g\\b|hz|x\\b|%))";
+      const tests = [
+        new RegExp("\\b(?:under|below|less than|up to|upto|max(?:imum)?|no more than|at most|within|budget(?:\\s+(?:of|is|around|about))?|around|about|spend(?:ing)?|can spend)\\s*" + num + stop),
+        new RegExp("\\$\\s*(\\d+(?:\\.\\d+)?)\\s*(k)?\\s*(?:budget|max|limit|tops|or less|or under)"),
+        new RegExp("\\b(\\d+(?:\\.\\d+)?)\\s*(k)?\\s*(?:dollars|bucks)?\\s*(?:budget|max|limit|tops|or less|or under)\\b")
+      ];
+      for (let i = 0; i < tests.length; i++) {
+        const m = tests[i].exec(t);
+        if (!m) continue;
+        const value = parseFloat(m[1]) * (m[2] ? 1000 : 1);
+        if (value >= 50 && value <= 20000) return { value: value, text: m[0] };
+      }
+      return null;
+    }
+
+    // Trade-in: "trade in iPhone 15 128GB", "trading in my S23 Ultra", "iPhone 14 trade-in".
+    const TI_KEY = /\b(?:trade[\s-]?in|trading[\s-]?in|traded[\s-]?in|tradein|trade[\s-]?up|trade)\b/g;
+    const TI_STOP = /\b(?:for|with|on|under|below|budget|education|edu|student|smb|business|ngc|new galaxy club|galaxy club|not working|broken|faulty|cracked|damaged|dead|good working|max|up to|worth|valued|add|into|towards?|to|and get|and a)\b/;
+    const TI_FILLER = /^(?:(?:my|their|his|her|the|an?|old|current|existing|customers?|customer's|is|are|device|handset|plus|also|has|have|got|being)\s+)+/;
+    function tiTerms(q) { return q.toLowerCase().replace(/\+/g, " plus ").split(/\s+/).filter(Boolean); }
+    function tiHitsFor(phrase) {
+      const terms = tiTerms(phrase).filter(w => !/^(?:gb|tb)$/.test(w));
+      if (!terms.length) return [];
+      const hits = [];
+      TRADEIN_GROUPS.forEach(g => g[3].forEach(v => {
+        const key = tiSearchKey(g, v);
+        if (terms.every(w => key.indexOf(w) !== -1)) hits.push({ g: g, v: v });
+      }));
+      return hits;
+    }
+    // The longest run of words, from either end, that names something on Asurion's list.
+    function tiLongest(tokens, fromEnd) {
+      for (let k = Math.min(tokens.length, 6); k >= 1; k--) {
+        const w = fromEnd ? tokens.slice(tokens.length - k) : tokens.slice(0, k);
+        if (!/[a-z]/.test(w.join(" "))) continue;
+        const hits = tiHitsFor(w.join(" "));
+        if (hits.length) return { phrase: w.join(" "), hits: hits };
+      }
+      return null;
+    }
+    function takeTradeIns(t) {
+      const found = [];
+      let rest = t;
+      const re = new RegExp(TI_KEY.source, "g");
+      let m, guard = 0;
+      while ((m = re.exec(rest)) && found.length < 2 && guard++ < 4) {
+        const kStart = m.index, kEnd = m.index + m[0].length;
+        let after = rest.slice(kEnd).replace(/^[\s:,-]+/, "");
+        const stop = after.search(TI_STOP);
+        let seg = stop === -1 ? after : after.slice(0, stop);
+        seg = seg.replace(TI_FILLER, "").replace(/\b(\d+)tb\b/g, (x, n) => (parseInt(n, 10) * 1024) + "gb").trim();
+        let hit = seg ? tiLongest(seg.split(/\s+/), false) : null;
+        let used = hit ? hit.phrase : "";
+        let cutFrom = kStart, cutTo = kEnd;
+        if (hit) {
+          const idx = rest.indexOf(used, kEnd);
+          cutTo = idx === -1 ? kEnd : idx + used.length;
+        } else {
+          // "iPhone 15 trade in": the words before it.
+          const before = rest.slice(0, kStart).trim().split(/\s+/).filter(Boolean);
+          hit = tiLongest(before.slice(-6), true);
+          if (hit) {
+            used = hit.phrase;
+            const idx = rest.lastIndexOf(used, kStart);
+            cutFrom = idx === -1 ? kStart : idx;
+          }
+        }
+        found.push({ asked: used || seg, hit: hit });
+        rest = rest.slice(0, cutFrom) + " " + rest.slice(cutTo);
+        re.lastIndex = Math.max(0, cutFrom);
+      }
+      return { found: found, rest: rest };
+    }
+    function resolveTrade(item) {
+      const phrase = item.asked;
+      if (!item.hit) return { asked: phrase, none: true };
+      let hits = item.hit.hits;
+      const sizeM = /(\d+)(gb|tb|mm)\b/.exec(phrase);
+      let size = null;
+      if (sizeM) size = sizeM[2] === "tb" ? String(parseInt(sizeM[1], 10) * 1024) : sizeM[1];
+      const norm = x => x.toLowerCase().replace(/^galaxy\s+/, "").replace(/[^a-z0-9+]/g, "");
+      const bare = norm(phrase.replace(/\d+\s?(gb|tb|mm)\b/g, "").replace(/\bplus\b/g, "+"));
+      const models = [];
+      hits.forEach(h => { if (models.indexOf(h.g[2]) === -1) models.push(h.g[2]); });
+      let model = null;
+      const exact = models.filter(n => norm(n) === bare);
+      if (exact.length === 1) model = exact[0];
+      else if (models.length === 1) model = models[0];
+      if (!model) return { asked: phrase, ambiguous: models };
+      let pool = hits.filter(h => h.g[2] === model);
+      let assumedSize = false;
+      if (size && pool.some(h => String(h.v[0]) === size)) pool = pool.filter(h => String(h.v[0]) === size);
+      else if (pool.length > 1) {
+        // No size given: the lowest value, so the quote never promises more credit than it should.
+        pool = pool.slice().sort((a, b) => a.v[1] - b.v[1]);
+        assumedSize = true;
+      }
+      return { asked: phrase, hit: pool[0], assumedSize: assumedSize };
+    }
+
+    // ---- everything read from one sentence ----
+    function parse(raw) {
+      const out = { raw: raw, notes: [], devices: [], trades: [], ngc: false, term: null, mode: null, budget: null, category: null, unknown: [] };
+      const b = readBudget(raw);
+      let text = raw;
+      if (b) {
+        out.budget = b.value;
+        text = text.toLowerCase().replace(/(\d),(\d{3})/g, "$1$2").replace(/\bpro max\b/g, "promax").replace(b.text, " ").replace(/\bpromax\b/g, "pro max");
+      }
+      let t = clean(text);
+      const ti = takeTradeIns(t);
+      t = ti.rest;
+      out.trades = ti.found.map(resolveTrade);
+      if (out.trades.length) {
+        out.tradeNon = /\b(?:not working|isn'?t working|doesn'?t work|broken|faulty|dead|won'?t turn on|no power|water damage|cracked|damaged|smashed)\b/.test(t);
+        out.tradeNonWord = (/\b(cracked|damaged|smashed)\b/.exec(t) || /\b(not working|broken|faulty|dead|water damage)\b/.exec(t) || [])[1] || "not working";
+      }
+      if (/\b(?:ngc|new\s+galaxy\s+club|new\s+club|galaxy\s+club)\b/.test(raw.toLowerCase())) {
+        out.ngc = true;
+        const tm = /\b(\d)\s*(?:years?|yrs?|y)\b/.exec(t) || /\b(12|24)\s*months?\b/.exec(t);
+        if (tm) {
+          const n = +tm[1] >= 12 ? +tm[1] / 12 : +tm[1];
+          out.term = n + (n === 1 ? " year" : " years");
+          t = t.replace(tm[0], " ");
+        }
+        t = t.replace(/\b(?:ngc|new club|club)\b/g, " ");
+      }
+      const edu = /\b(?:edu|education|educational|student|students|uni|university|teacher|tafe|school)\b/.test(t);
+      const smb = /\b(?:smb|business|abn|company|sole trader|enterprise)\b/.test(t);
+      if (edu && smb) out.notes.push("It mentions both Education and SMB, so the customer type was left as it is.");
+      else if (edu) out.mode = "edu";
+      else if (smb) out.mode = "smb";
+      const found = findDevices(t);
+      found.forEach((d, i) => {
+        const next = found[i + 1] ? found[i + 1].start : t.length;
+        out.devices.push({ m: d.m, qty: qtyFor(t, d), after: t.slice(d.end, next), lead: i === 0 ? t.slice(0, d.start) : "" });
+      });
+      if (!out.devices.length) {
+        const CATS = [
+          [/\b(?:phones?|handsets?|mobiles?|smartphones?)\b/, "phones", mo => /Phones|Foldables|Rugged/.test(mo.cat)],
+          [/\b(?:tablets?|tabs?)\b/, "tablets", mo => /Tablets/.test(mo.cat)],
+          [/\b(?:watch(?:es)?|smartwatch(?:es)?)\b/, "watches", mo => /Watch|Fit/.test(mo.n)],
+          [/\b(?:buds|earbuds|earphones|headphones)\b/, "earbuds", mo => /Buds/.test(mo.n)],
+          [/\b(?:foldables?|folding)\b/, "foldables", mo => /Foldables/.test(mo.cat)]
+        ];
+        const hit = CATS.find(c => c[0].test(t));
+        if (hit) out.category = { label: hit[1], test: hit[2] };
+        const STOPWORDS = /^(?:the|and|for|with|under|over|about|around|budget|max|have|want|need|looking|customer|has|get|can|you|show|me|what|can|got|any|good|best|cheap|cheapest|something|that|this|please|quote|new|one|some|of|to|in|on|at|is|are|a|an|my|an)$/;
+        out.unknown = t.split(/[\s,]+/).filter(w => w.length >= 3 && /^[a-z0-9+]+$/.test(w) && !STOPWORDS.test(w) && !/^\d/.test(w)
+          && !/^(?:edu|education|smb|business|student|lte|wifi|cellular|bluetooth|gb|tb|mm|ngc|phones?|tablets?|watch(?:es)?|trade|tradein|x\d)$/.test(w));
+      }
+      return out;
+    }
+
+    // ---- choosing the storage, colour and price for a device ----
+    function resolveDevice(d, mode, first) {
+      const mo = modelIndex[d.m];
+      const spec = readSpec(d.after);
+      if (first && !spec.cap && !spec.mm && !spec.conn) Object.assign(spec, readSpec(d.lead));
+      const vn = v => v.v.toLowerCase().replace(/blutooth/, "bluetooth").replace(/wi-?fi/, "wifi").replace(/[^a-z0-9]/g, "");
+      const all = mo.variants.map(v => ({ v: v, n: vn(v), price: priceOf(mo.m, v.v, v.p, mode) }));
+      const has = k => all.some(x => x.n.indexOf(k) !== -1);
+      const issues = [], assumed = [];
+      let pool = all;
+      const narrow = (test, miss) => {
+        const next = pool.filter(test);
+        if (next.length) pool = next; else issues.push(miss);
+      };
+      if (spec.cap) {
+        const cap = spec.cap === "1024gb" ? "1tb" : spec.cap;
+        narrow(x => x.n.indexOf(cap) !== -1, spec.cap.toUpperCase() + " isn't offered on " + mo.n
+          + " (" + all.map(x => x.v.v).join(", ") + ").");
+      }
+      if (spec.mm && has("mm")) narrow(x => x.n.indexOf(spec.mm) !== -1, spec.mm + " isn't offered on " + mo.n + ".");
+      if (spec.conn && (has("wifi") || has("lte") || has("bluetooth"))) {
+        const label = { wifi: "Wi-Fi", lte: "LTE", bluetooth: "Bluetooth" }[spec.conn];
+        narrow(x => x.n.indexOf(spec.conn) !== -1, label + " isn't offered on " + mo.n + ".");
+      }
+      pool = pool.slice().sort((a, b) => a.price - b.price);
+      const sized = !!(spec.cap || spec.mm) && !issues.some(x => /isn't offered/.test(x) && /GB|TB|mm/.test(x));
+      let pick = pool[0], over = false;
+      if (budget != null) {
+        const fitting = pool.filter(x => x.price <= budget + 0.005);
+        if (fitting.length) {
+          pick = sized ? fitting[0] : fitting[fitting.length - 1];
+          if (!sized && pool.length > 1) assumed.push(/mm/.test(pick.n) ? "the largest size that fits the budget" : "the largest storage that fits the budget");
+        } else over = true;
+      } else if (!sized && pool.length > 1) {
+        const size = pick.v.v.replace(/\s*(wi-?fi|lte|bluetooth|blutooth)$/i, "");
+        assumed.push(/mm/.test(pick.n) ? "the smallest size, " + size : "the lowest storage, " + size);
+      }
+      if (!spec.conn && has("wifi") && has("lte") && /wifi/.test(pick.n)) assumed.push("Wi-Fi, as no cellular was asked for");
+      if (!spec.conn && has("bluetooth") && has("lte") && /bluetooth/.test(pick.n) && !spec.mm) assumed.push("Bluetooth, as no LTE was asked for");
+      // colour: a whole colour name in the words, else a single colour that shares a word
+      const colours = coloursFor(mo.m, pick.v.v).list;
+      let colour = "", colourNote = "", exclusive = false;
+      if (colours.length) {
+        const txt = " " + (d.after + " " + d.lead).replace(/\s+/g, " ") + " ";
+        const whole = colours.filter(x => txt.indexOf(" " + x.value.toLowerCase() + " ") !== -1)
+          .sort((a, b) => b.value.length - a.value.length)[0];
+        if (whole) { colour = whole.value; exclusive = !!whole.exclusive; }
+        else {
+          const words = {};
+          txt.split(/\s+/).forEach(w => { if (w.length >= 3 && /^[a-z]+$/.test(w)) words[w] = 1; });
+          if (words.gray) words.grey = 1;
+          if (words.grey) words.gray = 1;
+          const hits = colours.filter(x => x.value.toLowerCase().split(/\s+/).some(w => words[w]));
+          if (hits.length === 1) { colour = hits[0].value; exclusive = !!hits[0].exclusive; }
+          else if (hits.length > 1) colourNote = "Several colours fit what was said (" + hits.map(x => x.value).join(", ") + "), so the colour was left to choose.";
+        }
+      }
+      if (exclusive) issues.push(colour + " is sold online only, so it can't be sold in store.");
+      return { mo: mo, v: pick.v, price: pick.price, qty: d.qty, colour: colour, issues: issues.concat(colourNote ? [colourNote] : []),
+               assumed: assumed, over: over, options: all.slice().sort((a, b) => a.price - b.price).map(x => ({ v: x.v.v, price: x.price, fits: budget == null || x.price <= budget + 0.005 })) };
+    }
+
+    // ---- applying: the normal steps, in the normal order ----
+    function setMode(mode) {
+      const b = document.querySelector('#quote-modes [data-mode="' + mode + '"]');
+      if (b && currentMode !== mode) b.click();
+    }
+    function addItem(it) {
+      deviceSelect.value = it.mo.m;
+      deviceSelect.dispatchEvent(new Event("change", { bubbles: true }));
+      variantSelect.value = it.v.v;
+      variantSelect.dispatchEvent(new Event("change", { bubbles: true }));
+      if (it.colour) { selectedColour = it.colour; renderColourField(); }
+      const ids = [];
+      for (let i = 0; i < it.qty; i++) {
+        addSelectionToQuote();
+        ids.push(cart[cart.length - 1].id);
+      }
+      return ids;
+    }
+    function setToggle(box, on) {
+      if (box.checked === on) return false;
+      box.checked = on;
+      box.dispatchEvent(new Event("change", { bubbles: true }));
+      return true;
+    }
+    function applyTrade(tr, usedSlots, opts) {
+      const slot = tiSlots.find(x => !x.val.value && usedSlots.indexOf(x) === -1) || tiSlots.find(x => usedSlots.indexOf(x) === -1);
+      if (!slot) return null;
+      usedSlots.push(slot);
+      tiPickFromSearch(slot, tr.hit.g, tr.hit.v);
+      if (opts.non) {
+        slot.cond.value = "non";
+        slot.cond.dispatchEvent(new Event("change", { bubbles: true }));
+      }
+      return slot;
+    }
+
+    function undoLast(silent) {
+      if (!undoInfo) return;
+      const u = undoInfo;
+      undoInfo = null;
+      cart = cart.filter(i => u.ids.indexOf(i.id) === -1);
+      if (u.tradeSlots.length) u.tradeSlots.forEach(slot => {
+        slot.make.value = "";
+        slot.make.dispatchEvent(new Event("change", { bubbles: true }));
+      });
+      if (u.tradeOn) setToggle(tradeinToggle, false);
+      if (u.ngcOn) setToggle(ngcToggle, false);
+      if (u.prevMode && u.prevMode !== currentMode) setMode(u.prevMode);
+      renderLedger();
+      renderPromoPreview();
+      if (!silent) { lastRead = null; chipsEl.innerHTML = ""; outEl.innerHTML = '<p class="ask-sub">Taken off the quote.</p>'; hintsEl.hidden = false; }
+    }
+
+    // ---- showing the answer ----
+    let lastRead = null;
+    function chip(text, cls) { return '<span class="ask-chip' + (cls ? " " + cls : "") + '">' + esc(text) + "</span>"; }
+    function render(res, refreshOnly) {
+      const chips = [], notes = [];
+      res.items.forEach(it => {
+        chips.push(chip((it.qty > 1 ? it.qty + " × " : "") + it.mo.n + (it.v.v !== "Standard" ? " " + it.v.v : "")));
+        if (it.colour) chips.push(chip(it.colour));
+      });
+      if (res.mode) chips.push(chip(MODE_NAME[res.mode] + " — " + MODE_NEEDS[res.mode]));
+      else if (res.items.length || res.list) chips.push(chip(MODE_NAME[res.modeUsed] + ", as set at the top", "is-budget"));
+      res.trades.forEach(tr => {
+        if (tr.hit) chips.push(chip("Trade-in: " + tr.hit.g[2] + " " + tr.hit.v[0] + tiSizeUnit(tr.hit.g[1])
+          + (res.tradeNon ? ", " + res.tradeNonWord + " (not working order)" : ", good working order")));
+      });
+      if (res.ngc) chips.push(chip("New Galaxy Club" + (res.term ? ", " + res.term : "")));
+      if (budget != null) chips.push(chip("Budget " + dollars(budget), "is-budget"));
+      chipsEl.innerHTML = chips.join("");
+
+      let html = "";
+      const added = res.items.filter(it => it.added);
+      if (added.length) {
+        html += '<div class="ask-done"><div class="ask-done-head"><strong>Added to the quote</strong>'
+          + '<button type="button" class="ask-link" id="ask-undo">Undo</button></div><ul class="ask-lines">'
+          + added.map(it => '<li><span>' + (it.qty > 1 ? it.qty + " × " : "") + esc(it.mo.n) + " " + capHtml(esc(it.v.v))
+              + (it.colour ? " · " + esc(it.colour) : "") + '</span><span class="ask-price">' + fmt(it.price * it.qty) + "</span></li>").join("")
+          + "</ul>";
+        const extra = [];
+        res.trades.forEach(tr => {
+          if (tr.slot) extra.push("Trade-in " + tr.hit.g[2] + " " + tr.hit.v[0] + tiSizeUnit(tr.hit.g[1]) + ": "
+            + (tr.slot.val.value ? fmt(parseFloat(tr.slot.val.value) || 0) + " credit" : "no credit in this condition"));
+        });
+        if (res.ngc) extra.push("New Galaxy Club is on");
+        if (extra.length) html += '<p class="ask-sub">' + esc(extra.join(" · ")) + "</p>";
+        html += "</div>";
+      }
+      res.items.filter(it => it.over).forEach(it => {
+        html += '<div class="ask-over"><div class="ask-over-head"><strong>' + esc(it.mo.n) + " " + capHtml(esc(it.v.v)) + "</strong> is "
+          + fmt(it.price - budget) + " over the " + dollars(budget) + " budget (" + fmt(it.price) + " for " + MODE_NAME[res.modeUsed] + ").</div>"
+          + (it.options.some(o => o.fits)
+            ? '<p class="ask-sub">Within budget: ' + it.options.filter(o => o.fits).map(o => esc(o.v) + " " + fmt(o.price)).join(", ") + ".</p>" : "")
+          + '<button type="button" class="ask-link" data-add-anyway="' + esc(it.mo.m + "|" + it.v.v) + '">Add anyway</button></div>';
+      });
+      res.items.forEach(it => {
+        const msgs = it.assumed.length ? [it.mo.n + ": assumed " + it.assumed.join(" and ") + "."] : [];
+        it.issues.forEach(x => msgs.push(x));
+        msgs.forEach(x => notes.push(x));
+      });
+      res.trades.forEach(tr => {
+        if (tr.none) notes.push("Couldn't find “" + tr.asked + "” on Asurion's trade-in list, so no trade-in was filled.");
+        else if (tr.ambiguous) notes.push("The trade-in “" + tr.asked + "” could be " + tr.ambiguous.slice(0, 4).join(", ") + (tr.ambiguous.length > 4 ? " or " + (tr.ambiguous.length - 4) + " more" : "") + ". Say which and ask again.");
+        else if (tr.assumedSize) notes.push("No storage given for the " + tr.hit.g[2] + " trade-in, so the lowest value (" + tr.hit.v[0] + tiSizeUnit(tr.hit.g[1]) + ") was used.");
+        if (tr.slot && res.tradeNon) notes.push("Trade-in set to not working order. Check the condition checklist under Trade-In.");
+        if (tr.slot && !res.tradeNon) notes.push("Trade-in assumed to be in good working order. Check the condition checklist under Trade-In.");
+      });
+      res.notes.forEach(n => notes.push(n));
+      if (notes.length) html += '<ul class="ask-notes">' + notes.map(n => "<li>" + esc(n) + "</li>").join("") + "</ul>";
+
+      if (res.list) {
+        html += '<div class="ask-list"><p class="ask-sub">' + esc(res.list.head) + "</p>"
+          + (res.list.rows.length ? res.list.rows.map(r =>
+              '<div class="ask-opt"><span class="ask-opt-name"><strong>' + esc(r.mo.n) + "</strong> " + capHtml(esc(r.v.v)) + "</span>"
+              + '<span class="ask-price">' + fmt(r.price) + "</span>"
+              + '<button type="button" class="ask-add" data-add="' + esc(r.mo.m + "|" + r.v.v) + '">Add to quote</button></div>').join("")
+            : '<p class="ask-sub">Nothing fits. Try a higher budget.</p>') + "</div>";
+      }
+      if (res.empty) {
+        html += '<p class="ask-sub">' + esc(res.empty) + "</p>";
+        if (res.suggest && res.suggest.length) html += '<div class="ask-did">Did you mean ' + res.suggest.map(n =>
+          '<button type="button" class="ask-link" data-say="' + esc(n) + '">' + esc(n) + "</button>").join(", ") + "?</div>";
+      }
+      outEl.innerHTML = html;
+      hintsEl.hidden = true;
+      $("ask-undo") && $("ask-undo").addEventListener("click", () => undoLast(false));
+      outEl.querySelectorAll("[data-add],[data-add-anyway]").forEach(b => b.addEventListener("click", () => {
+        const key = b.getAttribute("data-add") || b.getAttribute("data-add-anyway");
+        const k = key.indexOf("|");
+        const m = key.slice(0, k), v = key.slice(k + 1);
+        const mo = modelIndex[m];
+        const variant = mo.variants.find(x => x.v === v);
+        if (!mo || !variant) return;
+        const mode = res.modeUsed || currentMode;
+        setMode(mode);
+        const it = { mo: mo, v: variant, price: priceOf(mo.m, variant.v, variant.p, mode), qty: 1, colour: "", issues: [], assumed: [], options: [] };
+        const ids = addItem(it);
+        undoInfo = { ids: ids, tradeSlots: [], tradeOn: false, ngcOn: false, prevMode: null };
+        chipsEl.innerHTML = chip(mo.n + " " + v) + chip(MODE_NAME[mode]);
+        outEl.innerHTML = '<div class="ask-done"><div class="ask-done-head"><strong>Added to the quote</strong>'
+          + '<button type="button" class="ask-link" id="ask-undo">Undo</button></div><ul class="ask-lines"><li><span>'
+          + esc(mo.n) + " " + capHtml(esc(v)) + '</span><span class="ask-price">' + fmt(it.price) + "</span></li></ul></div>";
+        $("ask-undo").addEventListener("click", () => undoLast(false));
+      }));
+      outEl.querySelectorAll("[data-say]").forEach(b => b.addEventListener("click", () => {
+        textEl.value = b.getAttribute("data-say"); run();
+      }));
+    }
+
+    function run() {
+      const raw = textEl.value.trim();
+      if (!raw) { chipsEl.innerHTML = ""; outEl.innerHTML = ""; lastRead = null; hintsEl.hidden = false; return; }
+      try {
+        undoLast(true);       // asking again replaces what the last ask added
+        const rd = parse(raw);
+        if (rd.budget != null) setBudget(rd.budget, true);
+        const prevMode = currentMode;
+        const modeUsed = rd.mode || currentMode;
+        if (rd.mode) setMode(rd.mode);
+        const res = { items: [], trades: rd.trades, notes: rd.notes.slice(), mode: rd.mode, modeUsed: modeUsed, ngc: rd.ngc, term: rd.term,
+                      tradeNon: rd.tradeNon, tradeNonWord: rd.tradeNonWord, list: null, empty: "", suggest: [] };
+        rd.devices.forEach((d, i) => res.items.push(resolveDevice(d, modeUsed, i === 0)));
+        const ids = [];
+        res.items.forEach(it => {
+          if (it.over) return;
+          it.added = true;
+          addItem(it).forEach(id => ids.push(id));
+        });
+        const tradeSlots = [], used = [];
+        let tradeOn = false;
+        rd.trades.forEach(tr => {
+          if (!tr.hit) return;
+          tradeOn = setToggle(tradeinToggle, true) || tradeOn;
+          tr.slot = applyTrade(tr, used, { non: rd.tradeNon });
+          if (tr.slot) tradeSlots.push(tr.slot);
+        });
+        const ngcOn = rd.ngc ? setToggle(ngcToggle, true) : false;
+        if (rd.ngc && rd.term && Array.prototype.some.call(ngcTerm.options, o => o.value === rd.term)) {
+          ngcTerm.value = rd.term;
+          ngcTerm.dispatchEvent(new Event("change", { bubbles: true }));
+        }
+        if (ids.length || tradeSlots.length || ngcOn) {
+          undoInfo = { ids: ids, tradeSlots: tradeSlots, tradeOn: tradeOn, ngcOn: ngcOn, prevMode: rd.mode && prevMode !== rd.mode ? prevMode : null };
+        }
+        if (!rd.devices.length) {
+          // No device named: with a budget or a kind of device, list what fits.
+          const catTest = rd.category ? rd.category.test : (() => true);
+          if (budget != null || rd.category) {
+            const rows = [];
+            models.forEach(mo => {
+              if (!catTest(mo)) return;
+              const vs = mo.variants.map(v => ({ v: v, price: priceOf(mo.m, v.v, v.p, modeUsed) })).sort((a, b) => a.price - b.price);
+              const fit = vs.filter(x => budget == null || x.price <= budget + 0.005);
+              if (!fit.length) return;
+              const pick = budget == null ? fit[0] : fit[fit.length - 1];
+              rows.push({ mo: mo, v: pick.v, price: pick.price });
+            });
+            rows.sort((a, b) => budget == null ? a.price - b.price : b.price - a.price);
+            res.list = {
+              head: (rows.length ? rows.length + " " : "") + (rd.category ? rd.category.label : "devices")
+                + (budget != null ? " at or under " + dollars(budget) : ", cheapest first") + " for " + MODE_NAME[modeUsed]
+                + (budget != null ? ", largest storage that fits:" : ":"),
+              rows: rows.slice(0, 8)
+            };
+          } else {
+            res.empty = "I couldn't find a device in that. Try a model with its storage, like “S26 Ultra 512GB”, or give a budget like “phone under $1,200”.";
+            const sg = [];
+            rd.unknown.forEach(w => models.forEach(mo => {
+              if (clean(mo.n).indexOf(w) !== -1 && sg.indexOf(mo.n) === -1) sg.push(mo.n);
+            }));
+            res.suggest = sg.slice(0, 4).map(n => n.replace(/^Galaxy /, ""));
+          }
+        }
+        lastRead = res;
+        render(res, false);
+        if (res.items.some(it => it.added)) {
+          const el = document.getElementById("ledger-panel");
+          if (el && window.innerWidth <= 900) el.scrollIntoView({ block: "start", behavior: "smooth" });
+        }
+      } catch (e) {
+        console.error(e);
+        outEl.innerHTML = '<p class="ask-sub">Something in that couldn’t be read. Try fewer words, like “S26 Ultra 512GB education”.</p>';
+      }
+    }
+    goBtn.addEventListener("click", run);
+    textEl.addEventListener("keydown", e => { if (e.key === "Enter") { e.preventDefault(); run(); } });
+
+    // examples, so the box teaches itself
+    const EXAMPLES = ["S26 Ultra 512GB, Education", "Fold8 256GB, trade in iPhone 15 Pro", "Phone under $1,200", "2x Tab S11 128GB LTE, SMB"];
+    hintsEl.innerHTML = '<span class="ask-hint-label">Try</span>' + EXAMPLES.map(x =>
+      '<button type="button" class="ask-hint" data-ex="' + esc(x) + '">' + esc(x) + "</button>").join("");
+    hintsEl.querySelectorAll("[data-ex]").forEach(b => b.addEventListener("click", () => {
+      textEl.value = b.getAttribute("data-ex"); run(); textEl.focus();
+    }));
+
+    // A new customer: Reset quote clears the budget and the last ask with it.
+    function clearAll() {
+      undoInfo = null; lastRead = null;
+      textEl.value = ""; chipsEl.innerHTML = ""; outEl.innerHTML = ""; hintsEl.hidden = false;
+      if (budget != null) setBudget(null, true);
+    }
+    const baseReset = resetQuote;
+    resetQuote = function () { baseReset.apply(this, arguments); clearAll(); };
+    ["clear-btn", "quote-bar-reset"].forEach(id => { const el = document.getElementById(id); if (el) el.addEventListener("click", clearAll); });
+  })();
+  // ---- end Ask ----
 
   // ---- Presets (v13.5) ----
   // Each preset is a whole quote: its devices (model, variant, customer type) and whether Trade-In
