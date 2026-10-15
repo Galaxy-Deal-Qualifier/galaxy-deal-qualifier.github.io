@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v14.5
+  Galaxy Deals v14.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=851d05f2ae" />
+<link rel="stylesheet" href="styles.css?v=09e9732bcd" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,9 +713,9 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="6" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="7" hidden>
   <h2>Cost of Ownership</h2>
-  <p class="sk-intro">What the customer pays to own this phone and stay connected for 12 or 24 months: buying it here outright with a SIM plan, against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
+  <p class="sk-intro">What the customer pays to own this phone and stay connected for 12 or 24 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
   <div class="card pc-device">
     <div class="pc-pickers">
       <div>
@@ -750,7 +750,7 @@
   </div>
   <div class="card pc-own">
     <div class="pc-ohead" aria-hidden="true">
-      <span>Where</span><span>Phone</span><span>Plan</span><span>Discounts</span><span class="pc-right">Cost to own</span>
+      <span>Where</span><span>Phone</span><span>Plan / payment</span><span>Discounts</span><span class="pc-right">Cost to own</span>
     </div>
     <div id="pc-own"></div>
   </div>
@@ -6364,6 +6364,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "14.6", d: "16 Oct 2026", t: "Cost of Ownership: no plan when buying here",
+      items: [
+        "<strong>Buying here is now the device price only.</strong> We don't sell plans, so the Buying here row no longer adds one. It shows our price today, with any offer or Education/SMB pricing.",
+        "<strong>If they finance it,</strong> pick how they pay: Latitude interest free adds the Gem Visa's monthly card fee ($11.95) for the months chosen, and Afterpay adds nothing if paid on time. The fee can be overtyped.",
+        "The Cheapest tag now compares the telco and JB Hi-Fi plan deals. Each of those still says how much cheaper it is buying the phone here and taking the same plan SIM-only."
+      ] },
     { type: "app", v: "14.5", d: "16 Oct 2026", t: "Cost of Ownership",
       items: [
         "<strong>Price Check is now Cost of Ownership.</strong> Pick a device and 12 or 24 months, and it shows what the customer pays to own the phone and stay connected for that time. The options are buying it here outright with a SIM plan, Telstra, Optus or Vodafone with the phone on a plan, or JB Hi-Fi with a JB Hi-Fi Mobile plan. The cheapest is tagged.",
@@ -8801,6 +8807,7 @@
 
 
 
+
   // ---- Price check ----
   // The Cost of Ownership page. Competitor figures are collected twice a day by
   // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
@@ -8818,6 +8825,15 @@
     ["vodafone", "Vodafone", "https://www.vodafone.com.au/mobile/mobile-phones/samsung"]
   ];
   const PC_JB_PLANS_URL = "https://www.jbhifi.com.au/pages/upfront-mobile-plans";
+  // Paying here. We don't sell plans: outright is the device price alone. Latitude's interest-free
+  // finance runs on a Gem Visa with a monthly card fee ($11.95 from 15 Jul 2026, latitudefinancial.com.au);
+  // Afterpay has no fees if paid on time. The fee can be overtyped.
+  const PC_PAY = [
+    ["", "Outright, no plan", 0, "Device price only"],
+    ["latitude", "Latitude interest free — card fee", 11.95, "Latitude Gem Visa card fee, charged each month"],
+    ["afterpay", "Afterpay — no fees paid on time", 0, "Afterpay, 4 payments, no fees if paid on time"],
+    ["other", "Other finance, type the monthly fee", null, "Finance fee"]
+  ];
   const pc = { mode: "none", buy: null };
   const pcEl = id => document.getElementById("pc-" + id);
   const pcNum = el => { const n = parseFloat(el && el.value); return isFinite(n) && n >= 0 ? n : null; };
@@ -8926,13 +8942,13 @@
     const plans = pcPlanList();
     const first = owner => plans.find(x => x.owner === owner);
 
-    // Buying here: our price, and a SIM plan picked from any of the plans the page knows.
-    const herePlan = plans[0];
+    // Buying here: our price, outright. No plan; a finance fee only if they pay with Latitude or similar.
     let html = `<div class="pc-orow is-here" data-row="here">`
-      + `<span><span class="pc-name">Buying here</span><span class="pc-note">Outright today, with the SIM plan the customer chooses</span></span>`
+      + `<span><span class="pc-name">Buying here</span><span class="pc-note">Outright today. We don&#8217;t sell plans; they keep their own.</span></span>`
       + `<span class="pc-cell" data-col="Phone"><span class="pc-figure" data-ours></span></span>`
-      + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect("all", 'aria-label="Plan when buying here"')}`
-      + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="Plan price per month when buying here" value="${herePlan ? herePlan.plan.p : ""}" placeholder="$" /></span></span>`
+      + `<span class="pc-cell pc-cell-plan" data-col="Payment"><span class="pc-plan"><select data-field="pay" aria-label="How they pay when buying here">`
+      + PC_PAY.map(x => `<option value="${x[0]}">${escapeHtml(x[1])}</option>`).join("") + `</select>`
+      + `<input type="number" min="0" step="0.01" inputmode="decimal" data-field="fee" aria-label="Finance fee per month when buying here" value="0" placeholder="$" hidden /></span></span>`
       + `<span class="pc-cell" data-col="Discounts"><span class="pc-figure" data-disc></span><span class="pc-note" data-disc-note></span></span>`
       + `<span class="pc-total pc-right" data-sums></span></div>`;
 
@@ -8982,6 +8998,7 @@
       + "less the discounts earned in that time. Telcos spread the phone over 24 to 48 months and take a stay-connected credit off each month; leaving sooner means "
       + "paying off what is left and losing the rest of the credit, so only the credit for the months chosen is counted. A JB Hi-Fi Mobile gift card is paid back "
       + "pro rata if the plan ends before 24 months. Introductory plan prices count for the months they apply, and pre-paid is charged every 30 days. "
+      + "Buying here is the device price alone, as we don&#8217;t sell plans; paying with Latitude adds its monthly card fee for the months chosen, and Afterpay has no fees if paid on time. "
       + "&#8220;Same plan&#8221; compares our phone with the same plan, which a customer can take SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
       + "Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".";
     pcEl("src").innerHTML = "Retailer in-store prices and price matches can differ from what is listed online.";
@@ -9022,21 +9039,17 @@
     // Buying here
     const here = own.querySelector('[data-row="here"]');
     if (here) {
-      const plan = planOf(here);
-      const price = pcNum(here.querySelector('[data-field="price"]'));
+      const pay = PC_PAY.find(x => x[0] === here.querySelector('[data-field="pay"]').value) || PC_PAY[0];
+      const feeIn = here.querySelector('[data-field="fee"]');
+      feeIn.hidden = !pay[0] || pay[0] === "afterpay";
+      const fee = feeIn.hidden ? 0 : pcNum(feeIn) || 0;
+      const feeCost = Math.round(fee * term * 100) / 100;
       here.querySelector("[data-ours]").textContent = fmt(ours);
-      const gift = plan && plan.gift ? pcGiftKept(plan, plan.gift, term) : 0;
-      here.querySelector("[data-disc]").textContent = gift ? "−" + fmt(gift) : names.length ? "In price" : "—";
-      here.querySelector("[data-disc-note]").textContent = gift ? "JB gift card with the plan" + (term < (plan.term || 24) ? ", the share for " + term + " mths" : "")
-        : names.length ? names.join(" · ") : "";
-      const sums = here.querySelector("[data-sums]");
-      if (price === null) sums.innerHTML = `<span class="pc-total-note">Enter the plan price</span>`;
-      else {
-        const planCost = pcPlanCost(plan, price, term);
-        const total = ours + planCost - gift;
-        totals.push([here, total]);
-        sums.innerHTML = `${fmt(total)}<span class="pc-total-note">${fmt(ours)} phone + ${fmt(planCost)} plan${gift ? " − " + fmt(gift) + " gift card" : ""}</span>`;
-      }
+      here.querySelector("[data-disc]").textContent = names.length ? "In price" : "—";
+      here.querySelector("[data-disc-note]").textContent = names.length ? names.join(" · ") : "";
+      here.querySelector("[data-sums]").innerHTML = `${fmt(ours + feeCost)}<span class="pc-total-note">`
+        + (feeCost ? `${fmt(ours)} phone + ${fmt(feeCost)} card fee (${term} × ${fmt(fee)})` : `${fmt(ours)} phone, no plan`)
+        + `</span><span class="pc-total-note">${escapeHtml(pay[3])}</span>`;
     }
 
     // Telcos and JB Hi-Fi
@@ -9084,7 +9097,8 @@
         : diff < 0 ? fmt(-diff) + " cheaper with " + row.querySelector(".pc-name").textContent : "Same as buying here on this plan";
     });
 
-    // The cheapest way to own it, of the rows filled in.
+    // The cheapest of the plan rows filled in. Buying here has no plan, so it isn't in this;
+    // the same-plan tag on each row compares it like with like.
     own.querySelectorAll(".pc-best").forEach(x => x.remove());
     if (totals.length > 1) {
       const best = totals.reduce((a, b) => b[1] < a[1] - 0.005 ? b : a);
@@ -9119,6 +9133,16 @@
       pcEl("retail").addEventListener("input", pcUpdate);
       pcEl("own").addEventListener("input", pcUpdate);
       pcEl("own").addEventListener("change", e => {
+        if (e.target.dataset.field === "pay") {
+          // Picking a way to pay fills in its monthly fee, which can then be overtyped.
+          const pay = PC_PAY.find(x => x[0] === e.target.value);
+          const fee = e.target.closest(".pc-orow").querySelector('[data-field="fee"]');
+          if (pay && pay[2] !== null) fee.value = pay[2];
+          else fee.value = "";
+          pcUpdate();
+          if (!fee.hidden && pay && pay[2] === null) fee.focus();
+          return;
+        }
         if (e.target.dataset.field !== "plan") return;
         const row = e.target.closest(".pc-orow");
         const hit = pcPlanByKey(e.target.value);
