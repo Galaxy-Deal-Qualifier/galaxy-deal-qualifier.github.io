@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v14.4
+  Galaxy Deals v14.5
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=2b312810ab" />
+<link rel="stylesheet" href="styles.css?v=851d05f2ae" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -77,7 +77,7 @@
 
   <div class="side-store-chip none" id="side-store-chip" style="position:relative"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9.5 5.5 4.5h13L20 9.5"/><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/><path d="M5.5 11.5v8h13v-8"/><path d="M10 19.5v-4.5h4v4.5"/></svg></span><span class="ssc-text"><span class="ssc-label">Your Store</span><span class="ssc-name" id="side-store-chip-name">Pick your store</span></span><select id="side-store-chip-select" aria-label="Your store" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;padding:0;border:0;cursor:pointer"></select></div>
   <nav class="tabs" role="tablist" aria-label="Sections" aria-orientation="vertical"><div class="tabs-group gs-group"><button type="button" class="tab gs-open" id="gs-open" aria-haspopup="dialog"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span><span>Search</span><kbd class="gs-kbd" aria-hidden="true">/</kbd></button></div><div class="tabs-group"><span class="nav-group-label">Quote</span><button type="button" class="tab" data-panel="quote" role="tab" aria-selected="true"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-2.2-1.4-2.1 1.4-2.2-1.4-2.2 1.4-2.3-1.4z"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"/></svg></span><span>Customer Quote</span></button><button type="button" class="tab" data-panel="builder" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Deal Builder</span></button></div>
-<div class="tabs-group"><span class="nav-group-label">Products & Offers</span><button type="button" class="tab" data-panel="compare" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="7" height="15" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="15" rx="1.5"/></svg></span><span>Compare</span></button><button type="button" class="tab" data-panel="pricecheck" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M7 7l-3 7a3.2 3.2 0 0 0 6 0zM17 7l-3 7a3.2 3.2 0 0 0 6 0zM12 4v16M8.500 20h7"/></svg></span><span>Price Check</span></button><button type="button" class="tab" data-panel="saleskit" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span>Sales Kit</span><span class="tab-dot danger" id="saleskit-dot" hidden></span></button></div>
+<div class="tabs-group"><span class="nav-group-label">Products & Offers</span><button type="button" class="tab" data-panel="compare" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="7" height="15" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="15" rx="1.5"/></svg></span><span>Compare</span></button><button type="button" class="tab" data-panel="pricecheck" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M7 7l-3 7a3.2 3.2 0 0 0 6 0zM17 7l-3 7a3.2 3.2 0 0 0 6 0zM12 4v16M8.500 20h7"/></svg></span><span>Cost of Ownership</span></button><button type="button" class="tab" data-panel="saleskit" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span>Sales Kit</span><span class="tab-dot danger" id="saleskit-dot" hidden></span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Store Tools</span><button type="button" class="tab" data-panel="store" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></svg></span><span>Store &amp; Stock</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Service</span><button type="button" class="tab" data-panel="service" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.5 6.2a4.2 4.2 0 0 0-5.3 5.3L4 16.7V20h3.3l5.2-5.2a4.2 4.2 0 0 0 5.3-5.3l-2.7 2.7-2.4-.6-.6-2.4z"/></svg></span><span>Repair or Upgrade</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Help & Updates</span><button type="button" class="tab" data-panel="whatsnew" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v3.8h3.8"/><path d="M12 8v4.2l2.8 1.8"/></svg></span><span>What&#8217;s New</span><span class="tab-dot" id="whatsnew-dot-item" hidden></span></button><button type="button" class="tab" data-panel="suggest" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 5.5h15v10h-10l-5 4z"/></svg></span><span>Suggestions</span></button></div></nav>
@@ -713,9 +713,9 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="3" hidden>
-  <h2>Price Check</h2>
-  <p class="sk-intro">Our price today against the big retailers and the telcos, for the same device.</p>
+<section id="panel-pricecheck" class="saleskit" data-pc="6" hidden>
+  <h2>Cost of Ownership</h2>
+  <p class="sk-intro">What the customer pays to own this phone and stay connected for 12 or 24 months: buying it here outright with a SIM plan, against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
   <div class="card pc-device">
     <div class="pc-pickers">
       <div>
@@ -739,40 +739,30 @@
   </div>
 
   <div class="pc-section-head">
-    <h3 class="pc-h">Retailers</h3>
+    <h3 class="pc-h">Cost to own</h3>
+    <span class="pc-h-sub">The phone, paid off by the end, plus the plan, less the discounts earned</span>
+    <div class="pc-controls">
+      <div class="segmented" id="pc-term" role="group" aria-label="Months">
+        <button type="button" data-term="12" aria-pressed="false">12 months</button>
+        <button type="button" data-term="24" aria-pressed="true">24 months</button>
+      </div>
+    </div>
+  </div>
+  <div class="card pc-own">
+    <div class="pc-ohead" aria-hidden="true">
+      <span>Where</span><span>Phone</span><span>Plan</span><span>Discounts</span><span class="pc-right">Cost to own</span>
+    </div>
+    <div id="pc-own"></div>
+  </div>
+  <details class="pc-offers" id="pc-offers"><summary>Other offers on their sites, not counted above</summary><div id="pc-offers-body"></div></details>
+  <p class="svc-src" id="pc-own-src"></p>
+
+  <div class="pc-section-head">
+    <h3 class="pc-h">Outright elsewhere</h3>
     <span class="pc-h-sub" id="pc-retail-when"></span>
   </div>
   <div id="pc-retail" class="pc-tiles"></div>
   <div id="pc-match" class="card pc-match" aria-live="polite" hidden></div>
-
-  <div class="pc-section-head">
-    <h3 class="pc-h">Telcos</h3>
-    <span class="pc-h-sub">Device on a plan, total over the term</span>
-    <div class="pc-controls">
-      <div class="segmented" id="pc-term" role="group" aria-label="Term">
-        <button type="button" data-term="12" aria-pressed="false">12 mths</button>
-        <button type="button" data-term="24" aria-pressed="false">24 mths</button>
-        <button type="button" data-term="36" aria-pressed="true">36 mths</button>
-        <button type="button" data-term="48" aria-pressed="false">48 mths</button>
-      </div>
-    </div>
-  </div>
-  <div class="card pc-telcos">
-    <div class="pc-thead" aria-hidden="true">
-      <span>Telco</span><span>Device</span><span>Plan</span><span>Extras</span><span class="pc-right">Total over term</span>
-    </div>
-    <div id="pc-telco"></div>
-    <div class="pc-here">
-      <div class="pc-here-text">
-        <span class="pc-name">Buying Here</span>
-        <span class="pc-note" id="pc-here-note"></span>
-      </div>
-      <label class="pc-sim" for="pc-sim">SIM plan instead
-        <span class="pc-money"><span aria-hidden="true">$</span><input type="number" id="pc-sim" min="0" step="1" inputmode="decimal" placeholder="same" autocomplete="off" /><span aria-hidden="true">/mth</span></span>
-      </label>
-      <span class="pc-total pc-right" id="pc-here-total"></span>
-    </div>
-  </div>
   <p class="svc-src" id="pc-src"></p>
 </section>
 
@@ -6374,6 +6364,14 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "14.5", d: "16 Oct 2026", t: "Cost of Ownership",
+      items: [
+        "<strong>Price Check is now Cost of Ownership.</strong> Pick a device and 12 or 24 months, and it shows what the customer pays to own the phone and stay connected for that time. The options are buying it here outright with a SIM plan, Telstra, Optus or Vodafone with the phone on a plan, or JB Hi-Fi with a JB Hi-Fi Mobile plan. The cheapest is tagged.",
+        "<strong>The telco figure is the true cost to own.</strong> Telcos spread the phone over 24 to 48 months and take a stay-connected credit off each month. Leaving sooner means paying off what's left and losing the rest of the credit, so it counts the full phone price, less only the credit earned in the months chosen. Each row says how much would still be owing.",
+        "<strong>Discounts are included:</strong> our offers and Education/SMB pricing, the telcos' stay-connected credits and introductory plan prices (such as Telstra's $10/mth off Basic for 12 months, and Optus and Vodafone's first-12-month prices), and JB Hi-Fi Mobile's gift card. The gift card counts only for the months the plan runs, because it's paid back if the plan ends early. Other offers on the telcos' sites are listed in a fold-out for you to ask about.",
+        "<strong>Each row compares like with like:</strong> the tag says how much cheaper it is buying the phone here and taking the same plan SIM-only. Every price and discount can be overtyped.",
+        "The outright prices at JB Hi-Fi, The Good Guys, Officeworks and Harvey Norman, and the price match request, are still on the page under Outright elsewhere. The figures are checked automatically every day."
+      ] },
     { type: "app", v: "14.4", d: "16 Oct 2026", t: "Presets page removed",
       items: [
         "<strong>The Presets page is gone.</strong> The Presets tab in the sidebar and the page behind it have been removed, along with the count of quotes it kept on each computer.",
@@ -8504,260 +8502,6 @@
     svcFillSeries();
   }
 
-  // ---- Price check ----
-  // Competitor figures are collected twice a day by competitor-sync/fetch-competitors.py and baked in
-  // here; every one of them can be overtyped on the page, because a price on a customer's phone beats
-  // a price captured this morning. Retailers are outright prices. Telcos are the device as listed on a
-  // plan (base storage, over the months shown) and their headline plans.
-  const COMPETITORS = {"at":{"tgg":"2026-10-16T00:39+11:00","ow":"2026-10-16T00:39+11:00","telstra":"2026-10-16T00:39+11:00","optus":"2026-10-16T00:39+11:00","vodafone":"2026-10-16T00:39+11:00","jb":"2026-10-16T00:39+11:00"},"retail":{"tgg":{"m1|256GB":[2197,"https://www.thegoodguys.com.au/samsung-galaxy-s26-ultra-256gb-black-11901357836"],"m1|512GB":[2497,"https://www.thegoodguys.com.au/samsung-galaxy-s26-ultra-512gb-black-11901357839"],"m2|256GB":[1847,"https://www.thegoodguys.com.au/samsung-galaxy-s26-plus-256gb-black-11901357822"],"m2|512GB":[2147,"https://www.thegoodguys.com.au/samsung-galaxy-s26-plus-512gb-black-11901357829"],"m3|256GB":[1147,"https://www.thegoodguys.com.au/samsung-galaxy-s26-256gb-black-11901357816"],"m3|512GB":[1447,"https://www.thegoodguys.com.au/samsung-galaxy-s26-512gb-black-11901357820"],"m4|256GB":[2999,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-ultra-256gb-cream-11901374853"],"m4|512GB":[3299,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-ultra-512gb-cream-11901374855"],"m5|256GB":[2699,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-256gb-cream-11901374866"],"m5|512GB":[2999,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-512gb-cream-11901374858"],"m6|256GB":[1949,"https://www.thegoodguys.com.au/samsung-galaxy-z-flip8-256gb-cream-11901374871"],"m6|512GB":[2249,"https://www.thegoodguys.com.au/samsung-galaxy-z-flip8-512gb-cream-11901374872"],"m7|128GB":[749,"https://www.thegoodguys.com.au/samsung-galaxy-a57-5g-128gb-lilac-11901362225"],"m7|256GB":[849,"https://www.thegoodguys.com.au/samsung-galaxy-a57-5g-256gb-navy-11901362226"],"m8|128GB":[599,"https://www.thegoodguys.com.au/samsung-galaxy-a37-5g-128gb-charcoal-11901362224"],"m9|128GB":[499,"https://www.thegoodguys.com.au/samsung-galaxy-a27-5g-128gb-black-11901375167"],"m12|40mm Bluetooth":[649,"https://www.thegoodguys.com.au/samsung-galaxy-watch-9-bt-cream-40mm-sm-l340nzeaxsa"],"m12|44mm Bluetooth":[699,"https://www.thegoodguys.com.au/samsung-galaxy-watch-9-bt-graphite-44mm-sm-l350nzkaxsa"],"m13|47mm LTE":[699,"https://www.thegoodguys.com.au/samsung-galaxy-watch-ultra-2025-blue-lte-47mm-sm-l705fzb1xsa"],"m15|Standard":[399,"https://www.thegoodguys.com.au/samsung-galaxy-buds4-pro-sm-r640nzkaxsa"],"m14|Standard":[299,"https://www.thegoodguys.com.au/samsung-galaxy-buds4-sm-r540nzkaxsa"],"m22|Standard":[249,"https://www.thegoodguys.com.au/samsung-galaxy-buds3-fe-black-sm-r420nzkaasa"],"m21|128GB":[379,"https://www.thegoodguys.com.au/samsung-galaxy-a17-5g-128gb-black-11901345420"],"m19|128GB Wi-Fi":[379,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-wi-fi-6gb-128gb-grey-sm-x230nzaaxsa"],"m19|256GB Wi-Fi":[499,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-wi-fi-8gb-256gb-grey-sm-x230nzaexsa"],"m19|128GB LTE":[449,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-5g-6gb-128gb-grey-sm-x236bzaaats"],"m19|256GB LTE":[599,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-5g-8gb-256gb-grey-sm-x236bzaeats"],"m24|256GB Wi-Fi":[1794,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-wifi-12gb-256gb-moonstone-grey-sm-x820nzaaxsa"],"m24|512GB Wi-Fi":[1994,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-wifi-12gb-512gb-moonstone-grey-sm-x820nzaexsa"],"m24|256GB LTE":[2044,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-5g-12gb-256gb-moonstone-grey-sm-x826bzaaats"],"m24|512GB LTE":[2249,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-5g-12gb-512gb-moonstone-grey-sm-x826bzaeats"],"m25|46mm Blutooth":[899,"https://www.thegoodguys.com.au/samsung-galaxy-watch-8-classic-black-bt-46mm-sm-l500nzkaxsa"],"m28|Standard":[149,"https://www.thegoodguys.com.au/samsung-galaxy-fit3-watch-grey-bt-sm-r390nzaaxsa"],"m31|512GB":[1999,"https://www.thegoodguys.com.au/samsung-galaxy-z-flip7-512gb-blue-shadow-11901342086"],"m33|40mm Bluetooth":[649,"https://www.thegoodguys.com.au/samsung-galaxy-watch-8-graphite-bt-40mm-sm-l320ndaaxsa"],"m33|44mm Bluetooth":[699,"https://www.thegoodguys.com.au/samsung-galaxy-watch-8-silver-bt-44mm-sm-l330nzsaxsa"],"m34|128GB":[1149,"https://www.thegoodguys.com.au/samsung-galaxy-s26-fe-128gb-blueberry-11901376810"],"m34|256GB":[1299,"https://www.thegoodguys.com.au/samsung-galaxy-s26-fe-256gb-graphite-11901377304"],"m35|256GB Wi-Fi":[2299,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-wi-fi-12gb-256gb-grey-sm-x940nzaaxsa"],"m35|512GB Wi-Fi":[2599,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-wi-fi-12gb-512gb-grey-sm-x940nzaexsa"],"m35|1TB Wi-Fi":[3199,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-wi-fi-16gb-1tb-grey-sm-x940nzaixsa"],"m35|256GB LTE":[2549,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-5g-12gb-256gb-grey-sm-x946bzaaats"],"m35|512GB LTE":[2849,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-5g-12gb-512gb-grey-sm-x946bzaeats"],"m35|1TB LTE":[3449,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-5g-16gb-1tb-grey-sm-x946bzaiats"],"m36|256GB Wi-Fi":[1999,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-wi-fi-12gb-256gb-grey-sm-x840nzaaxsa"],"m36|512GB Wi-Fi":[2299,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-wi-fi-12gb-512gb-grey-sm-x840nzaexsa"],"m36|256GB LTE":[2249,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-wi-fi-12gb-256gb-grey-sm-x846bzaaats"],"m36|512GB LTE":[2549,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-5g-12gb-512gb-grey-sm-x846bzaeats"]},"ow":{"m1|256GB":[2197,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-ultra-256gb-black-s26u256bk"],"m1|512GB":[2497,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-ultra-512gb-black-s26u512bk"],"m1|1TB":[2947,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-ultra-1tb-sky-blue-s26u1tbbl"],"m2|256GB":[1847,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-256gb-black-s26p256bk"],"m2|512GB":[2147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-512gb-black-s26p512bk"],"m3|256GB":[1147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-256gb-black-s26256bk"],"m3|512GB":[1447,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-512gb-black-s26512bk"],"m4|256GB":[2997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-ultra-256gb-cream-sfld8u256c"],"m4|512GB":[3297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-ultra-512gb-cream-sfld8u512c"],"m5|256GB":[2697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-256gb-cream-sfld8256cr"],"m5|512GB":[2997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-512gb-cream-sfld8512cr"],"m6|256GB":[1947,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-flip8-256gb-cream-sflp8256cr"],"m6|512GB":[2247,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-flip8-512gb-cream-sflp8512cr"],"m7|128GB":[747,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-a57-5g-128gb-lilac-sama575gli"],"m8|128GB":[597,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-a37-128gb-charcoal-sama375gbk"],"m9|128GB":[497,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-a27-5g-128gb-black-sama275gbk"],"m10|256GB Wi-Fi":[2097,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-wifi-256gb-grey-sms11uw25g"],"m10|512GB Wi-Fi":[2297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-wifi-512gb-grey-sms11uw51g"],"m10|1TB Wi-Fi":[2999,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-wifi-1tb-grey-sms11uwtbg"],"m10|256GB LTE":[2347,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-5g-256gb-grey-sms11uc25g"],"m10|512GB LTE":[2547,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-5g-512gb-grey-sms11uc51g"],"m11|128GB Wi-Fi":[1397,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-wifi-128gb-grey-sms11w12gy"],"m11|256GB Wi-Fi":[1848,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-wifi-256gb-grey-sms11w25gy"],"m11|512GB Wi-Fi":[2198,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-wifi-512gb-grey-sms11w51gy"],"m11|128GB LTE":[1798,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-5g-128gb-grey-sms11c12gy"],"m11|256GB LTE":[2098,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-5g-256gb-grey-sms11c25gy"],"m11|512GB LTE":[1749,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-5g-512gb-grey-sms11c51gy"],"m12|40mm Bluetooth":[647,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-40mm-graphite-samwt940gb"],"m12|40mm LTE":[747,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-lte-40mm-graphite-samwt940gl"],"m12|44mm Bluetooth":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-44mm-graphite-samwt944gb"],"m12|44mm LTE":[797,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-lte-44mm-graphite-samwt944gl"],"m13|47mm LTE":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch-ultra-2025-lte-47mm-titanium-white-smwtult25w"],"m15|Standard":[399,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-buds4-pro-black-samgbud4pb"],"m14|Standard":[299,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-buds4-black-samgbud4b"],"m22|Standard":[189,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-buds3-fe-black-sambud3feb"],"m20|128GB":[977,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s25fe-128gb-navy-s25fe128ny"],"m21|128GB":[327,"https://www.officeworks.com.au/shop/officeworks/p/telstra-samsung-galaxy-a17-5g-128gb-black-telsmaa17"],"m17|128GB Wi-Fi":[629,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-lite-wifi-128gb-grey-sms10lw12g"],"m17|256GB Wi-Fi":[748,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-lite-wifi-256gb-grey-sms10lw25g"],"m18|128GB Wi-Fi":[1097,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-128gb-blue-sam1336096"],"m18|256GB Wi-Fi":[1247,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-256gb-grey-sam1336105"],"m18|128GB LTE":[1297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-128gb-silver-sam1336101"],"m18|256GB LTE":[1447,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-256gb-grey-sam1336098"],"m19|128GB Wi-Fi":[377,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-wifi-128gb-grey-samtaba115"],"m19|256GB Wi-Fi":[497,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-wifi-256gb-grey-samtaba117"],"m19|128GB LTE":[447,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-5g-128gb-grey-samtaba118"],"m19|256GB LTE":[597,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-5g-256gb-grey-samtaba116"],"m23|128GB Wi-Fi":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-128gb-grey-sam1336103"],"m23|256GB Wi-Fi":[849,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-256gb-grey-sam1336097"],"m23|128GB LTE":[899,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-128gb-grey-sam1336104"],"m23|256GB LTE":[1049,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-256gb-grey-sam1336095"],"m25|46mm Blutooth":[897,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-classic-bluetooth-46mm-black-smwt8c46b"],"m25|46mm LTE":[997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-classic-lte-46mm-black-smwt8c46bl"],"m28|Standard":[147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-fit3-bluetooth-dark-grey-samfit3gry"],"m31|512GB":[1997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-flip-7-512gb-coral-red-sflp7512rd"],"m33|40mm Bluetooth":[647,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-bluetooth-40mm-black-samwt843b"],"m33|40mm LTE":[747,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-lte-40mm-black-samwt843bl"],"m33|44mm Bluetooth":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-bluetooth-44mm-silver-samwt846s"],"m33|44mm LTE":[797,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-lte-44mm-black-samwt846bl"],"m34|128GB":[1147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-fe-128gb-blueberry-s26fe128bl"],"m34|256GB":[1297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-fe-256gb-blueberry-s26fe256bl"],"m36|256GB Wi-Fi":[1948,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-wifi-256gb-grey-sms12p256w"],"m36|512GB Wi-Fi":[2248,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-wifi-512gb-grey-sms12p512w"],"m36|256GB LTE":[2198,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-5g-256gb-grey-sms12p256c"],"m36|512GB LTE":[2498,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-5g-512gb-grey-sms12p512c"]},"jb":{"m1|256GB":[2199,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-ultra-5g-256gb-black"],"m1|512GB":[2499,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-ultra-5g-512gb-black"],"m1|1TB":[2949,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-ultra-5g-1tb-black"],"m2|256GB":[1849,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-256gb-black-1"],"m2|512GB":[2149,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-512gb-black-1"],"m3|256GB":[1149,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-256gb-black"],"m3|512GB":[1449,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-512gb-black"],"m4|256GB":[2999,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-ultra-5g-256gb-cream"],"m4|512GB":[3299,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-ultra-5g-512gb-cream"],"m4|1TB":[3899,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-ultra-5g-1tb-cream"],"m5|256GB":[2699,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-5g-256gb-cream"],"m5|512GB":[2999,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-5g-512gb-cream"],"m5|1TB":[3599,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-5g-1tb-cream"],"m6|256GB":[1949,"https://www.jbhifi.com.au/products/samsung-galaxy-z-flip8-5g-256gb-cream"],"m6|512GB":[2249,"https://www.jbhifi.com.au/products/samsung-galaxy-z-flip8-5g-512gb-cream"],"m7|128GB":[749,"https://www.jbhifi.com.au/products/samsung-galaxy-a57-5g-128gb-awesome-lilac"],"m7|256GB":[849,"https://www.jbhifi.com.au/products/samsung-galaxy-a57-5g-256gb-awesome-lilac"],"m8|128GB":[599,"https://www.jbhifi.com.au/products/samsung-galaxy-a37-5g-128gb-awesome-charcoal"],"m9|128GB":[499,"https://www.jbhifi.com.au/products/samsung-galaxy-a27-5g-128gb-black"],"m11|128GB Wi-Fi":[1549,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-wi-fi-128gb-grey"],"m11|256GB Wi-Fi":[1849,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-wi-fi-256gb-grey"],"m11|512GB Wi-Fi":[2199,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-wi-fi-512gb-grey"],"m11|128GB LTE":[1799,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-5g-128gb-grey"],"m11|256GB LTE":[2099,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-5g-256gb-grey"],"m11|512GB LTE":[2449,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-5g-512gb-grey"],"m12|40mm Bluetooth":[649,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-40mm-cream"],"m12|40mm LTE":[749,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-lte-40mm-cream"],"m12|44mm Bluetooth":[699,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-44mm-graphite"],"m12|44mm LTE":[799,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-lte-44mm-graphite"],"m15|Standard":[399,"https://www.jbhifi.com.au/products/samsung-galaxy-buds4-pro-black"],"m14|Standard":[299,"https://www.jbhifi.com.au/products/samsung-galaxy-buds4-black"],"m22|Standard":[249,"https://www.jbhifi.com.au/products/samsung-galaxy-buds3-fe-wireless-noise-cancelling-earbuds-black"],"m20|128GB":[1099,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-fe-5g-128gb-icy-blue"],"m20|256GB":[1199,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-fe-5g-256gb-icy-blue"],"m21|128GB":[289.52,"https://www.jbhifi.com.au/products/telstra-samsung-galaxy-a17-5g-128gb-tprepaid-pkit-black"],"m25|46mm Blutooth":[899,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-classic-46mm-black"],"m25|46mm LTE":[999,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-classic-lte-46mm-black"],"m29|512GB":[1837,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-ultra-512gb-titanium-black"],"m30|512GB":[2049,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-edge-5g-512gb-titanium-jetblack"],"m31|512GB":[1999,"https://www.jbhifi.com.au/products/samsung-galaxy-z-flip7-5g-512gb-blue-shadow"],"m32|47mm LTE":[699,"https://www.jbhifi.com.au/products/samsung-galaxy-watch-ultra-lte-47mm-grey-2024"],"m33|40mm Bluetooth":[649,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-40mm-graphite"],"m33|40mm LTE":[749,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-lte-40mm-graphite"],"m33|44mm Bluetooth":[699,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-44mm-graphite"],"m33|44mm LTE":[799,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-lte-44mm-graphite"],"m34|128GB":[1149,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-fe-5g-128gb-blueberry"],"m34|256GB":[1299,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-fe-5g-256gb-blueberry"]}},"telco":{"telstra":{"m4":[2998.8,36,83.3,2998.8],"m5":[2698.92,36,74.97,2698.92],"m6":[1948.68,36,54.13,1948.68],"m34":[1148.76,36,31.91,1148.76],"m1":[2198.88,36,61.08,2198.88],"m2":[1448.64,36,40.24,1848.96],"m3":[1548.72,36,43.02,1548.72],"m8":[648.72,36,18.02,648.72],"m7":[848.88,36,23.58,848.88],"m31":[1798.92,36,49.97,1798.92],"m20":[1098.72,36,30.52,1098.72],"m30":[2048.76,36,56.91,2048.76],"m29":[2148.84,36,59.69,2148.84],"m21":[398.88,36,11.08,398.88],"m27":[999,36,27.75,999]},"optus":{"m3":[774,36,21.5,1527.2],"m4":[2248.56,36,62.46,2977.96],"m6":[1198.08,36,33.28,1927.48],"m34":[1148.4,36,31.9,1148.4],"m5":[2698.56,36,74.96,2698.56],"m1":[2198.88,36,61.08,2198.88],"m20":[1098.72,36,30.52,1098.72],"m8":[598.32,36,16.62,598.32],"m2":[1848.96,36,51.36,1848.96],"m29":[2348.64,36,65.24,2348.64],"m31":[1798.56,36,49.96,1798.56],"m7":[748.8,36,20.8,748.8]},"vodafone":{"m4":[2398.56,48,49.97,2998.56],"m6":[1448.64,48,30.18,1948.8],"m1":[1548.48,48,32.26,2198.88],"m3":[1148.64,48,23.93,1548.96],"m30":[1348.8,48,28.1,1848.96],"m7":[360,36,10,748.8],"m21":[0,36,0,348.84],"m29":[1548.48,48,32.26,2348.64]}},"plans":{"telstra":[{"n":"Basic 50GB","p":74.0},{"n":"Essential 180GB","p":84.0},{"n":"Premium 300GB","p":99.0}],"optus":[{"n":"Choice Plus","p":60.0,"promo":{"p":39.0,"months":12}}],"vodafone":[{"n":"Small","p":58.0,"promo":{"p":45.0,"months":12}},{"n":"Medium","p":68.0,"promo":{"p":50.0,"months":12}},{"n":"Large","p":78.0,"promo":{"p":55.0,"months":12}}]}};
-  const PC_RETAILERS = [
-    ["jb", "JB Hi-Fi", q => "https://www.jbhifi.com.au/search?query=" + q],
-    ["tgg", "The Good Guys", q => "https://www.thegoodguys.com.au/search?q=" + q],
-    ["ow", "Officeworks", q => "https://www.officeworks.com.au/shop/officeworks/search?q=" + q],
-    ["hn", "Harvey Norman", q => "https://www.harveynorman.com.au/search?q=" + q]
-  ];
-  const PC_TELCOS = [
-    ["telstra", "Telstra", "https://www.telstra.com.au/mobile-phones/mobiles-on-a-plan/samsung"],
-    ["optus", "Optus", "https://www.optus.com.au/mobile/phones?brand=samsung"],
-    ["vodafone", "Vodafone", "https://www.vodafone.com.au/mobile/mobile-phones/samsung"]
-  ];
-  const pc = { mode: "none", buy: null };
-  const pcEl = id => document.getElementById("pc-" + id);
-  const pcNum = el => { const n = parseFloat(el && el.value); return isFinite(n) && n >= 0 ? n : null; };
-  const pcWhen = iso => {
-    if (!iso) return "";
-    const d = new Date(iso);
-    return d.toLocaleDateString("en-AU", { day: "numeric", month: "short" }) + ", " + d.toLocaleTimeString("en-AU", { hour: "numeric", minute: "2-digit" });
-  };
-
-  function pcSelection() {
-    const mo = modelIndex[pcEl("model").value];
-    if (!mo) return null;
-    const variant = mo.variants.find(x => x.v === pcEl("variant").value) || mo.variants[0];
-    return { m: mo.m, n: mo.n, v: variant.v, p: variant.p, base: mo.variants.reduce((b, x) => x.p < b.p ? x : b, mo.variants[0]).v };
-  }
-
-  function pcOurPrice(sel) {
-    return pricingFor(sel.m, sel.v, sel.p, pc.mode, { optIns: [], ngc: false, bundleWearable: false, tradeIn: false });
-  }
-
-  function pcFillVariants() {
-    const mo = modelIndex[pcEl("model").value];
-    pcEl("variant").innerHTML = mo.variants.map(x => `<option>${escapeHtml(x.v)}</option>`).join("");
-  }
-
-  // A plan with an introductory price costs less over the term than its sticker price times the months.
-  function pcPlanCost(plan, price, term) {
-    if (plan && plan.promo && price === plan.p) {
-      const intro = Math.min(plan.promo.months, term);
-      return plan.promo.p * intro + plan.p * (term - intro);
-    }
-    return price * term;
-  }
-
-  // Draw the rows for the chosen device. Inputs are drawn once per device so typing never loses focus;
-  // pcUpdate() then only rewrites the figures beside them.
-  function pcRender() {
-    const sel = pcSelection();
-    if (!sel) return;
-    const key = sel.m + "|" + sel.v;
-    const q = encodeURIComponent("Samsung " + sel.n + (sel.v === "Standard" ? "" : " " + sel.v));
-    pcEl("retail").innerHTML = PC_RETAILERS.map(r => {
-      const hit = (COMPETITORS.retail[r[0]] || {})[key];
-      const low = hit && hit[0] < sel.p * 0.6;
-      const link = hit ? `<a class="pc-link" href="${escapeHtml(hit[1])}" target="_blank" rel="noopener">View listing</a>`
-        : `<a class="pc-link" href="${r[2](q)}" target="_blank" rel="noopener">${r[0] === "hn" ? "Look it up" : "Search their site"}</a>`;
-      const note = low ? "Well under RRP — check the listing" : hit ? "" : r[0] === "hn" ? "Type in their price" : "Not found — type it in";
-      return `<div class="pc-tile"><div class="pc-tile-head"><span class="pc-name">${r[1]}</span>${link}</div>`
-        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-retail="${r[0]}" aria-label="${r[1]} price" value="${hit ? hit[0] : ""}" placeholder="—" /></span>`
-        + `<div class="pc-tile-foot"><span class="pc-pill" data-retail-diff="${r[0]}"></span><span class="pc-note${low ? " warn" : ""}">${note}</span></div>`
-        // Wording taken from a summary of their policy; their own page could not be read by the tool that wrote this.
-        + (r[0] === "hn" ? `<p class="pc-policy">They match genuine advertised prices from leading Australian retailers, on request through Live Chat with proof. <a href="https://www.harveynorman.com.au/price-match-guarantee" target="_blank" rel="noopener">Read the policy</a></p>` : "")
-        + `</div>`;
-    }).join("");
-    const when = ["jb", "tgg", "ow"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];
-    pcEl("retail-when").textContent = "Buying outright · lowest colour, as listed online" + (when ? " · captured " + pcWhen(when) : "");
-
-    pcEl("telco").innerHTML = PC_TELCOS.map(t => {
-      const dev = (COMPETITORS.telco[t[0]] || {})[sel.m];
-      const plans = COMPETITORS.plans[t[0]] || [];
-      const isBase = sel.v === sel.base;
-      const prefill = dev && isBase ? dev[0] : "";
-      const note = !dev ? "Not on their Samsung page — enter the device price"
-        : !isBase ? `They list ${escapeHtml(sel.base)} at ${fmt(dev[0])} — enter the ${escapeHtml(sel.v)} price`
-        : `${fmt(dev[2])}/mth over ${dev[1]} mths` + (dev[3] && dev[3] > dev[0] ? ` · includes ${fmt(dev[3] - dev[0])} off, lost if they leave early` : "");
-      return `<div class="pc-trow" data-telco="${t[0]}">`
-        + `<span><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a><span class="pc-note">${note}</span></span>`
-        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="device" aria-label="${t[1]} device price, total" value="${prefill}" placeholder="—" /></span>`
-        + `<span class="pc-plan pc-cell-plan"><select data-field="plan" aria-label="${t[1]} plan">`
-        + plans.map((p, k) => `<option value="${k}">${escapeHtml(p.n)}</option>`).join("") + `<option value="">Other plan</option></select>`
-        + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${t[1]} plan price per month" value="${plans.length ? plans[0].p : ""}" placeholder="$" /></span>`
-        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="extra" aria-label="${t[1]} other costs such as setup, accessories or insurance" placeholder="0" /></span>`
-        + `<span class="pc-total pc-right" data-sums></span></div>`;
-    }).join("");
-    const when2 = ["telstra", "optus", "vodafone"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];
-    pcEl("src").innerHTML = "<strong>How the telco total is worked out:</strong> device + plan fees for the term + extras (setup, accessories, insurance). "
-      + "Buying here is our price plus the same plan for the same months, or the SIM plan you enter. Telcos charge the same plan fee with or without a phone, "
-      + "so on the same plan the gap is the device price. Introductory plan prices are counted for the months they apply. "
-      + "Telco device prices are for the base storage as published on each telco&#8217;s site" + (when2 ? ", captured " + pcWhen(when2) : "") + ". "
-      + "Retailer in-store prices and price matches can differ from what is listed online.";
-    pcUpdate();
-  }
-
-  function pcTerm() { return Number(pcEl("term").querySelector('[aria-pressed="true"]').dataset.term); }
-
-  function pcUpdate() {
-    const sel = pcSelection();
-    if (!sel) return;
-    const res = pcOurPrice(sel);
-    const ours = res.subtotal;
-    const names = res.lines.map(l => l.name);
-    pcEl("ours").innerHTML = `<span class="pc-ours-label">Our price today</span><span class="pc-ours-amount">${fmt(ours)}</span>${gstNote(ours)}`
-      + (names.length ? `<span class="pc-ours-sub">${escapeHtml(names.join(" · "))} · RRP ${fmt(sel.p)}</span>` : `<span class="pc-ours-sub plain">RRP, no offer running</span>`);
-
-    const pill = (out, diff, here) => {
-      out.className = "pc-pill" + (diff > 0 ? " win" : diff < 0 ? " lose" : "");
-      out.textContent = diff > 0 ? fmt(diff) + " cheaper here" : diff < 0 ? fmt(-diff) + " cheaper " + here : "Same price";
-    };
-    PC_RETAILERS.forEach(r => {
-      const theirs = pcNum(pcEl("retail").querySelector(`[data-retail="${r[0]}"]`));
-      const out = pcEl("retail").querySelector(`[data-retail-diff="${r[0]}"]`);
-      if (theirs === null) { out.textContent = ""; out.className = "pc-pill"; return; }
-      pill(out, Math.round((theirs - ours) * 100) / 100, "there");
-    });
-    pcMatchRender(sel, ours);
-
-    const term = pcTerm();
-    const sim = pcNum(pcEl("sim"));
-    let samePlanNote = "";
-    pcEl("telco").querySelectorAll(".pc-trow").forEach(box => {
-      const id = box.dataset.telco;
-      const plans = COMPETITORS.plans[id] || [];
-      const planSel = box.querySelector('[data-field="plan"]');
-      const plan = planSel.value === "" ? null : plans[Number(planSel.value)];
-      const device = pcNum(box.querySelector('[data-field="device"]'));
-      const price = pcNum(box.querySelector('[data-field="price"]'));
-      const extra = pcNum(box.querySelector('[data-field="extra"]')) || 0;
-      const sums = box.querySelector("[data-sums]");
-      if (device === null || price === null) {
-        sums.innerHTML = `<span class="pc-total-note">Enter the device${price === null ? " and plan" : ""} price</span>`;
-        return;
-      }
-      const planCost = pcPlanCost(plan, price, term);
-      const theirs = device + planCost + extra;
-      const here = ours + (sim === null ? planCost : sim * term);
-      const diff = Math.round((theirs - here) * 100) / 100;
-      const intro = plan && plan.promo && price === plan.p ? ` (${fmt(plan.promo.p)} for ${Math.min(plan.promo.months, term)} mths)` : "";
-      sums.innerHTML = `${fmt(theirs)}<span class="pc-total-note">${fmt(device)} + ${fmt(planCost)} plan${intro}${extra ? " + " + fmt(extra) : ""}</span><span class="pc-pill"></span>`;
-      pill(sums.querySelector(".pc-pill"), diff, "with " + id.charAt(0).toUpperCase() + id.slice(1));
-    });
-    pcEl("here-note").textContent = sim === null
-      ? `${fmt(ours)} outright, plus the same plan as each telco for ${term} months`
-      : `${fmt(ours)} outright + ${fmt(sim)}/mth SIM plan for ${term} months`;
-    pcEl("here-total").innerHTML = sim === null ? `${fmt(ours)}<span class="pc-total-note">+ plan</span>` : `${fmt(ours + sim * term)}`;
-  }
-
-  let pcBuilt = false;
-  function pcBuild() {
-    if (!pcBuilt) {
-      pcBuilt = true;
-      const groups = {};
-      models.forEach(mo => { (groups[mo.cat] = groups[mo.cat] || []).push(mo); });
-      pcEl("model").innerHTML = CAT_ORDER.filter(g => groups[g]).map(g => `<optgroup label="${escapeHtml(g)}">`
-        + groups[g].map(mo => `<option value="${mo.m}">${escapeHtml(mo.n)}</option>`).join("") + `</optgroup>`).join("");
-      pcEl("model").addEventListener("change", () => { pcFillVariants(); pcRender(); });
-      pcEl("variant").addEventListener("change", pcRender);
-      pcEl("modes").addEventListener("click", e => {
-        const b = e.target.closest("button[data-mode]");
-        if (!b) return;
-        pc.mode = b.dataset.mode;
-        pcEl("modes").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
-        pcUpdate();
-      });
-      pcEl("term").addEventListener("click", e => {
-        const b = e.target.closest("button[data-term]");
-        if (!b) return;
-        pcEl("term").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
-        pcUpdate();
-      });
-      pcEl("sim").addEventListener("input", pcUpdate);
-      pcEl("retail").addEventListener("input", pcUpdate);
-      pcEl("telco").addEventListener("input", pcUpdate);
-      pcEl("telco").addEventListener("change", e => {
-        if (e.target.dataset.field !== "plan") return;
-        const box = e.target.closest(".pc-trow");
-        const plan = (COMPETITORS.plans[box.dataset.telco] || [])[Number(e.target.value)];
-        if (e.target.value !== "" && plan) box.querySelector('[data-field="price"]').value = plan.p;
-        pcUpdate();
-      });
-      pcFillVariants();
-    }
-    // Open on the device being quoted, each time that device changes on the Deal Qualifier.
-    const buy = deviceSelect.value + "|" + variantSelect.value;
-    if (pc.buy !== buy && modelIndex[deviceSelect.value]) {
-      pc.buy = buy;
-      pcEl("model").value = deviceSelect.value;
-      pcFillVariants();
-      pcEl("variant").value = variantSelect.value;
-    }
-    pcRender();
-  }
-  // ---- Price match request ----
-  // The lowest retailer price under ours, summed up for a manager. It reads the tiles as they stand,
-  // so a price typed in (Harvey Norman, or an in-store price) counts the same as a collected one.
-  function pcMatchRender(sel, ours) {
-    const box = pcEl("match");
-    if (!box) return;
-    let best = null;
-    PC_RETAILERS.forEach(r => {
-      const theirs = pcNum(pcEl("retail").querySelector(`[data-retail="${r[0]}"]`));
-      if (theirs !== null && theirs > 0 && theirs < ours && (!best || theirs < best.price)) best = { id: r[0], name: r[1], price: theirs };
-    });
-    if (!best) { box.hidden = true; box.innerHTML = ""; return; }
-    const hit = (COMPETITORS.retail[best.id] || {})[sel.m + "|" + sel.v];
-    const url = hit && Number(hit[0]) === best.price ? hit[1] : "";   // the listing only backs the figure it was collected with
-    const gap = Math.round((ours - best.price) * 100) / 100;
-    const device = "Samsung " + sel.n + (sel.v === "Standard" ? "" : " " + sel.v);
-    const mode = pc.mode === "edu" ? " (Education price)" : pc.mode === "smb" ? " (SMB price)" : "";
-    const today = new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
-    const text = ["Price match request \u2014 " + today, device,
-      best.name + ": " + fmt(best.price) + (url ? " \u2014 " + url : " (price typed in, screenshot attached)"),
-      "Our price: " + fmt(ours) + mode,
-      "A match takes " + fmt(gap) + " off"].join("\n");
-    box.hidden = false;
-    box.innerHTML = `<div class="pc-match-head"><p class="card-title">Price Match Request</p>`
-      + `<button type="button" class="clear-btn" data-match-copy>Copy request</button></div>`
-      + `<p class="pc-match-line"><strong>${escapeHtml(best.name)}</strong> has it for <strong>${fmt(best.price)}</strong>, `
-      + `<strong>${fmt(gap)}</strong> under our ${fmt(ours)}${escapeHtml(mode)}.`
-      + (url ? ` <a class="pc-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Their listing</a>` : "") + `</p>`
-      + `<p class="pc-match-sub">Before you ask your manager:</p><ul class="pc-match-list">`
-      + `<li>Screenshot the listing with the price, and today\u2019s date if it shows.</li>`
-      + `<li>Same model, storage and colour, and in stock with them.</li>`
-      + `<li>Not a clearance, bundle, member-only or marketplace price.</li></ul>`
-      + `<span class="pc-match-status" data-match-status role="status"></span>`;
-    box.querySelector("[data-match-copy]").onclick = () => {
-      const status = box.querySelector("[data-match-status]");
-      copyPlain(text).then(ok => {
-        status.textContent = ok ? "Copied \u2014 paste it into a message to your manager." : "Copying was blocked here. Select the text above and copy it by hand.";
-      });
-    };
-  }
-
-  // Copy text from a tap. The old copy command runs inside the tap, which the artifact's frame
-  // allows; the Clipboard API is the fallback.
-  function copyPlain(text) {
-    const ta = document.createElement("textarea");
-    ta.value = text; ta.setAttribute("readonly", "");
-    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
-    document.body.appendChild(ta); ta.select();
-    let ok = false;
-    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
-    document.body.removeChild(ta);
-    if (ok || !navigator.clipboard) return Promise.resolve(ok);
-    return navigator.clipboard.writeText(text).then(() => true, () => false);
-  }
-
-  // ---- end Price check ----
 
   // ---- Quote as separate options ----
   // Two or more devices can be one sale (added up, the default) or options the customer is choosing
@@ -8982,7 +8726,7 @@
     function draw() {
       hits = search(input.value);
       active = Math.min(active, Math.max(hits.length - 1, 0));
-      if (!input.value.trim()) { list.innerHTML = `<p class="gs-empty">Try “s26 ultra”, “A260006352”, “fold5 repair”, “iphone 14 trade” or “price check”.</p>`; return; }
+      if (!input.value.trim()) { list.innerHTML = `<p class="gs-empty">Try “s26 ultra”, “A260006352”, “fold5 repair”, “iphone 14 trade” or “cost of ownership”.</p>`; return; }
       if (!hits.length) { list.innerHTML = `<p class="gs-empty">Nothing matches “${escapeHtml(input.value.trim())}”.</p>`; return; }
       list.innerHTML = hits.map((h, k) => `<button type="button" class="gs-item${k === active ? " on" : ""}" role="option" aria-selected="${k === active}" data-k="${k}">`
         + `<span class="gs-type">${h.type}</span><span class="gs-text"><span class="gs-label">${escapeHtml(h.label)}</span>`
@@ -9054,6 +8798,406 @@
   new ResizeObserver(syncMobileControls).observe(document.getElementById("quote-bar"));
   document.querySelectorAll("nav, .tabs").forEach(nav => new ResizeObserver(syncMobileControls).observe(nav));
   syncMobileControls();
+
+
+
+  // ---- Price check ----
+  // The Cost of Ownership page. Competitor figures are collected twice a day by
+  // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
+  // because a price on a customer's phone beats a price captured this morning.
+  const COMPETITORS = {"at":{"tgg":"2026-10-16T02:30+11:00","ow":"2026-10-16T02:30+11:00","telstra":"2026-10-16T02:30+11:00","optus":"2026-10-16T02:30+11:00","vodafone":"2026-10-16T02:30+11:00","jb":"2026-10-16T02:30+11:00","jbplans":"2026-10-16T02:30+11:00"},"retail":{"tgg":{"m1|256GB":[2197,"https://www.thegoodguys.com.au/samsung-galaxy-s26-ultra-256gb-black-11901357836"],"m1|512GB":[2497,"https://www.thegoodguys.com.au/samsung-galaxy-s26-ultra-512gb-black-11901357839"],"m2|256GB":[1847,"https://www.thegoodguys.com.au/samsung-galaxy-s26-plus-256gb-black-11901357822"],"m2|512GB":[2147,"https://www.thegoodguys.com.au/samsung-galaxy-s26-plus-512gb-black-11901357829"],"m3|256GB":[1147,"https://www.thegoodguys.com.au/samsung-galaxy-s26-256gb-black-11901357816"],"m3|512GB":[1447,"https://www.thegoodguys.com.au/samsung-galaxy-s26-512gb-black-11901357820"],"m4|256GB":[2999,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-ultra-256gb-cream-11901374853"],"m4|512GB":[3299,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-ultra-512gb-cream-11901374855"],"m5|256GB":[2699,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-256gb-cream-11901374866"],"m5|512GB":[2999,"https://www.thegoodguys.com.au/samsung-galaxy-z-fold8-512gb-cream-11901374858"],"m6|256GB":[1949,"https://www.thegoodguys.com.au/samsung-galaxy-z-flip8-256gb-cream-11901374871"],"m6|512GB":[2249,"https://www.thegoodguys.com.au/samsung-galaxy-z-flip8-512gb-cream-11901374872"],"m7|128GB":[749,"https://www.thegoodguys.com.au/samsung-galaxy-a57-5g-128gb-lilac-11901362225"],"m7|256GB":[849,"https://www.thegoodguys.com.au/samsung-galaxy-a57-5g-256gb-navy-11901362226"],"m8|128GB":[599,"https://www.thegoodguys.com.au/samsung-galaxy-a37-5g-128gb-charcoal-11901362224"],"m9|128GB":[499,"https://www.thegoodguys.com.au/samsung-galaxy-a27-5g-128gb-black-11901375167"],"m12|40mm Bluetooth":[649,"https://www.thegoodguys.com.au/samsung-galaxy-watch-9-bt-cream-40mm-sm-l340nzeaxsa"],"m12|44mm Bluetooth":[699,"https://www.thegoodguys.com.au/samsung-galaxy-watch-9-bt-graphite-44mm-sm-l350nzkaxsa"],"m13|47mm LTE":[699,"https://www.thegoodguys.com.au/samsung-galaxy-watch-ultra-2025-blue-lte-47mm-sm-l705fzb1xsa"],"m15|Standard":[399,"https://www.thegoodguys.com.au/samsung-galaxy-buds4-pro-sm-r640nzkaxsa"],"m14|Standard":[299,"https://www.thegoodguys.com.au/samsung-galaxy-buds4-sm-r540nzkaxsa"],"m22|Standard":[249,"https://www.thegoodguys.com.au/samsung-galaxy-buds3-fe-black-sm-r420nzkaasa"],"m21|128GB":[379,"https://www.thegoodguys.com.au/samsung-galaxy-a17-5g-128gb-black-11901345420"],"m19|128GB Wi-Fi":[379,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-wi-fi-6gb-128gb-grey-sm-x230nzaaxsa"],"m19|256GB Wi-Fi":[499,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-wi-fi-8gb-256gb-grey-sm-x230nzaexsa"],"m19|128GB LTE":[449,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-5g-6gb-128gb-grey-sm-x236bzaaats"],"m19|256GB LTE":[599,"https://www.thegoodguys.com.au/samsung-galaxy-tab-a11-plus-5g-8gb-256gb-grey-sm-x236bzaeats"],"m24|256GB Wi-Fi":[1794,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-wifi-12gb-256gb-moonstone-grey-sm-x820nzaaxsa"],"m24|512GB Wi-Fi":[1994,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-wifi-12gb-512gb-moonstone-grey-sm-x820nzaexsa"],"m24|256GB LTE":[2044,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-5g-12gb-256gb-moonstone-grey-sm-x826bzaaats"],"m24|512GB LTE":[2249,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s10-plus-5g-12gb-512gb-moonstone-grey-sm-x826bzaeats"],"m25|46mm Blutooth":[899,"https://www.thegoodguys.com.au/samsung-galaxy-watch-8-classic-black-bt-46mm-sm-l500nzkaxsa"],"m28|Standard":[149,"https://www.thegoodguys.com.au/samsung-galaxy-fit3-watch-grey-bt-sm-r390nzaaxsa"],"m31|512GB":[1999,"https://www.thegoodguys.com.au/samsung-galaxy-z-flip7-512gb-blue-shadow-11901342086"],"m33|40mm Bluetooth":[649,"https://www.thegoodguys.com.au/samsung-galaxy-watch-8-graphite-bt-40mm-sm-l320ndaaxsa"],"m33|44mm Bluetooth":[699,"https://www.thegoodguys.com.au/samsung-galaxy-watch-8-silver-bt-44mm-sm-l330nzsaxsa"],"m34|128GB":[1149,"https://www.thegoodguys.com.au/samsung-galaxy-s26-fe-128gb-blueberry-11901376810"],"m34|256GB":[1299,"https://www.thegoodguys.com.au/samsung-galaxy-s26-fe-256gb-graphite-11901377304"],"m35|256GB Wi-Fi":[2299,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-wi-fi-12gb-256gb-grey-sm-x940nzaaxsa"],"m35|512GB Wi-Fi":[2599,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-wi-fi-12gb-512gb-grey-sm-x940nzaexsa"],"m35|1TB Wi-Fi":[3199,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-wi-fi-16gb-1tb-grey-sm-x940nzaixsa"],"m35|256GB LTE":[2549,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-5g-12gb-256gb-grey-sm-x946bzaaats"],"m35|512GB LTE":[2849,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-5g-12gb-512gb-grey-sm-x946bzaeats"],"m35|1TB LTE":[3449,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-ultra-5g-16gb-1tb-grey-sm-x946bzaiats"],"m36|256GB Wi-Fi":[1999,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-wi-fi-12gb-256gb-grey-sm-x840nzaaxsa"],"m36|512GB Wi-Fi":[2299,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-wi-fi-12gb-512gb-grey-sm-x840nzaexsa"],"m36|256GB LTE":[2249,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-wi-fi-12gb-256gb-grey-sm-x846bzaaats"],"m36|512GB LTE":[2549,"https://www.thegoodguys.com.au/samsung-galaxy-tab-s12-plus-5g-12gb-512gb-grey-sm-x846bzaeats"]},"ow":{"m1|256GB":[2197,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-ultra-256gb-black-s26u256bk"],"m1|512GB":[2497,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-ultra-512gb-black-s26u512bk"],"m1|1TB":[2947,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-ultra-1tb-sky-blue-s26u1tbbl"],"m2|256GB":[1847,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-256gb-black-s26p256bk"],"m2|512GB":[2147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-512gb-black-s26p512bk"],"m3|256GB":[1147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-256gb-black-s26256bk"],"m3|512GB":[1447,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-512gb-black-s26512bk"],"m4|256GB":[2997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-ultra-256gb-cream-sfld8u256c"],"m4|512GB":[3297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-ultra-512gb-cream-sfld8u512c"],"m5|256GB":[2697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-256gb-cream-sfld8256cr"],"m5|512GB":[2997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-fold8-512gb-cream-sfld8512cr"],"m6|256GB":[1947,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-flip8-256gb-cream-sflp8256cr"],"m6|512GB":[2247,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-flip8-512gb-cream-sflp8512cr"],"m7|128GB":[747,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-a57-5g-128gb-lilac-sama575gli"],"m8|128GB":[597,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-a37-128gb-charcoal-sama375gbk"],"m9|128GB":[497,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-a27-5g-128gb-black-sama275gbk"],"m10|256GB Wi-Fi":[2097,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-wifi-256gb-grey-sms11uw25g"],"m10|512GB Wi-Fi":[2297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-wifi-512gb-grey-sms11uw51g"],"m10|1TB Wi-Fi":[2999,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-wifi-1tb-grey-sms11uwtbg"],"m10|256GB LTE":[2347,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-5g-256gb-grey-sms11uc25g"],"m10|512GB LTE":[2547,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-ultra-5g-512gb-grey-sms11uc51g"],"m11|128GB Wi-Fi":[1397,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-wifi-128gb-grey-sms11w12gy"],"m11|256GB Wi-Fi":[1848,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-wifi-256gb-grey-sms11w25gy"],"m11|512GB Wi-Fi":[2198,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-wifi-512gb-grey-sms11w51gy"],"m11|128GB LTE":[1798,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-5g-128gb-grey-sms11c12gy"],"m11|256GB LTE":[2098,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-5g-256gb-grey-sms11c25gy"],"m11|512GB LTE":[1749,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s11-5g-512gb-grey-sms11c51gy"],"m12|40mm Bluetooth":[647,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-40mm-graphite-samwt940gb"],"m12|40mm LTE":[747,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-lte-40mm-graphite-samwt940gl"],"m12|44mm Bluetooth":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-44mm-graphite-samwt944gb"],"m12|44mm LTE":[797,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch9-lte-44mm-graphite-samwt944gl"],"m13|47mm LTE":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch-ultra-2025-lte-47mm-titanium-white-smwtult25w"],"m15|Standard":[399,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-buds4-pro-black-samgbud4pb"],"m14|Standard":[299,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-buds4-black-samgbud4b"],"m22|Standard":[189,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-buds3-fe-black-sambud3feb"],"m20|128GB":[977,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s25fe-128gb-navy-s25fe128ny"],"m21|128GB":[327,"https://www.officeworks.com.au/shop/officeworks/p/telstra-samsung-galaxy-a17-5g-128gb-black-telsmaa17"],"m17|128GB Wi-Fi":[629,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-lite-wifi-128gb-grey-sms10lw12g"],"m17|256GB Wi-Fi":[748,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-lite-wifi-256gb-grey-sms10lw25g"],"m18|128GB Wi-Fi":[1097,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-128gb-blue-sam1336096"],"m18|256GB Wi-Fi":[1247,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-256gb-grey-sam1336105"],"m18|128GB LTE":[1297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-128gb-silver-sam1336101"],"m18|256GB LTE":[1447,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-256gb-grey-sam1336098"],"m19|128GB Wi-Fi":[377,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-wifi-128gb-grey-samtaba115"],"m19|256GB Wi-Fi":[497,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-wifi-256gb-grey-samtaba117"],"m19|128GB LTE":[447,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-5g-128gb-grey-samtaba118"],"m19|256GB LTE":[597,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-a11-5g-256gb-grey-samtaba116"],"m23|128GB Wi-Fi":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-128gb-grey-sam1336103"],"m23|256GB Wi-Fi":[849,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-wifi-256gb-grey-sam1336097"],"m23|128GB LTE":[899,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-128gb-grey-sam1336104"],"m23|256GB LTE":[1049,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s10-fe-5g-256gb-grey-sam1336095"],"m25|46mm Blutooth":[897,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-classic-bluetooth-46mm-black-smwt8c46b"],"m25|46mm LTE":[997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-classic-lte-46mm-black-smwt8c46bl"],"m28|Standard":[147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-fit3-bluetooth-dark-grey-samfit3gry"],"m31|512GB":[1997,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-z-flip-7-512gb-coral-red-sflp7512rd"],"m33|40mm Bluetooth":[647,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-bluetooth-40mm-black-samwt843b"],"m33|40mm LTE":[747,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-lte-40mm-black-samwt843bl"],"m33|44mm Bluetooth":[697,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-bluetooth-44mm-silver-samwt846s"],"m33|44mm LTE":[797,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-watch8-lte-44mm-black-samwt846bl"],"m34|128GB":[1147,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-fe-128gb-blueberry-s26fe128bl"],"m34|256GB":[1297,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-s26-fe-256gb-blueberry-s26fe256bl"],"m36|256GB Wi-Fi":[1948,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-wifi-256gb-grey-sms12p256w"],"m36|512GB Wi-Fi":[2248,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-wifi-512gb-grey-sms12p512w"],"m36|256GB LTE":[2198,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-5g-256gb-grey-sms12p256c"],"m36|512GB LTE":[2498,"https://www.officeworks.com.au/shop/officeworks/p/samsung-galaxy-tab-s12-5g-512gb-grey-sms12p512c"]},"jb":{"m1|256GB":[2199,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-ultra-5g-256gb-black"],"m1|512GB":[2499,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-ultra-5g-512gb-black"],"m1|1TB":[2949,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-ultra-5g-1tb-black"],"m2|256GB":[1849,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-256gb-black-1"],"m2|512GB":[2149,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-512gb-black-1"],"m3|256GB":[1149,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-256gb-black"],"m3|512GB":[1449,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-5g-512gb-black"],"m4|256GB":[2999,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-ultra-5g-256gb-cream"],"m4|512GB":[3299,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-ultra-5g-512gb-cream"],"m4|1TB":[3899,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-ultra-5g-1tb-cream"],"m5|256GB":[2699,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-5g-256gb-cream"],"m5|512GB":[2999,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-5g-512gb-cream"],"m5|1TB":[3599,"https://www.jbhifi.com.au/products/samsung-galaxy-z-fold8-5g-1tb-cream"],"m6|256GB":[1949,"https://www.jbhifi.com.au/products/samsung-galaxy-z-flip8-5g-256gb-cream"],"m6|512GB":[2249,"https://www.jbhifi.com.au/products/samsung-galaxy-z-flip8-5g-512gb-cream"],"m7|128GB":[749,"https://www.jbhifi.com.au/products/samsung-galaxy-a57-5g-128gb-awesome-lilac"],"m7|256GB":[849,"https://www.jbhifi.com.au/products/samsung-galaxy-a57-5g-256gb-awesome-lilac"],"m8|128GB":[599,"https://www.jbhifi.com.au/products/samsung-galaxy-a37-5g-128gb-awesome-charcoal"],"m9|128GB":[499,"https://www.jbhifi.com.au/products/samsung-galaxy-a27-5g-128gb-black"],"m11|128GB Wi-Fi":[1549,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-wi-fi-128gb-grey"],"m11|256GB Wi-Fi":[1849,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-wi-fi-256gb-grey"],"m11|512GB Wi-Fi":[2199,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-wi-fi-512gb-grey"],"m11|128GB LTE":[1799,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-5g-128gb-grey"],"m11|256GB LTE":[2099,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-5g-256gb-grey"],"m11|512GB LTE":[2449,"https://www.jbhifi.com.au/products/samsung-galaxy-tab-s11-11-0-5g-512gb-grey"],"m12|40mm Bluetooth":[649,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-40mm-cream"],"m12|40mm LTE":[749,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-lte-40mm-cream"],"m12|44mm Bluetooth":[699,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-44mm-graphite"],"m12|44mm LTE":[799,"https://www.jbhifi.com.au/products/samsung-galaxy-watch9-lte-44mm-graphite"],"m15|Standard":[399,"https://www.jbhifi.com.au/products/samsung-galaxy-buds4-pro-black"],"m14|Standard":[299,"https://www.jbhifi.com.au/products/samsung-galaxy-buds4-black"],"m22|Standard":[249,"https://www.jbhifi.com.au/products/samsung-galaxy-buds3-fe-wireless-noise-cancelling-earbuds-black"],"m20|128GB":[1099,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-fe-5g-128gb-icy-blue"],"m20|256GB":[1199,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-fe-5g-256gb-icy-blue"],"m21|128GB":[289.52,"https://www.jbhifi.com.au/products/telstra-samsung-galaxy-a17-5g-128gb-tprepaid-pkit-black"],"m25|46mm Blutooth":[899,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-classic-46mm-black"],"m25|46mm LTE":[999,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-classic-lte-46mm-black"],"m29|512GB":[1837,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-ultra-512gb-titanium-black"],"m30|512GB":[2049,"https://www.jbhifi.com.au/products/samsung-galaxy-s25-edge-5g-512gb-titanium-jetblack"],"m31|512GB":[1999,"https://www.jbhifi.com.au/products/samsung-galaxy-z-flip7-5g-512gb-blue-shadow"],"m32|47mm LTE":[699,"https://www.jbhifi.com.au/products/samsung-galaxy-watch-ultra-lte-47mm-grey-2024"],"m33|40mm Bluetooth":[649,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-40mm-graphite"],"m33|40mm LTE":[749,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-lte-40mm-graphite"],"m33|44mm Bluetooth":[699,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-44mm-graphite"],"m33|44mm LTE":[799,"https://www.jbhifi.com.au/products/samsung-galaxy-watch8-lte-44mm-graphite"],"m34|128GB":[1149,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-fe-5g-128gb-blueberry"],"m34|256GB":[1299,"https://www.jbhifi.com.au/products/samsung-galaxy-s26-fe-5g-256gb-blueberry"]}},"telco":{"telstra":{"m4":[2998.8,36,83.3,2998.8],"m5":[2698.92,36,74.97,2698.92],"m6":[1948.68,36,54.13,1948.68],"m34":[1148.76,36,31.91,1148.76],"m1":[2198.88,36,61.08,2198.88],"m2":[1448.64,36,40.24,1848.96],"m3":[1548.72,36,43.02,1548.72],"m8":[648.72,36,18.02,648.72],"m7":[848.88,36,23.58,848.88],"m31":[1798.92,36,49.97,1798.92],"m20":[1098.72,36,30.52,1098.72],"m30":[2048.76,36,56.91,2048.76],"m29":[2148.84,36,59.69,2148.84],"m21":[398.88,36,11.08,398.88],"m27":[999,36,27.75,999]},"optus":{"m3":[774,36,21.5,1527.2],"m4":[2248.56,36,62.46,2977.96],"m6":[1198.08,36,33.28,1927.48],"m34":[1148.4,36,31.9,1148.4],"m5":[2698.56,36,74.96,2698.56],"m1":[2198.88,36,61.08,2198.88],"m20":[1098.72,36,30.52,1098.72],"m8":[598.32,36,16.62,598.32],"m2":[1848.96,36,51.36,1848.96],"m29":[2348.64,36,65.24,2348.64],"m31":[1798.56,36,49.96,1798.56],"m7":[748.8,36,20.8,748.8]},"vodafone":{"m4":[2398.56,48,49.97,2998.56],"m6":[1448.64,48,30.18,1948.8],"m1":[1548.48,48,32.26,2198.88],"m3":[1148.64,48,23.93,1548.96],"m30":[1348.8,48,28.1,1848.96],"m7":[360,36,10,748.8],"m21":[0,36,0,348.84],"m29":[1548.48,48,32.26,2348.64]}},"plans":{"telstra":[{"n":"Basic 50GB","p":74.0,"promo":{"p":64.0,"months":12}},{"n":"Essential 180GB","p":84.0},{"n":"Premium 300GB","p":99.0}],"optus":[{"n":"Choice Plus","p":60.0,"promo":{"p":39.0,"months":12}}],"vodafone":[{"n":"Small","p":58.0,"promo":{"p":45.0,"months":12}},{"n":"Medium","p":68.0,"promo":{"p":50.0,"months":12}},{"n":"Large","p":78.0,"promo":{"p":55.0,"months":12}}]},"jbplans":{"upfront":[{"n":"Starter","p":64.0,"term":1,"gb":60,"gift":0,"ends":null},{"n":"Everyday","p":79.0,"term":24,"gb":150,"gift":550.0,"ends":null},{"n":"Premium","p":99.0,"term":24,"gb":300,"gift":1100.0,"ends":"28/10/26"}],"prepaid":{"n":"Pre-paid SIM","first":13.0,"firstGb":80,"p":39.0,"count":2,"gb":80,"then":39.0,"thenGb":30,"days":30,"ends":"2 November 2026"}},"offers":{"telstra":["SIM-only plans Get $120 off over 12 months On Upfront Basic Mobile Plan","$10 off for 12 months Basic 50GB for $74 /mth , Slide 1 of 3 $10/mth off for 12 mths Add PROMO at checkout","Explore concession discount Additional stuff, on us Close Get $10/mth off a new Upfront Basic or Essential Mobile Plan for 12 months","$10/mth off for 12 mths Add PROMO at checkout","No, show me other plans Yes, I am Close Get $10/mth off a new Upfront Basic Mobile Plan for 12 months","Get up to $400 bonus trade-in credit","Get $14/mth off a new Upfront Basic Mobile Plan for 6 months","Get $16/mth off a new Upfront Essential Mobile Plan for 6 months"],"optus":["$60 Optus Choice Plus Promo plan fee is $39/month for the first 12 months"],"vodafone":["Bundle and Save 65 GB $ 45 per month was $ 58 Small Plan No excess data charges First use 65GB, then keep using data in Oz at slower sp","Bundle & Save on eligible plans Save $13/mth for the first 12 months Get our Small SIM Only Plan for $45/mth for the first 12 months, then $58/mth","Bundle & Save on eligible plans Save $18/mth for the first 12 months Get our Medium SIM Only Plan for $50/mth for the first 12 months, then $68/mth","Bundle & Save on eligible plans Save $23/mth for the first 12 months Get our Large SIM Only Plan for $55/mth for the first 12 months, then $78/mth","You can save $5/mth on your second eligible mobile plan, and $15/mth on each one after that when you bundle under one account and st","Once off $20 discount on Small, Medium & Large Plans Offer available online to selected customers only to both: (i) approved new customers si","Discount on Eligible Plan(s) includes: $20 off Eligible Plans"]}};
+  const PC_RETAILERS = [
+    ["jb", "JB Hi-Fi", q => "https://www.jbhifi.com.au/search?query=" + q],
+    ["tgg", "The Good Guys", q => "https://www.thegoodguys.com.au/search?q=" + q],
+    ["ow", "Officeworks", q => "https://www.officeworks.com.au/shop/officeworks/search?q=" + q],
+    ["hn", "Harvey Norman", q => "https://www.harveynorman.com.au/search?q=" + q]
+  ];
+  const PC_TELCOS = [
+    ["telstra", "Telstra", "https://www.telstra.com.au/mobile-phones/mobiles-on-a-plan/samsung"],
+    ["optus", "Optus", "https://www.optus.com.au/mobile/phones?brand=samsung"],
+    ["vodafone", "Vodafone", "https://www.vodafone.com.au/mobile/mobile-phones/samsung"]
+  ];
+  const PC_JB_PLANS_URL = "https://www.jbhifi.com.au/pages/upfront-mobile-plans";
+  const pc = { mode: "none", buy: null };
+  const pcEl = id => document.getElementById("pc-" + id);
+  const pcNum = el => { const n = parseFloat(el && el.value); return isFinite(n) && n >= 0 ? n : null; };
+  const pcWhen = iso => {
+    if (!iso) return "";
+    const d = new Date(iso);
+    return d.toLocaleDateString("en-AU", { day: "numeric", month: "short" }) + ", " + d.toLocaleTimeString("en-AU", { hour: "numeric", minute: "2-digit" });
+  };
+
+  function pcSelection() {
+    const mo = modelIndex[pcEl("model").value];
+    if (!mo) return null;
+    const variant = mo.variants.find(x => x.v === pcEl("variant").value) || mo.variants[0];
+    return { m: mo.m, n: mo.n, v: variant.v, p: variant.p, base: mo.variants.reduce((b, x) => x.p < b.p ? x : b, mo.variants[0]).v };
+  }
+
+  function pcOurPrice(sel) {
+    return pricingFor(sel.m, sel.v, sel.p, pc.mode, { optIns: [], ngc: false, bundleWearable: false, tradeIn: false });
+  }
+
+  function pcFillVariants() {
+    const mo = modelIndex[pcEl("model").value];
+    pcEl("variant").innerHTML = mo.variants.map(x => `<option>${escapeHtml(x.v)}</option>`).join("");
+  }
+
+  // Every plan the page knows, keyed "owner:index". Telco plans can carry an introductory price;
+  // JB Hi-Fi Mobile Upfront plans carry a gift card and a 24-month term; pre-paid is per 30 days.
+  function pcPlanList() {
+    const out = [];
+    PC_TELCOS.forEach(t => (COMPETITORS.plans[t[0]] || []).forEach((p, k) => out.push({
+      key: t[0] + ":" + k, owner: t[0], group: t[1],
+      label: p.n + " — " + fmt(p.p) + "/mth" + (p.promo ? ", " + fmt(p.promo.p) + " for " + p.promo.months + " mths" : ""),
+      plan: { kind: "monthly", p: p.p, promo: p.promo || null }
+    })));
+    const jb = COMPETITORS.jbplans || {};
+    (jb.upfront || []).forEach((p, k) => out.push({
+      key: "jb:" + k, owner: "jb", group: "JB Hi-Fi Mobile",
+      label: p.n + " — " + fmt(p.p) + "/mth" + (p.term > 1 ? ", " + p.term + " mths" : ", month to month") + (p.gift ? ", " + fmt(p.gift) + " gift card" : ""),
+      plan: { kind: "monthly", p: p.p, term: p.term, gift: p.gift || 0, ends: p.ends || null }
+    }));
+    if (jb.prepaid) out.push({
+      key: "jb:prepaid", owner: "jb", group: "JB Hi-Fi Mobile",
+      label: "Pre-paid — " + fmt(jb.prepaid.first) + " first, then " + fmt(jb.prepaid.p) + " per " + jb.prepaid.days + " days",
+      plan: { kind: "prepaid", p: jb.prepaid.p, first: jb.prepaid.first, days: jb.prepaid.days, ends: jb.prepaid.ends || null }
+    });
+    return out;
+  }
+  const pcPlanByKey = key => pcPlanList().find(x => x.key === key) || null;
+
+  // Plan fees for the months chosen. An introductory price counts for its months; pre-paid is
+  // recharged every 30 days, so 24 months is 25 recharges.
+  function pcPlanCost(plan, price, term) {
+    if (plan && plan.kind === "prepaid") {
+      const periods = Math.ceil(term * 365 / 12 / (plan.days || 30) - 1e-9);
+      const first = price === plan.p ? plan.first : price;
+      return first + price * Math.max(0, periods - 1);
+    }
+    if (plan && plan.promo && price === plan.p) {
+      const intro = Math.min(plan.promo.months, term);
+      return plan.promo.p * intro + plan.p * (term - intro);
+    }
+    return price * term;
+  }
+  // A JB gift card is paid back pro rata if the plan ends before its 24 instalments.
+  function pcGiftKept(plan, gift, term) {
+    if (!plan || !gift) return 0;
+    const len = plan.term || 24;
+    return gift * Math.min(term, len) / len;
+  }
+
+  function pcPlanSelect(owner, attr) {
+    const list = pcPlanList().filter(x => owner === "all" || x.owner === owner);
+    const groups = [];
+    list.forEach(x => { if (groups.indexOf(x.group) === -1) groups.push(x.group); });
+    const opts = owner === "all"
+      ? groups.map(g => `<optgroup label="${escapeHtml(g)}">` + list.filter(x => x.group === g)
+          .map(x => `<option value="${x.key}">${escapeHtml(x.label)}</option>`).join("") + `</optgroup>`).join("")
+      : list.map(x => `<option value="${x.key}">${escapeHtml(x.label)}</option>`).join("");
+    return `<select data-field="plan" ${attr}>${opts}<option value="">Other plan, type the price</option></select>`;
+  }
+
+  // Draw the rows for the chosen device. Inputs are drawn once per device so typing never loses focus;
+  // pcUpdate() then only rewrites the figures beside them.
+  function pcRender() {
+    const sel = pcSelection();
+    if (!sel) return;
+    const key = sel.m + "|" + sel.v;
+    const q = encodeURIComponent("Samsung " + sel.n + (sel.v === "Standard" ? "" : " " + sel.v));
+    pcEl("retail").innerHTML = PC_RETAILERS.map(r => {
+      const hit = (COMPETITORS.retail[r[0]] || {})[key];
+      const low = hit && hit[0] < sel.p * 0.6;
+      const link = hit ? `<a class="pc-link" href="${escapeHtml(hit[1])}" target="_blank" rel="noopener">View listing</a>`
+        : `<a class="pc-link" href="${r[2](q)}" target="_blank" rel="noopener">${r[0] === "hn" ? "Look it up" : "Search their site"}</a>`;
+      const note = low ? "Well under RRP — check the listing" : hit ? "" : r[0] === "hn" ? "Type in their price" : "Not found — type it in";
+      return `<div class="pc-tile"><div class="pc-tile-head"><span class="pc-name">${r[1]}</span>${link}</div>`
+        + `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-retail="${r[0]}" aria-label="${r[1]} price" value="${hit ? hit[0] : ""}" placeholder="—" /></span>`
+        + `<div class="pc-tile-foot"><span class="pc-pill" data-retail-diff="${r[0]}"></span><span class="pc-note${low ? " warn" : ""}">${note}</span></div>`
+        // Wording taken from a summary of their policy; their own page could not be read by the tool that wrote this.
+        + (r[0] === "hn" ? `<p class="pc-policy">They match genuine advertised prices from leading Australian retailers, on request through Live Chat with proof. <a href="https://www.harveynorman.com.au/price-match-guarantee" target="_blank" rel="noopener">Read the policy</a></p>` : "")
+        + `</div>`;
+    }).join("");
+    const when = ["jb", "tgg", "ow"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];
+    pcEl("retail-when").textContent = "Buying outright · lowest colour, as listed online" + (when ? " · captured " + pcWhen(when) : "");
+
+    const money = (field, label, value) => `<span class="pc-money"><span aria-hidden="true">$</span><input type="number" min="0" step="1" inputmode="decimal" data-field="${field}" aria-label="${label}" value="${value == null ? "" : value}" placeholder="—" /></span>`;
+    const plans = pcPlanList();
+    const first = owner => plans.find(x => x.owner === owner);
+
+    // Buying here: our price, and a SIM plan picked from any of the plans the page knows.
+    const herePlan = plans[0];
+    let html = `<div class="pc-orow is-here" data-row="here">`
+      + `<span><span class="pc-name">Buying here</span><span class="pc-note">Outright today, with the SIM plan the customer chooses</span></span>`
+      + `<span class="pc-cell" data-col="Phone"><span class="pc-figure" data-ours></span></span>`
+      + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect("all", 'aria-label="Plan when buying here"')}`
+      + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="Plan price per month when buying here" value="${herePlan ? herePlan.plan.p : ""}" placeholder="$" /></span></span>`
+      + `<span class="pc-cell" data-col="Discounts"><span class="pc-figure" data-disc></span><span class="pc-note" data-disc-note></span></span>`
+      + `<span class="pc-total pc-right" data-sums></span></div>`;
+
+    // Telcos: the phone on a plan. Full price and the credit off it over the contract.
+    html += PC_TELCOS.map(t => {
+      const dev = (COMPETITORS.telco[t[0]] || {})[sel.m];
+      const isBase = sel.v === sel.base;
+      const full = dev ? (dev[3] || dev[0]) : null;
+      const credit = dev && dev[3] && dev[3] > dev[0] ? Math.round((dev[3] - dev[0]) * 100) / 100 : 0;
+      const p0 = first(t[0]);
+      const note = !dev ? "Not on their Samsung page — enter the phone price"
+        : !isBase ? `They list ${escapeHtml(sel.base)} at ${fmt(full)} — enter the ${escapeHtml(sel.v)} price`
+        : `Phone over ${dev[1]} mths: ${fmt(dev[2])}/mth` + (credit ? ` after a ${fmt(credit / dev[1])}/mth credit` : "");
+      return `<div class="pc-orow" data-row="${t[0]}" data-months="${dev ? dev[1] : 36}">`
+        + `<span><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a><span class="pc-note">${note}</span></span>`
+        + `<span class="pc-cell" data-col="Phone, full price">` + money("device", t[1] + " phone, full price", dev && isBase ? full : null) + `</span>`
+        + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect(t[0], 'aria-label="' + t[1] + ' plan"')}`
+        + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${t[1]} plan price per month" value="${p0 ? p0.plan.p : ""}" placeholder="$" /></span></span>`
+        + `<span class="pc-cell" data-col="Credit over the contract">${money("credit", t[1] + " stay-connected credit over the whole contract", dev && isBase ? credit : null)}<span class="pc-note" data-disc-note></span></span>`
+        + `<span class="pc-total pc-right" data-sums></span></div>`;
+    }).join("");
+
+    // JB Hi-Fi: outright from JB, with a JB Hi-Fi Mobile plan (Telstra network) and its gift card.
+    const jbHit = (COMPETITORS.retail.jb || {})[key];
+    const jbDefault = plans.find(x => x.owner === "jb" && x.plan.gift) || first("jb");
+    html += `<div class="pc-orow" data-row="jb">`
+      + `<span><span class="pc-name">JB Hi-Fi</span> <a class="pc-link" href="${PC_JB_PLANS_URL}" target="_blank" rel="noopener">Their plans</a>`
+      + `<span class="pc-note">Outright from JB, on a JB Hi-Fi Mobile plan (Telstra network). Gift card for new or ported numbers.</span></span>`
+      + `<span class="pc-cell" data-col="Phone">` + money("device", "JB Hi-Fi phone price", jbHit ? jbHit[0] : null) + `</span>`
+      + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect("jb", 'aria-label="JB Hi-Fi Mobile plan"')}`
+      + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="JB Hi-Fi Mobile plan price" value="${jbDefault ? jbDefault.plan.p : ""}" placeholder="$" /></span></span>`
+      + `<span class="pc-cell" data-col="Gift card">${money("credit", "JB Hi-Fi gift card", jbDefault ? jbDefault.plan.gift || 0 : null)}<span class="pc-note" data-disc-note></span></span>`
+      + `<span class="pc-total pc-right" data-sums></span></div>`;
+    pcEl("own").innerHTML = html;
+    const jbSel = pcEl("own").querySelector('[data-row="jb"] [data-field="plan"]');
+    if (jbSel && jbDefault) jbSel.value = jbDefault.key;
+
+    // Other money-off lines on their sites, for the consultant to ask about. Not in any total.
+    const names = { telstra: "Telstra", optus: "Optus", vodafone: "Vodafone" };
+    const offers = Object.keys(names).filter(k => (COMPETITORS.offers || {})[k] && COMPETITORS.offers[k].length);
+    pcEl("offers").hidden = !offers.length;
+    pcEl("offers-body").innerHTML = offers.map(k => `<div class="pc-offer-group"><span class="pc-name">${names[k]}</span><ul>`
+      + COMPETITORS.offers[k].map(x => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`).join("");
+
+    const when2 = ["telstra", "optus", "vodafone", "jbplans"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];
+    pcEl("own-src").innerHTML = "<strong>How cost to own is worked out:</strong> the phone, paid off by the end of the months chosen, plus the plan for those months, "
+      + "less the discounts earned in that time. Telcos spread the phone over 24 to 48 months and take a stay-connected credit off each month; leaving sooner means "
+      + "paying off what is left and losing the rest of the credit, so only the credit for the months chosen is counted. A JB Hi-Fi Mobile gift card is paid back "
+      + "pro rata if the plan ends before 24 months. Introductory plan prices count for the months they apply, and pre-paid is charged every 30 days. "
+      + "&#8220;Same plan&#8221; compares our phone with the same plan, which a customer can take SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
+      + "Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".";
+    pcEl("src").innerHTML = "Retailer in-store prices and price matches can differ from what is listed online.";
+    pcUpdate();
+  }
+
+  function pcTerm() { return Number(pcEl("term").querySelector('[aria-pressed="true"]').dataset.term); }
+
+  function pcUpdate() {
+    const sel = pcSelection();
+    if (!sel) return;
+    const res = pcOurPrice(sel);
+    const ours = res.subtotal;
+    const names = res.lines.map(l => l.name);
+    pcEl("ours").innerHTML = `<span class="pc-ours-label">Our price today</span><span class="pc-ours-amount">${fmt(ours)}</span>${gstNote(ours)}`
+      + (names.length ? `<span class="pc-ours-sub">${escapeHtml(names.join(" · "))} · RRP ${fmt(sel.p)}</span>` : `<span class="pc-ours-sub plain">RRP, no offer running</span>`);
+
+    const pill = (out, diff, here) => {
+      out.className = "pc-pill" + (diff > 0 ? " win" : diff < 0 ? " lose" : "");
+      out.textContent = diff > 0 ? fmt(diff) + " cheaper here" : diff < 0 ? fmt(-diff) + " cheaper " + here : "Same price";
+    };
+    PC_RETAILERS.forEach(r => {
+      const theirs = pcNum(pcEl("retail").querySelector(`[data-retail="${r[0]}"]`));
+      const out = pcEl("retail").querySelector(`[data-retail-diff="${r[0]}"]`);
+      if (theirs === null) { out.textContent = ""; out.className = "pc-pill"; return; }
+      pill(out, Math.round((theirs - ours) * 100) / 100, "there");
+    });
+    pcMatchRender(sel, ours);
+
+    const term = pcTerm();
+    const own = pcEl("own");
+    const totals = [];
+    const planOf = row => {
+      const v = row.querySelector('[data-field="plan"]').value;
+      return v ? (pcPlanByKey(v) || {}).plan || null : null;
+    };
+
+    // Buying here
+    const here = own.querySelector('[data-row="here"]');
+    if (here) {
+      const plan = planOf(here);
+      const price = pcNum(here.querySelector('[data-field="price"]'));
+      here.querySelector("[data-ours]").textContent = fmt(ours);
+      const gift = plan && plan.gift ? pcGiftKept(plan, plan.gift, term) : 0;
+      here.querySelector("[data-disc]").textContent = gift ? "−" + fmt(gift) : names.length ? "In price" : "—";
+      here.querySelector("[data-disc-note]").textContent = gift ? "JB gift card with the plan" + (term < (plan.term || 24) ? ", the share for " + term + " mths" : "")
+        : names.length ? names.join(" · ") : "";
+      const sums = here.querySelector("[data-sums]");
+      if (price === null) sums.innerHTML = `<span class="pc-total-note">Enter the plan price</span>`;
+      else {
+        const planCost = pcPlanCost(plan, price, term);
+        const total = ours + planCost - gift;
+        totals.push([here, total]);
+        sums.innerHTML = `${fmt(total)}<span class="pc-total-note">${fmt(ours)} phone + ${fmt(planCost)} plan${gift ? " − " + fmt(gift) + " gift card" : ""}</span>`;
+      }
+    }
+
+    // Telcos and JB Hi-Fi
+    own.querySelectorAll('.pc-orow:not([data-row="here"])').forEach(row => {
+      const id = row.dataset.row;
+      const isJb = id === "jb";
+      const plan = planOf(row);
+      const device = pcNum(row.querySelector('[data-field="device"]'));
+      const price = pcNum(row.querySelector('[data-field="price"]'));
+      const credit = pcNum(row.querySelector('[data-field="credit"]')) || 0;
+      const sums = row.querySelector("[data-sums]");
+      const discNote = row.querySelector("[data-disc-note]");
+      if (device === null || price === null) {
+        sums.innerHTML = `<span class="pc-total-note">Enter the phone${price === null ? " and plan" : ""} price</span>`;
+        discNote.textContent = "";
+        return;
+      }
+      const planCost = pcPlanCost(plan, price, term);
+      let phoneCost, earned, note;
+      if (isJb) {
+        earned = plan && plan.kind !== "prepaid" ? pcGiftKept(plan, credit, term) : 0;
+        phoneCost = device;
+        discNote.textContent = !credit ? "No gift card on this plan"
+          : earned < credit ? `Gift card; ${fmt(credit - earned)} paid back if the plan ends at ${term} mths` : "JB gift card, kept for the full plan";
+        note = `${fmt(device)} phone + ${fmt(planCost)} plan${earned ? " − " + fmt(earned) + " gift card" : ""}`;
+      } else {
+        const months = Number(row.dataset.months) || 36;
+        earned = credit * Math.min(term, months) / months;
+        phoneCost = device;
+        const owing = term < months ? device * (1 - term / months) : 0;
+        discNote.textContent = !credit ? "No credit on this phone"
+          : earned < credit ? `Credit for ${term} of ${months} mths; the rest is lost if they leave` : "Credit for the whole contract";
+        note = `${fmt(device)} phone${earned ? " − " + fmt(earned) + " credit" : ""} + ${fmt(planCost)} plan</span>`
+          + (owing ? `<span class="pc-total-note">${fmt(owing)} of it still owing on the phone at ${term} mths` : "");
+      }
+      const total = phoneCost - earned + planCost;
+      totals.push([row, total]);
+      // Same plan: our phone with this plan SIM-only (and JB's gift card, which a bring-your-own phone gets too).
+      const sameHere = ours + planCost - (isJb ? earned : 0);
+      const diff = Math.round((total - sameHere) * 100) / 100;
+      sums.innerHTML = `${fmt(total)}<span class="pc-total-note">${note}</span><span class="pc-pill"></span>`;
+      const out = sums.querySelector(".pc-pill");
+      out.className = "pc-pill" + (diff > 0 ? " win" : diff < 0 ? " lose" : "");
+      out.textContent = diff > 0 ? fmt(diff) + " cheaper buying here on the same plan"
+        : diff < 0 ? fmt(-diff) + " cheaper with " + row.querySelector(".pc-name").textContent : "Same as buying here on this plan";
+    });
+
+    // The cheapest way to own it, of the rows filled in.
+    own.querySelectorAll(".pc-best").forEach(x => x.remove());
+    if (totals.length > 1) {
+      const best = totals.reduce((a, b) => b[1] < a[1] - 0.005 ? b : a);
+      const name = best[0].querySelector(".pc-name");
+      if (name) name.insertAdjacentHTML("afterend", '<span class="pc-best">Cheapest</span>');
+    }
+  }
+
+  let pcBuilt = false;
+  function pcBuild() {
+    if (!pcBuilt) {
+      pcBuilt = true;
+      const groups = {};
+      models.forEach(mo => { (groups[mo.cat] = groups[mo.cat] || []).push(mo); });
+      pcEl("model").innerHTML = CAT_ORDER.filter(g => groups[g]).map(g => `<optgroup label="${escapeHtml(g)}">`
+        + groups[g].map(mo => `<option value="${mo.m}">${escapeHtml(mo.n)}</option>`).join("") + `</optgroup>`).join("");
+      pcEl("model").addEventListener("change", () => { pcFillVariants(); pcRender(); });
+      pcEl("variant").addEventListener("change", pcRender);
+      pcEl("modes").addEventListener("click", e => {
+        const b = e.target.closest("button[data-mode]");
+        if (!b) return;
+        pc.mode = b.dataset.mode;
+        pcEl("modes").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+        pcUpdate();
+      });
+      pcEl("term").addEventListener("click", e => {
+        const b = e.target.closest("button[data-term]");
+        if (!b) return;
+        pcEl("term").querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+        pcUpdate();
+      });
+      pcEl("retail").addEventListener("input", pcUpdate);
+      pcEl("own").addEventListener("input", pcUpdate);
+      pcEl("own").addEventListener("change", e => {
+        if (e.target.dataset.field !== "plan") return;
+        const row = e.target.closest(".pc-orow");
+        const hit = pcPlanByKey(e.target.value);
+        if (hit) {
+          row.querySelector('[data-field="price"]').value = hit.plan.p;
+          // On the JB row the discount box is the plan's gift card.
+          const gift = row.dataset.row === "jb" ? row.querySelector('[data-field="credit"]') : null;
+          if (gift) gift.value = hit.plan.gift || 0;
+        }
+        pcUpdate();
+      });
+      pcFillVariants();
+    }
+    // Open on the device being quoted, each time that device changes on the Deal Qualifier.
+    const buy = deviceSelect.value + "|" + variantSelect.value;
+    if (pc.buy !== buy && modelIndex[deviceSelect.value]) {
+      pc.buy = buy;
+      pcEl("model").value = deviceSelect.value;
+      pcFillVariants();
+      pcEl("variant").value = variantSelect.value;
+    }
+    pcRender();
+  }
+  // ---- Price match request ----
+  // The lowest retailer price under ours, summed up for a manager. It reads the tiles as they stand,
+  // so a price typed in (Harvey Norman, or an in-store price) counts the same as a collected one.
+  function pcMatchRender(sel, ours) {
+    const box = pcEl("match");
+    if (!box) return;
+    let best = null;
+    PC_RETAILERS.forEach(r => {
+      const theirs = pcNum(pcEl("retail").querySelector(`[data-retail="${r[0]}"]`));
+      if (theirs !== null && theirs > 0 && theirs < ours && (!best || theirs < best.price)) best = { id: r[0], name: r[1], price: theirs };
+    });
+    if (!best) { box.hidden = true; box.innerHTML = ""; return; }
+    const hit = (COMPETITORS.retail[best.id] || {})[sel.m + "|" + sel.v];
+    const url = hit && Number(hit[0]) === best.price ? hit[1] : "";   // the listing only backs the figure it was collected with
+    const gap = Math.round((ours - best.price) * 100) / 100;
+    const device = "Samsung " + sel.n + (sel.v === "Standard" ? "" : " " + sel.v);
+    const mode = pc.mode === "edu" ? " (Education price)" : pc.mode === "smb" ? " (SMB price)" : "";
+    const today = new Date().toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" });
+    const text = ["Price match request \u2014 " + today, device,
+      best.name + ": " + fmt(best.price) + (url ? " \u2014 " + url : " (price typed in, screenshot attached)"),
+      "Our price: " + fmt(ours) + mode,
+      "A match takes " + fmt(gap) + " off"].join("\n");
+    box.hidden = false;
+    box.innerHTML = `<div class="pc-match-head"><p class="card-title">Price Match Request</p>`
+      + `<button type="button" class="clear-btn" data-match-copy>Copy request</button></div>`
+      + `<p class="pc-match-line"><strong>${escapeHtml(best.name)}</strong> has it for <strong>${fmt(best.price)}</strong>, `
+      + `<strong>${fmt(gap)}</strong> under our ${fmt(ours)}${escapeHtml(mode)}.`
+      + (url ? ` <a class="pc-link" href="${escapeHtml(url)}" target="_blank" rel="noopener">Their listing</a>` : "") + `</p>`
+      + `<p class="pc-match-sub">Before you ask your manager:</p><ul class="pc-match-list">`
+      + `<li>Screenshot the listing with the price, and today\u2019s date if it shows.</li>`
+      + `<li>Same model, storage and colour, and in stock with them.</li>`
+      + `<li>Not a clearance, bundle, member-only or marketplace price.</li></ul>`
+      + `<span class="pc-match-status" data-match-status role="status"></span>`;
+    box.querySelector("[data-match-copy]").onclick = () => {
+      const status = box.querySelector("[data-match-status]");
+      copyPlain(text).then(ok => {
+        status.textContent = ok ? "Copied \u2014 paste it into a message to your manager." : "Copying was blocked here. Select the text above and copy it by hand.";
+      });
+    };
+  }
+
+  // Copy text from a tap. The old copy command runs inside the tap, which the artifact's frame
+  // allows; the Clipboard API is the fallback.
+  function copyPlain(text) {
+    const ta = document.createElement("textarea");
+    ta.value = text; ta.setAttribute("readonly", "");
+    ta.style.cssText = "position:fixed;top:0;left:0;opacity:0;pointer-events:none;";
+    document.body.appendChild(ta); ta.select();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+    document.body.removeChild(ta);
+    if (ok || !navigator.clipboard) return Promise.resolve(ok);
+    return navigator.clipboard.writeText(text).then(() => true, () => false);
+  }
+
+  // ---- end Price check ----
 
   // ---- tabs ----
   (function () {
