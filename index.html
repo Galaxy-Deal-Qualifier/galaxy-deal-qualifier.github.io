@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v14.6
+  Galaxy Deals v14.7
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=09e9732bcd" />
+<link rel="stylesheet" href="styles.css?v=7b6e2f5c6e" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,7 +713,7 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="7" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="8" hidden>
   <h2>Cost of Ownership</h2>
   <p class="sk-intro">What the customer pays to own this phone and stay connected for 12 or 24 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
   <div class="card pc-device">
@@ -6364,6 +6364,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "14.7", d: "16 Oct 2026", t: "Cost of Ownership: our price against theirs",
+      items: [
+        "<strong>Buying here is back in the comparison.</strong> It's the device price alone, so it sits in the Cheapest tag alongside each telco's phone-and-plan total.",
+        "<strong>Each telco and JB Hi-Fi row says what buying here saves,</strong> over the 12 or 24 months chosen. Under it, a smaller line gives the like-for-like figure: our phone with that same plan taken SIM-only."
+      ] },
     { type: "app", v: "14.6", d: "16 Oct 2026", t: "Cost of Ownership: no plan when buying here",
       items: [
         "<strong>Buying here is now the device price only.</strong> We don't sell plans, so the Buying here row no longer adds one. It shows our price today, with any offer or Education/SMB pricing.",
@@ -8808,6 +8813,7 @@
 
 
 
+
   // ---- Price check ----
   // The Cost of Ownership page. Competitor figures are collected twice a day by
   // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
@@ -8999,7 +9005,7 @@
       + "paying off what is left and losing the rest of the credit, so only the credit for the months chosen is counted. A JB Hi-Fi Mobile gift card is paid back "
       + "pro rata if the plan ends before 24 months. Introductory plan prices count for the months they apply, and pre-paid is charged every 30 days. "
       + "Buying here is the device price alone, as we don&#8217;t sell plans; paying with Latitude adds its monthly card fee for the months chosen, and Afterpay has no fees if paid on time. "
-      + "&#8220;Same plan&#8221; compares our phone with the same plan, which a customer can take SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
+      + "Each telco and JB row shows what buying here saves against their total. Under it, the like-for-like line is our phone with the same plan taken SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
       + "Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".";
     pcEl("src").innerHTML = "Retailer in-store prices and price matches can differ from what is listed online.";
     pcUpdate();
@@ -9036,7 +9042,9 @@
       return v ? (pcPlanByKey(v) || {}).plan || null : null;
     };
 
-    // Buying here
+    // Buying here: the device price, plus Latitude's card fee if they finance it. This is what the
+    // page is for: our outright price against what each telco and JB Hi-Fi cost in total.
+    let hereTotal = null;
     const here = own.querySelector('[data-row="here"]');
     if (here) {
       const pay = PC_PAY.find(x => x[0] === here.querySelector('[data-field="pay"]').value) || PC_PAY[0];
@@ -9044,6 +9052,8 @@
       feeIn.hidden = !pay[0] || pay[0] === "afterpay";
       const fee = feeIn.hidden ? 0 : pcNum(feeIn) || 0;
       const feeCost = Math.round(fee * term * 100) / 100;
+      hereTotal = Math.round((ours + feeCost) * 100) / 100;
+      totals.push([here, hereTotal]);
       here.querySelector("[data-ours]").textContent = fmt(ours);
       here.querySelector("[data-disc]").textContent = names.length ? "In price" : "—";
       here.querySelector("[data-disc-note]").textContent = names.length ? names.join(" · ") : "";
@@ -9087,18 +9097,21 @@
       }
       const total = phoneCost - earned + planCost;
       totals.push([row, total]);
-      // Same plan: our phone with this plan SIM-only (and JB's gift card, which a bring-your-own phone gets too).
+      // The headline: our price against their total. Below it, like for like: our phone with this
+      // same plan SIM-only (and JB's gift card, which a bring-your-own phone gets too).
+      const who = row.querySelector(".pc-name").textContent;
+      const diff = hereTotal === null ? 0 : Math.round((total - hereTotal) * 100) / 100;
       const sameHere = ours + planCost - (isJb ? earned : 0);
-      const diff = Math.round((total - sameHere) * 100) / 100;
-      sums.innerHTML = `${fmt(total)}<span class="pc-total-note">${note}</span><span class="pc-pill"></span>`;
+      const same = Math.round((total - sameHere) * 100) / 100;
+      sums.innerHTML = `${fmt(total)}<span class="pc-total-note">${note}</span><span class="pc-pill"></span>`
+        + (same ? `<span class="pc-total-note">On the same plan, with our phone SIM-only: ${fmt(Math.abs(same))} cheaper ${same > 0 ? "here" : "with " + escapeHtml(who)}</span>` : "");
       const out = sums.querySelector(".pc-pill");
       out.className = "pc-pill" + (diff > 0 ? " win" : diff < 0 ? " lose" : "");
-      out.textContent = diff > 0 ? fmt(diff) + " cheaper buying here on the same plan"
-        : diff < 0 ? fmt(-diff) + " cheaper with " + row.querySelector(".pc-name").textContent : "Same as buying here on this plan";
+      out.textContent = hereTotal === null ? "" : diff > 0 ? "Buying here saves " + fmt(diff) + " over " + term + " months"
+        : diff < 0 ? who + " is " + fmt(-diff) + " cheaper over " + term + " months" : "Same cost as buying here";
     });
 
-    // The cheapest of the plan rows filled in. Buying here has no plan, so it isn't in this;
-    // the same-plan tag on each row compares it like with like.
+    // The cheapest way to own it, of the rows filled in.
     own.querySelectorAll(".pc-best").forEach(x => x.remove());
     if (totals.length > 1) {
       const best = totals.reduce((a, b) => b[1] < a[1] - 0.005 ? b : a);
