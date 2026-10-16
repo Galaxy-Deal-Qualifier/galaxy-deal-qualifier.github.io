@@ -1927,6 +1927,8 @@ body.print-view .deal-stage-heading { display: none; }
 
   
 
+  
+
   /* ---- Price check ---- */
   .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; }
   .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }
@@ -1967,7 +1969,7 @@ body.print-view .deal-stage-heading { display: none; }
   .pc-policy a:hover { color: var(--accent); }
   /* cost to own: one row each */
   .pc-own { padding-top: 6px; padding-bottom: 6px; }
-  .pc-ohead, .pc-orow { display: grid; grid-template-columns: minmax(160px, 1.4fr) 128px 260px 128px minmax(190px, 1fr); gap: 6px 16px; align-items: center; }
+  .pc-ohead, .pc-orow { display: grid; grid-template-columns: minmax(150px, 1.2fr) 120px minmax(200px, 250px) 120px minmax(240px, 1.1fr); gap: 6px 16px; align-items: center; }
   .pc-ohead { padding: 10px 0 8px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink-faint); }
   .pc-orow { padding: 14px 0; border-bottom: 1px solid var(--line); }
   .pc-orow:last-child { border-bottom: 0; }
@@ -1979,7 +1981,7 @@ body.print-view .deal-stage-heading { display: none; }
   .pc-cell > .pc-money { display: flex; }
   .pc-figure { display: block; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
   .pc-total { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .pc-total .pc-pill { margin-top: 4px; }
+  .pc-total .pc-pill { margin-top: 6px; max-width: 100%; white-space: normal; text-align: right; line-height: 1.35; border-radius: 12px; padding: 4px 10px; }
   .pc-total-note { display: block; font-size: 12px; font-weight: 400; color: var(--ink-faint); white-space: normal; line-height: 1.4; }
   .pc-best { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; vertical-align: 2px;
     background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-line); }

@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v14.7
+  Galaxy Deals v14.8
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=7b6e2f5c6e" />
+<link rel="stylesheet" href="styles.css?v=cb066ef4e0" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,7 +713,7 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="8" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="9" hidden>
   <h2>Cost of Ownership</h2>
   <p class="sk-intro">What the customer pays to own this phone and stay connected for 12 or 24 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
   <div class="card pc-device">
@@ -6364,6 +6364,10 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "14.8", d: "16 Oct 2026", t: "Cost of Ownership: text fits its box",
+      items: [
+        "The &#8220;Buying here saves&#8221; tag on each row no longer runs past the edge of the card. It wraps inside the column, and the Cost to own column is a little wider."
+      ] },
     { type: "app", v: "14.7", d: "16 Oct 2026", t: "Cost of Ownership: our price against theirs",
       items: [
         "<strong>Buying here is back in the comparison.</strong> It's the device price alone, so it sits in the Cheapest tag alongside each telco's phone-and-plan total.",
@@ -8809,6 +8813,7 @@
   new ResizeObserver(syncMobileControls).observe(document.getElementById("quote-bar"));
   document.querySelectorAll("nav, .tabs").forEach(nav => new ResizeObserver(syncMobileControls).observe(nav));
   syncMobileControls();
+
 
 
 
