@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v14.8
+  Galaxy Deals v14.9
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=cb066ef4e0" />
+<link rel="stylesheet" href="styles.css?v=505aec9f53" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,9 +713,9 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="9" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="11" hidden>
   <h2>Cost of Ownership</h2>
-  <p class="sk-intro">What the customer pays to own this phone and stay connected for 12 or 24 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
+  <p class="sk-intro">What the customer pays to own this phone and stay connected for 12, 24 or 36 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
   <div class="card pc-device">
     <div class="pc-pickers">
       <div>
@@ -745,6 +745,7 @@
       <div class="segmented" id="pc-term" role="group" aria-label="Months">
         <button type="button" data-term="12" aria-pressed="false">12 months</button>
         <button type="button" data-term="24" aria-pressed="true">24 months</button>
+        <button type="button" data-term="36" aria-pressed="false">36 months</button>
       </div>
     </div>
   </div>
@@ -6364,6 +6365,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "14.9", d: "16 Oct 2026", t: "Cost of Ownership: 36 months and repayment terms",
+      items: [
+        "<strong>36 months is now an option,</strong> next to 12 and 24.",
+        "<strong>Each telco row has a repayment term:</strong> 12, 24 or 36 months (and 48 where Vodafone lists it). It starts on the term their page lists, which is the one their stay-connected credit is for. Pick another term and the credit clears, ready to type theirs in if they offer one for that term.",
+        "The monthly phone price beside each telco now matches the term picked. When the repayments run longer than the months chosen, the full phone price still counts and the row says how much would still be owing."
+      ] },
     { type: "app", v: "14.8", d: "16 Oct 2026", t: "Cost of Ownership: text fits its box",
       items: [
         "The &#8220;Buying here saves&#8221; tag on each row no longer runs past the edge of the card. It wraps inside the column, and the Cost to own column is a little wider."
@@ -8819,6 +8826,8 @@
 
 
 
+
+
   // ---- Price check ----
   // The Cost of Ownership page. Competitor figures are collected twice a day by
   // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
@@ -8971,11 +8980,16 @@
       const credit = dev && dev[3] && dev[3] > dev[0] ? Math.round((dev[3] - dev[0]) * 100) / 100 : 0;
       const p0 = first(t[0]);
       const note = !dev ? "Not on their Samsung page — enter the phone price"
-        : !isBase ? `They list ${escapeHtml(sel.base)} at ${fmt(full)} — enter the ${escapeHtml(sel.v)} price`
-        : `Phone over ${dev[1]} mths: ${fmt(dev[2])}/mth` + (credit ? ` after a ${fmt(credit / dev[1])}/mth credit` : "");
-      return `<div class="pc-orow" data-row="${t[0]}" data-months="${dev ? dev[1] : 36}">`
-        + `<span><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a><span class="pc-note">${note}</span></span>`
-        + `<span class="pc-cell" data-col="Phone, full price">` + money("device", t[1] + " phone, full price", dev && isBase ? full : null) + `</span>`
+        : !isBase ? `They list ${escapeHtml(sel.base)} at ${fmt(full)} — enter the ${escapeHtml(sel.v)} price` : "";
+      // Repayment terms: 12, 24 and 36 months, plus the listed one if it's longer (Vodafone's 48).
+      // The listed term is where their advertised credit applies, so the row starts there.
+      const listed = dev ? dev[1] : 36;
+      const terms = [12, 24, 36].concat([12, 24, 36].indexOf(listed) === -1 ? [listed] : []);
+      const rterm = `<select class="pc-rterm" data-field="rterm" aria-label="${t[1]} repayment term" title="Repayment term">`
+        + terms.map(n => `<option value="${n}"${n === listed ? " selected" : ""}>${n} mths</option>`).join("") + `</select>`;
+      return `<div class="pc-orow" data-row="${t[0]}" data-listed="${listed}" data-listed-credit="${dev && isBase ? credit : 0}">`
+        + `<span><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a><span class="pc-note" data-rnote data-static="${escapeHtml(note)}">${note}</span></span>`
+        + `<span class="pc-cell" data-col="Phone, full price">` + money("device", t[1] + " phone, full price", dev && isBase ? full : null) + rterm + `</span>`
         + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect(t[0], 'aria-label="' + t[1] + ' plan"')}`
         + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${t[1]} plan price per month" value="${p0 ? p0.plan.p : ""}" placeholder="$" /></span></span>`
         + `<span class="pc-cell" data-col="Credit over the contract">${money("credit", t[1] + " stay-connected credit over the whole contract", dev && isBase ? credit : null)}<span class="pc-note" data-disc-note></span></span>`
@@ -9006,8 +9020,9 @@
 
     const when2 = ["telstra", "optus", "vodafone", "jbplans"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];
     pcEl("own-src").innerHTML = "<strong>How cost to own is worked out:</strong> the phone, paid off by the end of the months chosen, plus the plan for those months, "
-      + "less the discounts earned in that time. Telcos spread the phone over 24 to 48 months and take a stay-connected credit off each month; leaving sooner means "
-      + "paying off what is left and losing the rest of the credit, so only the credit for the months chosen is counted. A JB Hi-Fi Mobile gift card is paid back "
+      + "less the discounts earned in that time. Telcos let the phone be repaid over 12, 24 or 36 months (Vodafone lists some over 48). The stay-connected credit on their page is for the term "
+      + "listed there, so each row starts on that term; pick another and type in their credit for it, if any. When the repayments run past the months chosen, "
+      + "the phone's full price still counts (the rest is owing) and only the credit for the months chosen is earned. A JB Hi-Fi Mobile gift card is paid back "
       + "pro rata if the plan ends before 24 months. Introductory plan prices count for the months they apply, and pre-paid is charged every 30 days. "
       + "Buying here is the device price alone, as we don&#8217;t sell plans; paying with Latitude adds its monthly card fee for the months chosen, and Afterpay has no fees if paid on time. "
       + "Each telco and JB row shows what buying here saves against their total. Under it, the like-for-like line is our phone with the same plan taken SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
@@ -9077,6 +9092,8 @@
       const credit = pcNum(row.querySelector('[data-field="credit"]')) || 0;
       const sums = row.querySelector("[data-sums]");
       const discNote = row.querySelector("[data-disc-note]");
+      const rn = row.querySelector("[data-rnote]");
+      if (rn && device === null) rn.textContent = rn.dataset.static;
       if (device === null || price === null) {
         sums.innerHTML = `<span class="pc-total-note">Enter the phone${price === null ? " and plan" : ""} price</span>`;
         discNote.textContent = "";
@@ -9091,12 +9108,16 @@
           : earned < credit ? `Gift card; ${fmt(credit - earned)} paid back if the plan ends at ${term} mths` : "JB gift card, kept for the full plan";
         note = `${fmt(device)} phone + ${fmt(planCost)} plan${earned ? " − " + fmt(earned) + " gift card" : ""}`;
       } else {
-        const months = Number(row.dataset.months) || 36;
+        const months = Number(row.querySelector('[data-field="rterm"]').value) || 36;
+        const listed = Number(row.dataset.listed) || 36;
         earned = credit * Math.min(term, months) / months;
         phoneCost = device;
         const owing = term < months ? device * (1 - term / months) : 0;
-        discNote.textContent = !credit ? "No credit on this phone"
-          : earned < credit ? `Credit for ${term} of ${months} mths; the rest is lost if they leave` : "Credit for the whole contract";
+        const rnote = row.querySelector("[data-rnote]");
+        rnote.textContent = `Phone ${fmt((device - credit) / months)}/mth over ${months} mths` + (months === listed ? " (their listed deal)" : "")
+          + (credit ? `, after a ${fmt(credit / months)}/mth credit` : "");
+        discNote.textContent = !credit ? (months !== listed && Number(row.dataset.listedCredit) ? `Their credit is for ${listed}-mth repayments; type theirs for ${months} if they offer one` : "No credit on this phone")
+          : earned < credit ? `Credit for ${term} of ${months} mths; the rest is lost if they leave` : "Credit for the whole repayment term";
         note = `${fmt(device)} phone${earned ? " − " + fmt(earned) + " credit" : ""} + ${fmt(planCost)} plan</span>`
           + (owing ? `<span class="pc-total-note">${fmt(owing)} of it still owing on the phone at ${term} mths` : "");
       }
@@ -9159,6 +9180,13 @@
           else fee.value = "";
           pcUpdate();
           if (!fee.hidden && pay && pay[2] === null) fee.focus();
+          return;
+        }
+        if (e.target.dataset.field === "rterm") {
+          // Their advertised credit belongs to the listed term; any other term starts with none.
+          const row = e.target.closest(".pc-orow");
+          row.querySelector('[data-field="credit"]').value = Number(e.target.value) === Number(row.dataset.listed) ? row.dataset.listedCredit : 0;
+          pcUpdate();
           return;
         }
         if (e.target.dataset.field !== "plan") return;
