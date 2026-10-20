@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v15.1
+  Galaxy Deals v15.2
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -5283,7 +5283,7 @@
     { fam: "fold", re: /fold\s*8\s*ultra/, m: ["m4"] },
     { fam: "fold", re: /fold\s*8/, m: ["m5"] },
     { fam: "flip", re: /flip\s*8/, m: ["m6"] },
-    { fam: "tabs11", re: /tab\s*s11\s*ultra/, m: ["m10"] },
+    { fam: "tabs11", re: /tab\s*s11\s*u(?:ltra)?\b/, m: ["m10", "m35"] },
     { fam: "tabs11", re: /tab\s*s11/, m: ["m11"] },
     { fam: "tabs12", re: /tab\s*s12\s*ultra/, m: ["m35"] },
     { fam: "tabs12", re: /tab\s*s12\s*(\+|plus)/, m: ["m36"] },
@@ -6365,6 +6365,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "15.2", d: "20 Oct 2026", t: "S11 Ultra accessories fit the Tab S12 Ultra",
+      items: [
+        "<strong>Tab S11 Ultra accessories now show up for the Tab S12 Ultra,</strong> since they fit it and the S12 Ultra has none of its own in the price list yet. With an Education S12 Ultra on the quote they get the 40% S12 accessory offer (A260006535) like the S12+ accessories do.",
+        "The S11 Ultra book cover keyboard slim and anti-reflective protector were being read as plain S11 accessories. They are now matched to the S11 Ultra."
+      ] },
     { type: "app", v: "15.1", d: "20 Oct 2026", t: "Tab S12 accessory 40% now applies",
       items: [
         "<strong>The 40% Tab S12+ / S12 Ultra accessory offer (A260006535) now applies by itself.</strong> It was only matching cases and power products, but the S12 accessories are book covers, keyboards, screen protectors and S Pens, so it never came off. It now takes 40% off any accessory that fits the S12+ or S12 Ultra once an Education S12 is on the quote.",
