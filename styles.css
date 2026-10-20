@@ -1935,6 +1935,12 @@ body.print-view .deal-stage-heading { display: none; }
 
   
 
+  
+
+  
+
+  
+
   /* ---- Price check ---- */
   .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; }
   .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }
@@ -1973,25 +1979,37 @@ body.print-view .deal-stage-heading { display: none; }
   .pc-policy { margin: 0; padding-top: 10px; border-top: 1px solid var(--line); font-size: 12px; line-height: 1.45; color: var(--ink-faint); }
   .pc-policy a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
   .pc-policy a:hover { color: var(--accent); }
-  /* cost to own: one row each */
-  .pc-own { padding-top: 6px; padding-bottom: 6px; }
-  .pc-ohead, .pc-orow { display: grid; grid-template-columns: minmax(150px, 1.2fr) 120px minmax(200px, 250px) 120px minmax(240px, 1.1fr); gap: 6px 16px; align-items: center; }
-  .pc-ohead { padding: 10px 0 8px; border-bottom: 1px solid var(--line); font-size: 12px; font-weight: 600; color: var(--ink-faint); }
-  .pc-orow { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  /* cost to own: one block per provider, controls on the left, the cost on the right */
+  .pc-own { padding-top: 4px; padding-bottom: 4px; }
+  .pc-orow { display: grid; grid-template-columns: minmax(0, 1fr) minmax(250px, 300px); gap: 14px 28px; padding: 20px 0; border-bottom: 1px solid var(--line); }
   .pc-orow:last-child { border-bottom: 0; }
   .pc-orow.is-here { background: color-mix(in srgb, var(--accent) 5%, transparent); margin: 0 -20px; padding-left: 20px; padding-right: 20px; }
-  .pc-plan { display: grid; grid-template-columns: minmax(0, 1fr) 72px; gap: 6px; }
-  .pc-plan select, .pc-plan input, .pc-orow .pc-money input { min-height: 36px; font-size: 13px; }
-  .pc-plan input { text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-main { min-width: 0; }
+  .pc-title { display: flex; align-items: baseline; flex-wrap: wrap; gap: 2px 10px; }
+  .pc-main > .pc-note, .pc-title + .pc-note { font-size: 13px; margin: 3px 0 0; }
+  .pc-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px 14px; margin-top: 14px; align-items: start; }
+  .pc-cell-plan { grid-column: 1 / -1; }
   .pc-cell { display: block; min-width: 0; }
+  .pc-cell[data-col]::before { content: attr(data-col); display: block; margin-bottom: 5px; font-size: 12px; font-weight: 600; color: var(--ink-dim); }
   .pc-cell > .pc-money { display: flex; }
-  .pc-figure { display: block; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
-  .pc-total { font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .pc-rterm { display: block; width: 100%; margin-top: 6px; min-height: 32px; font-size: 12px; }
-  .pc-total .pc-pill { margin-top: 6px; max-width: 100%; white-space: normal; text-align: right; line-height: 1.35; border-radius: 12px; padding: 4px 10px; }
-  .pc-total-note { display: block; font-size: 12px; font-weight: 400; color: var(--ink-faint); white-space: normal; line-height: 1.4; }
-  .pc-best { display: inline-block; margin-left: 6px; padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; vertical-align: 2px;
+  .pc-cell .pc-note { font-size: 12px; margin-top: 5px; }
+  .pc-plan { display: grid; grid-template-columns: minmax(0, 1fr) 96px; gap: 8px; }
+  .pc-plan:has(input[hidden]) { grid-template-columns: minmax(0, 1fr); }
+  .pc-plan select, .pc-plan input, .pc-orow .pc-money input, .pc-rterm { min-height: 40px; font-size: 14px; }
+  .pc-plan input { text-align: right; font-variant-numeric: tabular-nums; }
+  .pc-rterm { display: block; width: 100%; }
+  .pc-figure { display: flex; align-items: center; min-height: 40px; font-size: 16px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pc-total { align-self: stretch; padding-left: 24px; border-left: 1px solid var(--line); font-size: 28px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; font-variant-numeric: tabular-nums; }
+  .pc-total::before { content: "Cost to own"; display: block; margin-bottom: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0; color: var(--ink-dim); }
+  .pc-total-note { display: block; margin-top: 6px; font-size: 13px; font-weight: 400; letter-spacing: 0; color: var(--ink-dim); white-space: normal; line-height: 1.45; }
+  .pc-total-note + .pc-total-note { margin-top: 2px; color: var(--ink-faint); }
+  .pc-total .pc-pill { display: block; margin-top: 12px; padding: 7px 12px; border-radius: 10px; font-size: 13px; line-height: 1.35; white-space: normal; }
+  .pc-total .pc-pill + .pc-total-note { margin-top: 10px; color: var(--ink-faint); font-size: 12px; }
+  .pc-best { display: inline-block; padding: 1px 9px; border-radius: 999px; font-size: 11px; font-weight: 700; vertical-align: 1px;
     background: var(--accent-soft); color: var(--accent); border: 1px solid var(--accent-line); }
+  .pc-how { margin-top: 14px; font-size: 13px; line-height: 1.55; color: var(--ink-dim); }
+  .pc-how h4 { margin: 0 0 6px; font-size: 13px; font-weight: 600; color: var(--ink); }
+  .pc-how ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; }
   .pc-offers { margin-top: 12px; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--surface); }
   .pc-offers > summary { cursor: pointer; padding: 12px 16px; font-size: 13px; font-weight: 600; color: var(--ink-dim); }
   .pc-offers[open] > summary { border-bottom: 1px solid var(--line); }
@@ -2002,16 +2020,17 @@ body.print-view .deal-stage-heading { display: none; }
     .pc-device { grid-template-columns: minmax(0, 1fr); }
     .pc-ours { text-align: left; }
     .pc-tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .pc-ohead { display: none; }
-    .pc-orow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .pc-orow > :first-child, .pc-orow > :last-child, .pc-orow > .pc-cell-plan { grid-column: 1 / -1; }
-    .pc-cell[data-col]::before { content: attr(data-col); display: block; margin-bottom: 4px; font-size: 11px; font-weight: 600; color: var(--ink-faint); }
-    .pc-orow > :last-child { text-align: left; }
+    .pc-orow { grid-template-columns: minmax(0, 1fr); }
+    .pc-total { padding: 14px 0 0; border-left: 0; border-top: 1px solid var(--line); }
   }
   @media (max-width: 640px) {
     .pc-pickers { grid-template-columns: minmax(0, 1fr); gap: 10px; }
     .pc-tiles { grid-template-columns: minmax(0, 1fr); }
     .pc-controls { margin-left: 0; width: 100%; }
     .pc-orow.is-here { margin: 0 -16px; padding-left: 16px; padding-right: 16px; }
+    .pc-fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .pc-plan, .pc-plan:has(input[hidden]) { grid-template-columns: minmax(0, 1fr); }
+    .pc-plan input { text-align: left; }
+    .pc-plan select { font-size: 13px; }
   }
   /* ---- end Price check ---- */

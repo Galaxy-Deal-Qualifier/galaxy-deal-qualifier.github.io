@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v15.4
+  Galaxy Deals v15.5
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=b01ec25f06" />
+<link rel="stylesheet" href="styles.css?v=8e6164d352" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,9 +713,9 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="12" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="15" hidden>
   <h2>Cost of Ownership</h2>
-  <p class="sk-intro">What the customer pays to own this phone and stay connected for 12, 24 or 36 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
+  <p class="sk-intro">What it costs to own this phone and stay connected for 12, 24 or 36 months. Every figure can be overtyped.</p>
   <div class="card pc-device">
     <div class="pc-pickers">
       <div>
@@ -740,7 +740,7 @@
 
   <div class="pc-section-head">
     <h3 class="pc-h">Cost to own</h3>
-    <span class="pc-h-sub">The phone, paid off by the end, plus the plan, less the discounts earned</span>
+    <span class="pc-h-sub">Phone plus plan, less discounts, for the months chosen</span>
     <div class="pc-controls">
       <div class="segmented" id="pc-term" role="group" aria-label="Months">
         <button type="button" data-term="12" aria-pressed="false">12 months</button>
@@ -750,13 +750,10 @@
     </div>
   </div>
   <div class="card pc-own">
-    <div class="pc-ohead" aria-hidden="true">
-      <span>Where</span><span>Phone</span><span>Plan / payment</span><span>Discounts</span><span class="pc-right">Cost to own</span>
-    </div>
     <div id="pc-own"></div>
   </div>
   <details class="pc-offers" id="pc-offers"><summary>Other offers on their sites, not counted above</summary><div id="pc-offers-body"></div></details>
-  <p class="svc-src" id="pc-own-src"></p>
+  <div class="pc-how" id="pc-own-src"></div>
 
   <div class="pc-section-head">
     <h3 class="pc-h">Outright elsewhere</h3>
@@ -6365,6 +6362,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "15.5", d: "20 Oct 2026", t: "Cost of Ownership: a cleaner layout",
+      items: [
+        "<strong>Cost of Ownership is laid out one provider at a time.</strong> Each one has its plan on its own full-width line, so the plan name and price are no longer cut off, with the phone price, repayment term and credit labelled underneath.",
+        "<strong>The cost to own is on the right in large type,</strong> with how it adds up, the &#8220;Buying here saves&#8221; tag and the like-for-like line beneath it, all in full.",
+        "The notes at the bottom are now a short list rather than a block of small print."
+      ] },
     { type: "app", v: "15.4", d: "20 Oct 2026", t: "Cost of Ownership follows the Latitude rules",
       items: [
         "<strong>Latitude on the Cost of Ownership page now follows the same rules as the quote.</strong> The choices are 12 months interest free, or 24 months where the customer is offered it, and they are switched off under $599, the same minimum as the Customer Quote page.",
@@ -8853,6 +8856,9 @@
 
 
 
+
+
+
   // ---- Price check ----
   // The Cost of Ownership page. Competitor figures are collected twice a day by
   // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
@@ -8913,20 +8919,22 @@
   // JB Hi-Fi Mobile Upfront plans carry a gift card and a 24-month term; pre-paid is per 30 days.
   function pcPlanList() {
     const out = [];
+    // Whole dollars without the cents, so a plan name fits its box.
+    const m0 = n => "$" + (Number.isInteger(n) ? n.toLocaleString("en-AU") : n.toFixed(2));
     PC_TELCOS.forEach(t => (COMPETITORS.plans[t[0]] || []).forEach((p, k) => out.push({
       key: t[0] + ":" + k, owner: t[0], group: t[1],
-      label: p.n + " — " + fmt(p.p) + "/mth" + (p.promo ? ", " + fmt(p.promo.p) + " for " + p.promo.months + " mths" : ""),
+      label: p.n + " — " + m0(p.p) + "/mth" + (p.promo ? ", " + m0(p.promo.p) + " for " + p.promo.months + " mths" : ""),
       plan: { kind: "monthly", p: p.p, promo: p.promo || null }
     })));
     const jb = COMPETITORS.jbplans || {};
     (jb.upfront || []).forEach((p, k) => out.push({
       key: "jb:" + k, owner: "jb", group: "JB Hi-Fi Mobile",
-      label: p.n + " — " + fmt(p.p) + "/mth" + (p.term > 1 ? ", " + p.term + " mths" : ", month to month") + (p.gift ? ", " + fmt(p.gift) + " gift card" : ""),
+      label: p.n + " — " + m0(p.p) + "/mth" + (p.term > 1 ? ", " + p.term + " mths" : ", month to month") + (p.gift ? ", " + m0(p.gift) + " gift card" : ""),
       plan: { kind: "monthly", p: p.p, term: p.term, gift: p.gift || 0, ends: p.ends || null }
     }));
     if (jb.prepaid) out.push({
       key: "jb:prepaid", owner: "jb", group: "JB Hi-Fi Mobile",
-      label: "Pre-paid — " + fmt(jb.prepaid.first) + " first, then " + fmt(jb.prepaid.p) + " per " + jb.prepaid.days + " days",
+      label: "Pre-paid — " + m0(jb.prepaid.first) + " first, then " + m0(jb.prepaid.p) + " per " + jb.prepaid.days + " days",
       plan: { kind: "prepaid", p: jb.prepaid.p, first: jb.prepaid.first, days: jb.prepaid.days, ends: jb.prepaid.ends || null }
     });
     return out;
@@ -8992,15 +9000,20 @@
     const plans = pcPlanList();
     const first = owner => plans.find(x => x.owner === owner);
 
+    const fld = (label, inner, cls) => `<span class="pc-cell${cls ? " " + cls : ""}" data-col="${label}">${inner}</span>`;
+    const priceIn = (label, value) => `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${label}" value="${value}" placeholder="$ a month" />`;
+
     // Buying here: our price, outright. No plan; a finance fee only if they pay with Latitude or similar.
-    let html = `<div class="pc-orow is-here" data-row="here">`
-      + `<span><span class="pc-name">Buying here</span><span class="pc-note">Outright today. We don&#8217;t sell plans; they keep their own.</span></span>`
-      + `<span class="pc-cell" data-col="Phone"><span class="pc-figure" data-ours></span></span>`
-      + `<span class="pc-cell pc-cell-plan" data-col="Payment"><span class="pc-plan"><select data-field="pay" aria-label="How they pay when buying here">`
-      + PC_PAY.map(x => `<option value="${x[0]}">${escapeHtml(x[1])}</option>`).join("") + `</select>`
-      + `<input type="number" min="0" step="0.01" inputmode="decimal" data-field="fee" aria-label="Finance fee per month when buying here" value="0" placeholder="$" hidden /></span></span>`
-      + `<span class="pc-cell" data-col="Discounts"><span class="pc-figure" data-disc></span><span class="pc-note" data-disc-note></span></span>`
-      + `<span class="pc-total pc-right" data-sums></span></div>`;
+    let html = `<div class="pc-orow is-here" data-row="here"><div class="pc-main">`
+      + `<div class="pc-title"><span class="pc-name">Buying here</span></div>`
+      + `<span class="pc-note">Outright today. We don&#8217;t sell plans; they keep their own.</span>`
+      + `<div class="pc-fields">`
+      + fld("How they pay", `<span class="pc-plan"><select data-field="pay" aria-label="How they pay when buying here">`
+          + PC_PAY.map(x => `<option value="${x[0]}">${escapeHtml(x[1])}</option>`).join("") + `</select>`
+          + `<input type="number" min="0" step="0.01" inputmode="decimal" data-field="fee" aria-label="Finance fee per month when buying here" value="0" placeholder="$ a month" hidden /></span>`, "pc-cell-plan")
+      + fld("Our price today", `<span class="pc-figure" data-ours></span>`)
+      + fld("Discounts", `<span class="pc-figure" data-disc></span><span class="pc-note" data-disc-note></span>`)
+      + `</div></div><span class="pc-total" data-sums></span></div>`;
 
     // Telcos: the phone on a plan. Full price and the credit off it over the contract.
     html += PC_TELCOS.map(t => {
@@ -9015,28 +9028,30 @@
       // The listed term is where their advertised credit applies, so the row starts there.
       const listed = dev ? dev[1] : 36;
       const terms = [12, 24, 36].concat([12, 24, 36].indexOf(listed) === -1 ? [listed] : []);
-      const rterm = `<select class="pc-rterm" data-field="rterm" aria-label="${t[1]} repayment term" title="Repayment term">`
-        + terms.map(n => `<option value="${n}"${n === listed ? " selected" : ""}>${n} mths</option>`).join("") + `</select>`;
-      return `<div class="pc-orow" data-row="${t[0]}" data-listed="${listed}" data-listed-credit="${dev && isBase ? credit : 0}">`
-        + `<span><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a><span class="pc-note" data-rnote data-static="${escapeHtml(note)}">${note}</span></span>`
-        + `<span class="pc-cell" data-col="Phone, full price">` + money("device", t[1] + " phone, full price", dev && isBase ? full : null) + rterm + `</span>`
-        + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect(t[0], 'aria-label="' + t[1] + ' plan"')}`
-        + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="${t[1]} plan price per month" value="${p0 ? p0.plan.p : ""}" placeholder="$" /></span></span>`
-        + `<span class="pc-cell" data-col="Credit over the contract">${money("credit", t[1] + " stay-connected credit over the whole contract", dev && isBase ? credit : null)}<span class="pc-note" data-disc-note></span></span>`
-        + `<span class="pc-total pc-right" data-sums></span></div>`;
+      const rterm = `<select class="pc-rterm" data-field="rterm" aria-label="${t[1]} repayment term">`
+        + terms.map(n => `<option value="${n}"${n === listed ? " selected" : ""}>${n} months</option>`).join("") + `</select>`;
+      return `<div class="pc-orow" data-row="${t[0]}" data-listed="${listed}" data-listed-credit="${dev && isBase ? credit : 0}"><div class="pc-main">`
+        + `<div class="pc-title"><span class="pc-name">${t[1]}</span> <a class="pc-link" href="${t[2]}" target="_blank" rel="noopener">Their page</a></div>`
+        + `<span class="pc-note" data-rnote data-static="${escapeHtml(note)}">${note}</span>`
+        + `<div class="pc-fields">`
+        + fld("Plan", `<span class="pc-plan">${pcPlanSelect(t[0], 'aria-label="' + t[1] + ' plan"')}${priceIn(t[1] + " plan price per month", p0 ? p0.plan.p : "")}</span>`, "pc-cell-plan")
+        + fld("Phone, full price", money("device", t[1] + " phone, full price", dev && isBase ? full : null))
+        + fld("Repaid over", rterm)
+        + fld("Stay-connected credit", money("credit", t[1] + " stay-connected credit over the whole contract", dev && isBase ? credit : null) + `<span class="pc-note" data-disc-note></span>`)
+        + `</div></div><span class="pc-total" data-sums></span></div>`;
     }).join("");
 
     // JB Hi-Fi: outright from JB, with a JB Hi-Fi Mobile plan (Telstra network) and its gift card.
     const jbHit = (COMPETITORS.retail.jb || {})[key];
     const jbDefault = plans.find(x => x.owner === "jb" && x.plan.gift) || first("jb");
-    html += `<div class="pc-orow" data-row="jb">`
-      + `<span><span class="pc-name">JB Hi-Fi</span> <a class="pc-link" href="${PC_JB_PLANS_URL}" target="_blank" rel="noopener">Their plans</a>`
-      + `<span class="pc-note">Outright from JB, on a JB Hi-Fi Mobile plan (Telstra network). Gift card for new or ported numbers.</span></span>`
-      + `<span class="pc-cell" data-col="Phone">` + money("device", "JB Hi-Fi phone price", jbHit ? jbHit[0] : null) + `</span>`
-      + `<span class="pc-cell pc-cell-plan" data-col="Plan"><span class="pc-plan">${pcPlanSelect("jb", 'aria-label="JB Hi-Fi Mobile plan"')}`
-      + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="JB Hi-Fi Mobile plan price" value="${jbDefault ? jbDefault.plan.p : ""}" placeholder="$" /></span></span>`
-      + `<span class="pc-cell" data-col="Gift card">${money("credit", "JB Hi-Fi gift card", jbDefault ? jbDefault.plan.gift || 0 : null)}<span class="pc-note" data-disc-note></span></span>`
-      + `<span class="pc-total pc-right" data-sums></span></div>`;
+    html += `<div class="pc-orow" data-row="jb"><div class="pc-main">`
+      + `<div class="pc-title"><span class="pc-name">JB Hi-Fi</span> <a class="pc-link" href="${PC_JB_PLANS_URL}" target="_blank" rel="noopener">Their plans</a></div>`
+      + `<span class="pc-note">Outright from JB, on a JB Hi-Fi Mobile plan (Telstra network). The gift card is for new or ported numbers.</span>`
+      + `<div class="pc-fields">`
+      + fld("Plan", `<span class="pc-plan">${pcPlanSelect("jb", 'aria-label="JB Hi-Fi Mobile plan"')}${priceIn("JB Hi-Fi Mobile plan price", jbDefault ? jbDefault.plan.p : "")}</span>`, "pc-cell-plan")
+      + fld("Phone price at JB", money("device", "JB Hi-Fi phone price", jbHit ? jbHit[0] : null))
+      + fld("Gift card", money("credit", "JB Hi-Fi gift card", jbDefault ? jbDefault.plan.gift || 0 : null) + `<span class="pc-note" data-disc-note></span>`)
+      + `</div></div><span class="pc-total" data-sums></span></div>`;
     pcEl("own").innerHTML = html;
     const jbSel = pcEl("own").querySelector('[data-row="jb"] [data-field="plan"]');
     if (jbSel && jbDefault) jbSel.value = jbDefault.key;
@@ -9049,14 +9064,13 @@
       + COMPETITORS.offers[k].map(x => `<li>${escapeHtml(x)}</li>`).join("") + `</ul></div>`).join("");
 
     const when2 = ["telstra", "optus", "vodafone", "jbplans"].map(r => COMPETITORS.at[r]).filter(Boolean).sort()[0];
-    pcEl("own-src").innerHTML = "<strong>How cost to own is worked out:</strong> the phone, paid off by the end of the months chosen, plus the plan for those months, "
-      + "less the discounts earned in that time. Telcos let the phone be repaid over 12, 24 or 36 months (Vodafone lists some over 48). The stay-connected credit on their page is for the term "
-      + "listed there, so each row starts on that term; pick another and type in their credit for it, if any. When the repayments run past the months chosen, "
-      + "the phone's full price still counts (the rest is owing) and only the credit for the months chosen is earned. A JB Hi-Fi Mobile gift card is paid back "
-      + "pro rata if the plan ends before 24 months. Introductory plan prices count for the months they apply, and pre-paid is charged every 30 days. "
-      + "Buying here is the device price alone, as we don&#8217;t sell plans; paying with Latitude splits it into equal interest-free monthly payments over 12 months (24 where offered, on a sale of $599 or more) and adds its monthly card fee for the months of that plan, and Afterpay has no fees if paid on time. "
-      + "Each telco and JB row shows what buying here saves against their total. Under it, the like-for-like line is our phone with the same plan taken SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
-      + "Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".";
+    pcEl("own-src").innerHTML = "<h4>How it&#8217;s worked out</h4><ul>"
+      + "<li><strong>Telcos:</strong> the phone&#8217;s full price, less the stay-connected credit earned in the months chosen, plus the plan. Any repayments that run past those months are shown as still owing.</li>"
+      + "<li><strong>Repayment term:</strong> each telco starts on the term its page lists, which is where its credit applies (Vodafone lists some over 48 months). Pick another term and type in their credit for it, if they offer one.</li>"
+      + "<li><strong>Plans:</strong> introductory prices count for the months they apply. JB pre-paid is charged every 30 days, and a JB Hi-Fi Mobile gift card is paid back pro rata if the plan ends before 24 months.</li>"
+      + "<li><strong>Buying here:</strong> the device price alone, as we don&#8217;t sell plans. Latitude is equal interest-free payments over 12 months (24 where offered, on a sale of $599 or more) plus its monthly card fee for the months of the plan. Afterpay has no fees if paid on time.</li>"
+      + "<li><strong>Buying here saves</strong> compares our device price with their phone plus plan. The line under it is like for like: our phone with the same plan taken SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too).</li>"
+      + "<li>Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".</li></ul>";
     pcEl("src").innerHTML = "Retailer in-store prices and price matches can differ from what is listed online.";
     pcUpdate();
   }
