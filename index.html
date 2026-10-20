@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v15.7
+  Galaxy Deals v15.8
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=5ffa604620" />
+<link rel="stylesheet" href="styles.css?v=0cc9d4a33d" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,7 +713,7 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="17" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="19" hidden>
   <h2>Cost of Ownership</h2>
   <p class="sk-intro">What it costs to own this phone and stay connected over 24 months, with the telcos at their standard plan prices. Every figure can be overtyped.</p>
   <div class="card pc-device">
@@ -6356,6 +6356,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "15.8", d: "20 Oct 2026", t: "Cost of Ownership: Boost applied by default",
+      items: [
+        "<strong>Buying here now comes with Boost's $39 SIM plan already applied,</strong> so the cost to own is the phone plus 26 recharges over 24 months, set against each telco's phone-and-plan total.",
+        "Choose No plan, phone only to see the device price on its own, or Other plan to type a different monthly price."
+      ] },
     { type: "app", v: "15.7", d: "20 Oct 2026", t: "Cost of Ownership: 24 months at standard prices",
       items: [
         "<strong>Cost of Ownership is now over 24 months only.</strong> The 12 and 36 month options and the telcos' repayment-term picker are gone.",
@@ -8867,6 +8872,8 @@
 
 
 
+
+
   // ---- Price check ----
   // The Cost of Ownership page. Competitor figures are collected twice a day by
   // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
@@ -8891,7 +8898,7 @@
   // 24 where the customer is offered it, on a sale of LATITUDE_MIN ($599) or more. The card fee is
   // counted for the months the plan runs inside the period chosen.
   const PC_PAY = [
-    ["", "Outright, no plan", 0, "Device price only"],
+    ["", "Outright, no finance", 0, "Paid outright"],
     ["lat12", "Latitude, 12 months interest free", 11.95, "Latitude Gem Visa card fee, charged each month", 12],
     ["lat24", "Latitude, 24 months (if offered)", 11.95, "Latitude Gem Visa card fee, charged each month", 24],
     ["afterpay", "Afterpay — no fees paid on time", 0, "Afterpay, 4 payments, no fees if paid on time"],
@@ -9027,17 +9034,21 @@
     // Buying here: our price, outright. No plan; a finance fee only if they pay with Latitude or similar.
     let html = `<div class="pc-orow is-here" data-row="here"><div class="pc-main">`
       + `<div class="pc-title"><span class="pc-name">Buying here</span></div>`
-      + `<span class="pc-note">Outright today. We don&#8217;t sell plans, so none is counted unless you add one below.</span>`
+      + `<span class="pc-note">Outright today, with Boost&#8217;s $39 SIM plan alongside. We don&#8217;t sell plans; choose No plan to see the phone alone.</span>`
       + `<div class="pc-fields">`
       + fld("How they pay", `<span class="pc-plan"><select data-field="pay" aria-label="How they pay when buying here">`
           + PC_PAY.map(x => `<option value="${x[0]}">${escapeHtml(x[1])}</option>`).join("") + `</select>`
           + `<input type="number" min="0" step="0.01" inputmode="decimal" data-field="fee" aria-label="Finance fee per month when buying here" value="0" placeholder="$ a month" hidden /></span>`, "pc-cell-plan")
-      + fld("SIM plan to compare (optional)", `<span class="pc-plan"><select data-field="plan" aria-label="SIM plan alongside the phone">`
-          + `<option value="none">No plan</option>`
-          + plans.filter(x => x.owner === "boost").map(x => `<option value="${x.key}">${escapeHtml(x.label)}</option>`).join("")
-          + `<option value="other">Other plan, type the monthly price</option></select>`
-          + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="SIM plan price per month" value="" placeholder="$ a month" hidden /></span>`
-          + `<span class="pc-note" data-plan-note></span>`, "pc-cell-plan")
+      // Boost's $39 plan is applied to our phones by default; No plan shows the phone on its own.
+      + (() => {
+          const boost = plans.find(x => x.owner === "boost");
+          return fld("SIM plan", `<span class="pc-plan"><select data-field="plan" aria-label="SIM plan alongside the phone">`
+            + `<option value="none"${boost ? "" : " selected"}>No plan, phone only</option>`
+            + plans.filter(x => x.owner === "boost").map(x => `<option value="${x.key}" selected>${escapeHtml(x.label)}</option>`).join("")
+            + `<option value="other">Other plan, type the monthly price</option></select>`
+            + `<input type="number" min="0" step="1" inputmode="decimal" data-field="price" aria-label="SIM plan price per month" value="${boost ? boost.plan.p : ""}" placeholder="$ a month"${boost ? "" : " hidden"} /></span>`
+            + `<span class="pc-note" data-plan-note></span>`, "pc-cell-plan");
+        })()
       + fld("Our price today", `<span class="pc-figure" data-ours></span>`)
       + fld("Discounts", `<span class="pc-figure" data-disc></span><span class="pc-note" data-disc-note></span>`)
       + `</div></div><span class="pc-total" data-sums></span></div>`;
@@ -9089,7 +9100,7 @@
     pcEl("own-src").innerHTML = "<h4>How it&#8217;s worked out</h4><ul>"
       + "<li><strong>Telcos:</strong> the phone&#8217;s full price plus 24 months of the plan, at the standard plan price. No introductory prices or stay-connected credits are counted, as those are special deals; their credit can be typed in. Repayments that run past 24 months are shown as still owing.</li>"
       + "<li><strong>JB Hi-Fi:</strong> its outright price plus 24 months of a JB Hi-Fi Mobile plan, less the plan&#8217;s gift card. JB pre-paid is charged every 30 days.</li>"
-      + "<li><strong>Buying here:</strong> the device price alone, as we don&#8217;t sell plans. Latitude is equal interest-free payments over 12 months (24 where offered, on a sale of $599 or more) plus its monthly card fee for the months of the plan. Afterpay has no fees if paid on time. A SIM plan can be added to compare: Boost&#8217;s $39 pre-paid is charged every 28 days.</li>"
+      + "<li><strong>Buying here:</strong> the device price with Boost&#8217;s $39 SIM plan added, as we don&#8217;t sell plans (choose No plan for the phone alone). Latitude is equal interest-free payments over 12 months (24 where offered, on a sale of $599 or more) plus its monthly card fee for the months of the plan. Afterpay has no fees if paid on time. Boost&#8217;s $39 pre-paid is charged every 28 days.</li>"
       + "<li><strong>Buying here saves</strong> compares our device price with their phone plus plan. The line under it is like for like: our phone with the same plan taken SIM-only.</li>"
       + "<li>Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".</li></ul>";
     pcEl("src").innerHTML = "Retailer in-store prices and price matches can differ from what is listed online.";
