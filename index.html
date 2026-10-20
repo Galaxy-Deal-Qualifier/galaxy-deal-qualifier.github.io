@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v15.2
+  Galaxy Deals v15.3
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -5284,7 +5284,7 @@
     { fam: "fold", re: /fold\s*8/, m: ["m5"] },
     { fam: "flip", re: /flip\s*8/, m: ["m6"] },
     { fam: "tabs11", re: /tab\s*s11\s*u(?:ltra)?\b/, m: ["m10", "m35"] },
-    { fam: "tabs11", re: /tab\s*s11/, m: ["m11"] },
+    { fam: "tabs11", re: /tab\s*s11/, m: ["m11", "m36"] },
     { fam: "tabs12", re: /tab\s*s12\s*ultra/, m: ["m35"] },
     { fam: "tabs12", re: /tab\s*s12\s*(\+|plus)/, m: ["m36"] },
     { fam: "tabs10", re: /tab\s*s10\s*lite/, m: ["m17"] },
@@ -6365,6 +6365,10 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "15.3", d: "20 Oct 2026", t: "S11 accessories fit the Tab S12+",
+      items: [
+        "<strong>Tab S11 accessories now show up for the Tab S12+</strong>, as they fit it. With an Education S12+ on the quote they get the 40% S12 accessory offer (A260006535), the same as the S12+ accessories and, for the S12 Ultra, the S11 Ultra ones."
+      ] },
     { type: "app", v: "15.2", d: "20 Oct 2026", t: "S11 Ultra accessories fit the Tab S12 Ultra",
       items: [
         "<strong>Tab S11 Ultra accessories now show up for the Tab S12 Ultra,</strong> since they fit it and the S12 Ultra has none of its own in the price list yet. With an Education S12 Ultra on the quote they get the 40% S12 accessory offer (A260006535) like the S12+ accessories do.",
