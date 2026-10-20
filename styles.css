@@ -1933,6 +1933,8 @@ body.print-view .deal-stage-heading { display: none; }
 
   
 
+  
+
   /* ---- Price check ---- */
   .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; }
   .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }

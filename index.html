@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v15.3
+  Galaxy Deals v15.4
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -22,7 +22,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=505aec9f53" />
+<link rel="stylesheet" href="styles.css?v=b01ec25f06" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -713,7 +713,7 @@
   </div>
 </section>
 
-<section id="panel-pricecheck" class="saleskit" data-pc="11" hidden>
+<section id="panel-pricecheck" class="saleskit" data-pc="12" hidden>
   <h2>Cost of Ownership</h2>
   <p class="sk-intro">What the customer pays to own this phone and stay connected for 12, 24 or 36 months: buying it here outright (we don&#8217;t sell plans, so it&#8217;s the device price, plus Latitude&#8217;s card fee if they finance it), against Telstra, Optus and Vodafone on a plan, and JB Hi-Fi with a JB Hi-Fi Mobile plan. Every figure can be overtyped.</p>
   <div class="card pc-device">
@@ -6365,6 +6365,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "15.4", d: "20 Oct 2026", t: "Cost of Ownership follows the Latitude rules",
+      items: [
+        "<strong>Latitude on the Cost of Ownership page now follows the same rules as the quote.</strong> The choices are 12 months interest free, or 24 months where the customer is offered it, and they are switched off under $599, the same minimum as the Customer Quote page.",
+        "The card fee counts for the months of the Latitude plan inside the period chosen, rather than every month. The row shows the monthly payment, and how much of the phone is still to pay if the plan runs past the months chosen."
+      ] },
     { type: "app", v: "15.3", d: "20 Oct 2026", t: "S11 accessories fit the Tab S12+",
       items: [
         "<strong>Tab S11 accessories now show up for the Tab S12+</strong>, as they fit it. With an Education S12+ on the quote they get the 40% S12 accessory offer (A260006535), the same as the S12+ accessories and, for the S12 Ultra, the S11 Ultra ones."
@@ -8847,6 +8852,7 @@
 
 
 
+
   // ---- Price check ----
   // The Cost of Ownership page. Competitor figures are collected twice a day by
   // competitor-sync/fetch-competitors.py and baked in here; every one of them can be overtyped,
@@ -8867,12 +8873,17 @@
   // Paying here. We don't sell plans: outright is the device price alone. Latitude's interest-free
   // finance runs on a Gem Visa with a monthly card fee ($11.95 from 15 Jul 2026, latitudefinancial.com.au);
   // Afterpay has no fees if paid on time. The fee can be overtyped.
+  // Latitude follows the rules on the Customer Quote page: equal monthly payments over 12 months, or
+  // 24 where the customer is offered it, on a sale of LATITUDE_MIN ($599) or more. The card fee is
+  // counted for the months the plan runs inside the period chosen.
   const PC_PAY = [
     ["", "Outright, no plan", 0, "Device price only"],
-    ["latitude", "Latitude interest free — card fee", 11.95, "Latitude Gem Visa card fee, charged each month"],
+    ["lat12", "Latitude, 12 months interest free", 11.95, "Latitude Gem Visa card fee, charged each month", 12],
+    ["lat24", "Latitude, 24 months (if offered)", 11.95, "Latitude Gem Visa card fee, charged each month", 24],
     ["afterpay", "Afterpay — no fees paid on time", 0, "Afterpay, 4 payments, no fees if paid on time"],
     ["other", "Other finance, type the monthly fee", null, "Finance fee"]
   ];
+  const pcLatMin = () => (typeof LATITUDE_MIN === "number" ? LATITUDE_MIN : 599);
   const pc = { mode: "none", buy: null };
   const pcEl = id => document.getElementById("pc-" + id);
   const pcNum = el => { const n = parseFloat(el && el.value); return isFinite(n) && n >= 0 ? n : null; };
@@ -9043,7 +9054,7 @@
       + "listed there, so each row starts on that term; pick another and type in their credit for it, if any. When the repayments run past the months chosen, "
       + "the phone's full price still counts (the rest is owing) and only the credit for the months chosen is earned. A JB Hi-Fi Mobile gift card is paid back "
       + "pro rata if the plan ends before 24 months. Introductory plan prices count for the months they apply, and pre-paid is charged every 30 days. "
-      + "Buying here is the device price alone, as we don&#8217;t sell plans; paying with Latitude adds its monthly card fee for the months chosen, and Afterpay has no fees if paid on time. "
+      + "Buying here is the device price alone, as we don&#8217;t sell plans; paying with Latitude splits it into equal interest-free monthly payments over 12 months (24 where offered, on a sale of $599 or more) and adds its monthly card fee for the months of that plan, and Afterpay has no fees if paid on time. "
       + "Each telco and JB row shows what buying here saves against their total. Under it, the like-for-like line is our phone with the same plan taken SIM-only (JB&#8217;s gift card comes with a bring-your-own phone too). "
       + "Telco phone prices are for the base storage on each telco&#8217;s Samsung page" + (when2 ? ", captured " + pcWhen(when2) : "") + ".";
     pcEl("src").innerHTML = "Retailer in-store prices and price matches can differ from what is listed online.";
@@ -9086,19 +9097,33 @@
     let hereTotal = null;
     const here = own.querySelector('[data-row="here"]');
     if (here) {
-      const pay = PC_PAY.find(x => x[0] === here.querySelector('[data-field="pay"]').value) || PC_PAY[0];
+      const paySel = here.querySelector('[data-field="pay"]');
+      // Latitude needs a sale of $599 or more: under that its options are off, and say why.
+      const latOk = ours >= pcLatMin();
+      [...paySel.options].forEach(o => {
+        const lat = PC_PAY.find(x => x[0] === o.value);
+        if (!lat || !lat[4]) return;
+        o.disabled = !latOk;
+        o.textContent = lat[1] + (latOk ? "" : " — needs " + fmt(pcLatMin()) + " or more");
+      });
+      if (!latOk && /^lat/.test(paySel.value)) { paySel.value = ""; here.querySelector('[data-field="fee"]').value = 0; }
+      const pay = PC_PAY.find(x => x[0] === paySel.value) || PC_PAY[0];
       const feeIn = here.querySelector('[data-field="fee"]');
       feeIn.hidden = !pay[0] || pay[0] === "afterpay";
       const fee = feeIn.hidden ? 0 : pcNum(feeIn) || 0;
-      const feeCost = Math.round(fee * term * 100) / 100;
+      // Latitude's card fee runs for the months of its plan; any other finance fee for the period.
+      const planMonths = pay[4] || 0;
+      const feeMonths = planMonths ? Math.min(term, planMonths) : term;
+      const feeCost = Math.round(fee * feeMonths * 100) / 100;
       hereTotal = Math.round((ours + feeCost) * 100) / 100;
       totals.push([here, hereTotal]);
       here.querySelector("[data-ours]").textContent = fmt(ours);
       here.querySelector("[data-disc]").textContent = names.length ? "In price" : "—";
       here.querySelector("[data-disc-note]").textContent = names.length ? names.join(" · ") : "";
       here.querySelector("[data-sums]").innerHTML = `${fmt(ours + feeCost)}<span class="pc-total-note">`
-        + (feeCost ? `${fmt(ours)} phone + ${fmt(feeCost)} card fee (${term} × ${fmt(fee)})` : `${fmt(ours)} phone, no plan`)
-        + `</span><span class="pc-total-note">${escapeHtml(pay[3])}</span>`;
+        + (feeCost ? `${fmt(ours)} phone + ${fmt(feeCost)} card fee (${feeMonths} × ${fmt(fee)})` : `${fmt(ours)} phone, no plan`)
+        + `</span><span class="pc-total-note">${escapeHtml(pay[3])}</span>`
+        + (planMonths ? `<span class="pc-total-note">${fmt(ours / planMonths)}/mth over ${planMonths} mths, no interest` + (term < planMonths ? `; ${fmt(ours * (1 - term / planMonths))} of the phone still to pay at ${term} mths` : "") + `</span>` : "");
     }
 
     // Telcos and JB Hi-Fi
