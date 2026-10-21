@@ -1951,6 +1951,8 @@ body.print-view .deal-stage-heading { display: none; }
 
   
 
+  
+
   /* ---- Price check ---- */
   .pc-device { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end; }
   .pc-pickers { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) auto; gap: 0 12px; align-items: end; }
@@ -1965,7 +1967,6 @@ body.print-view .deal-stage-heading { display: none; }
   .pc-h { margin: 0; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
   .pc-h-sub { font-size: 13px; color: var(--ink-faint); }
   .pc-controls { margin-left: auto; align-self: center; }
-  .pc-controls .segmented { margin: 0; }
   .pc-term-fixed { display: inline-block; padding: 7px 14px; border: 1px solid var(--accent-line); border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-size: 13px; font-weight: 600; }
   .pc-right { text-align: right; }
   .pc-name { font-weight: 600; font-size: 14px; line-height: 1.3; }
