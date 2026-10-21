@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v16.2
+  Galaxy Deals v16.3
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -865,7 +865,7 @@
   <div id="expired-deals" class="sk-expired" hidden></div>
   <details class="sk-rules" id="sk-rules">
     <summary>How offers stack, ECO vouchers and printing</summary>
-    <p><strong>How ECO vouchers work here.</strong> An ECO voucher is never taken off the device that earns it. Tick it on, and it is spent against an eligible <strong>Watch, Buds or Tablet</strong> elsewhere in the same quote — capped at what that product costs, with any unused balance called out. With no eligible ECO product in the quote, it stays listed but reduces nothing. Offers needing a <strong>unique code</strong> (Memory Upgrade, Samsung Wallet) only come off once ticked, since they're keyed in manually at POS.</p>
+    <p><strong>How ECO vouchers work here.</strong> An ECO voucher is never taken off the device that earns it. Tick it on, and it is spent against an eligible <strong>Watch, Buds or Tablet</strong> elsewhere in the same quote. The ECO products bundled must add up to at least the voucher's value (a $400 voucher needs $400 of ECO products), or the voucher can't be used. With no eligible ECO product in the quote, it stays listed but reduces nothing. Offers needing a <strong>unique code</strong> (Memory Upgrade, Samsung Wallet) only come off once ticked, since they're keyed in manually at POS.</p>
     <p><strong>Stacking rules.</strong> <strong>SMB</strong> replaces every other offer on a line (flat 15% off). <strong>Education</strong> applies the education rate and drops any sales-kit offer marked education/SMB-exclusive; for Watch9 and Watch Ultra 2 the boosted 25% rate replaces the standard 20% rather than adding to it. The <strong>wearable MBO</strong> (30% off a watch bundled with a Flip8/Fold8/Fold8 Ultra/S26) replaces all other offers on that watch. Fold/Flip <strong>ECO vouchers and trade-in bonuses cannot be combined</strong> — with a trade-in active the bonus is paid and the voucher is shown as unavailable. New Galaxy Club carries two separate offers: a <strong>$100 bonus off the device</strong>, and a <strong>plan discount that comes off the NGC price itself</strong>.</p>
     <p><strong>Printing.</strong> "Print quote" strips the page back to the customer quote — lines, credits and total, stamped <em>Quote Created</em> with today's date. "Print receipt" formats it for an 80 mm docket roll. You can also download a PDF or email the quote.</p>
   </details>
@@ -4305,13 +4305,20 @@
     });
 
     // Spend each ticked ECO voucher against eligible ECO products elsewhere in the quote.
-    // A voucher can't be redeemed against the device that earned it, and never pays out cash --
-    // it's capped at what the eligible products actually cost.
+    // A voucher can't be redeemed against the device that earned it, and never pays out cash.
+    // v16.3: the ECO products bundled must be worth at least the voucher (a $400 voucher needs
+    // $400 of Watch, Buds or Tablet, at the price being charged), or none of it comes off.
     const remaining = items.map(x => x.result.subtotal);
     items.forEach(x => { x.ecoApplied = []; });
     const voucherState = [];
     items.forEach((x, srcIdx) => {
       x.result.vouchers.filter(v => v.optedIn).forEach(v => {
+        const ecoSpend = items.reduce((sum, y, i) => sum + (i !== srcIdx
+          && ECO_PRODUCT_MODELS.indexOf(y.item.m) !== -1 && remaining[i] > 0 ? remaining[i] : 0), 0);
+        if (ecoSpend < v.value) {
+          voucherState.push({ id: v.id, srcIdx: srcIdx, value: v.value, redeemed: 0, ecoSpend: ecoSpend });
+          return;
+        }
         let left = v.value;
         for (let i = 0; i < items.length && left > 0; i++) {
           if (i === srcIdx) continue;
@@ -4403,7 +4410,9 @@
               ? `redeemed in full against an ECO product in this quote`
               : st.redeemed > 0
                 ? `${fmt(st.redeemed)} redeemed, ${fmt(vo.value - st.redeemed)} unused — add another Watch, Buds or Tablet`
-                : `add a Watch, Buds or Tablet to this quote to redeem it`;
+                : st.ecoSpend > 0
+                  ? `needs at least ${fmt(vo.value)} of Watch, Buds or Tablet in this sale — ${fmt(st.ecoSpend)} so far, add ${fmt(vo.value - st.ecoSpend)} more to use it`
+                  : `needs at least ${fmt(vo.value)} of Watch, Buds or Tablet in this sale to redeem it`;
           html += `<label class="eco-note optional-note${vo.optedIn ? "" : " offer-not-selected"}"><input type="checkbox"${vo.optedIn ? " checked" : ""} data-item="${item.id}" data-offer="${vo.id}" />${icoHtml("leaf")}<span>${escapeHtml(vo.name)}: ${fmt(vo.value)} — ${tail}${endDateTag(vo.end)}</span></label>`;
         });
         result.manual.filter(mo => mo.optedIn && !mo.value && !mo.blocked).forEach(mo => {
@@ -6423,6 +6432,11 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "16.3", d: "22 Oct 2026", t: "ECO vouchers need a minimum spend",
+      items: [
+        "<strong>An ECO voucher now needs ECO products worth at least its value in the same sale.</strong> A $400 voucher needs $400 of Watch, Buds or Tablet, at the price being charged for them. Until then it doesn't come off, and the quote says how much more to add.",
+        "Example: a Tab S12+ with a Tab A11+ at $199 doesn't use the $400 Launch ECO Voucher. Add $201 more of ECO products and the voucher comes off in full."
+      ] },
     { type: "app", v: "16.2", d: "22 Oct 2026", t: "Tab S12 bundle offers",
       items: [
         "<strong>Tab A11+ for $199 with a Tab S12+ or S12 Ultra</strong> (bulletin A260006729), 22 Oct to 19 Nov. Any A11+, Wi-Fi or 5G, 128GB or 256GB. Turn on the ECO Device Bundle and add both to the quote. Not with SMB.",
@@ -7431,6 +7445,10 @@
 
   // One summary per day for What's New (keyed by the entries' d). See patches/zzz-whatsnew-days.py.
   const WHATS_NEW_DAYS = {
+    "22 Oct 2026": { t: "Tab S12 bundle offers, and ECO voucher minimum spend", items: [
+      "<strong>Tab S12 bundles:</strong> a Tab A11+ for $199 and 15% off a Buds4 Pro with a Tab S12+ or S12 Ultra, through the ECO Device Bundle. The $200 Loyalist / Service Trade-In Bonus is paid like any trade-in bonus, and the $100 Loyalist code shows as blocked while it applies.",
+      "<strong>ECO vouchers need a minimum spend:</strong> the ECO products in the sale must add up to at least the voucher's value before it comes off. The quote says how much more to add."
+    ] },
     "20 Oct 2026": { t: "Cost of Ownership settled, and Tab S12 accessories", items: [
       "<strong>Tab S12 accessories:</strong> the 40% Education accessory offer now comes off book covers, keyboards, screen protectors and S Pens for the S12+ and S12 Ultra, and the Tab S11 accessories that fit them are listed too.",
       "<strong>Cost of Ownership is over 24 months at standard prices:</strong> Telstra, Optus and Vodafone are the phone's full price plus 24 months of the plan, with no introductory prices or stay-connected credits counted. JB Hi-Fi's plan gift card still counts.",
