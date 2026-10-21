@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v16.3
+  Galaxy Deals v16.4
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -5730,7 +5730,8 @@
 
   // ---- sales kit tab ----
   // A condensed read of every live offer: what it takes off, what it needs, and when it ends.
-  const SK_GROUPS = ["Galaxy S Series — Phones", "Galaxy A Series — Phones", "Galaxy Z Series — Foldables",
+  const SK_S12_GROUP = "S12 Ultra / S12+ Pre-Order";
+  const SK_GROUPS = [SK_S12_GROUP, "Galaxy S Series — Phones", "Galaxy A Series — Phones", "Galaxy Z Series — Foldables",
                      "Galaxy Tab — Tablets", "Wearables & Audio", "Galaxy XCover — Rugged", "Education & SMB"];
 
   function offerModelIds(offer) {
@@ -5751,6 +5752,11 @@
   }
 
   function offerGroup(offer) {
+    // v16.4: every Tab S12 deal sits together, ahead of the rest. Curated offers list plain ids
+    // ("m35") in targets, which offerModelIds doesn't read, so those are checked as well.
+    const isS12 = id => id === "m35" || id === "m36" || id === "model:m35" || id === "model:m36";
+    if (offer.kind !== "education" && offer.kind !== "smb"
+        && (offerModelIds(offer).some(isS12) || (offer.targets || []).some(isS12))) return SK_S12_GROUP;
     if (offer.kind === "education" || offer.kind === "smb" || offer.kind === "boosted-education") {
       return "Education & SMB";
     }
@@ -5852,7 +5858,8 @@
     SK_GROUPS.forEach(group => {
       const inGroup = all.filter(o => offerGroup(o) === group).filter(o => {
         if (!q) return true;
-        const hay = [o.name, o.bulletin || "", o.note || "", offerDeviceNames(o).join(" ")].join(" ").toLowerCase();
+        const hay = [o.name, o.bulletin || "", o.note || "", offerDeviceNames(o).join(" "),
+          group === SK_S12_GROUP ? group + " pre order preorder" : ""].join(" ").toLowerCase();
         return hay.indexOf(q) !== -1;
       });
       if (!inGroup.length) return;
@@ -6432,6 +6439,10 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "16.4", d: "22 Oct 2026", t: "S12 pre-order deals in one place",
+      items: [
+        "<strong>The Sales Kit page has an S12 Ultra / S12+ Pre-Order section at the top</strong>, holding every Tab S12 deal: the Launch ECO Voucher and Trade-Up Bonus, the Loyalist / Service offers, RNPL, Boosted Education, the accessory offers, and the Tab A11+ and Buds4 Pro bundles. Typing \"pre-order\" or \"S12\" into the Sales Kit search finds them."
+      ] },
     { type: "app", v: "16.3", d: "22 Oct 2026", t: "ECO vouchers need a minimum spend",
       items: [
         "<strong>An ECO voucher now needs ECO products worth at least its value in the same sale.</strong> A $400 voucher needs $400 of Watch, Buds or Tablet, at the price being charged for them. Until then it doesn't come off, and the quote says how much more to add.",
@@ -7445,9 +7456,10 @@
 
   // One summary per day for What's New (keyed by the entries' d). See patches/zzz-whatsnew-days.py.
   const WHATS_NEW_DAYS = {
-    "22 Oct 2026": { t: "Tab S12 bundle offers, and ECO voucher minimum spend", items: [
+    "22 Oct 2026": { t: "Tab S12 bundle offers, ECO voucher minimum spend, S12 pre-order section", items: [
       "<strong>Tab S12 bundles:</strong> a Tab A11+ for $199 and 15% off a Buds4 Pro with a Tab S12+ or S12 Ultra, through the ECO Device Bundle. The $200 Loyalist / Service Trade-In Bonus is paid like any trade-in bonus, and the $100 Loyalist code shows as blocked while it applies.",
-      "<strong>ECO vouchers need a minimum spend:</strong> the ECO products in the sale must add up to at least the voucher's value before it comes off. The quote says how much more to add."
+      "<strong>ECO vouchers need a minimum spend:</strong> the ECO products in the sale must add up to at least the voucher's value before it comes off. The quote says how much more to add.",
+      "<strong>S12 Ultra / S12+ Pre-Order:</strong> every Tab S12 deal now sits in its own section at the top of the Sales Kit page."
     ] },
     "20 Oct 2026": { t: "Cost of Ownership settled, and Tab S12 accessories", items: [
       "<strong>Tab S12 accessories:</strong> the 40% Education accessory offer now comes off book covers, keyboards, screen protectors and S Pens for the S12+ and S12 Ultra, and the Tab S11 accessories that fit them are listed too.",
