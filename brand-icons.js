@@ -1,3 +1,4 @@
+/* Galaxy Deals (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved. [GD-2026-IGHP] See LICENSE.txt. */
 // The sidebar CSS and browser icons follow manual/system theme settings.
 (() => {
   const root=document.documentElement;

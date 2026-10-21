@@ -1,3 +1,4 @@
+/* Galaxy Deals (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved. [GD-2026-IGHP] See LICENSE.txt. */
 /* Customer PDF layout. All prices come from the existing quote calculation. */
 window.renderGalaxyQuotePdf = function ({ quote, options, date, valid, servedBy, fmt, gstIn, quoteSale }) {
   const pdf = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
@@ -110,6 +111,6 @@ window.renderGalaxyQuotePdf = function ({ quote, options, date, valid, servedBy,
     text('Galaxy Deals', left, 282, 9, true, 103);
     text(page + ' / ' + pages, right, 282, 9, false, 103, 'right');
   }
-  pdf.setProperties({ title: 'Galaxy Deals - Customer Quote', author: 'Galaxy Deals' });
+  pdf.setProperties({ title: 'Galaxy Deals - Customer Quote', author: 'Galaxy Deals', creator: 'Galaxy Deals (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.', keywords: 'GD-2026-IGHP' });
   return pdf;
 };

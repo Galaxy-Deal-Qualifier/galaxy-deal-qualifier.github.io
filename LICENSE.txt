@@ -1,0 +1,24 @@
+GALAXY DEALS (Galaxy Deal Qualifier)
+Copyright (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
+[GD-2026-IGHP]
+
+This software, including its source code, page layout and design, wording, pricing and offer-stacking
+logic, and the selection and arrangement of its data, is the copyright work of Isaiah Graham and
+Harsha Parthiban, who are its authors and owners.
+
+NO LICENCE IS GRANTED. Except with the prior written permission of both authors, you may not copy,
+reproduce, host, publish, distribute, sell, sublicense, modify, translate, adapt, reverse engineer,
+or make any derivative work of this software or any part of it, or remove it from where the authors
+published it. Use of the tool at the address the authors published, and in the way they intended, is
+permitted; that use does not transfer any right in the software.
+
+Any permitted copy or extract must keep this notice and every copyright notice, file header, meta tag
+and credit in it, unchanged. Removing, hiding, rewording or replacing a notice is a breach of these
+terms and of the authors' rights.
+
+THIRD-PARTY MATERIAL. jsPDF is used under its own licence, and the fonts under theirs (see
+quote-font-license.txt). Samsung, Galaxy and related names and marks belong to Samsung Electronics. The
+product, price and offer information shown belongs to Samsung and its retailers; the authors claim
+no right in it. This is not an official Samsung system.
+
+NO WARRANTY. The software is provided as it is, as a quoting aid. Always confirm the final price in POS.

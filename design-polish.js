@@ -1,3 +1,4 @@
+/* Galaxy Deals (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved. [GD-2026-IGHP] See LICENSE.txt. */
 (() => {
  const body=document.body;
  const svg=paths=>`<span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${paths}</svg></span>`;

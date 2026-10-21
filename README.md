@@ -39,3 +39,5 @@ After this HTML is deployed, it no longer needs logo-light.svg, logo-dark.svg, l
 ## Check after publishing
 
 Wait for deployment, reload the page and close/reopen the tab. Browser or host-app favicon caches may refresh separately. Check light/dark mode, device pricing, quoting and print preview. This package does not add PWA installation support.
+
+All rights reserved. See LICENSE.txt and COPYRIGHT.md.
