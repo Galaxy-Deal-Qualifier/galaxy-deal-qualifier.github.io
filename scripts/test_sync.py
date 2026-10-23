@@ -1,9 +1,22 @@
 import json, unittest
 from pathlib import Path
-from sync_saleskit import blocks, iso_date, parse_education, retail_offers
+from sync_saleskit import blocks, iso_date, parse_education, retail_offers, keep_reviewed_offer, read_array
 
 ROOT=Path(__file__).resolve().parents[1]
 class SyncTests(unittest.TestCase):
+    def test_standing_watch_clearance_survives_sync(self):
+        _,promos=read_array((ROOT/'index.html').read_text(),'PROMOS')
+        clearance=next(o for o in promos if o['id']=='saleskit_eol_watch8')
+        self.assertIn('model:m25',clearance['targets'])
+        self.assertEqual(clearance['value'],50)
+        self.assertTrue(keep_reviewed_offer(clearance,'2026-10-23'))
+        self.assertTrue(keep_reviewed_offer(clearance,'2027-01-01'))
+        # A normal dated live offer is still replaced, and expired history is retained.
+        dated=dict(clearance,end='2026-10-23')
+        self.assertFalse(keep_reviewed_offer(dated,'2026-10-23'))
+        self.assertTrue(keep_reviewed_offer(dated,'2026-10-24'))
+        self.assertFalse(keep_reviewed_offer(dict(clearance,kind='education'),'2026-10-23'))
+        self.assertTrue(keep_reviewed_offer(dict(clearance,kind='smb'),'2026-10-23'))
     def test_dates(self):
         self.assertEqual(iso_date('02/11/2026'),'2026-11-02')
         self.assertEqual(iso_date('07/10/26'),'2026-10-07')

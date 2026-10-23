@@ -93,6 +93,15 @@ def read_array(html,name):
     if not m: raise ValueError('Missing '+name)
     return m,json.loads(m[1])
 
+def keep_reviewed_offer(offer, today):
+    # Only dated retail offers are refreshed by this parser. Standing sellout offers
+    # are manually reviewed and must survive until their stock/rules are reviewed again.
+    if offer['kind'] == 'education':
+        return False
+    if offer['kind'] == 'retail':
+        return not offer.get('end') or offer['end'] < today
+    return True
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--root',type=Path,default=Path(__file__).resolve().parents[1]);args=parser.parse_args();root=args.root
     html=(root/'index.html').read_text(); pm,promos=read_array(html,'PROMOS');_,devices=read_array(html,'DEVICES')
@@ -106,9 +115,9 @@ def main():
     updated=parse_education(pages['edusmb'],config['education'])
     for slug in ['s-series','z-series','a-series','tablets','wearables']:
         updated.extend(retail_offers(pages[slug],devices,warnings))
-    # Keep expired history but replace live simple retail offers from the inspected category pages.
+    # Keep expired history and standing reviewed offers; replace dated live retail offers.
     today=datetime.now(ZoneInfo('Australia/Melbourne')).date().isoformat()
-    keep=[o for o in promos if o['kind'] not in ('education','retail') or (o['kind']=='retail' and o.get('end') and o['end']<today)]
+    keep=[o for o in promos if keep_reviewed_offer(o, today)]
     for slug in ['accessories','loyalty','eol']:
         if hashlib.sha256(norm(pages[slug]).encode()).hexdigest()!=config['pageHashes'][slug]:
             warnings.append(slug+' page changed; complex rules require manual review')
