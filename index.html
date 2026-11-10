@@ -479,7 +479,7 @@
             <input type="checkbox" id="latitude-toggle" class="switch" />
             <span>
               <span class="ct">Latitude Finance</span>
-              <span class="cd payment-description">12 equal monthly payments. Sales of $599 or more.</span>
+              <span class="cd payment-description">12 equal monthly payments plus the card fee. Sales of $599 or more.</span>
             </span>
           </label>
           <label class="checkbox-row lat-sub" id="latitude-24-row" hidden>
@@ -4585,9 +4585,26 @@
     grandTotalEl.classList.add("tick");
   }
 
-  // Latitude Finance: the quote total split into equal monthly payments. Nothing here is a
-  // credit quote -- Latitude sets the actual schedule, and its fees are not in these figures.
+  // Latitude Finance, worked the way Latitude's own Gem Visa interest-free calculator works
+  // (latitudefinancial.com.au/credit-cards/gem-visa/iifcalculator): the purchase split into equal
+  // monthly payments, plus the Gem Visa's monthly credit card fee each month. The total is the
+  // purchase plus the card fee for every month of the plan. Its example: $500 over 6 months is
+  // $83.33 + $11.95 = $95.28 a month, $571.70 in total. Equal monthly payment plans only; no other
+  // purchases or balances on the card are counted. Indicative, not a credit quote.
   const LATITUDE_TERMS = [12, 24];
+  // Gem Visa monthly credit card fee, $11.95 from 15 Jul 2026 (subject to change by Latitude).
+  const LATITUDE_CARD_FEE = 11.95;
+  function latitudePlan(amount, months, fee = LATITUDE_CARD_FEE) {
+    const cents = n => Math.round(n * 100) / 100;
+    const instalment = cents(amount / months);
+    return {
+      instalment,                                   // the purchase's share each month
+      fee,                                          // card fee each month
+      monthly: cents(instalment + fee),             // what the customer pays each month
+      fees: cents(fee * months),                    // card fees over the plan
+      total: cents(amount + fee * months)           // purchase + card fees over the plan
+    };
+  }
   // Afterpay: four equal fortnightly instalments, the first taken at purchase.
   const AFTERPAY_SPLITS = 4;
   // Zip Pay is a revolving account, not a fixed instalment plan: a limit set per customer up to
@@ -4620,16 +4637,19 @@
     box.innerHTML = `<div class="lat-title">Latitude Finance — indicative</div>`
       + `<div class="lat-terms">` + terms.map(months => {
           // Rounded to the cent. Latitude squares off any remainder on the final payment.
-          const each = Math.round((total / months) * 100) / 100;
+          const plan = latitudePlan(total, months);
           return `<div class="lat-term"><div class="lat-months">${months} months</div>`
-               + `<div class="lat-amount">${fmt(each)}</div>`
-               + `<div class="lat-per">per month</div></div>`;
+               + `<div class="lat-amount">${fmt(plan.monthly)}</div>`
+               + `<div class="lat-per">per month</div>`
+               + `<div class="lat-per">${fmt(plan.instalment)} + ${fmt(plan.fee)} fee</div>`
+               + `<div class="lat-per">Total ${fmt(plan.total)}</div></div>`;
         }).join("") + `</div>`
-      + `<div class="lat-note">Equal monthly payments on a total of ${fmt(total)},`
-      + ` <strong>subject to Latitude approval</strong>.`
-      + ` <strong>Does not include any Latitude fees or charges</strong> — establishment,`
-      + ` monthly account and any other fees are additional and are set by Latitude.`
-      + ` Figures are indicative; the total payment may differ.</div>`;
+      + `<div class="lat-note">Equal monthly payments on ${fmt(total)}, interest free,`
+      + ` <strong>including the ${fmt(LATITUDE_CARD_FEE)} monthly Gem Visa credit card fee</strong>`
+      + ` (subject to change). The total is the purchase plus that fee for every month of the plan.`
+      + ` <strong>Subject to Latitude approval</strong>. For equal monthly payment plans only;`
+      + ` other purchases or balances on the card are not included.`
+      + ` Figures are indicative; the exact amount is shown on the Latitude statement.</div>`;
     box.hidden = false;
   }
 
@@ -6468,6 +6488,13 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "17.2", d: "10 Nov 2026", t: "Latitude worked out like Latitude's calculator",
+      items: [
+        "<strong>Latitude payments now match Latitude's own Gem Visa interest-free calculator.</strong> Each month is the quote split into equal payments plus the $11.95 monthly Gem Visa credit card fee, so $1,200 over 12 months shows $111.95 a month ($100.00 + $11.95 fee).",
+        "<strong>Each term shows its total:</strong> the purchase plus the card fee for every month of the plan, so $1,200 over 12 months is $1,343.40 in total.",
+        "The note now says the card fee is included and may change, and that the figures are for equal monthly payment plans only and leave out other purchases or balances on the card. The $599 minimum and the 24-month option are unchanged.",
+        "<strong>Cost of Ownership</strong> shows the same monthly Latitude payment, with the card fee in it."
+      ] },
     { type: "data", v: "17.1", d: "5 Nov 2026", t: "S26 FE save $400, Tab S10 FE save $250",
       items: [
         "<strong>Galaxy S26 FE is $400 off, now $749 (128GB) and $899 (256GB).</strong> The Sales Kit lists S26FE Save $400 (bulletin A260007024, 5 Nov to 2 Dec 2026). It does not stack with Education or SMB, so the S26 FE Education and SMB prices are unchanged.",
@@ -9103,8 +9130,8 @@
   // Every fee can be overtyped.
   const PC_PAY = [
     ["", "Outright, no finance", 0, "Paid outright"],
-    ["lat12", "Latitude, 12 months interest free", 11.95, "Latitude Gem Visa card fee, charged each month", 12],
-    ["lat24", "Latitude, 24 months (if offered)", 11.95, "Latitude Gem Visa card fee, charged each month", 24],
+    ["lat12", "Latitude, 12 months interest free", LATITUDE_CARD_FEE, "Latitude Gem Visa card fee, charged each month", 12],
+    ["lat24", "Latitude, 24 months (if offered)", LATITUDE_CARD_FEE, "Latitude Gem Visa card fee, charged each month", 24],
     ["afterpay", "Afterpay — no fees paid on time", 0, "Afterpay, 4 payments, no fees if paid on time"],
     ["other", "Other finance, type the monthly fee", null, "Finance fee"]
   ];
@@ -9377,7 +9404,11 @@
       here.querySelector("[data-sums]").innerHTML = `${fmt(hereTotal)}<span class="pc-total-note">`
         + (feeCost ? `${fmt(ours)} phone + ${fmt(feeCost)} card fee (${feeMonths} × ${fmt(fee)})${simNote}` : `${fmt(ours)} phone${simCost ? simNote : ", no plan"}`)
         + `</span><span class="pc-total-note">${escapeHtml(pay[3])}</span>`
-        + (planMonths ? `<span class="pc-total-note">${fmt(ours / planMonths)}/mth over ${planMonths} mths, no interest</span>` : "");
+        + (planMonths ? (() => {
+            // As Latitude's calculator: equal payments plus the card fee, every month of the plan.
+            const lp = latitudePlan(ours, planMonths, fee);
+            return `<span class="pc-total-note">${fmt(lp.monthly)}/mth over ${planMonths} mths (${fmt(lp.instalment)} + ${fmt(lp.fee)} card fee), no interest</span>`;
+          })() : "");
     }
 
     // Telcos and JB Hi-Fi
