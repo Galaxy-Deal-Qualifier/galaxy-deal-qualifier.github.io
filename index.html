@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v17.6
+  Galaxy Deals v17.7
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -671,6 +671,9 @@
   The iPhones and iPads are international models captured from GSMArena on 12 October 2026, for comparison only:
   they are not sold here, so they carry no prices, and Apple’s MagSafe is shown as Apple publishes it, with the
   magnets built in.
+  The Google Pixels are international models captured from GSMArena on 13 November 2026, also for comparison
+  only. The Pixel 10 and 11 series have their magnets built in, so they don’t need a magnetic case either;
+  the Pixel 10a has no magnets.
   Prices and offers are live from this tool. <span id="cmp-gsm-wrap" hidden>Full technical comparison:
   <a id="cmp-gsm" href="#" target="_blank" rel="noopener">open on GSMArena</a>.</span></p>
 </section>
@@ -2255,6 +2258,203 @@
     }
   ];
   /* apple-compare:end */
+  /* google-compare:start */
+  // Google Pixels for Compare only: specs from each device's GSMArena page (13 Nov 2026), nothing sold,
+  // no prices. Field names match SPECS, LEGACY_SPECS and APPLE_SPECS.
+  const GOOGLE_SPECS = [
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_11_pro_fold",
+     "n": "Pixel 11 Pro Fold",
+     "when": "released 20 Aug 2026",
+     "gsm": 14874,
+     "display": "8.0\" foldable LTPO OLED, 120Hz, 2076×2152, 3600 nits peak",
+     "cover": "6.5\" OLED, 120Hz, 1080×2342, 3600 nits peak",
+     "chipset": "Google Tensor G6 (3nm)",
+     "ram": "16GB + 256GB/512GB/1TB",
+     "rear": "48MP wide + 10.8MP 5× tele + 10.5MP ultrawide",
+     "selfie": "10MP inner · 10MP cover",
+     "battery": "4806 mAh",
+     "charge": "30W wired (50% in 30 min) · 25W wireless",
+     "weight": "239 g",
+     "dims": "155.2 × 150.4 × 5 mm open · 155.2 × 76 × 10.1 mm folded",
+     "os": "Android 17",
+     "wireless": "Qi2.2 with built-in magnets, 25W",
+     "support": "7 major Android updates from Android 17 — roughly to 2033"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_11_pro_xl",
+     "n": "Pixel 11 Pro XL",
+     "when": "released 20 Aug 2026",
+     "gsm": 14800,
+     "display": "6.8\" LTPO OLED, 120Hz, 1344×2992, 3600 nits peak",
+     "chipset": "Google Tensor G6 (3nm)",
+     "ram": "12GB + 256GB · 16GB + 512GB/1TB",
+     "rear": "50MP wide + 48MP 5× periscope tele + 48MP ultrawide",
+     "selfie": "42MP ultrawide",
+     "battery": "5115 mAh",
+     "charge": "45W wired (75% in 30 min) · 25W wireless",
+     "weight": "226 g",
+     "dims": "162.7 × 76.5 × 8.5 mm",
+     "os": "Android 17",
+     "wireless": "Qi2.2 with built-in magnets, 25W · reverse wired",
+     "support": "7 major Android updates from Android 17 — roughly to 2033"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_11_pro",
+     "n": "Pixel 11 Pro",
+     "when": "released 20 Aug 2026",
+     "gsm": 14801,
+     "display": "6.3\" LTPO OLED, 120Hz, 1280×2856, 3600 nits peak",
+     "chipset": "Google Tensor G6 (3nm)",
+     "ram": "12GB + 256GB · 16GB + 512GB/1TB",
+     "rear": "50MP wide + 48MP 5× periscope tele + 48MP ultrawide",
+     "selfie": "42MP ultrawide",
+     "battery": "4850 mAh",
+     "charge": "30W wired (55% in 30 min) · 25W wireless",
+     "weight": "204 g",
+     "dims": "152.7 × 71.9 × 8.4 mm",
+     "os": "Android 17",
+     "wireless": "Qi2.2 with built-in magnets, 25W · reverse wired",
+     "support": "7 major Android updates from Android 17 — roughly to 2033"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_11",
+     "n": "Pixel 11",
+     "when": "released 20 Aug 2026",
+     "gsm": 14799,
+     "display": "6.3\" OLED, 120Hz, 1080×2424, 3000 nits peak",
+     "chipset": "Google Tensor G6 (3nm)",
+     "ram": "12GB + 256GB/512GB",
+     "rear": "48MP wide + 10.8MP 5× tele + 13MP ultrawide",
+     "selfie": "10.5MP ultrawide",
+     "battery": "4985 mAh",
+     "charge": "30W wired (55% in 30 min) · 25W wireless",
+     "weight": "197 g",
+     "dims": "152.8 × 72 × 8.6 mm",
+     "os": "Android 17",
+     "wireless": "Qi2.2 with built-in magnets, 25W · reverse wired",
+     "support": "7 major Android updates from Android 17 — roughly to 2033"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_10a",
+     "n": "Pixel 10a",
+     "when": "released 5 Mar 2026",
+     "gsm": 14474,
+     "display": "6.3\" P-OLED, 120Hz, 1080×2424, 3000 nits peak",
+     "chipset": "Google Tensor G4 (4nm)",
+     "ram": "8GB + 128GB/256GB",
+     "rear": "48MP wide + 13MP ultrawide",
+     "selfie": "13MP ultrawide",
+     "battery": "5100 mAh",
+     "charge": "30W wired (50% in 30 min) · 10W wireless",
+     "weight": "183 g",
+     "dims": "153.9 × 73 × 9 mm",
+     "os": "Android 16, upgradable to Android 17",
+     "wireless": "10W — magnetic charging needs a MagSafe-style magnetic case",
+     "support": "7 major Android updates from Android 16 — roughly to 2033"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_10_pro_fold",
+     "n": "Pixel 10 Pro Fold",
+     "when": "released 9 Oct 2025",
+     "gsm": 14014,
+     "display": "8.0\" foldable LTPO OLED, 120Hz, 2076×2152, 3000 nits peak",
+     "cover": "6.4\" OLED, 120Hz, 1080×2364, 3000 nits peak",
+     "chipset": "Google Tensor G5 (3nm)",
+     "ram": "16GB + 256GB/512GB/1TB",
+     "rear": "48MP wide + 10.8MP 5× tele + 10.5MP ultrawide",
+     "selfie": "10MP inner · 10MP cover",
+     "battery": "5015 mAh",
+     "charge": "30W wired (50% in 30 min) · 15W wireless",
+     "weight": "258 g",
+     "dims": "155.2 × 150.4 × 5.2 mm open · 155.2 × 76.3 × 10.8 mm folded",
+     "os": "Android 16, upgradable to Android 17",
+     "wireless": "Qi2 with built-in magnets, 15W",
+     "support": "7 major Android updates from Android 16 — roughly to 2032"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_10_pro_xl",
+     "n": "Pixel 10 Pro XL",
+     "when": "released 28 Aug 2025",
+     "gsm": 13988,
+     "display": "6.8\" LTPO OLED, 120Hz, 1344×2992, 3300 nits peak",
+     "chipset": "Google Tensor G5 (3nm)",
+     "ram": "16GB + 256GB/512GB/1TB",
+     "rear": "50MP wide + 48MP 5× periscope tele + 48MP ultrawide",
+     "selfie": "42MP ultrawide",
+     "battery": "5200 mAh",
+     "charge": "45W wired (70% in 30 min) · 25W wireless",
+     "weight": "232 g",
+     "dims": "162.8 × 76.6 × 8.5 mm",
+     "os": "Android 16, upgradable to Android 17",
+     "wireless": "Qi2 with built-in magnets, 25W · reverse wired",
+     "support": "7 major Android updates from Android 16 — roughly to 2032"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_10_pro",
+     "n": "Pixel 10 Pro",
+     "when": "released 28 Aug 2025",
+     "gsm": 13987,
+     "display": "6.3\" LTPO OLED, 120Hz, 1280×2856, 3300 nits peak",
+     "chipset": "Google Tensor G5 (3nm)",
+     "ram": "16GB + 128GB/256GB/512GB/1TB",
+     "rear": "50MP wide + 48MP 5× periscope tele + 48MP ultrawide",
+     "selfie": "42MP ultrawide",
+     "battery": "4870 mAh",
+     "charge": "30W wired (55% in 30 min) · 15W wireless",
+     "weight": "207 g",
+     "dims": "152.8 × 72 × 8.5 mm",
+     "os": "Android 16, upgradable to Android 17",
+     "wireless": "Qi2 with built-in magnets, 15W · reverse wired",
+     "support": "7 major Android updates from Android 16 — roughly to 2032"
+    },
+    {
+     "brand": "Google",
+     "group": "Google Pixel",
+     "ip": "IP68",
+     "id": "G_pixel_10",
+     "n": "Pixel 10",
+     "when": "released 28 Aug 2025",
+     "gsm": 13979,
+     "display": "6.3\" OLED, 120Hz, 1080×2424, 3000 nits peak",
+     "chipset": "Google Tensor G5 (3nm)",
+     "ram": "12GB + 128GB/256GB",
+     "rear": "48MP wide + 10.8MP 5× tele + 13MP ultrawide",
+     "selfie": "10.5MP ultrawide",
+     "battery": "4970 mAh",
+     "charge": "30W wired (55% in 30 min) · 15W wireless",
+     "weight": "204 g",
+     "dims": "152.8 × 72 × 8.6 mm",
+     "os": "Android 16, upgradable to Android 17",
+     "wireless": "Qi2 with built-in magnets, 15W · reverse wired",
+     "support": "7 major Android updates from Android 16 — roughly to 2032"
+    }
+  ];
+  /* google-compare:end */
 
   // ---- deal builder ----------------------------------------------------------------------------
   // The quote screen answers "what does this device cost". This answers "what can I put together",
@@ -2435,6 +2635,7 @@
     models.forEach(mo => rows.push({ v: mo.m, n: mo.n, group: groupOf(mo.n), sold: true }));
     LEGACY_SPECS.forEach(d => rows.push({ v: d.id, n: d.n + " (" + d.year + ")", group: "Older " + d.group + " — not sold here", sold: false }));
     APPLE_SPECS.forEach(d => rows.push({ v: d.id, n: d.n, group: d.group + " — not sold here", sold: false }));
+    GOOGLE_SPECS.forEach(d => rows.push({ v: d.id, n: d.n, group: d.group + " — not sold here", sold: false }));
     return rows;
   }
 
@@ -2442,7 +2643,8 @@
     const q = String(filter || "").trim().toLowerCase();
     const rows = cmpCatalogue().filter(r => !q || (r.n + " " + r.group).toLowerCase().indexOf(q) !== -1);
     const order = ["S Series", "Z Series", "A Series", "Tablets", "Wearables", "Rugged",
-                   "Apple iPhone \u2014 not sold here", "Apple iPad \u2014 not sold here"];
+                   "Apple iPhone \u2014 not sold here", "Apple iPad \u2014 not sold here",
+                   "Google Pixel \u2014 not sold here"];
     const groups = [];
     rows.forEach(r => { if (groups.indexOf(r.group) === -1) groups.push(r.group); });
     groups.sort((a, b) => {
@@ -2504,7 +2706,7 @@
     if (!mo) {
       // A device we don't sell has no variant to price, so the control says so rather than sitting
       // there empty and looking broken.
-      const legacy = LEGACY_SPECS.concat(APPLE_SPECS).find(d => d.id === ms.value);
+      const legacy = LEGACY_SPECS.concat(APPLE_SPECS, GOOGLE_SPECS).find(d => d.id === ms.value);
       vs.innerHTML = `<option value="">${legacy ? "Not sold here \u2014 specs only" : "\u2014"}</option>`;
       vs.disabled = true;
       return;
@@ -2517,7 +2719,7 @@
     const ms = document.getElementById("cmp-model-" + slot);
     const vs = document.getElementById("cmp-variant-" + slot);
     if (!ms || !ms.value) return null;
-    const legacy = LEGACY_SPECS.concat(APPLE_SPECS).find(d => d.id === ms.value);
+    const legacy = LEGACY_SPECS.concat(APPLE_SPECS, GOOGLE_SPECS).find(d => d.id === ms.value);
     if (legacy) return { m: legacy.id, n: legacy.n, v: String(legacy.year), p: null, legacy: legacy };
     const mo = modelIndex[ms.value];
     if (!mo) return null;
@@ -2797,7 +2999,7 @@
     ];
     const anySpec = cols.some(c => c.spec);
     if (anySpec) {
-      rows.push(`<tr class="cmp-sec"><th class="cmp-row-label">${cols.some(c => c.spec && c.spec.brand === "Apple") ? "Specifications — Samsung Australian variants, Apple international models" : "Specifications — Australian variants"}</th>${cols.map(() => "<td></td>").join("")}</tr>`);
+      rows.push(`<tr class="cmp-sec"><th class="cmp-row-label">${(() => { const b = ["Apple", "Google"].filter(x => cols.some(c => c.spec && c.spec.brand === x)); return b.length ? "Specifications — Samsung Australian variants, " + b.join(" and ") + " international models" : "Specifications — Australian variants"; })()}</th>${cols.map(() => "<td></td>").join("")}</tr>`);
       SPEC_ROWS.forEach(([label, key]) => {
         if (!cols.some(c => c.spec && c.spec[key])) return;
         rows.push(`<tr>${cmpLabel(label)}` + cols.map(c =>
@@ -6518,6 +6720,13 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "17.7", d: "13 Nov 2026", t: "Google Pixels on Compare",
+      items: [
+        "<strong>Compare now includes Google Pixels.</strong> Pick one in any of the three slots and set it beside a Galaxy: the Pixel 11 Pro Fold, 11 Pro XL, 11 Pro and 11, the Pixel 10a, and the Pixel 10 Pro Fold, 10 Pro XL, 10 Pro and 10.",
+        "<strong>Specifications only.</strong> We don't sell Pixels, so every price row says \u201cnot sold here\u201d, the same as the iPhones. The figures come from GSMArena, and a figure GSMArena doesn't list shows a dash.",
+        "<strong>Easy to find:</strong> they sit under <em>Google Pixel</em> in the device list, and typing \u201cgoogle\u201d or \u201cpixel\u201d in the search box finds them.",
+        "<strong>Wireless charging:</strong> the Pixel 10 and 11 series have magnets built in, so the \u201cneeds a MagSafe-style magnetic case\u201d line isn't shown for them. The Pixel 10a has no magnets and keeps it. Nothing about prices, offers or the printed quote has changed."
+      ] },
     { type: "app", v: "17.6", d: "12 Nov 2026", t: "Samsung exclusive colours",
       items: [
         "Colours such as the Flip8's Mint are now labelled <strong>Samsung exclusive</strong> instead of “online only”."
