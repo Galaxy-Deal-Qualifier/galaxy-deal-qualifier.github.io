@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v17.5
+  Galaxy Deals v17.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -1247,7 +1247,7 @@
       base = rule ? rule.colours : [];
     }
     const list = base.map(c => ({ value: c, label: c }))
-      .concat((d.exclusive || []).map(c => ({ value: c, label: c + " (online only)", exclusive: true })));
+      .concat((d.exclusive || []).map(c => ({ value: c, label: c + " (Samsung exclusive)", exclusive: true })));
     return { list: list, known: list.length > 0, fromStock: !!d.fromStock };
   }
 
@@ -1643,7 +1643,7 @@
       btn.style.color = readableColourText(c.value);
       btn.innerHTML = `<span class="colour-dot" style="${colourSwatchStyle(c.value)}"></span>`
         + `<span class="colour-name">${escapeHtml(c.value)}</span>`
-        + (c.exclusive ? `<span class="colour-online">online only</span>` : "");
+        + (c.exclusive ? `<span class="colour-online">Samsung exclusive</span>` : "");
       btn.addEventListener("click", () => onPick(c.value));
       container.appendChild(btn);
     });
@@ -6518,6 +6518,10 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "17.6", d: "12 Nov 2026", t: "Samsung exclusive colours",
+      items: [
+        "Colours such as the Flip8's Mint are now labelled <strong>Samsung exclusive</strong> instead of “online only”."
+      ] },
     { type: "app", v: "17.5", d: "12 Nov 2026", t: "Black Friday promos, and the Flip8 Mint 512GB price",
       items: [
         "<strong>Black Friday store promos, 12 Nov to 31 Dec:</strong> 50% off Galaxy S26, S26+ and S26 Ultra accessories, $50 off the Galaxy Fit 3, a free PopSocket with a device purchase, and an extra 10% off the Watch8, Watch8 Classic and Watch Ultra (2025) on top of the end-of-life 50% (all RTL12). Watch8 accessories are now in the $10 accessory promo (RTL05).",
@@ -8222,7 +8226,7 @@
           else if (hits.length > 1) colourNote = "Several colours fit what was said (" + hits.map(x => x.value).join(", ") + "), so the colour was left to choose.";
         }
       }
-      if (exclusive) issues.push(colour + " is sold online only, so it can't be sold in store.");
+      if (exclusive) issues.push(colour + " is a Samsung exclusive colour.");
       return { mo: mo, v: pick.v, price: pick.price, qty: d.qty, colour: colour, issues: issues.concat(colourNote ? [colourNote] : []),
                assumed: assumed, over: over, options: all.slice().sort((a, b) => a.price - b.price).map(x => ({ v: x.v.v, price: x.price, fits: budget == null || x.price <= budget + 0.005 })) };
     }
