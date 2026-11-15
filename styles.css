@@ -2053,6 +2053,12 @@ body.print-view .deal-stage-heading { display: none; }
 .sk-modebar .segmented { margin: 0; }
 .sk-modenote { font-size: 12px; color: var(--ink-faint); }
 /* ---- end Sales Kit customer type ---- */
+/* ---- Sales Kit device row ---- */
+.sk-modebar:has(#sk-mode) { margin-bottom: 10px; }
+.sk-catbar .sk-modelabel { min-width: 0; }
+.sk-catbar .segmented { flex-wrap: wrap; }
+@media (max-width: 640px) { .sk-catbar .segmented button { flex: 1 1 auto; } }
+/* ---- end Sales Kit device row ---- */
 /* ---- Trade-In page ---- */
 .tip-find { display: grid; gap: 6px; }
 .tip-pickers { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 2.2fr) minmax(0, 1.5fr); gap: 12px; margin-top: 12px; }
