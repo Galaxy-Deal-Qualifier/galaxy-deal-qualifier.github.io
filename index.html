@@ -33,7 +33,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=72734203a4" />
+<link rel="stylesheet" href="styles.css?v=bf9e807f1f" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -825,6 +825,8 @@
     <span class="bf-when" id="bf-when"></span>
   </div>
   <p class="sk-intro">What to lead with this weekend, what to add to every sale and how to sell it. Prices are for a Standard customer, worked out from the same offers as the quote. This page goes away after Monday 30 November.</p>
+
+  <div class="card bf-count" id="bf-count" role="timer" aria-live="off"></div>
 
   <div class="bf-check" id="bf-check" hidden></div>
 
@@ -10319,10 +10321,42 @@
   function bfWhen() {
     const el = bfEl("when");
     const days = Math.round((new Date(BF_FIRST + "T00:00:00") - new Date(TODAY + "T00:00:00")) / 86400000);
-    if (days > 1) el.textContent = "Black Friday is in " + days + " days";
-    else if (days === 1) el.textContent = "Black Friday is tomorrow";
+    if (days >= 1) el.textContent = "Fri 27 to Mon 30 Nov";
     else if (TODAY === BF_LAST) el.textContent = "Last day: Cyber Monday";
     else el.textContent = "Black Friday weekend, day " + (1 - days) + " of 4";
+  }
+
+  // Live countdown: to the start of Black Friday, then to the end of Cyber Monday.
+  let bfTimer = null;
+  function bfTick() {
+    const box = bfEl("count");
+    if (!box) return;
+    const now = new Date();
+    const start = new Date(BF_FIRST + "T00:00:00");
+    const end = new Date(BF_LAST + "T00:00:00"); end.setDate(end.getDate() + 1);
+    const before = now < start;
+    const target = before ? start : end;
+    let left = Math.max(0, Math.floor((target - now) / 1000));
+    if (!before && left === 0) {
+      box.innerHTML = '<p class="bf-count-label">The Black Friday weekend is over</p>';
+      clearInterval(bfTimer); bfTimer = null;
+      return;
+    }
+    const d = Math.floor(left / 86400); left -= d * 86400;
+    const h = Math.floor(left / 3600); left -= h * 3600;
+    const m = Math.floor(left / 60), sec = left - m * 60;
+    const unit = (n, label) => '<span class="bf-count-unit"><span class="bf-count-num">' + String(n).padStart(2, "0") + '</span><span class="bf-count-name">' + label + '</span></span>';
+    box.setAttribute("aria-label", (before ? "Black Friday starts in " : "Black Friday weekend ends in ") + d + " days " + h + " hours " + m + " minutes");
+    box.innerHTML = '<p class="bf-count-label">' + (before ? "Black Friday starts in" : "Black Friday weekend ends in") + '</p>'
+      + '<div class="bf-count-units">' + unit(d, d === 1 ? "day" : "days") + unit(h, h === 1 ? "hour" : "hours") + unit(m, "min") + unit(sec, "sec") + '</div>'
+      + '<p class="bf-count-sub">' + (before ? "Midnight going into Friday 27 November" : "End of Cyber Monday, 30 November. Most deals keep going after that: check each card&#8217;s end date.") + '</p>';
+  }
+  function bfStartCount() {
+    bfTick();
+    if (!bfTimer) bfTimer = setInterval(() => {
+      const panel = document.getElementById("panel-blackfriday");
+      if (panel && !panel.hidden) bfTick();
+    }, 1000);
   }
 
   function bfCheck() {
@@ -10417,6 +10451,7 @@
     if (!bfShown()) return;
     const deals = bfDeals();
     bfWhen();
+    bfStartCount();
     bfCheck();
     bfRenderDeals(deals);
     bfRenderBands(deals);
