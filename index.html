@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Galaxy Deals v18.1
+  Galaxy Deals v18.6
   Created by Isaiah Graham & Harsha Parthiban.
   (c) 2026 Isaiah Graham & Harsha Parthiban. All rights reserved.
   A quoting aid for retail consultants. Not an official Samsung system.
@@ -33,7 +33,7 @@
 <script src="jspdf.umd.min.js" defer></script>
 <script src="quote-pdf-fonts.js?v=12.6" defer></script>
 <script src="quote-pdf.js?v=12.6" defer></script>
-<link rel="stylesheet" href="styles.css?v=82b310e0a1" />
+<link rel="stylesheet" href="styles.css?v=72734203a4" />
 <link rel="stylesheet" href="brand-accent.css?v=final-4" />
 <link rel="stylesheet" href="logo-theme.css?v=logo8" />
 <script>
@@ -89,7 +89,7 @@
 
   <div class="side-store-chip none" id="side-store-chip" style="position:relative"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 9.5 5.5 4.5h13L20 9.5"/><path d="M4 9.5a2.7 2.7 0 0 0 5.3 0 2.7 2.7 0 0 0 5.4 0 2.7 2.7 0 0 0 5.3 0"/><path d="M5.5 11.5v8h13v-8"/><path d="M10 19.5v-4.5h4v4.5"/></svg></span><span class="ssc-text"><span class="ssc-label">Your Store</span><span class="ssc-name" id="side-store-chip-name">Pick your store</span></span><select id="side-store-chip-select" aria-label="Your store" style="position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;padding:0;border:0;cursor:pointer"></select></div>
   <nav class="tabs" role="tablist" aria-label="Sections" aria-orientation="vertical"><div class="tabs-group gs-group"><button type="button" class="tab gs-open" id="gs-open" aria-haspopup="dialog"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></span><span>Search</span><kbd class="gs-kbd" aria-hidden="true">/</kbd></button></div><div class="tabs-group"><span class="nav-group-label">Quote</span><button type="button" class="tab" data-panel="quote" role="tab" aria-selected="true"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6.5 3.5h11v17l-2.2-1.4-2.1 1.4-2.2-1.4-2.2 1.4-2.3-1.4z"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h3"/></svg></span><span>Customer Quote</span></button><button type="button" class="tab" data-panel="builder" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></svg></span><span>Deal Builder</span></button><button type="button" class="tab" data-panel="tradein" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20 11a8 8 0 0 0-14.9-3M4 13a8 8 0 0 0 14.9 3"/><path d="M5 4v4h4M19 20v-4h-4"/></svg></span><span>Trade-In</span></button></div>
-<div class="tabs-group"><span class="nav-group-label">Products & Offers</span><button type="button" class="tab" data-panel="compare" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="7" height="15" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="15" rx="1.5"/></svg></span><span>Compare</span></button><button type="button" class="tab" data-panel="pricecheck" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M7 7l-3 7a3.2 3.2 0 0 0 6 0zM17 7l-3 7a3.2 3.2 0 0 0 6 0zM12 4v16M8.500 20h7"/></svg></span><span>Cost of Ownership</span></button><button type="button" class="tab" data-panel="pricematch" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h13l-3-3M19 16H6l3 3"/></svg></span><span>Price Match</span></button><button type="button" class="tab" data-panel="saleskit" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span>Sales Kit</span><span class="tab-dot danger" id="saleskit-dot" hidden></span></button></div>
+<div class="tabs-group"><span class="nav-group-label">Products & Offers</span><button type="button" class="tab bf-tab" data-panel="blackfriday" role="tab" aria-selected="false" data-badge="Till Mon"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.6V4.5a1 1 0 0 1 1-1h8.1l7.9 7.9a1.4 1.4 0 0 1 0 2l-6.1 6.1a1.4 1.4 0 0 1-2 0z"/><circle cx="8.2" cy="8.2" r="1.4"/></svg></span><span>Black Friday</span></button><button type="button" class="tab" data-panel="compare" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3.5" y="4.5" width="7" height="15" rx="1.5"/><rect x="13.5" y="4.5" width="7" height="15" rx="1.5"/></svg></span><span>Compare</span></button><button type="button" class="tab" data-panel="pricecheck" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 7h16M7 7l-3 7a3.2 3.2 0 0 0 6 0zM17 7l-3 7a3.2 3.2 0 0 0 6 0zM12 4v16M8.500 20h7"/></svg></span><span>Cost of Ownership</span></button><button type="button" class="tab" data-panel="pricematch" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 8h13l-3-3M19 16H6l3 3"/></svg></span><span>Price Match</span></button><button type="button" class="tab" data-panel="saleskit" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 12.3V4.5a1 1 0 0 1 1-1h7.8l8.2 8.2a1.4 1.4 0 0 1 0 2l-6.3 6.3a1.4 1.4 0 0 1-2 0z"/><circle cx="8" cy="8" r="1.4"/></svg></span><span>Sales Kit</span><span class="tab-dot danger" id="saleskit-dot" hidden></span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Store Tools</span><button type="button" class="tab" data-panel="store" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></svg></span><span>Store &amp; Stock</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Service</span><button type="button" class="tab" data-panel="service" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M14.5 6.2a4.2 4.2 0 0 0-5.3 5.3L4 16.7V20h3.3l5.2-5.2a4.2 4.2 0 0 0 5.3-5.3l-2.7 2.7-2.4-.6-.6-2.4z"/></svg></span><span>Repair or Upgrade</span></button></div>
 <div class="tabs-group"><span class="nav-group-label">Help & Updates</span><button type="button" class="tab" data-panel="whatsnew" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 12a8 8 0 1 0 2.4-5.7"/><path d="M4 4.5v3.8h3.8"/><path d="M12 8v4.2l2.8 1.8"/></svg></span><span>What&#8217;s New</span><span class="tab-dot" id="whatsnew-dot-item" hidden></span></button><button type="button" class="tab" data-panel="suggest" role="tab" aria-selected="false"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 5.5h15v10h-10l-5 4z"/></svg></span><span>Suggestions</span></button></div></nav>
@@ -817,6 +817,35 @@
   </div>
   <div class="card tip-values" id="tip-values"></div>
   <p class="svc-src" id="tip-src"></p>
+</section>
+
+<section id="panel-blackfriday" class="saleskit" hidden>
+  <div class="bf-head">
+    <h2>Black Friday</h2>
+    <span class="bf-when" id="bf-when"></span>
+  </div>
+  <p class="sk-intro">What to lead with this weekend, what to add to every sale and how to sell it. Prices are for a Standard customer, worked out from the same offers as the quote. This page goes away after Monday 30 November.</p>
+
+  <div class="bf-check" id="bf-check" hidden></div>
+
+  <h3 class="bf-sec">Lead with these</h3>
+  <p class="bf-sec-sub">Biggest savings first. Tap Quote to start a quote with that device.</p>
+  <div class="bf-deals" id="bf-deals"></div>
+
+  <h3 class="bf-sec">Gifts by budget</h3>
+  <p class="bf-sec-sub">For &#8220;I&#8217;m buying for someone&#8221;. Lowest Black Friday price for each device.</p>
+  <div class="bf-bands" id="bf-bands"></div>
+
+  <h3 class="bf-sec">Add these to every sale</h3>
+  <p class="bf-sec-sub">Accessory deals running now. Ring them up in the same sale as the device.</p>
+  <div class="card bf-acc" id="bf-acc"></div>
+
+  <h3 class="bf-sec">Bundles that sell</h3>
+  <p class="bf-sec-sub">Devices at their Black Friday price, before accessories and trade-in.</p>
+  <div class="bf-bundles" id="bf-bundles"></div>
+
+  <h3 class="bf-sec">Tips for the weekend</h3>
+  <div class="card bf-tips" id="bf-tips"></div>
 </section>
 
 <section id="panel-suggest" class="saleskit" hidden>
@@ -6793,6 +6822,12 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
+    { type: "app", v: "18.6", d: "25 Nov 2026", t: "Black Friday page, on until Monday",
+      items: [
+        "<strong>Black Friday has its own page in the sidebar</strong> until Monday 30 November, then it takes itself off. It lists every device on a Black Friday offer, biggest saving first, with the price for each storage, the bulletin codes, the end date and a line on how to sell it. Quote starts a quote with that device.",
+        "<strong>Gifts by budget, accessory deals, bundles and tips:</strong> devices sorted under $300, $300 to $800 and $800 and up, every accessory deal running now, bundle ideas with their total, and ten tips for the weekend. Each card says when Education or SMB is cheaper than the Black Friday price.",
+        "Every price is worked out from the same offers as the quote, so a Sales Kit change shows up here too."
+      ] },
     { type: "data", v: "18.5", d: "20 Nov 2026", t: "Tab S12 Ultra and Tab S12+ now on SMB 15%",
       items: [
         "<strong>Galaxy Tab S12 Ultra and Tab S12+: SMB 15% off</strong>, now that the Sales Kit adds the Tab S12 to the SMB offer (bulletin A260007028, coupon SMB0038, not with any other offer). Tab S12 Ultra 256GB Wi-Fi $2,299 to $1,954.15, Tab S12+ 256GB Wi-Fi $1,999 to $1,699.15.",
@@ -10186,6 +10221,233 @@
   }
   // ---- end Trade-In page ----
 
+  // ---- Black Friday page ----
+  // Shown to the end of Monday 30 Nov 2026, then the tab and page take themselves off.
+  const BF_FIRST = "2026-11-27", BF_LAST = "2026-11-30";
+  const bfEl = id => document.getElementById("bf-" + id);
+  // Hand-written pitch per model. No prices in here: those come from the offers.
+  const BF_PITCH = {
+    m1: "The biggest dollar saving in the store. Show the 1TB to anyone who films a lot or keeps a phone for years: the extra off makes the jump to 1TB cheap.",
+    m2: "Big screen without the Ultra price.",
+    m3: "The compact flagship. Good for upgraders who find the Ultra too big.",
+    m4: "For the customer who wants the best of everything.",
+    m5: "A phone that opens into a tablet. Let them hold it.",
+    m6: "Pocketable and giftable. Mint 512GB gets a further saving: pick Mint on the quote to see it.",
+    m7: "Mid-range with the features most people use.",
+    m8: "An easy phone gift. Add a case at 40% and a charger at 50% with the handset.",
+    m9: "Reliable everyday phone at a low price.",
+    m21: "The cheapest phone in the store: first phone, backup phone, or for a parent.",
+    m34: "The S26 look for less. A strong pick for parents buying for a teenager, and its accessories are 40% off in the same sale.",
+    m14: "An easy add-on to any phone sale.",
+    m15: "The easiest add-on to any phone sale, and a gift on its own.",
+    m25: "Rotating bezel and the bigger 46mm case. Pair it with a phone and add a strap at 40%.",
+    m32: "End of life: half price plus an extra Black Friday 10% of the RRP, while stocks last. Check stock before you promise one.",
+    m33: "Half price while stocks last: the cheapest way into a Galaxy Watch.",
+    m28: "A stocking filler for anyone who wants step and sleep tracking.",
+    m18: "Big screen for study and streaming. Tablet accessories are 30% off in the same sale.",
+    m19: "The kids' or Netflix tablet. Add a cover at 30%.",
+    m23: "A study tablet with S Pen in the box."
+  };
+  const BF_BUNDLES = [
+    { t: "Flagship upgrade", m: ["m1"], add: "S26 Ultra case and charger at 50% (no handset needed) + free PopSocket. Ask about a trade-in." },
+    { t: "Phone and watch", m: ["m6", "m25"], add: "Fold and Flip accessories and watch straps 40% off in the same sale + free PopSocket." },
+    { t: "Phone and earbuds", m: ["m34", "m15"], add: "S26 FE accessories and Buds accessories 40% off in the same sale." },
+    { t: "First phone", m: ["m8"], add: "Case 40% off and charger 50% off with the handset (take the 50% power off by hand) + free PopSocket." },
+    { t: "Kids' tablet", m: ["m19"], add: "Tablet cover 30% off in the same sale." },
+    { t: "Watch on a budget", m: ["m33"], add: "Watch strap 40% off in the same sale. While stocks last." }
+  ];
+
+  function bfShown() { return TODAY <= BF_LAST; }
+  function bfMoney(n) {
+    const r = Math.round(n * 100) / 100;
+    return r % 1 === 0 ? "$" + r.toLocaleString("en-AU") : fmt(r);
+  }
+  function bfDay(iso) {
+    return new Date(iso + "T00:00:00").toLocaleDateString("en-AU", { weekday: "short", day: "numeric", month: "short" }).replace(",", "");
+  }
+  function bfPrice(m, v, p, mode, colour) {
+    return pricingFor(m, v, p, mode, { ngc: false, bundleWearable: false, tradeIn: false, optIns: [], item: null, colour: colour || "" });
+  }
+  // A Black Friday offer here is any live retail promo. Education and SMB rows are not, nor is a
+  // promo that only starts after the weekend.
+  function bfPromos() {
+    return PROMOS.filter(p => p.kind === "retail" && dateValid(p));
+  }
+
+  // Every model with a live retail offer, each variant priced as the quote would price it.
+  function bfDeals() {
+    const byModel = {};
+    bfPromos().forEach(p => p.targets.forEach(t => {
+      const mm = /^(?:model|variant):(m\d+)/.exec(t);
+      if (mm && modelIndex[mm[1]]) byModel[mm[1]] = true;
+    }));
+    const out = [];
+    Object.keys(byModel).forEach(m => {
+      const mo = modelIndex[m];
+      const rows = [];
+      mo.variants.forEach(x => {
+        const res = bfPrice(m, x.v, x.p, "none");
+        rows.push({ v: x.v, rrp: x.p, now: res.subtotal, lines: res.lines });
+        // A colour-only extra (Flip8 Mint 512GB) gets a row of its own.
+        PROMOS.filter(p => p.colours && p.colours.length && p.kind === "retail" && dateValid(p) && targetsMatch(p, m, x.v)).forEach(p => {
+          const col = p.colours[0];
+          const r2 = bfPrice(m, x.v, x.p, "none", col);
+          if (r2.subtotal < res.subtotal) rows.push({ v: x.v + " " + col, base: x.v, colour: col, rrp: x.p, now: r2.subtotal, lines: r2.lines });
+        });
+      });
+      rows.forEach(r => {
+        r.save = r.rrp - r.now;
+        const edu = bfPrice(m, r.base || r.v, r.rrp, "edu", r.colour).subtotal;
+        const smb = bfPrice(m, r.base || r.v, r.rrp, "smb", r.colour).subtotal;
+        r.edu = edu < r.now - 0.005 ? edu : null;
+        r.smb = smb < r.now - 0.005 ? smb : null;
+      });
+      const saving = rows.filter(r => r.save > 0.005);
+      if (!saving.length) return;
+      const best = saving.reduce((a, b) => b.save > a.save ? b : a);
+      const low = saving.reduce((a, b) => b.now < a.now ? b : a);
+      const used = bfPromos().filter(p => saving.some(r => r.lines.some(l => l.name === p.name)));
+      const ends = used.map(p => p.end).filter(Boolean).sort();
+      const eol = used.some(p => /end of life/i.test(p.name) && !p.end);  // no end date: while stocks last
+      out.push({ m, n: mo.n, rows: saving, best, low,
+        bulletins: Array.from(new Set(used.map(p => p.bulletin).filter(Boolean))),
+        end: ends.length ? ends[0] : null, lastEnd: ends.length ? ends[ends.length - 1] : null, eol });
+    });
+    return out.sort((a, b) => b.best.save - a.best.save);
+  }
+
+  function bfWhen() {
+    const el = bfEl("when");
+    const days = Math.round((new Date(BF_FIRST + "T00:00:00") - new Date(TODAY + "T00:00:00")) / 86400000);
+    if (days > 1) el.textContent = "Black Friday is in " + days + " days";
+    else if (days === 1) el.textContent = "Black Friday is tomorrow";
+    else if (TODAY === BF_LAST) el.textContent = "Last day: Cyber Monday";
+    else el.textContent = "Black Friday weekend, day " + (1 - days) + " of 4";
+  }
+
+  function bfCheck() {
+    const w = (typeof SALESKIT_SYNC_STATUS !== "undefined" && SALESKIT_SYNC_STATUS.warnings) || [];
+    const box = bfEl("check");
+    box.hidden = !w.length;
+    box.innerHTML = '<p class="bf-check-title">Check before you key</p><ul>' + w.map(x => "<li>" + escapeHtml(x) + "</li>").join("") + "</ul>";
+  }
+
+  function bfRenderDeals(deals) {
+    bfEl("deals").innerHTML = deals.length ? deals.map(d => {
+      const rows = d.rows.slice().sort((a, b) => a.now - b.now);
+      const endTxt = (d.end ? "To " + bfDay(d.end) + (d.lastEnd && d.lastEnd !== d.end ? " (part to " + bfDay(d.lastEnd) + ")" : "") : (d.eol ? "" : "No end date"))
+        + (d.eol ? (d.end ? ", end of life part while stocks last" : "While stocks last") : "");
+      const eduRow = rows.find(r => r.edu !== null);
+      const smbRow = rows.find(r => r.smb !== null);
+      const pick = d.low.colour ? d.rows.find(r => !r.colour) || d.low : d.low;
+      return '<article class="card bf-deal">'
+        + '<div class="bf-deal-top"><h4>' + escapeHtml(d.n) + '</h4><span class="bf-save">Save up to ' + bfMoney(d.best.save) + '</span></div>'
+        + '<p class="bf-from">From <strong>' + bfMoney(d.low.now) + '</strong> <s>' + bfMoney(d.low.rrp) + '</s></p>'
+        + (BF_PITCH[d.m] ? '<p class="bf-pitch">' + escapeHtml(BF_PITCH[d.m]) + '</p>' : "")
+        + '<ul class="bf-rows">' + rows.map(r => '<li><span>' + escapeHtml(r.v) + '</span><span><s>' + bfMoney(r.rrp) + '</s> ' + bfMoney(r.now) + '</span></li>').join("") + '</ul>'
+        + (eduRow ? '<p class="bf-flag">Education is cheaper: ' + escapeHtml(eduRow.v) + ' ' + bfMoney(eduRow.edu) + ' with a student or staff ID.</p>' : "")
+        + (smbRow ? '<p class="bf-flag">SMB is cheaper: ' + escapeHtml(smbRow.v) + ' ' + bfMoney(smbRow.smb) + ' with an ABN.</p>' : "")
+        + '<div class="bf-deal-foot"><span class="bf-meta">' + escapeHtml(endTxt) + (d.bulletins.length ? " · " + d.bulletins.map(escapeHtml).join(", ") : "") + '</span>'
+        + '<button type="button" class="bf-quote" data-bf-m="' + d.m + '" data-bf-v="' + escapeHtml(pick.base || pick.v) + '" data-bf-c="' + escapeHtml(pick.colour || "") + '">Quote</button></div>'
+        + '</article>';
+    }).join("") : '<p class="tip-empty">No Black Friday device offers are live right now.</p>';
+  }
+
+  function bfRenderBands(deals) {
+    const bands = [
+      { t: "Under $300", test: p => p < 300 },
+      { t: "$300 to $800", test: p => p >= 300 && p < 800 },
+      { t: "$800 and up", test: p => p >= 800 }
+    ];
+    bfEl("bands").innerHTML = bands.map(b => {
+      const list = deals.filter(d => b.test(d.low.now)).sort((x, y) => x.low.now - y.low.now);
+      if (!list.length) return "";
+      return '<div class="card bf-band"><p class="bf-band-title">' + b.t + '</p><ul>'
+        + list.map(d => '<li><span>' + escapeHtml(d.n.replace(/^Galaxy /, "")) + (d.low.v && d.rows.length > 1 ? ' <em>' + escapeHtml(d.low.v) + '</em>' : "") + '</span><strong>' + bfMoney(d.low.now) + '</strong></li>').join("")
+        + '</ul></div>';
+    }).join("");
+  }
+
+  function bfRenderAcc() {
+    const offers = CURATED_OFFERS.filter(o => ["accessory-sale", "accessory-mbo", "aged-accessory"].includes(o.kind) && offerActive(o));
+    const amount = o => o.flatPrice === 0 ? "Free" : o.flatPrice ? bfMoney(o.flatPrice) : o.percent ? o.percent + "% off" : "";
+    const rank = o => o.flatPrice === 0 ? 0 : o.kind === "accessory-sale" ? 1 : o.kind === "accessory-mbo" ? 2 : 3;
+    const rows = offers.slice().sort((a, b) => rank(a) - rank(b) || (b.percent || 0) - (a.percent || 0)).map(o =>
+      '<li><span class="bf-acc-amt">' + escapeHtml(amount(o)) + '</span><span class="bf-acc-body"><strong>'
+      + escapeHtml(String(o.name).replace(/\s*\(Black Friday\)\s*$/i, "").replace(/^Black Friday MBO:\s*/i, "")) + '</strong>'
+      + '<span>' + escapeHtml(o.note || "") + '</span>'
+      + '<span class="bf-meta">' + (o.end ? "To " + bfDay(o.end) : "No end date") + (o.bulletin ? " · " + escapeHtml(o.bulletin) : "") + '</span></span></li>');
+    bfEl("acc").innerHTML = rows.length ? '<ul class="bf-acc-list">' + rows.join("") + '</ul>' : '<p class="tip-empty">No accessory deals are live right now.</p>';
+  }
+
+  function bfRenderBundles(deals) {
+    const by = {};
+    deals.forEach(d => { by[d.m] = d; });
+    const html = BF_BUNDLES.filter(b => b.m.every(m => by[m])).map(b => {
+      const items = b.m.map(m => by[m]);
+      const total = items.reduce((t, d) => t + d.low.now, 0);
+      const was = items.reduce((t, d) => t + d.low.rrp, 0);
+      return '<div class="card bf-bundle"><p class="bf-band-title">' + escapeHtml(b.t) + '</p>'
+        + '<p class="bf-bundle-items">' + items.map(d => escapeHtml(d.n.replace(/^Galaxy /, "") + (d.rows.length > 1 ? " " + d.low.v : ""))).join(" + ") + '</p>'
+        + '<p class="bf-from"><strong>' + bfMoney(total) + '</strong> <s>' + bfMoney(was) + '</s> <span class="bf-save">Save ' + bfMoney(was - total) + '</span></p>'
+        + '<p class="bf-pitch">' + escapeHtml(b.add) + '</p></div>';
+    }).join("");
+    bfEl("bundles").innerHTML = html || '<p class="tip-empty">None of the bundle devices have a live offer right now.</p>';
+  }
+
+  function bfRenderTips() {
+    const ngc = (typeof NGC_PLANS !== "undefined" ? NGC_PLANS : []).filter(p => p.term === "1 year")
+      .map(p => p.series + " " + bfMoney(p.price) + " a year").join(", ");
+    const tips = [
+      ["Start with who it&#8217;s for and the budget.", "Type it into Ask on Customer Quote (&#8220;S26 Ultra for my son, under $1,800&#8221;) and anything over budget is hidden."],
+      ["Check Education and SMB first.", "Black Friday device offers don&#8217;t stack with Education or SMB. The cards above say when Education or SMB is cheaper, and the quote always picks the better one."],
+      ["Ask every customer about a trade-in.", "Trade-in credit comes off on top of the Black Friday price. Look it up on the Trade-In page; Asurion&#8217;s values hold to the date shown there."],
+      ["Accessories go in the same sale as the device.", "The 40% and 30% accessory offers only work when the device is in the same transaction. Ring them up together, not afterwards."],
+      ["A free PopSocket on every device sale.", "It comes off by itself once a device is on the quote. Customers remember the freebie."],
+      ["Offer interest free on $599 and over.", "Latitude 12 months interest free turns a big total into a monthly amount. Mention the card fee."],
+      ["Offer New Galaxy Club on S and Z Series phones.", ngc ? "From " + escapeHtml(ngc) + "." : "Plans are on the quote."],
+      ["Be straight about end dates.", "Most of these deals run past Monday. Each card shows its end date: don&#8217;t tell a customer a deal ends Monday unless it does."],
+      ["Check stock before you promise.", "Especially the end-of-life watches, which are while stocks last. Store &amp; Stock shows what your store has."],
+      ["Customer has a JB or telco price?", "Use Price Match for outright prices and Cost of Ownership to show the 24-month total against a phone on a plan."]
+    ];
+    bfEl("tips").innerHTML = '<ol class="bf-tip-list">' + tips.map(t => '<li><strong>' + t[0] + '</strong><span>' + t[1] + '</span></li>').join("") + '</ol>';
+  }
+
+  function bfBuild() {
+    if (!bfShown()) return;
+    const deals = bfDeals();
+    bfWhen();
+    bfCheck();
+    bfRenderDeals(deals);
+    bfRenderBands(deals);
+    bfRenderAcc();
+    bfRenderBundles(deals);
+    bfRenderTips();
+  }
+
+  (function () {
+    const tab = document.querySelector('.tab[data-panel="blackfriday"]');
+    const panel = document.getElementById("panel-blackfriday");
+    if (!bfShown()) { if (tab) tab.remove(); if (panel) panel.remove(); return; }
+    if (!panel) return;
+    panel.addEventListener("click", e => {
+      const b = e.target.closest(".bf-quote");
+      if (!b) return;
+      const m = modelIndex[b.dataset.bfM];
+      if (!m) return;
+      const variant = m.variants.find(x => x.v === b.dataset.bfV) || m.variants[0];
+      // Hand the device to the quote the same way the Service page does, then go there.
+      deviceSelect.value = m.m;
+      populateVariants();
+      variantSelect.value = variant.v;
+      selectedColour = b.dataset.bfC || "";
+      renderColourField();
+      renderPromoPreview();
+      document.querySelector('.tab[data-panel="quote"]').click();
+    });
+  })();
+  // ---- end Black Friday page ----
+
   // ---- tabs ----
   (function () {
     // Only the ones that actually name a panel -- the More button opens the menu instead.
@@ -10199,6 +10461,7 @@
       compare: document.getElementById("panel-compare"),
       builder: document.getElementById("panel-builder"),
       tradein: document.getElementById("panel-tradein"),
+      blackfriday: document.getElementById("panel-blackfriday"),
       whatsnew: document.getElementById("panel-whatsnew"),
       suggest: document.getElementById("panel-suggest"),
       service: document.getElementById("panel-service")
@@ -10207,13 +10470,14 @@
     tabs.forEach(t => {
       t.addEventListener("click", () => {
         tabs.forEach(x => x.setAttribute("aria-selected", String(x === t)));
-        Object.keys(panels).forEach(k => { panels[k].hidden = k !== t.dataset.panel; });
+        Object.keys(panels).forEach(k => { if (panels[k]) panels[k].hidden = k !== t.dataset.panel; });
         if (t.dataset.panel === "whatsnew") markWhatsNewSeen();
         if (t.dataset.panel === "pricecheck") pcBuild();
         if (t.dataset.panel === "pricematch") pmBuild();
         if (t.dataset.panel === "compare") { cmpBuildPickers(); cmpAutofill(); renderDeviceCompare(); }
         if (t.dataset.panel === "builder") { bldBuild(); bldRenderBreakdown(); }
         if (t.dataset.panel === "tradein") tipBuild();
+        if (t.dataset.panel === "blackfriday") bfBuild();
         if (t.dataset.panel === "service") svcBuild();
         window.scrollTo(0, 0);
       });
