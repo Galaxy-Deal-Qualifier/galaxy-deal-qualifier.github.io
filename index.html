@@ -6822,9 +6822,9 @@
   // Numbering: the minor digit runs 1-9 and then rolls over, so .9 is followed by the next whole
   // number -- 2.9 to 3, 3.9 to 4. There is no 2.10.
   const CHANGELOG = [
-    { type: "app", v: "18.6", d: "25 Nov 2026", t: "Black Friday page, on until Monday",
+    { type: "app", v: "18.6", d: "25 Nov 2026", t: "Black Friday page, the start page until Monday",
       items: [
-        "<strong>Black Friday has its own page in the sidebar</strong> until Monday 30 November, then it takes itself off. It lists every device on a Black Friday offer, biggest saving first, with the price for each storage, the bulletin codes, the end date and a line on how to sell it. Quote starts a quote with that device.",
+        "<strong>Black Friday has its own page in the sidebar</strong> until Monday 30 November, and opens first until then; after Monday it takes itself off and the tool opens on Customer Quote again. It lists every device on a Black Friday offer, biggest saving first, with the price for each storage, the bulletin codes, the end date and a line on how to sell it. Quote starts a quote with that device.",
         "<strong>Gifts by budget, accessory deals, bundles and tips:</strong> devices sorted under $300, $300 to $800 and $800 and up, every accessory deal running now, bundle ideas with their total, and ten tips for the weekend. Each card says when Education or SMB is cheaper than the Black Friday price.",
         "Every price is worked out from the same offers as the quote, so a Sales Kit change shows up here too."
       ] },
@@ -10445,6 +10445,9 @@
       renderPromoPreview();
       document.querySelector('.tab[data-panel="quote"]').click();
     });
+    // Isaiah, 25 Nov 2026: the page staff land on until Monday. Clicked once the tab handlers
+    // further down are wired up; the first-visit tour switches to its own pages as it goes.
+    setTimeout(() => { if (tab && document.body.contains(tab)) tab.click(); }, 0);
   })();
   // ---- end Black Friday page ----
 
